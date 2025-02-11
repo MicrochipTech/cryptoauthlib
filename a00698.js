@@ -1,6 +1,29 @@
 var a00698 =
 [
-    [ "pkcs11_cert_wtlspublic_attributes", "a01477.html#gabc10a1f1b90bc7d2fb047db0af539e80", null ],
-    [ "pkcs11_cert_x509_attributes", "a01477.html#gafa471eb33699e2cba5dc3cc50a2d8df7", null ],
-    [ "pkcs11_cert_x509public_attributes", "a01477.html#ga8de4193ede04a12ab4e44b8df9eec478", null ]
+    [ "atca_mbedtls_pk_init", "a01509.html#gaa55a112d0b087adc242cc9b0978b5d15", null ],
+    [ "atca_mbedtls_pk_init_ext", "a01509.html#gad0e60f7088f93556c4a0ac7aff174fe6", null ],
+    [ "atcac_aes_cmac_finish", "a00698.html#a9fb429f011c7df55055763f41b896f28", null ],
+    [ "atcac_aes_cmac_init", "a00698.html#a17af2d47faed0774e9277be42512b0f4", null ],
+    [ "atcac_aes_cmac_update", "a00698.html#a9c6a8dc222080952c2541db9cf7cd3c0", null ],
+    [ "atcac_aes_gcm_aad_update", "a00698.html#a7cc388d11506f9ef030994fab99cfaa7", null ],
+    [ "atcac_aes_gcm_decrypt_finish", "a00698.html#ac9cde02547c1ed0122c87f0a156ee268", null ],
+    [ "atcac_aes_gcm_decrypt_start", "a00698.html#a473ff3c449375989e846d66342333b3a", null ],
+    [ "atcac_aes_gcm_decrypt_update", "a00698.html#a04b292df2006e31743224b66e16a29e9", null ],
+    [ "atcac_aes_gcm_encrypt_finish", "a00698.html#a5bdd8ba09593bb7a2ce1f48df873250a", null ],
+    [ "atcac_aes_gcm_encrypt_start", "a00698.html#a856d7a2b4bdd82d01544cb4ee6048e48", null ],
+    [ "atcac_aes_gcm_encrypt_update", "a00698.html#a34f53a6f8a1ef018ef886961e4f60694", null ],
+    [ "atcac_pk_derive", "a00698.html#a7b82589420e299091e6b80459bfb90d8", null ],
+    [ "atcac_pk_free", "a00698.html#a757c5734289254c48f43cc26b7d5e6a4", null ],
+    [ "atcac_pk_init", "a00698.html#aa1cfc16d20a4a93bc8cc45f68bd6a74f", null ],
+    [ "atcac_pk_init_pem", "a00698.html#a93806f5fc89ac97ab70e74dc9c41dd76", null ],
+    [ "atcac_pk_public", "a00698.html#acd482e1225ffba53b6bfe903e133a541", null ],
+    [ "atcac_pk_sign", "a00698.html#aef7827b56555e8efcc4646855335555f", null ],
+    [ "atcac_pk_verify", "a00698.html#a29573bbcca0c005de19ec709109538df", null ],
+    [ "atcac_sha256_hmac_finish", "a00698.html#ac5f016c7c9fa74cadbd76508e68ffe66", null ],
+    [ "atcac_sha256_hmac_init", "a00698.html#a107f3a8b6eb198dff510926061cabb43", null ],
+    [ "atcac_sha256_hmac_update", "a00698.html#a15fed8a07cb9fef1f7cb0dc5fffcbfee", null ],
+    [ "atcac_sw_random", "a00698.html#a45fef91f1894c03f9fd94d2835a91342", null ],
+    [ "atcac_sw_sha1_finish", "a00698.html#abb02186059737ad5fb792665cf0b97dd", null ],
+    [ "atcac_sw_sha1_init", "a00698.html#a723448315d3bbc03a39104d36fd2b4bc", null ],
+    [ "atcac_sw_sha1_update", "a00698.html#a1b8bae42b5963d812f4cf2329807f778", null ]
 ];

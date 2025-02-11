@@ -2,9 +2,9 @@ var dir_6319b470d978b666f57c44c2de446197 =
 [
     [ "tflxtls_cert_def_4_device.c", "a00056.html", null ],
     [ "tflxtls_cert_def_4_device.h", "a00059.html", null ],
-    [ "tng_atca.c", "a00062.html", "a00062" ],
+    [ "tng_atca.c", "a00062.html", null ],
     [ "tng_atca.h", "a00065.html", "a00065" ],
-    [ "tng_atcacert_client.c", "a00068.html", "a00068" ],
+    [ "tng_atcacert_client.c", "a00068.html", null ],
     [ "tng_atcacert_client.h", "a00071.html", "a00071" ],
     [ "tng_root_cert.c", "a00074.html", null ],
     [ "tng_root_cert.h", "a00077.html", null ],

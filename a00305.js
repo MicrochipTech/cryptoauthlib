@@ -1,9 +1,16 @@
 var a00305 =
 [
-    [ "atcacert_der_dec_ecdsa_sig_value", "a01470.html#gab22e2c8bf627f700be0e10e331bfdb1f", null ],
-    [ "atcacert_der_dec_integer", "a01470.html#ga5d7eff7a29bc02cfe16bc3d25e3ef2eb", null ],
-    [ "atcacert_der_dec_length", "a01470.html#ga9d4810aa2fd1db14a8f91204387fd972", null ],
-    [ "atcacert_der_enc_ecdsa_sig_value", "a01470.html#gacee7e7eb74c022b2ea70c7a549d5f876", null ],
-    [ "atcacert_der_enc_integer", "a01470.html#gadc86044101ad9a87556d49ab8bf892af", null ],
-    [ "atcacert_der_enc_length", "a01470.html#ga5866e20dc2c7f9d788924155eac4fece", null ]
+    [ "ATCACERT_E_BAD_CERT", "a01503.html#ga822ee0620c8d2d12ff971b9b35f9f5cd", null ],
+    [ "ATCACERT_E_BAD_PARAMS", "a01503.html#ga47509d283523ab1892fb8746d6f4e37d", null ],
+    [ "ATCACERT_E_BUFFER_TOO_SMALL", "a01503.html#ga7a2e774fc8b12c4045dea335a86afca6", null ],
+    [ "ATCACERT_E_DECODING_ERROR", "a01503.html#gaea155533fdd352d6602d3e2fc717930f", null ],
+    [ "ATCACERT_E_ELEM_MISSING", "a01503.html#ga8e3e7c64650c92364bbac17f6a75474a", null ],
+    [ "ATCACERT_E_ELEM_OUT_OF_BOUNDS", "a01503.html#ga62604c78d688530173e203b02df180fa", null ],
+    [ "ATCACERT_E_ERROR", "a01503.html#ga048a6bb9781dbbc402409a172f976f74", null ],
+    [ "ATCACERT_E_INVALID_DATE", "a01503.html#gaafd66d6744314225ead24b3901bd6372", null ],
+    [ "ATCACERT_E_INVALID_TRANSFORM", "a01503.html#ga2396e500bd36c2316a1a6e13e3117958", null ],
+    [ "ATCACERT_E_SUCCESS", "a01503.html#ga7bd1ad830360fc8b988f855da6d0d5ba", null ],
+    [ "ATCACERT_E_UNEXPECTED_ELEM_SIZE", "a01503.html#ga5a7cb98e18ad338f2eaf6594acb67c32", null ],
+    [ "ATCACERT_E_UNIMPLEMENTED", "a01503.html#ga4b6db1523875a2b1453ef5e16989ecd4", null ],
+    [ "ATCACERT_E_VERIFY_FAILED", "a01503.html#gae1da5e02cd9b4ee7b8617d7bce0a5b5d", null ]
 ];

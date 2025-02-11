@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_spi_harmony.c File Reference</title>
+<title>CryptoAuthLib: hal_linux.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,66 +99,57 @@ $(document).ready(function(){initNavTree('a00596.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">hal_spi_harmony.c File Reference</div></div>
+  <div class="headertitle"><div class="title">hal_linux.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>ATCA Hardware abstraction layer for SPI over Harmony PLIB.  
+<p>Timer Utility Functions for Linux.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;string.h&gt;</code><br />
-<code>#include &lt;stdio.h&gt;</code><br />
-<code>#include &quot;atca_config.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00521.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00530.html">atca_hal.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00254.html">atca_device.h</a>&quot;</code><br />
-<code>#include &quot;definitions.h&quot;</code><br />
-<code>#include &quot;talib/talib_defines.h&quot;</code><br />
-<code>#include &quot;talib/talib_fce.h&quot;</code><br />
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;unistd.h&gt;</code><br />
+<code>#include &lt;sys/types.h&gt;</code><br />
+<code>#include &lt;sys/stat.h&gt;</code><br />
+<code>#include &lt;fcntl.h&gt;</code><br />
+<code>#include &lt;errno.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00557.html">atca_hal.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga92cecc8e30a88dee1cbedd49141bc209"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01473.html#ga92cecc8e30a88dee1cbedd49141bc209">hal_spi_discover_buses</a> (int spi_buses[], int max_buses)</td></tr>
-<tr class="memdesc:ga92cecc8e30a88dee1cbedd49141bc209"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover spi buses available for this hardware this maintains a list of logical to physical bus mappings freeing the application of the a-priori knowledge  <br /></td></tr>
-<tr class="separator:ga92cecc8e30a88dee1cbedd49141bc209"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6cf45c115bcb721e951e8792e0feb3f0"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01473.html#ga6cf45c115bcb721e951e8792e0feb3f0">hal_spi_discover_devices</a> (int bus_num, <a class="el" href="a01539.html">ATCAIfaceCfg</a> cfg[], int *found)</td></tr>
-<tr class="memdesc:ga6cf45c115bcb721e951e8792e0feb3f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">discover any TA10x devices on a given logical bus number  <br /></td></tr>
-<tr class="separator:ga6cf45c115bcb721e951e8792e0feb3f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga24b3ca4076a0e4093644d4f58cd80a69"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01473.html#ga24b3ca4076a0e4093644d4f58cd80a69">hal_spi_init</a> (<a class="el" href="a01607.html">ATCAIface</a> iface, <a class="el" href="a01539.html">ATCAIfaceCfg</a> *cfg)</td></tr>
-<tr class="memdesc:ga24b3ca4076a0e4093644d4f58cd80a69"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize an SPI interface using given config  <br /></td></tr>
-<tr class="separator:ga24b3ca4076a0e4093644d4f58cd80a69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeb831d9894ce11146bd00c79a98b7f0f"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01473.html#gaeb831d9894ce11146bd00c79a98b7f0f">hal_spi_post_init</a> (<a class="el" href="a01607.html">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:gaeb831d9894ce11146bd00c79a98b7f0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SPI post init.  <br /></td></tr>
-<tr class="separator:gaeb831d9894ce11146bd00c79a98b7f0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga237aa1d0ee551a61991b52dc7812ff64"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01473.html#ga237aa1d0ee551a61991b52dc7812ff64">hal_spi_select</a> (<a class="el" href="a01607.html">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga237aa1d0ee551a61991b52dc7812ff64"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation to assert the device chip select.  <br /></td></tr>
-<tr class="separator:ga237aa1d0ee551a61991b52dc7812ff64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6bcb25e01ba6242973eedb32fa9dac2a"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01473.html#ga6bcb25e01ba6242973eedb32fa9dac2a">hal_spi_deselect</a> (<a class="el" href="a01607.html">ATCAIface</a> iface)</td></tr>
-<tr class="memdesc:ga6bcb25e01ba6242973eedb32fa9dac2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation to deassert the device chip select.  <br /></td></tr>
-<tr class="separator:ga6bcb25e01ba6242973eedb32fa9dac2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga16661176757d0ef155155b07267a44ed"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01473.html#ga16661176757d0ef155155b07267a44ed">hal_spi_send</a> (<a class="el" href="a01607.html">ATCAIface</a> iface, uint8_t word_address, uint8_t *txdata, int txlength)</td></tr>
-<tr class="memdesc:ga16661176757d0ef155155b07267a44ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SPI send over Harmony.  <br /></td></tr>
-<tr class="separator:ga16661176757d0ef155155b07267a44ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga410c24762579358a576a58610a877e63"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01473.html#ga410c24762579358a576a58610a877e63">hal_spi_receive</a> (<a class="el" href="a01607.html">ATCAIface</a> iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
-<tr class="memdesc:ga410c24762579358a576a58610a877e63"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SPI receive function for HARMONY SPI.  <br /></td></tr>
-<tr class="separator:ga410c24762579358a576a58610a877e63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac7f3951634faf0a7c16c234d471c3660"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01473.html#gac7f3951634faf0a7c16c234d471c3660">hal_spi_control</a> (<a class="el" href="a01607.html">ATCAIface</a> iface, uint8_t option, void *param, size_t paramlen)</td></tr>
-<tr class="memdesc:gac7f3951634faf0a7c16c234d471c3660"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform control operations for the kit protocol.  <br /></td></tr>
-<tr class="separator:gac7f3951634faf0a7c16c234d471c3660"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8c3f1c6c20d939c4ca976fdda6279359"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01473.html#ga8c3f1c6c20d939c4ca976fdda6279359">hal_spi_release</a> (void *hal_data)</td></tr>
-<tr class="memdesc:ga8c3f1c6c20d939c4ca976fdda6279359"><td class="mdescLeft">&#160;</td><td class="mdescRight">manages reference count on given bus and releases resource if no more refences exist  <br /></td></tr>
-<tr class="separator:ga8c3f1c6c20d939c4ca976fdda6279359"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7e9019810ba5ab81b256282392cd5079"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#ga7e9019810ba5ab81b256282392cd5079">hal_delay_us</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:ga7e9019810ba5ab81b256282392cd5079"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of microseconds.  <br /></td></tr>
+<tr class="separator:ga7e9019810ba5ab81b256282392cd5079"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc23b8130e72a445f76c68d62e8c95c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#gadc23b8130e72a445f76c68d62e8c95c5">hal_delay_ms</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:gadc23b8130e72a445f76c68d62e8c95c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API implemented at the HAL level.  <br /></td></tr>
+<tr class="separator:gadc23b8130e72a445f76c68d62e8c95c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad9da28968a527ce51a2b081461d4cfe"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#gaad9da28968a527ce51a2b081461d4cfe">hal_create_mutex</a> (void **ppMutex, const char *pName)</td></tr>
+<tr class="memdesc:gaad9da28968a527ce51a2b081461d4cfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional hal interfaces.  <br /></td></tr>
+<tr class="separator:gaad9da28968a527ce51a2b081461d4cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_destroy_mutex</b> (void *pMutex)</td></tr>
+<tr class="separator:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_lock_mutex</b> (void *pMutex)</td></tr>
+<tr class="separator:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31fd8170a49623686543f6247b883bd1"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_unlock_mutex</b> (void *pMutex)</td></tr>
+<tr class="separator:ga31fd8170a49623686543f6247b883bd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae31246ac870409a3d694c240c6c3498a"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_check_pid</b> (hal_pid_t pid)</td></tr>
+<tr class="memdesc:gae31246ac870409a3d694c240c6c3498a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the pid exists in the system. <br /></td></tr>
+<tr class="separator:gae31246ac870409a3d694c240c6c3498a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>ATCA Hardware abstraction layer for SPI over Harmony PLIB. </p>
-<p>This code is structured in two parts. Part 1 is the connection of the ATCA HAL API to the physical SPI implementation. Part 2 is the Harmony SPI primitives to set up the interface.</p>
-<p>Prerequisite: add SERCOM SPI Master Interrupt support to application in Mplab Harmony 3</p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+<div class="textblock"><p>Timer Utility Functions for Linux. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2018 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00596.html">hal_spi_harmony.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00596.html">hal_linux.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

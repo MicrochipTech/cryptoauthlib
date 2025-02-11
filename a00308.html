@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert_host_hw.c File Reference</title>
+<title>CryptoAuthLib: atcacert_check_config.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -97,24 +97,62 @@ $(document).ready(function(){initNavTree('a00308.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">atcacert_host_hw.c File Reference</div></div>
+  <div class="summary">
+<a href="#define-members">Macros</a>  </div>
+  <div class="headertitle"><div class="title">atcacert_check_config.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>host side methods using CryptoAuth hardware  
+<p>Configuration check and defaults for the atcacert module.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00311.html">atcacert_host_hw.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00230.html">atca_basic.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00500.html">crypto/atca_crypto_sw_sha2.h</a>&quot;</code><br />
-</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>host side methods using CryptoAuth hardware </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+<div class="textblock"><code>#include &quot;<a class="el" href="a00548.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00509.html">crypto/atca_crypto_sw.h</a>&quot;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a82cc4e898685eda93b47e741e5b44137"><td class="memItemLeft" align="right" valign="top"><a id="a82cc4e898685eda93b47e741e5b44137" name="a82cc4e898685eda93b47e741e5b44137"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HOSTLIB_CERT_EN</b>&#160;&#160;&#160;DEFAULT_DISABLED</td></tr>
+<tr class="separator:a82cc4e898685eda93b47e741e5b44137"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee352c0f4fcaec099e6ac354c4663c56"><td class="memItemLeft" align="right" valign="top"><a id="aee352c0f4fcaec099e6ac354c4663c56" name="aee352c0f4fcaec099e6ac354c4663c56"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_INTEGRATION_EN</b>&#160;&#160;&#160;HOSTLIB_CERT_EN</td></tr>
+<tr class="separator:aee352c0f4fcaec099e6ac354c4663c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14903345f69f9da1b68777baea96079c"><td class="memItemLeft" align="right" valign="top"><a id="a14903345f69f9da1b68777baea96079c" name="a14903345f69f9da1b68777baea96079c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_FULLSTOREDCERT_EN</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:a14903345f69f9da1b68777baea96079c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fd7b076f959ac1e785a3c36d298495b"><td class="memItemLeft" align="right" valign="top"><a id="a4fd7b076f959ac1e785a3c36d298495b" name="a4fd7b076f959ac1e785a3c36d298495b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_COMPCERT_EN</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:a4fd7b076f959ac1e785a3c36d298495b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d181d31956d42db1d25281deca4c7e3"><td class="memItemLeft" align="right" valign="top"><a id="a3d181d31956d42db1d25281deca4c7e3" name="a3d181d31956d42db1d25281deca4c7e3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_EN</b>&#160;&#160;&#160;(ATCACERT_FULLSTOREDCERT_EN || ATCACERT_COMPCERT_EN)</td></tr>
+<tr class="separator:a3d181d31956d42db1d25281deca4c7e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2894900773b25424610b3d4441802fad"><td class="memItemLeft" align="right" valign="top"><a id="a2894900773b25424610b3d4441802fad" name="a2894900773b25424610b3d4441802fad"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_HW_CHALLENGE_EN</b>&#160;&#160;&#160;(ATCAB_RANDOM_EN &amp;&amp; (ATCA_ECC_SUPPORT || ATCA_TA_SUPPORT))</td></tr>
+<tr class="separator:a2894900773b25424610b3d4441802fad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af247eb22827965004abb8b3b8aed35f1"><td class="memItemLeft" align="right" valign="top"><a id="af247eb22827965004abb8b3b8aed35f1" name="af247eb22827965004abb8b3b8aed35f1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_HW_VERIFY_EN</b>&#160;&#160;&#160;(ATCAB_VERIFY_EXTERN_EN &amp;&amp; (ATCA_ECC_SUPPORT || ATCA_TA_SUPPORT))</td></tr>
+<tr class="separator:af247eb22827965004abb8b3b8aed35f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4f6e00c9f67ccad2783628a6fe7e7af"><td class="memItemLeft" align="right" valign="top"><a id="ab4f6e00c9f67ccad2783628a6fe7e7af" name="ab4f6e00c9f67ccad2783628a6fe7e7af"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_DATEFMT_ISO_EN</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:ab4f6e00c9f67ccad2783628a6fe7e7af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e59ca45591de8524a95a45705269682"><td class="memItemLeft" align="right" valign="top"><a id="a2e59ca45591de8524a95a45705269682" name="a2e59ca45591de8524a95a45705269682"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_DATEFMT_UTC_EN</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:a2e59ca45591de8524a95a45705269682"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a7f452650c0f0659fe3ca21b3e2863b"><td class="memItemLeft" align="right" valign="top"><a id="a8a7f452650c0f0659fe3ca21b3e2863b" name="a8a7f452650c0f0659fe3ca21b3e2863b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_DATEFMT_POSIX_EN</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:a8a7f452650c0f0659fe3ca21b3e2863b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96e7eaed048b2ecf32a4d6b9623f8b4e"><td class="memItemLeft" align="right" valign="top"><a id="a96e7eaed048b2ecf32a4d6b9623f8b4e" name="a96e7eaed048b2ecf32a4d6b9623f8b4e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_DATEFMT_GEN_EN</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:a96e7eaed048b2ecf32a4d6b9623f8b4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Configuration check and defaults for the atcacert module. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2022 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00308.html">atcacert_host_hw.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00308.html">atcacert_check_config.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

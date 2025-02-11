@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert_host_hw.h File Reference</title>
+<title>CryptoAuthLib: atcacert_client.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -97,39 +97,30 @@ $(document).ready(function(){initNavTree('a00311.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">atcacert_host_hw.h File Reference</div></div>
+  <div class="headertitle"><div class="title">atcacert_client.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>host side methods using CryptoAuth hardware  
+<p>Client side cert i/o methods. These declarations deal with the client-side, the node being authenticated, of the authentication process. It is assumed the client has an ECC CryptoAuthentication device (e.g. ATECC508A) and the certificates are stored on that device.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00299.html">atcacert_def.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga42939c26927fb65340ff1ebb2914a976"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga42939c26927fb65340ff1ebb2914a976">atcacert_verify_cert_hw</a> (const <a class="el" href="a01470.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *cert_def, const uint8_t *cert, size_t cert_size, const uint8_t ca_public_key[64])</td></tr>
-<tr class="memdesc:ga42939c26927fb65340ff1ebb2914a976"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a certificate against its certificate authority's public key using the host's ATECC device for crypto functions.  <br /></td></tr>
-<tr class="separator:ga42939c26927fb65340ff1ebb2914a976"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6692847d9c41eb73e469df029697a7b9"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga6692847d9c41eb73e469df029697a7b9">atcacert_gen_challenge_hw</a> (uint8_t challenge[32])</td></tr>
-<tr class="memdesc:ga6692847d9c41eb73e469df029697a7b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a random challenge to be sent to the client using the RNG on the host's ATECC device.  <br /></td></tr>
-<tr class="separator:ga6692847d9c41eb73e469df029697a7b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1441695a23776f3b38722e51fd3c36e3"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga1441695a23776f3b38722e51fd3c36e3">atcacert_verify_response_hw</a> (const uint8_t device_public_key[64], const uint8_t challenge[32], const uint8_t response[64])</td></tr>
-<tr class="memdesc:ga1441695a23776f3b38722e51fd3c36e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a client's response to a challenge using the host's ATECC device for crypto functions.  <br /></td></tr>
-<tr class="separator:ga1441695a23776f3b38722e51fd3c36e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>host side methods using CryptoAuth hardware </p>
+<div class="textblock"><code>#include &lt;limits.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00314.html">atcacert_client.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00332.html">atcacert_der.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00350.html">atcacert_pem.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00548.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;calib/calib_basic.h&quot;</code><br />
+<code>#include &quot;talib/talib_basic.h&quot;</code><br />
+<code>#include &quot;talib/talib_internal.h&quot;</code><br />
+</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Client side cert i/o methods. These declarations deal with the client-side, the node being authenticated, of the authentication process. It is assumed the client has an ECC CryptoAuthentication device (e.g. ATECC508A) and the certificates are stored on that device. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00311.html">atcacert_host_hw.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00311.html">atcacert_client.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

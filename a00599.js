@@ -1,9 +1,9 @@
 var a00599 =
 [
-    [ "hal_swi_gpio_control", "a00599.html#aaf7a492cce7f9a5fe5b817aae347ba3d", null ],
-    [ "hal_swi_gpio_init", "a00599.html#a56876f187f5f50c3cc8728ee21f0962c", null ],
-    [ "hal_swi_gpio_post_init", "a00599.html#a1527badd7e7e5f4d1e60eada509b1319", null ],
-    [ "hal_swi_gpio_receive", "a00599.html#a3415a23c978f3421bc01d069d1ab9180", null ],
-    [ "hal_swi_gpio_release", "a00599.html#aae0cb0a585b3eb7535c70047bef1f7c6", null ],
-    [ "hal_swi_gpio_send", "a00599.html#aea9aba476b50f5d4ef082c24f0cb6b68", null ]
+    [ "hal_i2c_control", "a01506.html#ga4f82572f05b8587d98bc38601453863e", null ],
+    [ "hal_i2c_init", "a01506.html#ga17df8d983df73e2e8f62f1236f157909", null ],
+    [ "hal_i2c_post_init", "a01506.html#gafbe53519362f18c2688d10da6f7c618f", null ],
+    [ "hal_i2c_receive", "a01506.html#gac1baf65047dc3efe1f14f1b79b62c04f", null ],
+    [ "hal_i2c_release", "a01506.html#gac382cc4431d2d1c721c21a453ba36c22", null ],
+    [ "hal_i2c_send", "a01506.html#gacc9a889e19d2f1a475a39391565b66dd", null ]
 ];

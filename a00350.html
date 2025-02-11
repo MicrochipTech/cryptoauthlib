@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_checkmac.c File Reference</title>
+<title>CryptoAuthLib: atcacert_pem.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -97,24 +97,403 @@ $(document).ready(function(){initNavTree('a00350.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">calib_checkmac.c File Reference</div></div>
+  <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">atcacert_pem.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>CryptoAuthLib Basic API methods for CheckMAC command.  
+<p>Functions for converting between DER and PEM formats.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00521.html">cryptoauthlib.h</a>&quot;</code><br />
-</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>CryptoAuthLib Basic API methods for CheckMAC command. </p>
-<p>The CheckMac command calculates a MAC response that would have been generated on a different CryptoAuthentication device and then compares the result with input value.</p>
-<dl class="section note"><dt>Note</dt><dd>List of devices that support this command - ATSHA204A, ATECC108A, ATECC508A, and ATECC608A/B. There are differences in the modes that they support. Refer to device datasheets for full details.</dd></dl>
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:aefb573f85f8692759f6c82587a948d71"><td class="memItemLeft" align="right" valign="top"><a id="aefb573f85f8692759f6c82587a948d71" name="aefb573f85f8692759f6c82587a948d71"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PEM_CERT_BEGIN</b>&#160;&#160;&#160;&quot;-----BEGIN CERTIFICATE-----&quot;</td></tr>
+<tr class="separator:aefb573f85f8692759f6c82587a948d71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbe03d95d1d6a651c01d1ef74daa4063"><td class="memItemLeft" align="right" valign="top"><a id="afbe03d95d1d6a651c01d1ef74daa4063" name="afbe03d95d1d6a651c01d1ef74daa4063"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PEM_CERT_END</b>&#160;&#160;&#160;&quot;-----END CERTIFICATE-----&quot;</td></tr>
+<tr class="separator:afbe03d95d1d6a651c01d1ef74daa4063"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a006df03d5e86c2d586f02362ca66566e"><td class="memItemLeft" align="right" valign="top"><a id="a006df03d5e86c2d586f02362ca66566e" name="a006df03d5e86c2d586f02362ca66566e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PEM_CSR_BEGIN</b>&#160;&#160;&#160;&quot;-----BEGIN CERTIFICATE REQUEST-----&quot;</td></tr>
+<tr class="separator:a006df03d5e86c2d586f02362ca66566e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7521d8913a097b0a910d00fdb664210"><td class="memItemLeft" align="right" valign="top"><a id="ad7521d8913a097b0a910d00fdb664210" name="ad7521d8913a097b0a910d00fdb664210"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PEM_CSR_END</b>&#160;&#160;&#160;&quot;-----END CERTIFICATE REQUEST-----&quot;</td></tr>
+<tr class="separator:ad7521d8913a097b0a910d00fdb664210"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a65ca7cd1f2358ad40ae4c8c13f6d817c"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00350.html#a65ca7cd1f2358ad40ae4c8c13f6d817c">atcacert_encode_pem</a> (const uint8_t *der, size_t der_size, char *pem, size_t *pem_size, const char *header, const char *footer)</td></tr>
+<tr class="memdesc:a65ca7cd1f2358ad40ae4c8c13f6d817c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode a DER data in PEM format.  <br /></td></tr>
+<tr class="separator:a65ca7cd1f2358ad40ae4c8c13f6d817c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32d4e4f417e88b56b9adc5b7c521d545"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00350.html#a32d4e4f417e88b56b9adc5b7c521d545">atcacert_decode_pem</a> (const char *pem, size_t pem_size, uint8_t *der, size_t *der_size, const char *header, const char *footer)</td></tr>
+<tr class="memdesc:a32d4e4f417e88b56b9adc5b7c521d545"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode PEM data into DER format.  <br /></td></tr>
+<tr class="separator:a32d4e4f417e88b56b9adc5b7c521d545"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a206c4857a73ccfc7898131b61d43ba67"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00350.html#a206c4857a73ccfc7898131b61d43ba67">atcacert_encode_pem_cert</a> (const uint8_t *der_cert, size_t der_cert_size, char *pem_cert, size_t *pem_cert_size)</td></tr>
+<tr class="memdesc:a206c4857a73ccfc7898131b61d43ba67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode a DER certificate in PEM format.  <br /></td></tr>
+<tr class="separator:a206c4857a73ccfc7898131b61d43ba67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ee7c8e3893e67ae0a622bddc443bcbd"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00350.html#a5ee7c8e3893e67ae0a622bddc443bcbd">atcacert_decode_pem_cert</a> (const char *pem_cert, size_t pem_cert_size, uint8_t *der_cert, size_t *der_cert_size)</td></tr>
+<tr class="memdesc:a5ee7c8e3893e67ae0a622bddc443bcbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode a PEM certificate into DER format.  <br /></td></tr>
+<tr class="separator:a5ee7c8e3893e67ae0a622bddc443bcbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3b6773201632141bbc95ca6d43271f9"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00350.html#ad3b6773201632141bbc95ca6d43271f9">atcacert_encode_pem_csr</a> (const uint8_t *der_csr, size_t der_csr_size, char *pem_csr, size_t *pem_csr_size)</td></tr>
+<tr class="memdesc:ad3b6773201632141bbc95ca6d43271f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode a DER CSR in PEM format.  <br /></td></tr>
+<tr class="separator:ad3b6773201632141bbc95ca6d43271f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfccc0bc91b144dffab3aba96126800f"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00350.html#adfccc0bc91b144dffab3aba96126800f">atcacert_decode_pem_csr</a> (const char *pem_csr, size_t pem_csr_size, uint8_t *der_csr, size_t *der_csr_size)</td></tr>
+<tr class="memdesc:adfccc0bc91b144dffab3aba96126800f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract the CSR certificate bytes from a PEM encoded CSR certificate.  <br /></td></tr>
+<tr class="separator:adfccc0bc91b144dffab3aba96126800f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Functions for converting between DER and PEM formats. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a32d4e4f417e88b56b9adc5b7c521d545" name="a32d4e4f417e88b56b9adc5b7c521d545"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32d4e4f417e88b56b9adc5b7c521d545">&#9670;&#160;</a></span>atcacert_decode_pem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS atcacert_decode_pem </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>pem</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>pem_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>der</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>der_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>header</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>footer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Decode PEM data into DER format. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pem</td><td>PEM data to decode to DER. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pem_size</td><td>PEM data size in bytes. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">der</td><td>DER data is returned here. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">der_size</td><td>As input, the size of the der buffer. As output, the size of the DER data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">header</td><td>Header to find the beginning of the PEM data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">footer</td><td>Footer to find the end of the PEM data. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="a5ee7c8e3893e67ae0a622bddc443bcbd" name="a5ee7c8e3893e67ae0a622bddc443bcbd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ee7c8e3893e67ae0a622bddc443bcbd">&#9670;&#160;</a></span>atcacert_decode_pem_cert()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS atcacert_decode_pem_cert </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>pem_cert</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>pem_cert_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>der_cert</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>der_cert_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Decode a PEM certificate into DER format. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pem_cert</td><td>PEM certificate to decode to DER. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pem_cert_size</td><td>PEM certificate size in bytes. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">der_cert</td><td>DER certificate is returned here. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">der_cert_size</td><td>As input, the size of the der_cert buffer. As output, the size of the DER certificate. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="adfccc0bc91b144dffab3aba96126800f" name="adfccc0bc91b144dffab3aba96126800f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfccc0bc91b144dffab3aba96126800f">&#9670;&#160;</a></span>atcacert_decode_pem_csr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS atcacert_decode_pem_csr </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>pem_csr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>pem_csr_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>der_csr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>der_csr_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Extract the CSR certificate bytes from a PEM encoded CSR certificate. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pem_csr</td><td>PEM CSR to decode to DER. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pem_csr_size</td><td>PEM CSR size in bytes. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">der_csr</td><td>DER CSR is returned here. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">der_csr_size</td><td>As input, the size of the der_csr buffer. As output, the size of the DER CSR. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="a65ca7cd1f2358ad40ae4c8c13f6d817c" name="a65ca7cd1f2358ad40ae4c8c13f6d817c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65ca7cd1f2358ad40ae4c8c13f6d817c">&#9670;&#160;</a></span>atcacert_encode_pem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS atcacert_encode_pem </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>der</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>der_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>pem</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>pem_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>header</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>footer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Encode a DER data in PEM format. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">der</td><td>DER data to be encoded as PEM. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">der_size</td><td>DER data size in bytes. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pem</td><td>PEM encoded data is returned here. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">pem_size</td><td>As input, the size of the pem buffer. As output, the size of the PEM data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">header</td><td>Header to place at the beginning of the PEM data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">footer</td><td>Footer to place at the end of the PEM data. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="a206c4857a73ccfc7898131b61d43ba67" name="a206c4857a73ccfc7898131b61d43ba67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a206c4857a73ccfc7898131b61d43ba67">&#9670;&#160;</a></span>atcacert_encode_pem_cert()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS atcacert_encode_pem_cert </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>der_cert</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>der_cert_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>pem_cert</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>pem_cert_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Encode a DER certificate in PEM format. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">der_cert</td><td>DER certificate to be encoded as PEM. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">der_cert_size</td><td>DER certificate size in bytes. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pem_cert</td><td>PEM encoded certificate is returned here. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">pem_cert_size</td><td>As input, the size of the pem_cert buffer. As output, the size of the PEM certificate. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="ad3b6773201632141bbc95ca6d43271f9" name="ad3b6773201632141bbc95ca6d43271f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3b6773201632141bbc95ca6d43271f9">&#9670;&#160;</a></span>atcacert_encode_pem_csr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS atcacert_encode_pem_csr </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>der_csr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>der_csr_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>pem_csr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>pem_csr_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Encode a DER CSR in PEM format. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">der_csr</td><td>DER CSR to be encoded as PEM. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">der_csr_size</td><td>DER CSR size in bytes. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pem_csr</td><td>PEM encoded CSR is returned here. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">pem_csr_size</td><td>As input, the size of the pem_csr buffer. As output, the size of the PEM CSR. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_fe677a742bdf73affcb7505b38a59233.html">calib</a></li><li class="navelem"><a class="el" href="a00350.html">calib_checkmac.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00350.html">atcacert_pem.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

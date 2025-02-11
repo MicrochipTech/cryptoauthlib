@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: calib_execution.h File Reference</title>
+<title>CryptoAuthLib: calib_command.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,128 +98,123 @@ $(document).ready(function(){initNavTree('a00380.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">calib_execution.h File Reference</div></div>
+  <div class="headertitle"><div class="title">calib_command.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Defines an execution handler that executes a given command on a device and returns the results.  
+<p>Microchip CryptoAuthentication device command builder - this is the main object that builds the command byte strings for the given device. It does not execute the command. The basic flow is to call a command method to build the command you want given the parameters and then send that byte string through the device interface.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00269.html">atca_status.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00356.html">calib_command.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00254.html">atca_device.h</a>&quot;</code><br />
-<code>#include &quot;atca_config.h&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00548.html">cryptoauthlib.h</a>&quot;</code><br />
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01659.html">device_execution_time_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to hold the device execution time and the opcode for the corresponding command.  <a href="a01659.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:aa025be8149d8f6e4d07aaa436b026db2"><td class="memItemLeft" align="right" valign="top"><a id="aa025be8149d8f6e4d07aaa436b026db2" name="aa025be8149d8f6e4d07aaa436b026db2"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_UNSUPPORTED_CMD</b>&#160;&#160;&#160;((uint16_t)0xFFFF)</td></tr>
-<tr class="separator:aa025be8149d8f6e4d07aaa436b026db2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55c5fe347b23c42f6359e97ae82b4729"><td class="memItemLeft" align="right" valign="top"><a id="a55c5fe347b23c42f6359e97ae82b4729" name="a55c5fe347b23c42f6359e97ae82b4729"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_SWI_FLAG_WAKE</b>&#160;&#160;&#160;0x00</td></tr>
-<tr class="memdesc:a55c5fe347b23c42f6359e97ae82b4729"><td class="mdescLeft">&#160;</td><td class="mdescRight">flag preceding a command <br /></td></tr>
-<tr class="separator:a55c5fe347b23c42f6359e97ae82b4729"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7946c257bcbaf0e1589e960b83d23df"><td class="memItemLeft" align="right" valign="top"><a id="ac7946c257bcbaf0e1589e960b83d23df" name="ac7946c257bcbaf0e1589e960b83d23df"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_SWI_FLAG_CMD</b>&#160;&#160;&#160;0x77</td></tr>
-<tr class="memdesc:ac7946c257bcbaf0e1589e960b83d23df"><td class="mdescLeft">&#160;</td><td class="mdescRight">flag preceding a command <br /></td></tr>
-<tr class="separator:ac7946c257bcbaf0e1589e960b83d23df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c46cc5ed5e30945d62e9ea369c94cdb"><td class="memItemLeft" align="right" valign="top"><a id="a1c46cc5ed5e30945d62e9ea369c94cdb" name="a1c46cc5ed5e30945d62e9ea369c94cdb"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_SWI_FLAG_TX</b>&#160;&#160;&#160;0x88</td></tr>
-<tr class="memdesc:a1c46cc5ed5e30945d62e9ea369c94cdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">flag requesting a response <br /></td></tr>
-<tr class="separator:a1c46cc5ed5e30945d62e9ea369c94cdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a525ae62bb76a8ba01d4d85264f832c8e"><td class="memItemLeft" align="right" valign="top"><a id="a525ae62bb76a8ba01d4d85264f832c8e" name="a525ae62bb76a8ba01d4d85264f832c8e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_SWI_FLAG_IDLE</b>&#160;&#160;&#160;0xBB</td></tr>
-<tr class="memdesc:a525ae62bb76a8ba01d4d85264f832c8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">flag requesting to go into Idle mode <br /></td></tr>
-<tr class="separator:a525ae62bb76a8ba01d4d85264f832c8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8dd3e14e93cec4aea30e27104935d51b"><td class="memItemLeft" align="right" valign="top"><a id="a8dd3e14e93cec4aea30e27104935d51b" name="a8dd3e14e93cec4aea30e27104935d51b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>CALIB_SWI_FLAG_SLEEP</b>&#160;&#160;&#160;0xCC</td></tr>
-<tr class="memdesc:a8dd3e14e93cec4aea30e27104935d51b"><td class="mdescLeft">&#160;</td><td class="mdescRight">flag requesting to go into Sleep mode <br /></td></tr>
-<tr class="separator:a8dd3e14e93cec4aea30e27104935d51b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aa08ad4e89a8218e9598abbd36c11d07a"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00380.html#aa08ad4e89a8218e9598abbd36c11d07a">calib_get_execution_time</a> (uint8_t opcode, <a class="el" href="a01531.html">ATCADevice</a> device)</td></tr>
-<tr class="memdesc:aa08ad4e89a8218e9598abbd36c11d07a"><td class="mdescLeft">&#160;</td><td class="mdescRight">return the typical execution time for the given command  <br /></td></tr>
-<tr class="separator:aa08ad4e89a8218e9598abbd36c11d07a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36ecabdebc9a8bf0df577e11297fe4b4"><td class="memItemLeft" align="right" valign="top"><a id="a36ecabdebc9a8bf0df577e11297fe4b4" name="a36ecabdebc9a8bf0df577e11297fe4b4"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>calib_execute_send</b> (<a class="el" href="a01531.html">ATCADevice</a> device, uint8_t word_address, uint8_t *txdata, uint16_t txlength)</td></tr>
-<tr class="separator:a36ecabdebc9a8bf0df577e11297fe4b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a345bde60ef4556a595cdad71141c4afe"><td class="memItemLeft" align="right" valign="top"><a id="a345bde60ef4556a595cdad71141c4afe" name="a345bde60ef4556a595cdad71141c4afe"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>calib_execute_receive</b> (<a class="el" href="a01531.html">ATCADevice</a> device, uint8_t device_address, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
-<tr class="separator:a345bde60ef4556a595cdad71141c4afe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a19fc558e09f03a2f8f5ee89b1e396b2e"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00380.html#a19fc558e09f03a2f8f5ee89b1e396b2e">calib_execute_command</a> (<a class="el" href="a01643.html">ATCAPacket</a> *packet, <a class="el" href="a01531.html">ATCADevice</a> device)</td></tr>
-<tr class="memdesc:a19fc558e09f03a2f8f5ee89b1e396b2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wakes up device, sends the packet, waits for command completion, receives response, and puts the device into the idle state.  <br /></td></tr>
-<tr class="separator:a19fc558e09f03a2f8f5ee89b1e396b2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a640d3cfd0f5b41f50cea0b987094d8a1"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00380.html#a640d3cfd0f5b41f50cea0b987094d8a1">atInfo</a> (ATCADeviceType device_type, <a class="el" href="a01672.html">ATCAPacket</a> *packet)</td></tr>
+<tr class="memdesc:a640d3cfd0f5b41f50cea0b987094d8a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">ATCACommand Info method.  <br /></td></tr>
+<tr class="separator:a640d3cfd0f5b41f50cea0b987094d8a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afaf2ec3ff6b7feba0ca50a9b4f8d3ad8"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00380.html#afaf2ec3ff6b7feba0ca50a9b4f8d3ad8">atPause</a> (ATCADeviceType device_type, <a class="el" href="a01672.html">ATCAPacket</a> *packet)</td></tr>
+<tr class="memdesc:afaf2ec3ff6b7feba0ca50a9b4f8d3ad8"><td class="mdescLeft">&#160;</td><td class="mdescRight">ATCACommand Pause method.  <br /></td></tr>
+<tr class="separator:afaf2ec3ff6b7feba0ca50a9b4f8d3ad8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53ded4ed630b6ef4d292056c2e6b34f6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00380.html#a53ded4ed630b6ef4d292056c2e6b34f6">atCRC</a> (size_t length, const uint8_t *data, uint8_t *crc_le)</td></tr>
+<tr class="memdesc:a53ded4ed630b6ef4d292056c2e6b34f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates CRC over the given raw data and returns the CRC in little-endian byte order.  <br /></td></tr>
+<tr class="separator:a53ded4ed630b6ef4d292056c2e6b34f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff659b1042abf6e1376e38ccb4a20f3e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00380.html#aff659b1042abf6e1376e38ccb4a20f3e">atCalcCrc</a> (<a class="el" href="a01672.html">ATCAPacket</a> *packet)</td></tr>
+<tr class="memdesc:aff659b1042abf6e1376e38ccb4a20f3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function calculates CRC and adds it to the correct offset in the packet data.  <br /></td></tr>
+<tr class="separator:aff659b1042abf6e1376e38ccb4a20f3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7723a58d1781b3ba54e8f45d5729b33a"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00380.html#a7723a58d1781b3ba54e8f45d5729b33a">atCheckCrc</a> (const uint8_t *response)</td></tr>
+<tr class="memdesc:a7723a58d1781b3ba54e8f45d5729b33a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function checks the consistency of a response.  <br /></td></tr>
+<tr class="separator:a7723a58d1781b3ba54e8f45d5729b33a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae5866a78d2f0464b04eee9ef1f97030"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00380.html#aae5866a78d2f0464b04eee9ef1f97030">atIsSHAFamily</a> (ATCADeviceType device_type)</td></tr>
+<tr class="memdesc:aae5866a78d2f0464b04eee9ef1f97030"><td class="mdescLeft">&#160;</td><td class="mdescRight">determines if a given device type is a SHA device or a superset of a SHA device  <br /></td></tr>
+<tr class="separator:aae5866a78d2f0464b04eee9ef1f97030"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae82dca54cc3fd1cc2f1671e98d64df07"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00380.html#ae82dca54cc3fd1cc2f1671e98d64df07">atIsECCFamily</a> (ATCADeviceType device_type)</td></tr>
+<tr class="memdesc:ae82dca54cc3fd1cc2f1671e98d64df07"><td class="mdescLeft">&#160;</td><td class="mdescRight">determines if a given device type is an ECC device or a superset of a ECC device  <br /></td></tr>
+<tr class="separator:ae82dca54cc3fd1cc2f1671e98d64df07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae41108996848638519849163e51cd10a"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00380.html#ae41108996848638519849163e51cd10a">isATCAError</a> (uint8_t *data)</td></tr>
+<tr class="memdesc:ae41108996848638519849163e51cd10a"><td class="mdescLeft">&#160;</td><td class="mdescRight">checks for basic error frame in data  <br /></td></tr>
+<tr class="separator:ae41108996848638519849163e51cd10a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Defines an execution handler that executes a given command on a device and returns the results. </p>
-<p>The basic flow is to wake the device, send the command, wait/poll for completion, and finally receives the response from the device and does basic checks before returning to caller.</p>
-<p>This handler supports the ATSHA and ATECC device family.</p>
+<div class="textblock"><p>Microchip CryptoAuthentication device command builder - this is the main object that builds the command byte strings for the given device. It does not execute the command. The basic flow is to call a command method to build the command you want given the parameters and then send that byte string through the device interface. </p>
+<p>The primary goal of the command builder is to wrap the given parameters with the correct packet size and CRC. The caller should first fill in the parameters required in the <a class="el" href="a01672.html">ATCAPacket</a> parameter given to the command. The command builder will deal with the mechanics of creating a valid packet using the parameter information.</p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a19fc558e09f03a2f8f5ee89b1e396b2e" name="a19fc558e09f03a2f8f5ee89b1e396b2e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a19fc558e09f03a2f8f5ee89b1e396b2e">&#9670;&#160;</a></span>calib_execute_command()</h2>
+<a id="aff659b1042abf6e1376e38ccb4a20f3e" name="aff659b1042abf6e1376e38ccb4a20f3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff659b1042abf6e1376e38ccb4a20f3e">&#9670;&#160;</a></span>atCalcCrc()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ATCA_STATUS calib_execute_command </td>
+          <td class="memname">void atCalcCrc </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a01643.html">ATCAPacket</a> *&#160;</td>
-          <td class="paramname"><em>packet</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="a01672.html">ATCAPacket</a> *&#160;</td>
+          <td class="paramname"><em>packet</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a01531.html">ATCADevice</a>&#160;</td>
-          <td class="paramname"><em>device</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Wakes up device, sends the packet, waits for command completion, receives response, and puts the device into the idle state. </p>
+<p>This function calculates CRC and adds it to the correct offset in the packet data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">packet</td><td>As input, the packet to be sent. As output, the data buffer in the packet structure will contain the response. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>CryptoAuthentication device to send the command to.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">packet</td><td>Packet to calculate CRC data for </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
 
 </div>
 </div>
-<a id="aa08ad4e89a8218e9598abbd36c11d07a" name="aa08ad4e89a8218e9598abbd36c11d07a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa08ad4e89a8218e9598abbd36c11d07a">&#9670;&#160;</a></span>calib_get_execution_time()</h2>
+<a id="a7723a58d1781b3ba54e8f45d5729b33a" name="a7723a58d1781b3ba54e8f45d5729b33a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7723a58d1781b3ba54e8f45d5729b33a">&#9670;&#160;</a></span>atCheckCrc()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ATCA_STATUS calib_get_execution_time </td>
+          <td class="memname">ATCA_STATUS atCheckCrc </td>
           <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>opcode</em>, </td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>response</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function checks the consistency of a response. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">response</td><td>pointer to response </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise ATCA_RX_CRC_ERROR </dd></dl>
+
+</div>
+</div>
+<a id="a53ded4ed630b6ef4d292056c2e6b34f6" name="a53ded4ed630b6ef4d292056c2e6b34f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53ded4ed630b6ef4d292056c2e6b34f6">&#9670;&#160;</a></span>atCRC()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void atCRC </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a01531.html">ATCADevice</a>&#160;</td>
-          <td class="paramname"><em>device</em>&#160;</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>crc_le</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -229,15 +224,172 @@ ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>calib_execute_
       </table>
 </div><div class="memdoc">
 
-<p>return the typical execution time for the given command </p>
+<p>Calculates CRC over the given raw data and returns the CRC in little-endian byte order. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">opcode</td><td>Opcode value of the command </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">ca_cmd</td><td>Command object for which the execution times are associated </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Size of data not including the CRC byte positions </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Pointer to the data over which to compute the CRC </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">crc_le</td><td>Pointer to the place where the two-bytes of CRC will be returned in little-endian byte order. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a640d3cfd0f5b41f50cea0b987094d8a1" name="a640d3cfd0f5b41f50cea0b987094d8a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a640d3cfd0f5b41f50cea0b987094d8a1">&#9670;&#160;</a></span>atInfo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS atInfo </td>
+          <td>(</td>
+          <td class="paramtype">ATCADeviceType&#160;</td>
+          <td class="paramname"><em>device_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a01672.html">ATCAPacket</a> *&#160;</td>
+          <td class="paramname"><em>packet</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ATCACommand Info method. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ca_cmd</td><td>instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">packet</td><td>pointer to the packet containing the command being built </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS </dd></dl>
+
+</div>
+</div>
+<a id="ae82dca54cc3fd1cc2f1671e98d64df07" name="ae82dca54cc3fd1cc2f1671e98d64df07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae82dca54cc3fd1cc2f1671e98d64df07">&#9670;&#160;</a></span>atIsECCFamily()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool atIsECCFamily </td>
+          <td>(</td>
+          <td class="paramtype">ATCADeviceType&#160;</td>
+          <td class="paramname"><em>device_type</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>determines if a given device type is an ECC device or a superset of a ECC device </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">device_type</td><td>Type of device to check for family type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>boolean indicating whether the given device is an ECC family device. </dd></dl>
+
+</div>
+</div>
+<a id="aae5866a78d2f0464b04eee9ef1f97030" name="aae5866a78d2f0464b04eee9ef1f97030"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae5866a78d2f0464b04eee9ef1f97030">&#9670;&#160;</a></span>atIsSHAFamily()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool atIsSHAFamily </td>
+          <td>(</td>
+          <td class="paramtype">ATCADeviceType&#160;</td>
+          <td class="paramname"><em>device_type</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>determines if a given device type is a SHA device or a superset of a SHA device </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">device_type</td><td>Type of device to check for family type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>boolean indicating whether the given device is a SHA family device. </dd></dl>
+
+</div>
+</div>
+<a id="afaf2ec3ff6b7feba0ca50a9b4f8d3ad8" name="afaf2ec3ff6b7feba0ca50a9b4f8d3ad8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afaf2ec3ff6b7feba0ca50a9b4f8d3ad8">&#9670;&#160;</a></span>atPause()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS atPause </td>
+          <td>(</td>
+          <td class="paramtype">ATCADeviceType&#160;</td>
+          <td class="paramname"><em>device_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a01672.html">ATCAPacket</a> *&#160;</td>
+          <td class="paramname"><em>packet</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ATCACommand Pause method. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ca_cmd</td><td>instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">packet</td><td>pointer to the packet containing the command being built </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS </dd></dl>
+
+</div>
+</div>
+<a id="ae41108996848638519849163e51cd10a" name="ae41108996848638519849163e51cd10a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae41108996848638519849163e51cd10a">&#9670;&#160;</a></span>isATCAError()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS isATCAError </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>checks for basic error frame in data </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>pointer to received data - expected to be in the form of a CA device response frame </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
 
 </div>
 </div>
@@ -246,7 +398,7 @@ ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>calib_execute_
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_fe677a742bdf73affcb7505b38a59233.html">calib</a></li><li class="navelem"><a class="el" href="a00380.html">calib_execution.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_fe677a742bdf73affcb7505b38a59233.html">calib</a></li><li class="navelem"><a class="el" href="a00380.html">calib_command.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

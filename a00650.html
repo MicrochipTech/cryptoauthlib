@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_host.h File Reference</title>
+<title>CryptoAuthLib: hal_windows.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,327 +98,51 @@ $(document).ready(function(){initNavTree('a00650.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">atca_host.h File Reference</div></div>
+  <div class="headertitle"><div class="title">hal_windows.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Definitions and Prototypes for ATCA Utility Functions.  
+<p>ATCA Hardware abstraction layer for windows timer functions.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00521.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;calib/calib_basic.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00653.html">atca_host_config_check.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00557.html">atca_hal.h</a>&quot;</code><br />
+<code>#include &lt;windows.h&gt;</code><br />
+<code>#include &lt;math.h&gt;</code><br />
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01711.html">atca_temp_key</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to hold TempKey fields.  <a href="a01711.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01715.html">atca_include_data_in_out</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input / output parameters for function atca_include_data().  <a href="a01715.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01719.html">atca_nonce_in_out</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/output parameters for function atca_nonce().  <a href="a01719.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01723.html">atca_io_decrypt_in_out</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01727.html">atca_verify_mac</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01731.html">atca_secureboot_enc_in_out</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01735.html">atca_secureboot_mac_in_out</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01739.html">atca_mac_in_out</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/output parameters for function atca_mac().  <a href="a01739.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01743.html">atca_hmac_in_out</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/output parameters for function atca_hmac().  <a href="a01743.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01747.html">atca_gen_dig_in_out</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/output parameters for function atcah_gen_dig().  <a href="a01747.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01751.html">atca_diversified_key_in_out</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/output parameters for function atcah_gendivkey().  <a href="a01751.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01755.html">atca_write_mac_in_out</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/output parameters for function atcah_write_auth_mac() and atcah_privwrite_auth_mac().  <a href="a01755.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01759.html">atca_derive_key_in_out</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/output parameters for function atcah_derive_key().  <a href="a01759.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01763.html">atca_derive_key_mac_in_out</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/output parameters for function atcah_derive_key_mac().  <a href="a01763.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01767.html">atca_decrypt_in_out</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/output parameters for function atca_decrypt().  <a href="a01767.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01771.html">atca_check_mac_in_out</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/output parameters for function atcah_check_mac().  <a href="a01771.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01775.html">atca_resp_mac_in_out</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/Output parameters for calculating the output response mac in SHA105 device. Used with the atcah_gen_output_resp_mac() function.  <a href="a01775.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01779.html">atca_verify_in_out</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/output parameters for function atcah_verify().  <a href="a01779.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01783.html">atca_gen_key_in_out</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/output parameters for calculating the PubKey digest put into TempKey by the GenKey command with the atcah_gen_key_msg() function.  <a href="a01783.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01787.html">atca_sign_internal_in_out</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/output parameters for calculating the message and digest used by the Sign(internal) command. Used with the atcah_sign_internal_msg() function.  <a href="a01787.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01791.html">atca_session_key_in_out</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/Output paramters for calculating the session key by the nonce command. Used with the atcah_gen_session_key() function.  <a href="a01791.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01795.html">atca_delete_in_out</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/Output paramters for calculating the mac.Used with Delete command.  <a href="a01795.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr><td colspan="2"><div class="groupHeader">Definitions for ATECC Message Sizes to Calculate a SHA256 Hash</div></td></tr>
-<tr><td colspan="2"><div class="groupText"><p>"||" is the concatenation operator. The number in braces is the length of the hash input value in bytes. </p>
-</div></td></tr>
-<tr class="memitem:gaebdc2d83274268bb48fc45e87aef38af"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_MSG_SIZE_NONCE</b>&#160;&#160;&#160;(55)</td></tr>
-<tr class="memdesc:gaebdc2d83274268bb48fc45e87aef38af"><td class="mdescLeft">&#160;</td><td class="mdescRight">RandOut{32} || NumIn{20} || OpCode{1} || Mode{1} || LSB of Param2{1}. <br /></td></tr>
-<tr class="separator:gaebdc2d83274268bb48fc45e87aef38af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2b5993f5b7254d8c6e50794824cf47b6"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_MSG_SIZE_MAC</b>&#160;&#160;&#160;(88)</td></tr>
-<tr class="memdesc:ga2b5993f5b7254d8c6e50794824cf47b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Key or TempKey){32} || (Challenge or TempKey){32} || OpCode{1} || Mode{1} || Param2{2} || (OTP0_7 or 0){8} || (OTP8_10 or 0){3} || SN8{1} || (SN4_7 or 0){4} || SN0_1{2} || (SN2_3 or 0){2} <br /></td></tr>
-<tr class="separator:ga2b5993f5b7254d8c6e50794824cf47b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae9245f524128f65f77f65002a5a7265f"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_MSG_SIZE_HMAC</b>&#160;&#160;&#160;(88u)</td></tr>
-<tr class="separator:gae9245f524128f65f77f65002a5a7265f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga656372cab66beeb5a333e9a33e342017"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_MSG_SIZE_GEN_DIG</b>&#160;&#160;&#160;(96)</td></tr>
-<tr class="memdesc:ga656372cab66beeb5a333e9a33e342017"><td class="mdescLeft">&#160;</td><td class="mdescRight">KeyId{32} || OpCode{1} || Param1{1} || Param2{2} || SN8{1} || SN0_1{2} || 0{25} || TempKey{32}. <br /></td></tr>
-<tr class="separator:ga656372cab66beeb5a333e9a33e342017"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab2891a03e978d463823775bc1161a06e"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_MSG_SIZE_DIVERSIFIED_KEY</b>&#160;&#160;&#160;(96)</td></tr>
-<tr class="memdesc:gab2891a03e978d463823775bc1161a06e"><td class="mdescLeft">&#160;</td><td class="mdescRight">ParentKey{32} || OtherData{4} || SN8{1} || SN0_1{2} || 0{25} || InputData{32}. <br /></td></tr>
-<tr class="separator:gab2891a03e978d463823775bc1161a06e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1f445a11e4da099fec31efd43eadc234"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_MSG_SIZE_DERIVE_KEY</b>&#160;&#160;&#160;(96)</td></tr>
-<tr class="memdesc:ga1f445a11e4da099fec31efd43eadc234"><td class="mdescLeft">&#160;</td><td class="mdescRight">KeyId{32} || OpCode{1} || Param1{1} || Param2{2} || SN8{1} || SN0_1{2} || 0{25} || TempKey{32}. <br /></td></tr>
-<tr class="separator:ga1f445a11e4da099fec31efd43eadc234"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4ef7d31c60616cf5177f415e32607d10"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_MSG_SIZE_DERIVE_KEY_MAC</b>&#160;&#160;&#160;(39)</td></tr>
-<tr class="memdesc:ga4ef7d31c60616cf5177f415e32607d10"><td class="mdescLeft">&#160;</td><td class="mdescRight">KeyId{32} || OpCode{1} || Param1{1} || Param2{2} || SN8{1} || SN0_1{2}. <br /></td></tr>
-<tr class="separator:ga4ef7d31c60616cf5177f415e32607d10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafd8064c07a5f22cdb087c88e1b87c1be"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_MSG_SIZE_ENCRYPT_MAC</b>&#160;&#160;&#160;(96)</td></tr>
-<tr class="memdesc:gafd8064c07a5f22cdb087c88e1b87c1be"><td class="mdescLeft">&#160;</td><td class="mdescRight">KeyId{32} || OpCode{1} || Param1{1} || Param2{2}|| SN8{1} || SN0_1{2} || 0{25} || TempKey{32}. <br /></td></tr>
-<tr class="separator:gafd8064c07a5f22cdb087c88e1b87c1be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga56b92d82ffddbd86c99107b12043f8db"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_MSG_SIZE_SESSION_KEY</b>&#160;&#160;&#160;(96)</td></tr>
-<tr class="memdesc:ga56b92d82ffddbd86c99107b12043f8db"><td class="mdescLeft">&#160;</td><td class="mdescRight">TransportKey{32} || 0x15{1} || 0x00{1} || KeyId{2} || SN8{1} || SN0_1{2} || 0{25} || Nonce{32}. <br /></td></tr>
-<tr class="separator:ga56b92d82ffddbd86c99107b12043f8db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga15a78dd66644866b65cd5eda8b1a30d0"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_MSG_SIZE_DELETE_MAC</b>&#160;&#160;&#160;(96)</td></tr>
-<tr class="memdesc:ga15a78dd66644866b65cd5eda8b1a30d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hmac/SecretKey{32} || 0x13{1} || 0x00{1} || 0x0000{2} || SN8{1} || SN0_1{2} || 0{25} || Nonce{32}. <br /></td></tr>
-<tr class="separator:ga15a78dd66644866b65cd5eda8b1a30d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6d3a4804abc8a467154d5abd744c0cea"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_MSG_SIZE_RESPONSE_MAC</b>&#160;&#160;&#160;(97)</td></tr>
-<tr class="memdesc:ga6d3a4804abc8a467154d5abd744c0cea"><td class="mdescLeft">&#160;</td><td class="mdescRight">SlotKey{32} || Opcode{1} || Param1{1} || Param2{2} || SN8{1} || SN0_1{2} || 0{25} || client_Resp{32} || checkmac_result{1}. <br /></td></tr>
-<tr class="separator:ga6d3a4804abc8a467154d5abd744c0cea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1039bfbe7e13d614814341bdee6afa7b"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_MSG_SIZE_PRIVWRITE_MAC</b>&#160;&#160;&#160;(96)</td></tr>
-<tr class="memdesc:ga1039bfbe7e13d614814341bdee6afa7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">KeyId{32} || OpCode{1} || Param1{1} || Param2{2}|| SN8{1} || SN0_1{2} || 0{21} || PlainText{36}. <br /></td></tr>
-<tr class="separator:ga1039bfbe7e13d614814341bdee6afa7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab51341e9f564bc8f85c2e822835a8bcb"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_COMMAND_HEADER_SIZE</b>&#160;&#160;&#160;( 4)</td></tr>
-<tr class="separator:gab51341e9f564bc8f85c2e822835a8bcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5398e83ccfca8ada7cb609c1e34d2cc4"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_GENDIG_ZEROS_SIZE</b>&#160;&#160;&#160;(25)</td></tr>
-<tr class="separator:ga5398e83ccfca8ada7cb609c1e34d2cc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga80f7c39839ad16d73b21d6503b4e1072"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_GENDIVKEY_ZEROS_SIZE</b>&#160;&#160;&#160;(25)</td></tr>
-<tr class="separator:ga80f7c39839ad16d73b21d6503b4e1072"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga43496218f8a98faad996489af047272f"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_WRITE_MAC_ZEROS_SIZE</b>&#160;&#160;&#160;(25)</td></tr>
-<tr class="separator:ga43496218f8a98faad996489af047272f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaacf5f90dc57065fd7c386438747d63e2"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_DELETE_MAC_ZEROS_SIZE</b>&#160;&#160;&#160;(25)</td></tr>
-<tr class="separator:gaacf5f90dc57065fd7c386438747d63e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacd0eba0ed0083629096a623d0d57993e"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_RESP_MAC_ZEROS_SIZE</b>&#160;&#160;&#160;(25)</td></tr>
-<tr class="separator:gacd0eba0ed0083629096a623d0d57993e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9c24dfde4798589fd98c2583d170aeb1"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_PRIVWRITE_MAC_ZEROS_SIZE</b>&#160;&#160;&#160;(21)</td></tr>
-<tr class="separator:ga9c24dfde4798589fd98c2583d170aeb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6a06f47cbc2023edba7e8b0f2f4b08bb"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_PRIVWRITE_PLAIN_TEXT_SIZE</b>&#160;&#160;&#160;(36)</td></tr>
-<tr class="separator:ga6a06f47cbc2023edba7e8b0f2f4b08bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7204dddd2ff69a1139a6a8d8f6c62c9c"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_DERIVE_KEY_ZEROS_SIZE</b>&#160;&#160;&#160;(25)</td></tr>
-<tr class="separator:ga7204dddd2ff69a1139a6a8d8f6c62c9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga81922e26e59a7cea775992c18c5975b9"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_HMAC_BLOCK_SIZE</b>&#160;&#160;&#160;(64u)</td></tr>
-<tr class="separator:ga81922e26e59a7cea775992c18c5975b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9c907f9cf04f323952de1add9ff55456"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_ENCRYPTION_KEY_SIZE</b>&#160;&#160;&#160;(64)</td></tr>
-<tr class="separator:ga9c907f9cf04f323952de1add9ff55456"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader">Definition for TempKey Mode</div></td></tr>
-<tr class="memitem:ga05323075c94849bf70e84f5a5931f058"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>MAC_MODE_USE_TEMPKEY_MASK</b>&#160;&#160;&#160;((uint8_t)0x03)</td></tr>
-<tr class="memdesc:ga05323075c94849bf70e84f5a5931f058"><td class="mdescLeft">&#160;</td><td class="mdescRight">mode mask for MAC command when using TempKey <br /></td></tr>
-<tr class="separator:ga05323075c94849bf70e84f5a5931f058"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga2eb5b7f0471f9f14bd78c63104fb4cfe"><td class="memItemLeft" align="right" valign="top">
-typedef struct <a class="el" href="a01711.html">atca_temp_key</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atca_temp_key_t</b></td></tr>
-<tr class="memdesc:ga2eb5b7f0471f9f14bd78c63104fb4cfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to hold TempKey fields. <br /></td></tr>
-<tr class="separator:ga2eb5b7f0471f9f14bd78c63104fb4cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga22be37d60bd8f57e367424fb0c7bacf4"><td class="memItemLeft" align="right" valign="top">
-typedef struct <a class="el" href="a01719.html">atca_nonce_in_out</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atca_nonce_in_out_t</b></td></tr>
-<tr class="separator:ga22be37d60bd8f57e367424fb0c7bacf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac5efe11aed6a5a47c36b748e71a35945"><td class="memItemLeft" align="right" valign="top">
-typedef struct <a class="el" href="a01723.html">atca_io_decrypt_in_out</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atca_io_decrypt_in_out_t</b></td></tr>
-<tr class="separator:gac5efe11aed6a5a47c36b748e71a35945"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaae7f658ac9525d887e70d918fc34bb31"><td class="memItemLeft" align="right" valign="top">
-typedef struct <a class="el" href="a01727.html">atca_verify_mac</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atca_verify_mac_in_out_t</b></td></tr>
-<tr class="separator:gaae7f658ac9525d887e70d918fc34bb31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9675f5082f8c90b306414bebae70db75"><td class="memItemLeft" align="right" valign="top">
-typedef struct <a class="el" href="a01731.html">atca_secureboot_enc_in_out</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atca_secureboot_enc_in_out_t</b></td></tr>
-<tr class="separator:ga9675f5082f8c90b306414bebae70db75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga78f53ab779c77227c305ad4d4be118df"><td class="memItemLeft" align="right" valign="top">
-typedef struct <a class="el" href="a01735.html">atca_secureboot_mac_in_out</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atca_secureboot_mac_in_out_t</b></td></tr>
-<tr class="separator:ga78f53ab779c77227c305ad4d4be118df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6835354266e1c13a133959aaeb8bfdba"><td class="memItemLeft" align="right" valign="top">
-typedef struct <a class="el" href="a01739.html">atca_mac_in_out</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atca_mac_in_out_t</b></td></tr>
-<tr class="separator:ga6835354266e1c13a133959aaeb8bfdba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga572abeaaabf22c386ebcba19b4f6236c"><td class="memItemLeft" align="right" valign="top">
-typedef struct <a class="el" href="a01747.html">atca_gen_dig_in_out</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atca_gen_dig_in_out_t</b></td></tr>
-<tr class="memdesc:ga572abeaaabf22c386ebcba19b4f6236c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/output parameters for function atcah_gen_dig(). <br /></td></tr>
-<tr class="separator:ga572abeaaabf22c386ebcba19b4f6236c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae9784404fbe619217879d5d12261c2b8"><td class="memItemLeft" align="right" valign="top">
-typedef struct <a class="el" href="a01751.html">atca_diversified_key_in_out</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atca_diversified_key_in_out_t</b></td></tr>
-<tr class="memdesc:gae9784404fbe619217879d5d12261c2b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/output parameters for function atcah_gendivkey(). <br /></td></tr>
-<tr class="separator:gae9784404fbe619217879d5d12261c2b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac077314e00956519884e609b44b9cbce"><td class="memItemLeft" align="right" valign="top">
-typedef struct <a class="el" href="a01755.html">atca_write_mac_in_out</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atca_write_mac_in_out_t</b></td></tr>
-<tr class="memdesc:gac077314e00956519884e609b44b9cbce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/output parameters for function atcah_write_auth_mac() and atcah_privwrite_auth_mac(). <br /></td></tr>
-<tr class="separator:gac077314e00956519884e609b44b9cbce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga62321bafeb0a9dd7c4ce657ece10109f"><td class="memItemLeft" align="right" valign="top">
-typedef struct <a class="el" href="a01771.html">atca_check_mac_in_out</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atca_check_mac_in_out_t</b></td></tr>
-<tr class="memdesc:ga62321bafeb0a9dd7c4ce657ece10109f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/output parameters for function atcah_check_mac(). <br /></td></tr>
-<tr class="separator:ga62321bafeb0a9dd7c4ce657ece10109f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad2bbb95a1e12c8167ce68884dcf77a4e"><td class="memItemLeft" align="right" valign="top">
-typedef struct <a class="el" href="a01775.html">atca_resp_mac_in_out</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atca_resp_mac_in_out_t</b></td></tr>
-<tr class="memdesc:gad2bbb95a1e12c8167ce68884dcf77a4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/Output parameters for calculating the output response mac in SHA105 device. Used with the atcah_gen_output_resp_mac() function. <br /></td></tr>
-<tr class="separator:gad2bbb95a1e12c8167ce68884dcf77a4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga41028ecf36e87d294e91e551102dda5f"><td class="memItemLeft" align="right" valign="top">
-typedef struct <a class="el" href="a01779.html">atca_verify_in_out</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atca_verify_in_out_t</b></td></tr>
-<tr class="separator:ga41028ecf36e87d294e91e551102dda5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gada8cf14261301ec18458cbcbbe3d9b32"><td class="memItemLeft" align="right" valign="top">
-typedef struct <a class="el" href="a01783.html">atca_gen_key_in_out</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atca_gen_key_in_out_t</b></td></tr>
-<tr class="memdesc:gada8cf14261301ec18458cbcbbe3d9b32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/output parameters for calculating the PubKey digest put into TempKey by the GenKey command with the atcah_gen_key_msg() function. <br /></td></tr>
-<tr class="separator:gada8cf14261301ec18458cbcbbe3d9b32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1fdcaf886974acc1fcdfc3bace49b700"><td class="memItemLeft" align="right" valign="top">
-typedef struct <a class="el" href="a01787.html">atca_sign_internal_in_out</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atca_sign_internal_in_out_t</b></td></tr>
-<tr class="memdesc:ga1fdcaf886974acc1fcdfc3bace49b700"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/output parameters for calculating the message and digest used by the Sign(internal) command. Used with the atcah_sign_internal_msg() function. <br /></td></tr>
-<tr class="separator:ga1fdcaf886974acc1fcdfc3bace49b700"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab6d36ecdb6ea5e3c4024e2d10e82cd6e"><td class="memItemLeft" align="right" valign="top">
-typedef struct <a class="el" href="a01791.html">atca_session_key_in_out</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atca_session_key_in_out_t</b></td></tr>
-<tr class="memdesc:gab6d36ecdb6ea5e3c4024e2d10e82cd6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/Output paramters for calculating the session key by the nonce command. Used with the atcah_gen_session_key() function. <br /></td></tr>
-<tr class="separator:gab6d36ecdb6ea5e3c4024e2d10e82cd6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4ea861d041b787c766e9a19a0f11421c"><td class="memItemLeft" align="right" valign="top">
-typedef struct <a class="el" href="a01795.html">atca_delete_in_out</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atca_delete_in_out_t</b></td></tr>
-<tr class="memdesc:ga4ea861d041b787c766e9a19a0f11421c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input/Output paramters for calculating the mac.Used with Delete command. <br /></td></tr>
-<tr class="separator:ga4ea861d041b787c766e9a19a0f11421c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga9ee18575f8b4c1560f9e5c741403ef1b"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_nonce</b> (struct <a class="el" href="a01719.html">atca_nonce_in_out</a> *param)</td></tr>
-<tr class="separator:ga9ee18575f8b4c1560f9e5c741403ef1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga44361cadf1819cea687208eeadd57059"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_mac</b> (struct <a class="el" href="a01739.html">atca_mac_in_out</a> *param)</td></tr>
-<tr class="separator:ga44361cadf1819cea687208eeadd57059"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5b457cd0ccba73864eee4030b6079ba7"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_check_mac</b> (struct <a class="el" href="a01771.html">atca_check_mac_in_out</a> *param)</td></tr>
-<tr class="separator:ga5b457cd0ccba73864eee4030b6079ba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab17435577e546d2954bd697f21e6d3cc"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_hmac</b> (struct <a class="el" href="a01743.html">atca_hmac_in_out</a> *param)</td></tr>
-<tr class="separator:gab17435577e546d2954bd697f21e6d3cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6f6043ba8eebbaab6e6f3b4fa5e31ad4"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_gen_dig</b> (struct <a class="el" href="a01747.html">atca_gen_dig_in_out</a> *param)</td></tr>
-<tr class="separator:ga6f6043ba8eebbaab6e6f3b4fa5e31ad4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaae7f19e02251f824b9b938c0848fae2d"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_gendivkey</b> (struct <a class="el" href="a01751.html">atca_diversified_key_in_out</a> *param)</td></tr>
-<tr class="separator:gaae7f19e02251f824b9b938c0848fae2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga43ef2dc1159f28fbb100a2b9bf150c0c"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_gen_mac</b> (struct <a class="el" href="a01747.html">atca_gen_dig_in_out</a> *param)</td></tr>
-<tr class="separator:ga43ef2dc1159f28fbb100a2b9bf150c0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47853951c57803eff1432780bf360057"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_write_auth_mac</b> (struct <a class="el" href="a01755.html">atca_write_mac_in_out</a> *param)</td></tr>
-<tr class="separator:ga47853951c57803eff1432780bf360057"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaed8aa58875c6bdf46a937313e69c6ebb"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_privwrite_auth_mac</b> (struct <a class="el" href="a01755.html">atca_write_mac_in_out</a> *param)</td></tr>
-<tr class="separator:gaed8aa58875c6bdf46a937313e69c6ebb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga02b3479eaee1bd1741675c2a1249ffda"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_derive_key</b> (struct <a class="el" href="a01759.html">atca_derive_key_in_out</a> *param)</td></tr>
-<tr class="separator:ga02b3479eaee1bd1741675c2a1249ffda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga60fc543b3df6fa1dedfbf59e5bde554b"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_derive_key_mac</b> (struct <a class="el" href="a01763.html">atca_derive_key_mac_in_out</a> *param)</td></tr>
-<tr class="separator:ga60fc543b3df6fa1dedfbf59e5bde554b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga89408b8338dd9f43c4ba85b2a082c3ae"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_decrypt</b> (struct <a class="el" href="a01767.html">atca_decrypt_in_out</a> *param)</td></tr>
-<tr class="separator:ga89408b8338dd9f43c4ba85b2a082c3ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga256ac2cc8cd20805140da37268790af7"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_sha256</b> (uint32_t len, const uint8_t *message, uint8_t *digest)</td></tr>
-<tr class="separator:ga256ac2cc8cd20805140da37268790af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga279403b5a0f207a4fbba496fb663ec79"><td class="memItemLeft" align="right" valign="top">
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_include_data</b> (struct <a class="el" href="a01715.html">atca_include_data_in_out</a> *param)</td></tr>
-<tr class="separator:ga279403b5a0f207a4fbba496fb663ec79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabf2abd4bd62f47537756c9ab109050c0"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_gen_key_msg</b> (struct <a class="el" href="a01783.html">atca_gen_key_in_out</a> *param)</td></tr>
-<tr class="separator:gabf2abd4bd62f47537756c9ab109050c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga316e7eeaeedc7a30824294280488e24e"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_config_to_sign_internal</b> (ATCADeviceType device_type, struct <a class="el" href="a01787.html">atca_sign_internal_in_out</a> *param, const uint8_t *config)</td></tr>
-<tr class="separator:ga316e7eeaeedc7a30824294280488e24e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga680045caed6e8f6e136e1a2dc3fe1c9e"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_sign_internal_msg</b> (ATCADeviceType device_type, struct <a class="el" href="a01787.html">atca_sign_internal_in_out</a> *param)</td></tr>
-<tr class="separator:ga680045caed6e8f6e136e1a2dc3fe1c9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga03632bc31f21bec0d13d4f0cab198958"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_verify_mac</b> (<a class="el" href="a01727.html">atca_verify_mac_in_out_t</a> *param)</td></tr>
-<tr class="separator:ga03632bc31f21bec0d13d4f0cab198958"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4c89f8023aec521281824c0e35713baa"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_secureboot_enc</b> (<a class="el" href="a01731.html">atca_secureboot_enc_in_out_t</a> *param)</td></tr>
-<tr class="separator:ga4c89f8023aec521281824c0e35713baa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa795bec90432fbfa194913d8b4098fab"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_secureboot_mac</b> (<a class="el" href="a01735.html">atca_secureboot_mac_in_out_t</a> *param)</td></tr>
-<tr class="separator:gaa795bec90432fbfa194913d8b4098fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga325ba002a91f29dec233cbb029dad7be"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_encode_counter_match</b> (uint32_t counter_value, uint8_t *counter_match_value)</td></tr>
-<tr class="separator:ga325ba002a91f29dec233cbb029dad7be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa0df5937081037684ce2894a8cc2c1e5"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_io_decrypt</b> (struct <a class="el" href="a01723.html">atca_io_decrypt_in_out</a> *param)</td></tr>
-<tr class="separator:gaa0df5937081037684ce2894a8cc2c1e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga860db9cfc460c8c46b1c9c218cf2e110"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_ecc204_write_auth_mac</b> (struct <a class="el" href="a01755.html">atca_write_mac_in_out</a> *param)</td></tr>
-<tr class="separator:ga860db9cfc460c8c46b1c9c218cf2e110"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga567b3f9245252c2876c3ff54661a144f"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_gen_session_key</b> (<a class="el" href="a01474.html#gab6d36ecdb6ea5e3c4024e2d10e82cd6e">atca_session_key_in_out_t</a> *param)</td></tr>
-<tr class="separator:ga567b3f9245252c2876c3ff54661a144f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga59be58232ef6b81715876ad9a2f8e65a"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcah_gen_output_resp_mac</b> (struct <a class="el" href="a01775.html">atca_resp_mac_in_out</a> *param)</td></tr>
-<tr class="separator:ga59be58232ef6b81715876ad9a2f8e65a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7e9019810ba5ab81b256282392cd5079"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#ga7e9019810ba5ab81b256282392cd5079">hal_delay_us</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:ga7e9019810ba5ab81b256282392cd5079"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of microseconds.  <br /></td></tr>
+<tr class="separator:ga7e9019810ba5ab81b256282392cd5079"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc23b8130e72a445f76c68d62e8c95c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#gadc23b8130e72a445f76c68d62e8c95c5">hal_delay_ms</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:gadc23b8130e72a445f76c68d62e8c95c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API implemented at the HAL level.  <br /></td></tr>
+<tr class="separator:gadc23b8130e72a445f76c68d62e8c95c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad9da28968a527ce51a2b081461d4cfe"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#gaad9da28968a527ce51a2b081461d4cfe">hal_create_mutex</a> (void **ppMutex, const char *pName)</td></tr>
+<tr class="memdesc:gaad9da28968a527ce51a2b081461d4cfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional hal interfaces.  <br /></td></tr>
+<tr class="separator:gaad9da28968a527ce51a2b081461d4cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_destroy_mutex</b> (void *pMutex)</td></tr>
+<tr class="separator:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_lock_mutex</b> (void *pMutex)</td></tr>
+<tr class="separator:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31fd8170a49623686543f6247b883bd1"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_unlock_mutex</b> (void *pMutex)</td></tr>
+<tr class="separator:ga31fd8170a49623686543f6247b883bd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae31246ac870409a3d694c240c6c3498a"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_check_pid</b> (hal_pid_t pid)</td></tr>
+<tr class="memdesc:gae31246ac870409a3d694c240c6c3498a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the pid exists in the system. <br /></td></tr>
+<tr class="separator:gae31246ac870409a3d694c240c6c3498a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Definitions and Prototypes for ATCA Utility Functions. </p>
+<div class="textblock"><p>ATCA Hardware abstraction layer for windows timer functions. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b2187fb9aff39e17c00391b7def58804.html">host</a></li><li class="navelem"><a class="el" href="a00650.html">atca_host.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00650.html">hal_windows.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

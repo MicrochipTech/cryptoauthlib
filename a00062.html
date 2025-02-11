@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -97,9 +97,6 @@ $(document).ready(function(){initNavTree('a00062.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">tng_atca.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -107,36 +104,15 @@ $(document).ready(function(){initNavTree('a00062.html',''); initResizable(); });
 <p>TNG Helper Functions.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;string.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00521.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00548.html">cryptoauthlib.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="a00065.html">tng_atca.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="a00089.html">tnglora_cert_def_2_device.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="a00095.html">tnglora_cert_def_4_device.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="a00107.html">tngtls_cert_def_2_device.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="a00113.html">tngtls_cert_def_3_device.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="a00059.html">tflxtls_cert_def_4_device.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00299.html">atcacert/atcacert_def.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01527.html">tng_cert_map_element</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga60599359d5331215ca7fdf6710f0dbb1"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01470.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01465.html#ga60599359d5331215ca7fdf6710f0dbb1">tng_map_get_device_cert_def</a> (int index)</td></tr>
-<tr class="memdesc:ga60599359d5331215ca7fdf6710f0dbb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to iterate through all trust cert definitions.  <br /></td></tr>
-<tr class="separator:ga60599359d5331215ca7fdf6710f0dbb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3b8f346977ed8428692d15f74ef12401"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01465.html#ga3b8f346977ed8428692d15f74ef12401">tng_get_device_cert_def_ext</a> (<a class="el" href="a01531.html">ATCADevice</a> device, const <a class="el" href="a01470.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> **cert_def)</td></tr>
-<tr class="memdesc:ga3b8f346977ed8428692d15f74ef12401"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the TNG device certificate definition.  <br /></td></tr>
-<tr class="separator:ga3b8f346977ed8428692d15f74ef12401"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga28c369c92f1a7c2f61512cde463b8ff5"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01465.html#ga28c369c92f1a7c2f61512cde463b8ff5">tng_get_device_cert_def</a> (const <a class="el" href="a01470.html#ga01be962d7321095d15547113d727c97d">atcacert_def_t</a> **cert_def)</td></tr>
-<tr class="memdesc:ga28c369c92f1a7c2f61512cde463b8ff5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the TNG device certificate definition.  <br /></td></tr>
-<tr class="separator:ga28c369c92f1a7c2f61512cde463b8ff5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6bdd6b8ace7a98b7efbc13f85ffaac1a"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01465.html#ga6bdd6b8ace7a98b7efbc13f85ffaac1a">tng_get_device_pubkey</a> (uint8_t *public_key)</td></tr>
-<tr class="memdesc:ga6bdd6b8ace7a98b7efbc13f85ffaac1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses GenKey command to calculate the public key from the primary device public key.  <br /></td></tr>
-<tr class="separator:ga6bdd6b8ace7a98b7efbc13f85ffaac1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<code>#include &quot;<a class="el" href="a00326.html">atcacert/atcacert_def.h</a>&quot;</code><br />
+</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>TNG Helper Functions. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->

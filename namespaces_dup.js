@@ -1,6 +1,6 @@
 var namespaces_dup =
 [
-    [ "cryptoauthlib", "a01478.html", "a01478" ],
-    [ "test_device", "a01495.html", null ],
-    [ "test_iface", "a01496.html", null ]
+    [ "cryptoauthlib", "a01511.html", "a01511" ],
+    [ "test_device", "a01528.html", null ],
+    [ "test_iface", "a01529.html", null ]
 ];

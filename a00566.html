@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: hal_kit_bridge.h File Reference</title>
+<title>CryptoAuthLib: hal_all_platforms_kit_hidapi.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,54 +98,50 @@ $(document).ready(function(){initNavTree('a00566.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">hal_kit_bridge.h File Reference</div></div>
+  <div class="headertitle"><div class="title">hal_all_platforms_kit_hidapi.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Kit Bridging HAL for cryptoauthlib. This is not intended to be a zero copy driver. It should work with any interface that confirms to a few basic requirements: a) will accept an arbitrary number of bytes and packetize it if necessary for transmission, b) will block for the duration of the transmit.  
+<p>HAL for kit protocol over HID for any platform.  
 <a href="#details">More...</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:aa96163f305712a56649b07eabd26f54c"><td class="memItemLeft" align="right" valign="top"><a id="aa96163f305712a56649b07eabd26f54c" name="aa96163f305712a56649b07eabd26f54c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>BRIDGE_PROTOCOL_VERSION</b>&#160;&#160;&#160;(2)</td></tr>
-<tr class="separator:aa96163f305712a56649b07eabd26f54c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75036e62d451235c7cc2adb90ca52a8f"><td class="memItemLeft" align="right" valign="top"><a id="a75036e62d451235c7cc2adb90ca52a8f" name="a75036e62d451235c7cc2adb90ca52a8f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_KIT_COMMAND_SEND</b>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:a75036e62d451235c7cc2adb90ca52a8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abac189c960c7cca89e3485bf02049c0f"><td class="memItemLeft" align="right" valign="top"><a id="abac189c960c7cca89e3485bf02049c0f" name="abac189c960c7cca89e3485bf02049c0f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_KIT_COMMAND_RECV</b>&#160;&#160;&#160;0x02</td></tr>
-<tr class="separator:abac189c960c7cca89e3485bf02049c0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac885b1da63767551154f2fff4b27a037"><td class="memItemLeft" align="right" valign="top"><a id="ac885b1da63767551154f2fff4b27a037" name="ac885b1da63767551154f2fff4b27a037"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_KIT_COMMAND_WAKE</b>&#160;&#160;&#160;0x03</td></tr>
-<tr class="separator:ac885b1da63767551154f2fff4b27a037"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa84bdf1185a8f8c533db37fe133032eb"><td class="memItemLeft" align="right" valign="top"><a id="aa84bdf1185a8f8c533db37fe133032eb" name="aa84bdf1185a8f8c533db37fe133032eb"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_KIT_COMMAND_IDLE</b>&#160;&#160;&#160;0x04</td></tr>
-<tr class="separator:aa84bdf1185a8f8c533db37fe133032eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2afbe27f481ffa1bb18156882b7e642"><td class="memItemLeft" align="right" valign="top"><a id="ab2afbe27f481ffa1bb18156882b7e642" name="ab2afbe27f481ffa1bb18156882b7e642"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_KIT_COMMAND_SLEEP</b>&#160;&#160;&#160;0x05</td></tr>
-<tr class="separator:ab2afbe27f481ffa1bb18156882b7e642"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab89624779173549815c9fe24de017c44"><td class="memItemLeft" align="right" valign="top"><a id="ab89624779173549815c9fe24de017c44" name="ab89624779173549815c9fe24de017c44"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_KIT_HEADER_LEN</b>&#160;&#160;&#160;(3)</td></tr>
-<tr class="separator:ab89624779173549815c9fe24de017c44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &quot;hidapi.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00557.html">atca_hal.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00659.html">hal/kit_protocol.h</a>&quot;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga3f5bce4e9ee06a3b564052b2bd202c29"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01473.html#ga3f5bce4e9ee06a3b564052b2bd202c29">hal_kit_attach_phy</a> (<a class="el" href="a01539.html">ATCAIfaceCfg</a> *cfg, <a class="el" href="a01671.html">atca_hal_kit_phy_t</a> *phy)</td></tr>
-<tr class="memdesc:ga3f5bce4e9ee06a3b564052b2bd202c29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function that connects a physical layer context structure that will be used by the kit protocol bridge.  <br /></td></tr>
-<tr class="separator:ga3f5bce4e9ee06a3b564052b2bd202c29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga025e8f78bfdef446732e3aafacebc857"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#ga025e8f78bfdef446732e3aafacebc857">hal_kit_hid_init</a> (<a class="el" href="a01636.html">ATCAIface</a> iface, <a class="el" href="a01568.html">ATCAIfaceCfg</a> *cfg)</td></tr>
+<tr class="memdesc:ga025e8f78bfdef446732e3aafacebc857"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of Kit USB HID init.  <br /></td></tr>
+<tr class="separator:ga025e8f78bfdef446732e3aafacebc857"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6f06bc1662b3d0361f6a241e1b5612f2"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#ga6f06bc1662b3d0361f6a241e1b5612f2">hal_kit_hid_post_init</a> (<a class="el" href="a01636.html">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:ga6f06bc1662b3d0361f6a241e1b5612f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of Kit HID post init.  <br /></td></tr>
+<tr class="separator:ga6f06bc1662b3d0361f6a241e1b5612f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3fd44b390fe7558c882c97faa783c018"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#ga3fd44b390fe7558c882c97faa783c018">hal_kit_hid_send</a> (<a class="el" href="a01636.html">ATCAIface</a> iface, uint8_t word_address, uint8_t *txdata, int txlength)</td></tr>
+<tr class="memdesc:ga3fd44b390fe7558c882c97faa783c018"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of kit protocol send over USB HID.  <br /></td></tr>
+<tr class="separator:ga3fd44b390fe7558c882c97faa783c018"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1c62358b9abc11bc2e52b34c3dd712e0"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#ga1c62358b9abc11bc2e52b34c3dd712e0">hal_kit_hid_receive</a> (<a class="el" href="a01636.html">ATCAIface</a> iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
+<tr class="memdesc:ga1c62358b9abc11bc2e52b34c3dd712e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of send over USB HID.  <br /></td></tr>
+<tr class="separator:ga1c62358b9abc11bc2e52b34c3dd712e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadcf53722678e48323751359a04734680"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#gadcf53722678e48323751359a04734680">hal_kit_hid_control</a> (<a class="el" href="a01636.html">ATCAIface</a> iface, uint8_t option, void *param, size_t paramlen)</td></tr>
+<tr class="memdesc:gadcf53722678e48323751359a04734680"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform control operations for the kit protocol.  <br /></td></tr>
+<tr class="separator:gadcf53722678e48323751359a04734680"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c7b9adb28b4bbdee8d5cd78ab16255f"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#ga8c7b9adb28b4bbdee8d5cd78ab16255f">hal_kit_hid_release</a> (void *hal_data)</td></tr>
+<tr class="memdesc:ga8c7b9adb28b4bbdee8d5cd78ab16255f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the physical port for HID.  <br /></td></tr>
+<tr class="separator:ga8c7b9adb28b4bbdee8d5cd78ab16255f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Kit Bridging HAL for cryptoauthlib. This is not intended to be a zero copy driver. It should work with any interface that confirms to a few basic requirements: a) will accept an arbitrary number of bytes and packetize it if necessary for transmission, b) will block for the duration of the transmit. </p>
+<div class="textblock"><p>HAL for kit protocol over HID for any platform. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00566.html">hal_kit_bridge.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00566.html">hal_all_platforms_kit_hidapi.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

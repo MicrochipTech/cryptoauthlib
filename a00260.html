@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_helpers.h File Reference</title>
+<title>CryptoAuthLib: atca_config_check.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -97,127 +97,502 @@ $(document).ready(function(){initNavTree('a00260.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">atca_helpers.h File Reference</div></div>
+  <div class="summary">
+<a href="#define-members">Macros</a>  </div>
+  <div class="headertitle"><div class="title">atca_config_check.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Helpers to support the CryptoAuthLib Basic API methods.  
+<p>Consistency checks for configuration options.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00521.html">cryptoauthlib.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;atca_config.h&quot;</code><br />
 </div><table class="memberdecls">
-<tr class="memitem:gafe7071fde4efcfc730cc66ca39989c93"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>IS_ADD_SAFE_UINT16_T</b>(a,  b)&#160;&#160;&#160;(((UINT16_MAX - (a)) &gt;= (b)) ? true : false)</td></tr>
-<tr class="separator:gafe7071fde4efcfc730cc66ca39989c93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad0e6869f77067bff1e0c2af96e9055da"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>IS_ADD_SAFE_UINT32_T</b>(a,  b)&#160;&#160;&#160;(((UINT32_MAX - (a)) &gt;= (b)) ? true : false)</td></tr>
-<tr class="separator:gad0e6869f77067bff1e0c2af96e9055da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2971f31a4a32715689e9d2b27d0b0b74"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>IS_ADD_SAFE_UINT64_T</b>(a,  b)&#160;&#160;&#160;(((UINT64_MAX - (a)) &gt;= (b)) ? true : false)</td></tr>
-<tr class="separator:ga2971f31a4a32715689e9d2b27d0b0b74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga41ad3f5e495783894004e743f7974d3f"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>IS_ADD_SAFE_SIZE_T</b>(a,  b)&#160;&#160;&#160;(((SIZE_MAX   - (a)) &gt;= (b)) ? true : false)</td></tr>
-<tr class="separator:ga41ad3f5e495783894004e743f7974d3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9969a1e7f1dd3b73854c81c844592ac2"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>IS_MUL_SAFE_UINT16_T</b>(a,  b)&#160;&#160;&#160;((((a)  &lt;= UINT16_MAX / (b))) ? true : false)</td></tr>
-<tr class="separator:ga9969a1e7f1dd3b73854c81c844592ac2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga16e009fa2f075ae36af6875b6b073e2c"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>IS_MUL_SAFE_UINT32_T</b>(a,  b)&#160;&#160;&#160;((((a)  &lt;= UINT32_MAX / (b))) ? true : false)</td></tr>
-<tr class="separator:ga16e009fa2f075ae36af6875b6b073e2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabda9f68a16154468be38f037463afc89"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>IS_MUL_SAFE_UINT64_T</b>(a,  b)&#160;&#160;&#160;((((a)  &lt;= UINT64_MAX / (b))) ? true : false)</td></tr>
-<tr class="separator:gabda9f68a16154468be38f037463afc89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga244df56d4264c9433493bd0b05268e2f"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>IS_MUL_SAFE_SIZE_T</b>(a,  b)&#160;&#160;&#160;((((a)  &lt;= SIZE_MAX   / (b))) ? true : false)</td></tr>
-<tr class="separator:ga244df56d4264c9433493bd0b05268e2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae31a9fd8e9deca79aa5fef0292fe5272"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01466.html#gae31a9fd8e9deca79aa5fef0292fe5272">atcab_bin2hex</a> (const uint8_t *bin, size_t bin_size, char *hex, size_t *hex_size)</td></tr>
-<tr class="memdesc:gae31a9fd8e9deca79aa5fef0292fe5272"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a binary buffer to a hex string for easy reading.  <br /></td></tr>
-<tr class="separator:gae31a9fd8e9deca79aa5fef0292fe5272"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga40b70cfab865fa4fd9a5e7a29ca59d38"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01466.html#ga40b70cfab865fa4fd9a5e7a29ca59d38">atcab_bin2hex_</a> (const uint8_t *bin, size_t bin_size, char *hex, size_t *hex_size, bool is_pretty, bool is_space, bool is_upper)</td></tr>
-<tr class="memdesc:ga40b70cfab865fa4fd9a5e7a29ca59d38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that converts a binary buffer to a hex string suitable for easy reading.  <br /></td></tr>
-<tr class="separator:ga40b70cfab865fa4fd9a5e7a29ca59d38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga481179181349c801c16fc1ab698f2f24"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01466.html#ga481179181349c801c16fc1ab698f2f24">atcab_hex2bin</a> (const char *ascii_hex, size_t ascii_hex_len, uint8_t *binary, size_t *bin_len)</td></tr>
-<tr class="memdesc:ga481179181349c801c16fc1ab698f2f24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that converts a hex string to binary buffer.  <br /></td></tr>
-<tr class="separator:ga481179181349c801c16fc1ab698f2f24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4ef30ca351b13623043917b5ed86cbb8"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcab_hex2bin_</b> (const char *hex, size_t hex_size, uint8_t *bin, size_t *bin_size, bool is_space)</td></tr>
-<tr class="separator:ga4ef30ca351b13623043917b5ed86cbb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad017ae33af5a7ea062cea7d54de675a8"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01466.html#gad017ae33af5a7ea062cea7d54de675a8">packHex</a> (const char *ascii_hex, size_t ascii_hex_len, char *packed_hex, size_t *packed_len)</td></tr>
-<tr class="memdesc:gad017ae33af5a7ea062cea7d54de675a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove spaces from a ASCII hex string.  <br /></td></tr>
-<tr class="separator:gad017ae33af5a7ea062cea7d54de675a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7a929bf65cbc777bab7e533a2755cfad"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01466.html#ga7a929bf65cbc777bab7e533a2755cfad">isDigit</a> (char c)</td></tr>
-<tr class="memdesc:ga7a929bf65cbc777bab7e533a2755cfad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks to see if a character is an ASCII representation of a digit ((c ge '0') and (c le '9'))  <br /></td></tr>
-<tr class="separator:ga7a929bf65cbc777bab7e533a2755cfad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga04fefe2ff5a7d2e937b2634acd22982a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01466.html#ga04fefe2ff5a7d2e937b2634acd22982a">isBlankSpace</a> (char c)</td></tr>
-<tr class="memdesc:ga04fefe2ff5a7d2e937b2634acd22982a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks to see if a character is blank space.  <br /></td></tr>
-<tr class="separator:ga04fefe2ff5a7d2e937b2634acd22982a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga592c23e94097ad5e212beb6390aa88c6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01466.html#ga592c23e94097ad5e212beb6390aa88c6">isAlpha</a> (char c)</td></tr>
-<tr class="memdesc:ga592c23e94097ad5e212beb6390aa88c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks to see if a character is an ASCII representation of hex ((c &gt;= 'A') and (c &lt;= 'F')) || ((c &gt;= 'a') and (c &lt;= 'f'))  <br /></td></tr>
-<tr class="separator:ga592c23e94097ad5e212beb6390aa88c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga78abefc293c0a04d8ef649c94c8a1057"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01466.html#ga78abefc293c0a04d8ef649c94c8a1057">isHexAlpha</a> (char c)</td></tr>
-<tr class="memdesc:ga78abefc293c0a04d8ef649c94c8a1057"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks to see if a character is an ASCII representation of hex ((c &gt;= 'A') and (c &lt;= 'F')) || ((c &gt;= 'a') and (c &lt;= 'f'))  <br /></td></tr>
-<tr class="separator:ga78abefc293c0a04d8ef649c94c8a1057"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab7ca9ee391118aafe6f3cf7df4fa5de3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01466.html#gab7ca9ee391118aafe6f3cf7df4fa5de3">isHex</a> (char c)</td></tr>
-<tr class="memdesc:gab7ca9ee391118aafe6f3cf7df4fa5de3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this character is a valid hex character or if this is blankspace (The character can be included in a valid hexstring).  <br /></td></tr>
-<tr class="separator:gab7ca9ee391118aafe6f3cf7df4fa5de3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga39003da4dc8a0b8999f1325c2f96f641"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01466.html#ga39003da4dc8a0b8999f1325c2f96f641">isHexDigit</a> (char c)</td></tr>
-<tr class="memdesc:ga39003da4dc8a0b8999f1325c2f96f641"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this character is a valid hex character.  <br /></td></tr>
-<tr class="separator:ga39003da4dc8a0b8999f1325c2f96f641"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac873a37c53fdd922d5b36efd737e3ec3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01466.html#gac873a37c53fdd922d5b36efd737e3ec3">isBase64</a> (char c, const uint8_t *rules)</td></tr>
-<tr class="memdesc:gac873a37c53fdd922d5b36efd737e3ec3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this character is a valid base 64 character or if this is space (A character can be included in a valid base 64 string).  <br /></td></tr>
-<tr class="separator:gac873a37c53fdd922d5b36efd737e3ec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad10d15454308230fbef54bdd43001ed2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01466.html#gad10d15454308230fbef54bdd43001ed2">isBase64Digit</a> (char c, const uint8_t *rules)</td></tr>
-<tr class="memdesc:gad10d15454308230fbef54bdd43001ed2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this character is a valid base 64 character.  <br /></td></tr>
-<tr class="separator:gad10d15454308230fbef54bdd43001ed2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga63df1707f387c7d8cd9b5cc630585451"><td class="memItemLeft" align="right" valign="top">
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>atcab_b64rules_default</b> (void)</td></tr>
-<tr class="separator:ga63df1707f387c7d8cd9b5cc630585451"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2788ca7af14f8ddf1de38b6c3b295fc7"><td class="memItemLeft" align="right" valign="top">
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>atcab_b64rules_mime</b> (void)</td></tr>
-<tr class="separator:ga2788ca7af14f8ddf1de38b6c3b295fc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabf3840c83fd2df68907173f95bdece7e"><td class="memItemLeft" align="right" valign="top">
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>atcab_b64rules_urlsafe</b> (void)</td></tr>
-<tr class="separator:gabf3840c83fd2df68907173f95bdece7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga55ba8a1787f69d44d6e40db041fbd786"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01466.html#ga55ba8a1787f69d44d6e40db041fbd786">atcab_base64decode_</a> (const char *encoded, size_t encoded_size, uint8_t *data, size_t *data_size, const uint8_t *rules)</td></tr>
-<tr class="memdesc:ga55ba8a1787f69d44d6e40db041fbd786"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode base64 string to data with ruleset option.  <br /></td></tr>
-<tr class="separator:ga55ba8a1787f69d44d6e40db041fbd786"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3aa141525a1141f1a290e2a996da0c9c"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01466.html#ga3aa141525a1141f1a290e2a996da0c9c">atcab_base64encode</a> (const uint8_t *byte_array, size_t array_len, char *encoded, size_t *encoded_len)</td></tr>
-<tr class="memdesc:ga3aa141525a1141f1a290e2a996da0c9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode data as base64 string.  <br /></td></tr>
-<tr class="separator:ga3aa141525a1141f1a290e2a996da0c9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeeff0177acf29e6e7b134a14d7119d69"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01466.html#gaeeff0177acf29e6e7b134a14d7119d69">atcab_base64encode_</a> (const uint8_t *data, size_t data_size, char *encoded, size_t *encoded_size, const uint8_t *rules)</td></tr>
-<tr class="memdesc:gaeeff0177acf29e6e7b134a14d7119d69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode data as base64 string with ruleset option.  <br /></td></tr>
-<tr class="separator:gaeeff0177acf29e6e7b134a14d7119d69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6073c5a05e0ad2e738f460e727014553"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01466.html#ga6073c5a05e0ad2e738f460e727014553">atcab_base64decode</a> (const char *encoded, size_t encoded_len, uint8_t *byte_array, size_t *array_len)</td></tr>
-<tr class="memdesc:ga6073c5a05e0ad2e738f460e727014553"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode base64 string to data.  <br /></td></tr>
-<tr class="separator:ga6073c5a05e0ad2e738f460e727014553"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7371f490659b6fd68739d2b1fee50696"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01466.html#ga7371f490659b6fd68739d2b1fee50696">atcab_reversal</a> (const uint8_t *bin, size_t bin_size, uint8_t *dest, size_t *dest_size)</td></tr>
-<tr class="memdesc:ga7371f490659b6fd68739d2b1fee50696"><td class="mdescLeft">&#160;</td><td class="mdescRight">To reverse the input data.  <br /></td></tr>
-<tr class="separator:ga7371f490659b6fd68739d2b1fee50696"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac37b319dabc5b9492a422f6d3d4e118b"><td class="memItemLeft" align="right" valign="top">
-int&#160;</td><td class="memItemRight" valign="bottom"><b>atcab_memset_s</b> (void *dest, size_t destsz, int ch, size_t count)</td></tr>
-<tr class="memdesc:gac37b319dabc5b9492a422f6d3d4e118b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Guaranteed to perform memory writes regardless of optimization level. Matches memset_s signature. <br /></td></tr>
-<tr class="separator:gac37b319dabc5b9492a422f6d3d4e118b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga72f385a8eafc464a05acfa54561fed63"><td class="memItemLeft" align="right" valign="top">
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>atcab_pointer_delta</b> (const void *start, const void *end)</td></tr>
-<tr class="memdesc:ga72f385a8eafc464a05acfa54561fed63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to calculate the number of bytes between two pointers. <br /></td></tr>
-<tr class="separator:ga72f385a8eafc464a05acfa54561fed63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga13a4675d782c861977b653e3c2b354ba"><td class="memItemLeft" align="right" valign="top">
-char&#160;</td><td class="memItemRight" valign="bottom"><b>lib_toupper</b> (char c)</td></tr>
-<tr class="memdesc:ga13a4675d782c861977b653e3c2b354ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a character to uppercase. <br /></td></tr>
-<tr class="separator:ga13a4675d782c861977b653e3c2b354ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gada3308b30b1b1e40abb806dbc5476648"><td class="memItemLeft" align="right" valign="top">
-char&#160;</td><td class="memItemRight" valign="bottom"><b>lib_tolower</b> (char c)</td></tr>
-<tr class="memdesc:gada3308b30b1b1e40abb806dbc5476648"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a character to lowercase. <br /></td></tr>
-<tr class="separator:gada3308b30b1b1e40abb806dbc5476648"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a406f04a0b87c5ac4c354f3c74e8a52c5"><td class="memItemLeft" align="right" valign="top"><a id="a406f04a0b87c5ac4c354f3c74e8a52c5" name="a406f04a0b87c5ac4c354f3c74e8a52c5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>FEATURE_ENABLED</b>&#160;&#160;&#160;(1)</td></tr>
+<tr class="separator:a406f04a0b87c5ac4c354f3c74e8a52c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab04a5ec00a5d464b36e0e9522699248d"><td class="memItemLeft" align="right" valign="top"><a id="ab04a5ec00a5d464b36e0e9522699248d" name="ab04a5ec00a5d464b36e0e9522699248d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>FEATURE_DISABLED</b>&#160;&#160;&#160;(0)</td></tr>
+<tr class="separator:ab04a5ec00a5d464b36e0e9522699248d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf8ded95b0a2e24134fa5eed072bd8db"><td class="memItemLeft" align="right" valign="top"><a id="adf8ded95b0a2e24134fa5eed072bd8db" name="adf8ded95b0a2e24134fa5eed072bd8db"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DEFAULT_ENABLED</b>&#160;&#160;&#160;FEATURE_ENABLED</td></tr>
+<tr class="separator:adf8ded95b0a2e24134fa5eed072bd8db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10e9ebf188213332b505fa27c4fb9101"><td class="memItemLeft" align="right" valign="top"><a id="a10e9ebf188213332b505fa27c4fb9101" name="a10e9ebf188213332b505fa27c4fb9101"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DEFAULT_DISABLED</b>&#160;&#160;&#160;FEATURE_DISABLED</td></tr>
+<tr class="separator:a10e9ebf188213332b505fa27c4fb9101"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a334e663e6e76d56c92f87c1dbb4de944"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00260.html#a334e663e6e76d56c92f87c1dbb4de944">LIBRARY_BUILD_EN_CHECK</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:a334e663e6e76d56c92f87c1dbb4de944"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee9fe28440836d64894c7914a153eb86"><td class="memItemLeft" align="right" valign="top"><a id="aee9fe28440836d64894c7914a153eb86" name="aee9fe28440836d64894c7914a153eb86"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>LIBRARY_USAGE_EN_CHECK</b>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:aee9fe28440836d64894c7914a153eb86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe8da91949841c137ea573c327bff267"><td class="memItemLeft" align="right" valign="top"><a id="afe8da91949841c137ea573c327bff267" name="afe8da91949841c137ea573c327bff267"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SHA_SUPPORT</b>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:afe8da91949841c137ea573c327bff267"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42c67508ff6b45d11b1349d8a7ad04d9"><td class="memItemLeft" align="right" valign="top"><a id="a42c67508ff6b45d11b1349d8a7ad04d9" name="a42c67508ff6b45d11b1349d8a7ad04d9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_ECC_SUPPORT</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:a42c67508ff6b45d11b1349d8a7ad04d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bd6ff07c40b25566606b44f0a1a129c"><td class="memItemLeft" align="right" valign="top"><a id="a2bd6ff07c40b25566606b44f0a1a129c" name="a2bd6ff07c40b25566606b44f0a1a129c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CA2_SUPPORT</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:a2bd6ff07c40b25566606b44f0a1a129c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac578037fec9614e0a9528199d471fb21"><td class="memItemLeft" align="right" valign="top"><a id="ac578037fec9614e0a9528199d471fb21" name="ac578037fec9614e0a9528199d471fb21"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CA2_CERT_SUPPORT</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:ac578037fec9614e0a9528199d471fb21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cffff3f4586ac856f67460d33f23770"><td class="memItemLeft" align="right" valign="top"><a id="a2cffff3f4586ac856f67460d33f23770" name="a2cffff3f4586ac856f67460d33f23770"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CA_SUPPORT</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:a2cffff3f4586ac856f67460d33f23770"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b961f59c7f6d305843d67ac21c24501"><td class="memItemLeft" align="right" valign="top"><a id="a3b961f59c7f6d305843d67ac21c24501" name="a3b961f59c7f6d305843d67ac21c24501"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_HOSTLIB_EN</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:a3b961f59c7f6d305843d67ac21c24501"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab97062ef8dcf4e46b403d9c22aeb22c9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00260.html#ab97062ef8dcf4e46b403d9c22aeb22c9">ATCA_USE_ATCAB_FUNCTIONS</a></td></tr>
+<tr class="separator:ab97062ef8dcf4e46b403d9c22aeb22c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae22add16029813997fa4002dab361bad"><td class="memItemLeft" align="right" valign="top"><a id="ae22add16029813997fa4002dab361bad" name="ae22add16029813997fa4002dab361bad"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHECK_PARAMS_EN</b>&#160;&#160;&#160;DEFAULT_ENABLED</td></tr>
+<tr class="separator:ae22add16029813997fa4002dab361bad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2593f45dcf42602b3c334dccb9c52395"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00260.html#a2593f45dcf42602b3c334dccb9c52395">ATCA_CHECK_INVALID_MSG</a>(c,  s,  m)&#160;&#160;&#160;if (c) { return ATCA_TRACE(s, m); }</td></tr>
+<tr class="separator:a2593f45dcf42602b3c334dccb9c52395"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b0047e8a3c59e8c545295eafa72f682"><td class="memItemLeft" align="right" valign="top"><a id="a5b0047e8a3c59e8c545295eafa72f682" name="a5b0047e8a3c59e8c545295eafa72f682"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHECK_VALID_MSG</b>(c,  m)&#160;&#160;&#160;if (!ATCA_TRACE(!(c), m))</td></tr>
+<tr class="separator:a5b0047e8a3c59e8c545295eafa72f682"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afecc699c832cd69b20530e8eeb11b036"><td class="memItemLeft" align="right" valign="top"><a id="afecc699c832cd69b20530e8eeb11b036" name="afecc699c832cd69b20530e8eeb11b036"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHECK_INVALID</b>(c,  s)&#160;&#160;&#160;<a class="el" href="a00260.html#a2593f45dcf42602b3c334dccb9c52395">ATCA_CHECK_INVALID_MSG</a>(c, s, &quot;&quot;)</td></tr>
+<tr class="separator:afecc699c832cd69b20530e8eeb11b036"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42ebda94ff387f85c0da102506d799cb"><td class="memItemLeft" align="right" valign="top"><a id="a42ebda94ff387f85c0da102506d799cb" name="a42ebda94ff387f85c0da102506d799cb"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHECK_VALID</b>(c)&#160;&#160;&#160;ATCA_CHECK_VALID_MSG(c, &quot;&quot;)</td></tr>
+<tr class="separator:a42ebda94ff387f85c0da102506d799cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ff9c0c2785616e560c43e5312f40c0d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00260.html#a4ff9c0c2785616e560c43e5312f40c0d">MULTIPART_BUF_EN</a>&#160;&#160;&#160;(DEFAULT_DISABLED)</td></tr>
+<tr class="separator:a4ff9c0c2785616e560c43e5312f40c0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9496b6b80b24c0ba332705e443e60730"><td class="memItemLeft" align="right" valign="top"><a id="a9496b6b80b24c0ba332705e443e60730" name="a9496b6b80b24c0ba332705e443e60730"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_HEAP</b></td></tr>
+<tr class="separator:a9496b6b80b24c0ba332705e443e60730"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a987213394bc9a51f05c4a5f1b1de69f8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00260.html#a987213394bc9a51f05c4a5f1b1de69f8">ATCA_UNUSED_VAR_CHECK</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a987213394bc9a51f05c4a5f1b1de69f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31794cf0750795f7cc29b2a8a634e5bd"><td class="memItemLeft" align="right" valign="top"><a id="a31794cf0750795f7cc29b2a8a634e5bd" name="a31794cf0750795f7cc29b2a8a634e5bd"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_AES_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a31794cf0750795f7cc29b2a8a634e5bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31c9145169cb4a4e3be509ad04a40b04"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00260.html#a31c9145169cb4a4e3be509ad04a40b04">ATCAB_AES_GFM_EN</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a31c9145169cb4a4e3be509ad04a40b04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa51edc57c0eb2857a064a00e7cf2c62d"><td class="memItemLeft" align="right" valign="top"><a id="aa51edc57c0eb2857a064a00e7cf2c62d" name="aa51edc57c0eb2857a064a00e7cf2c62d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_AES_GCM_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:aa51edc57c0eb2857a064a00e7cf2c62d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab665cc62c9a4731c14ab3fd0e66f81b1"><td class="memItemLeft" align="right" valign="top"><a id="ab665cc62c9a4731c14ab3fd0e66f81b1" name="ab665cc62c9a4731c14ab3fd0e66f81b1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_CHECKMAC_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:ab665cc62c9a4731c14ab3fd0e66f81b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab62b4dd503fbbd6e74f247c8ad6e4f8d"><td class="memItemLeft" align="right" valign="top"><a id="ab62b4dd503fbbd6e74f247c8ad6e4f8d" name="ab62b4dd503fbbd6e74f247c8ad6e4f8d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_COUNTER_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:ab62b4dd503fbbd6e74f247c8ad6e4f8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66f796bf1d071099bf04d1fdee6b8207"><td class="memItemLeft" align="right" valign="top"><a id="a66f796bf1d071099bf04d1fdee6b8207" name="a66f796bf1d071099bf04d1fdee6b8207"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_DERIVEKEY_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a66f796bf1d071099bf04d1fdee6b8207"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f273d8951cb2f34abd1a192a348e454"><td class="memItemLeft" align="right" valign="top"><a id="a1f273d8951cb2f34abd1a192a348e454" name="a1f273d8951cb2f34abd1a192a348e454"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_ECDH_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a1f273d8951cb2f34abd1a192a348e454"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafc509c2ffc25dd7be416d941f49b315"><td class="memItemLeft" align="right" valign="top"><a id="aafc509c2ffc25dd7be416d941f49b315" name="aafc509c2ffc25dd7be416d941f49b315"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_ECDH_ENC_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:aafc509c2ffc25dd7be416d941f49b315"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa43fc6133dc2d3e18ea020b6a923aac9"><td class="memItemLeft" align="right" valign="top"><a id="aa43fc6133dc2d3e18ea020b6a923aac9" name="aa43fc6133dc2d3e18ea020b6a923aac9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_GENDIG_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:aa43fc6133dc2d3e18ea020b6a923aac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafef8e4fe664f7da29ca7a32d24b95c4"><td class="memItemLeft" align="right" valign="top"><a id="aafef8e4fe664f7da29ca7a32d24b95c4" name="aafef8e4fe664f7da29ca7a32d24b95c4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_GENKEY_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:aafef8e4fe664f7da29ca7a32d24b95c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85d4ccd2d66f9b2fd10c7a2e408c4737"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00260.html#a85d4ccd2d66f9b2fd10c7a2e408c4737">ATCAB_GENKEY_MAC_EN</a>&#160;&#160;&#160;ATCAB_GENKEY_EN</td></tr>
+<tr class="separator:a85d4ccd2d66f9b2fd10c7a2e408c4737"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3b3f5aa5064168746e4cbcb2a11cb29"><td class="memItemLeft" align="right" valign="top"><a id="ae3b3f5aa5064168746e4cbcb2a11cb29" name="ae3b3f5aa5064168746e4cbcb2a11cb29"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_HMAC_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:ae3b3f5aa5064168746e4cbcb2a11cb29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5965863afba861e5e0e899229da26e83"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00260.html#a5965863afba861e5e0e899229da26e83">ATCAB_INFO_LATCH_EN</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a5965863afba861e5e0e899229da26e83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdf45ab57b3866e85f33cb21fc582a88"><td class="memItemLeft" align="right" valign="top"><a id="acdf45ab57b3866e85f33cb21fc582a88" name="acdf45ab57b3866e85f33cb21fc582a88"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_KDF_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:acdf45ab57b3866e85f33cb21fc582a88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04d72197d5a904bf2c5b07674261847e"><td class="memItemLeft" align="right" valign="top"><a id="a04d72197d5a904bf2c5b07674261847e" name="a04d72197d5a904bf2c5b07674261847e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_LOCK_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a04d72197d5a904bf2c5b07674261847e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a70766acbeaf581baeea4edeaa9c1b9"><td class="memItemLeft" align="right" valign="top"><a id="a1a70766acbeaf581baeea4edeaa9c1b9" name="a1a70766acbeaf581baeea4edeaa9c1b9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_MAC_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a1a70766acbeaf581baeea4edeaa9c1b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a186e6b99995ef9a1733683c3500dd8a0"><td class="memItemLeft" align="right" valign="top"><a id="a186e6b99995ef9a1733683c3500dd8a0" name="a186e6b99995ef9a1733683c3500dd8a0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_NONCE_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a186e6b99995ef9a1733683c3500dd8a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd736ec7b0364931945b83bdece622d0"><td class="memItemLeft" align="right" valign="top"><a id="afd736ec7b0364931945b83bdece622d0" name="afd736ec7b0364931945b83bdece622d0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_PRIVWRITE_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:afd736ec7b0364931945b83bdece622d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e0cf5a9dfd0a899e0bf591620e4df85"><td class="memItemLeft" align="right" valign="top"><a id="a8e0cf5a9dfd0a899e0bf591620e4df85" name="a8e0cf5a9dfd0a899e0bf591620e4df85"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_RANDOM_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a8e0cf5a9dfd0a899e0bf591620e4df85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73b6662f2afe1f0cd552f0cb6475a2f3"><td class="memItemLeft" align="right" valign="top"><a id="a73b6662f2afe1f0cd552f0cb6475a2f3" name="a73b6662f2afe1f0cd552f0cb6475a2f3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_READ_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a73b6662f2afe1f0cd552f0cb6475a2f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45fb4916cda2c90be1ee747e920a37d9"><td class="memItemLeft" align="right" valign="top"><a id="a45fb4916cda2c90be1ee747e920a37d9" name="a45fb4916cda2c90be1ee747e920a37d9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_READ_ENC_EN</b>&#160;&#160;&#160;ATCAB_READ_EN</td></tr>
+<tr class="separator:a45fb4916cda2c90be1ee747e920a37d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6403c7554052f636bcb7422890fbcfd7"><td class="memItemLeft" align="right" valign="top"><a id="a6403c7554052f636bcb7422890fbcfd7" name="a6403c7554052f636bcb7422890fbcfd7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_SECUREBOOT_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a6403c7554052f636bcb7422890fbcfd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d7d1190aeb7d32a6d736f2fdfce0e62"><td class="memItemLeft" align="right" valign="top"><a id="a4d7d1190aeb7d32a6d736f2fdfce0e62" name="a4d7d1190aeb7d32a6d736f2fdfce0e62"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_SECUREBOOT_MAC_EN</b>&#160;&#160;&#160;ATCAB_SECUREBOOT_EN</td></tr>
+<tr class="separator:a4d7d1190aeb7d32a6d736f2fdfce0e62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6234f5edd2365f0e5792e5c91815d08"><td class="memItemLeft" align="right" valign="top"><a id="ab6234f5edd2365f0e5792e5c91815d08" name="ab6234f5edd2365f0e5792e5c91815d08"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_SELFTEST_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:ab6234f5edd2365f0e5792e5c91815d08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad720c08a33c9981c8e5c4fd46558b7fd"><td class="memItemLeft" align="right" valign="top"><a id="ad720c08a33c9981c8e5c4fd46558b7fd" name="ad720c08a33c9981c8e5c4fd46558b7fd"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_SHA_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:ad720c08a33c9981c8e5c4fd46558b7fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa617e434a0438bc6f95d7265098d9a9f"><td class="memItemLeft" align="right" valign="top"><a id="aa617e434a0438bc6f95d7265098d9a9f" name="aa617e434a0438bc6f95d7265098d9a9f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_SHA_HMAC_EN</b>&#160;&#160;&#160;ATCAB_SHA_EN</td></tr>
+<tr class="separator:aa617e434a0438bc6f95d7265098d9a9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0851ae5d02f8dba92bf36aa535087e4b"><td class="memItemLeft" align="right" valign="top"><a id="a0851ae5d02f8dba92bf36aa535087e4b" name="a0851ae5d02f8dba92bf36aa535087e4b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_SHA_CONTEXT_EN</b>&#160;&#160;&#160;ATCAB_SHA_EN</td></tr>
+<tr class="separator:a0851ae5d02f8dba92bf36aa535087e4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42db4207aaf9df9f63934ee4f11bcbb9"><td class="memItemLeft" align="right" valign="top"><a id="a42db4207aaf9df9f63934ee4f11bcbb9" name="a42db4207aaf9df9f63934ee4f11bcbb9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_SIGN_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a42db4207aaf9df9f63934ee4f11bcbb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf78f96a21f11c2b7bc2824eaa25a34c"><td class="memItemLeft" align="right" valign="top"><a id="adf78f96a21f11c2b7bc2824eaa25a34c" name="adf78f96a21f11c2b7bc2824eaa25a34c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_SIGN_INTERNAL_EN</b>&#160;&#160;&#160;ATCAB_SIGN_EN</td></tr>
+<tr class="separator:adf78f96a21f11c2b7bc2824eaa25a34c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a770d325772cd14caf06b0c48fa459535"><td class="memItemLeft" align="right" valign="top"><a id="a770d325772cd14caf06b0c48fa459535" name="a770d325772cd14caf06b0c48fa459535"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_UPDATEEXTRA_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a770d325772cd14caf06b0c48fa459535"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa132549ab47c9617cb6d1f1e77499409"><td class="memItemLeft" align="right" valign="top"><a id="aa132549ab47c9617cb6d1f1e77499409" name="aa132549ab47c9617cb6d1f1e77499409"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_VERIFY_EN</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:aa132549ab47c9617cb6d1f1e77499409"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26bf26b6c1a09775d6c90b144f539083"><td class="memItemLeft" align="right" valign="top"><a id="a26bf26b6c1a09775d6c90b144f539083" name="a26bf26b6c1a09775d6c90b144f539083"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_VERIFY_EXTERN_EN</b>&#160;&#160;&#160;ATCAB_VERIFY_EN</td></tr>
+<tr class="separator:a26bf26b6c1a09775d6c90b144f539083"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d69a9273e615d799841edc21bd72dc0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00260.html#a5d69a9273e615d799841edc21bd72dc0">ATCAB_VERIFY_MAC_EN</a>&#160;&#160;&#160;ATCAB_VERIFY_EN</td></tr>
+<tr class="separator:a5d69a9273e615d799841edc21bd72dc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1ff51f46ec8a394806300b38e2c04e4"><td class="memItemLeft" align="right" valign="top"><a id="ae1ff51f46ec8a394806300b38e2c04e4" name="ae1ff51f46ec8a394806300b38e2c04e4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_VERIFY_STORED_EN</b>&#160;&#160;&#160;ATCAB_VERIFY_EN</td></tr>
+<tr class="separator:ae1ff51f46ec8a394806300b38e2c04e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22f0fa694cc379e5ec859e91180ed051"><td class="memItemLeft" align="right" valign="top"><a id="a22f0fa694cc379e5ec859e91180ed051" name="a22f0fa694cc379e5ec859e91180ed051"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_VERIFY_VALIDATE_EN</b>&#160;&#160;&#160;ATCAB_VERIFY_EN</td></tr>
+<tr class="separator:a22f0fa694cc379e5ec859e91180ed051"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb9e7120857031fdf5f22df3086afab0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00260.html#abb9e7120857031fdf5f22df3086afab0">ATCAB_WRITE_EN</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:abb9e7120857031fdf5f22df3086afab0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9204dbf809a32f994e60f871e16a88d8"><td class="memItemLeft" align="right" valign="top"><a id="a9204dbf809a32f994e60f871e16a88d8" name="a9204dbf809a32f994e60f871e16a88d8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAB_WRITE_ENC_EN</b>&#160;&#160;&#160;<a class="el" href="a00260.html#abb9e7120857031fdf5f22df3086afab0">ATCAB_WRITE_EN</a></td></tr>
+<tr class="separator:a9204dbf809a32f994e60f871e16a88d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e3c7ddf3a16cbdcc42060cdee2d884e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00260.html#a8e3c7ddf3a16cbdcc42060cdee2d884e">ATCAC_SHA1_EN</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
+<tr class="separator:a8e3c7ddf3a16cbdcc42060cdee2d884e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99dab792a5983a089fe816abc57bad25"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00260.html#a99dab792a5983a089fe816abc57bad25">ATCAC_SHA256_EN</a>&#160;&#160;&#160;(FEATURE_ENABLED)</td></tr>
+<tr class="separator:a99dab792a5983a089fe816abc57bad25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a372b1be02c2a55afbe5eda47580c7ee8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00260.html#a372b1be02c2a55afbe5eda47580c7ee8">ATCAC_SHA384_EN</a>&#160;&#160;&#160;(FEATURE_DISABLED)</td></tr>
+<tr class="separator:a372b1be02c2a55afbe5eda47580c7ee8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7815fa6e2b361a72ae88bb26bea8a9ad"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00260.html#a7815fa6e2b361a72ae88bb26bea8a9ad">ATCAC_SHA512_EN</a>&#160;&#160;&#160;(FEATURE_DISABLED)</td></tr>
+<tr class="separator:a7815fa6e2b361a72ae88bb26bea8a9ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82dfe0816dd5dffe339c9e450ec67b67"><td class="memItemLeft" align="right" valign="top"><a id="a82dfe0816dd5dffe339c9e450ec67b67" name="a82dfe0816dd5dffe339c9e450ec67b67"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAC_SHA256_HMAC_EN</b>&#160;&#160;&#160;<a class="el" href="a00260.html#a99dab792a5983a089fe816abc57bad25">ATCAC_SHA256_EN</a></td></tr>
+<tr class="separator:a82dfe0816dd5dffe339c9e450ec67b67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ca74305a9036e142367d29db0915d9e"><td class="memItemLeft" align="right" valign="top"><a id="a9ca74305a9036e142367d29db0915d9e" name="a9ca74305a9036e142367d29db0915d9e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAC_SHA256_HMAC_CTR_EN</b>&#160;&#160;&#160;ATCAC_SHA256_HMAC_EN</td></tr>
+<tr class="separator:a9ca74305a9036e142367d29db0915d9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add878e0ecc6c87b683935f418f403c7e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00260.html#add878e0ecc6c87b683935f418f403c7e">ATCAC_RANDOM_EN</a>&#160;&#160;&#160;ATCA_HOSTLIB_EN</td></tr>
+<tr class="separator:add878e0ecc6c87b683935f418f403c7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7eeef6ad76dccb48d8b1741a9254af97"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00260.html#a7eeef6ad76dccb48d8b1741a9254af97">ATCAC_VERIFY_EN</a>&#160;&#160;&#160;ATCA_HOSTLIB_EN</td></tr>
+<tr class="separator:a7eeef6ad76dccb48d8b1741a9254af97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a094297d2dd0a7e2b4606fc37fc797fcd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00260.html#a094297d2dd0a7e2b4606fc37fc797fcd">ATCAC_SIGN_EN</a>&#160;&#160;&#160;ATCA_HOSTLIB_EN</td></tr>
+<tr class="separator:a094297d2dd0a7e2b4606fc37fc797fcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Helpers to support the CryptoAuthLib Basic API methods. </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+<div class="textblock"><p>Consistency checks for configuration options. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2021 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a2593f45dcf42602b3c334dccb9c52395" name="a2593f45dcf42602b3c334dccb9c52395"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2593f45dcf42602b3c334dccb9c52395">&#9670;&#160;</a></span>ATCA_CHECK_INVALID_MSG</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_CHECK_INVALID_MSG</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">c, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">s, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">m&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;if (c) { return ATCA_TRACE(s, m); }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Emits message and returns the status code when the condition is true </p>
+
+</div>
+</div>
+<a id="a987213394bc9a51f05c4a5f1b1de69f8" name="a987213394bc9a51f05c4a5f1b1de69f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a987213394bc9a51f05c4a5f1b1de69f8">&#9670;&#160;</a></span>ATCA_UNUSED_VAR_CHECK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_UNUSED_VAR_CHECK&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enables removal of compiler warning due to unused variables </p>
+
+</div>
+</div>
+<a id="ab97062ef8dcf4e46b403d9c22aeb22c9" name="ab97062ef8dcf4e46b403d9c22aeb22c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab97062ef8dcf4e46b403d9c22aeb22c9">&#9670;&#160;</a></span>ATCA_USE_ATCAB_FUNCTIONS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCA_USE_ATCAB_FUNCTIONS</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Does the atcab_ API layer need to be instantiated (adds a layer of abstraction) </p>
+
+</div>
+</div>
+<a id="a31c9145169cb4a4e3be509ad04a40b04" name="a31c9145169cb4a4e3be509ad04a40b04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31c9145169cb4a4e3be509ad04a40b04">&#9670;&#160;</a></span>ATCAB_AES_GFM_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAB_AES_GFM_EN&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable ATCAB_AES_GFM_EN to enabled Galois Field Multiply</p>
+<p>Supported API's: atcab_aes </p>
+
+</div>
+</div>
+<a id="a85d4ccd2d66f9b2fd10c7a2e408c4737" name="a85d4ccd2d66f9b2fd10c7a2e408c4737"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85d4ccd2d66f9b2fd10c7a2e408c4737">&#9670;&#160;</a></span>ATCAB_GENKEY_MAC_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAB_GENKEY_MAC_EN&#160;&#160;&#160;ATCAB_GENKEY_EN</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Requires: ATCAB_GENKEY_EN</p>
+<p>Enable ATCAB_GENKEY_MAC_EN which provides for a mac with the genkey command</p>
+<p>Supported API's: atcab_genkey_base </p>
+
+</div>
+</div>
+<a id="a5965863afba861e5e0e899229da26e83" name="a5965863afba861e5e0e899229da26e83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5965863afba861e5e0e899229da26e83">&#9670;&#160;</a></span>ATCAB_INFO_LATCH_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAB_INFO_LATCH_EN&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable ATCAB_INFO_LATCH_EN which enables control of GPIOs and the persistent latch</p>
+<p>Supported API's: atcab_info_base </p>
+
+</div>
+</div>
+<a id="a5d69a9273e615d799841edc21bd72dc0" name="a5d69a9273e615d799841edc21bd72dc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d69a9273e615d799841edc21bd72dc0">&#9670;&#160;</a></span>ATCAB_VERIFY_MAC_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAB_VERIFY_MAC_EN&#160;&#160;&#160;ATCAB_VERIFY_EN</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Requires: ATCAB_VERIFY</p>
+<p>Executes verification command with verification MAC for the External or Stored Verify modes</p>
+<p>Supported API's: atcab_verify_extern_mac, atcab_verify_stored_mac </p>
+
+</div>
+</div>
+<a id="abb9e7120857031fdf5f22df3086afab0" name="abb9e7120857031fdf5f22df3086afab0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb9e7120857031fdf5f22df3086afab0">&#9670;&#160;</a></span>ATCAB_WRITE_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAB_WRITE_EN&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable CALIB_WRITE which writes either one four byte word or a 32-byte block to one of the EEPROM zones on the device</p>
+<p>Supported API's: calib_write</p>
+<p>Supported ECC204 specific API's: calib_ca2_write </p>
+
+</div>
+</div>
+<a id="add878e0ecc6c87b683935f418f403c7e" name="add878e0ecc6c87b683935f418f403c7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add878e0ecc6c87b683935f418f403c7e">&#9670;&#160;</a></span>ATCAC_RANDOM_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAC_RANDOM_EN&#160;&#160;&#160;ATCA_HOSTLIB_EN</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Requires: ATCA_HOSTLIB_EN</p>
+<p>Enable ATCAC_RANDOM_EN get random numbers from the host's implementation - generally assumed to come from the host's cryptographic library or peripheral driver </p>
+
+</div>
+</div>
+<a id="a8e3c7ddf3a16cbdcc42060cdee2d884e" name="a8e3c7ddf3a16cbdcc42060cdee2d884e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e3c7ddf3a16cbdcc42060cdee2d884e">&#9670;&#160;</a></span>ATCAC_SHA1_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAC_SHA1_EN&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable ATCAC_SHA1_EN to enable sha1 host side api</p>
+<p>Supported API's: atcab_write </p>
+
+</div>
+</div>
+<a id="a99dab792a5983a089fe816abc57bad25" name="a99dab792a5983a089fe816abc57bad25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99dab792a5983a089fe816abc57bad25">&#9670;&#160;</a></span>ATCAC_SHA256_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAC_SHA256_EN&#160;&#160;&#160;(FEATURE_ENABLED)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable ATCAC_SHA256_EN to enable sha256 host side api </p>
+
+</div>
+</div>
+<a id="a372b1be02c2a55afbe5eda47580c7ee8" name="a372b1be02c2a55afbe5eda47580c7ee8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a372b1be02c2a55afbe5eda47580c7ee8">&#9670;&#160;</a></span>ATCAC_SHA384_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAC_SHA384_EN&#160;&#160;&#160;(FEATURE_DISABLED)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable ATCAC_SHA384_EN to enable sha384 host side api</p>
+<p>Disabled by default. Enable ATCAC_SHA512_EN to use SHA384 </p>
+
+</div>
+</div>
+<a id="a7815fa6e2b361a72ae88bb26bea8a9ad" name="a7815fa6e2b361a72ae88bb26bea8a9ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7815fa6e2b361a72ae88bb26bea8a9ad">&#9670;&#160;</a></span>ATCAC_SHA512_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAC_SHA512_EN&#160;&#160;&#160;(FEATURE_DISABLED)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable ATCAC_SHA512_EN to enable sha512 host side api</p>
+<p>Disabled by default. Use FEATURE_ENABLED to enable this feature </p>
+
+</div>
+</div>
+<a id="a094297d2dd0a7e2b4606fc37fc797fcd" name="a094297d2dd0a7e2b4606fc37fc797fcd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a094297d2dd0a7e2b4606fc37fc797fcd">&#9670;&#160;</a></span>ATCAC_SIGN_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAC_SIGN_EN&#160;&#160;&#160;ATCA_HOSTLIB_EN</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Requires: ATCA_HOSTLIB_EN</p>
+<p>Enable ATCAC_SIGN_EN to use the host's sign functions. Generally assumed to come from the host's cryptographic library or peripheral driver. </p>
+
+</div>
+</div>
+<a id="a7eeef6ad76dccb48d8b1741a9254af97" name="a7eeef6ad76dccb48d8b1741a9254af97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7eeef6ad76dccb48d8b1741a9254af97">&#9670;&#160;</a></span>ATCAC_VERIFY_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATCAC_VERIFY_EN&#160;&#160;&#160;ATCA_HOSTLIB_EN</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Requires: ATCA_HOSTLIB_EN</p>
+<p>Enable ATCAC_VERIFY_EN to use the host's verify functions. Generally assumed to come from the host's cryptographic library or peripheral driver. </p>
+
+</div>
+</div>
+<a id="a334e663e6e76d56c92f87c1dbb4de944" name="a334e663e6e76d56c92f87c1dbb4de944"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a334e663e6e76d56c92f87c1dbb4de944">&#9670;&#160;</a></span>LIBRARY_BUILD_EN_CHECK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LIBRARY_BUILD_EN_CHECK&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Library Configuration File - All build attributes should be included in atca_config.h </p>
+
+</div>
+</div>
+<a id="a4ff9c0c2785616e560c43e5312f40c0d" name="a4ff9c0c2785616e560c43e5312f40c0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ff9c0c2785616e560c43e5312f40c0d">&#9670;&#160;</a></span>MULTIPART_BUF_EN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MULTIPART_BUF_EN&#160;&#160;&#160;(DEFAULT_DISABLED)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enables multipart buffer handling (generally for small memory model platforms) </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00260.html">atca_helpers.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00260.html">atca_config_check.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

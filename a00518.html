@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: sha2_routines.h File Reference</title>
+<title>CryptoAuthLib: atca_crypto_sw_sha1.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -97,46 +97,25 @@ $(document).ready(function(){initNavTree('a00518.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#define-members">Macros</a>  </div>
-  <div class="headertitle"><div class="title">sha2_routines.h File Reference</div></div>
+  <div class="headertitle"><div class="title">atca_crypto_sw_sha1.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Software implementation of the SHA256, SHA384 and SHA512 algorithm.  
+<p>Wrapper API for SHA 1 routines.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a81efbc0fc101b06a914f7ff9e2fbc0e9"><td class="memItemLeft" align="right" valign="top"><a id="a81efbc0fc101b06a914f7ff9e2fbc0e9" name="a81efbc0fc101b06a914f7ff9e2fbc0e9"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>SHA256_DIGEST_SIZE</b>&#160;&#160;&#160;(32U)</td></tr>
-<tr class="separator:a81efbc0fc101b06a914f7ff9e2fbc0e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67f489f3eee39c447a6db3ba34ef75f2"><td class="memItemLeft" align="right" valign="top"><a id="a67f489f3eee39c447a6db3ba34ef75f2" name="a67f489f3eee39c447a6db3ba34ef75f2"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>SHA512_DIGEST_SIZE</b>&#160;&#160;&#160;(64U)</td></tr>
-<tr class="separator:a67f489f3eee39c447a6db3ba34ef75f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb6d310df497c25c1e85af07f71ee2b3"><td class="memItemLeft" align="right" valign="top"><a id="afb6d310df497c25c1e85af07f71ee2b3" name="afb6d310df497c25c1e85af07f71ee2b3"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>SHA384_DIGEST_SIZE</b>&#160;&#160;&#160;(48U)</td></tr>
-<tr class="separator:afb6d310df497c25c1e85af07f71ee2b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c1fe69ad43d4ca74b84303a0ed64f2f"><td class="memItemLeft" align="right" valign="top"><a id="a9c1fe69ad43d4ca74b84303a0ed64f2f" name="a9c1fe69ad43d4ca74b84303a0ed64f2f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>SHA256_BLOCK_SIZE</b>&#160;&#160;&#160;(64U)</td></tr>
-<tr class="separator:a9c1fe69ad43d4ca74b84303a0ed64f2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c624ed02505ff06099f03267ccfcc48"><td class="memItemLeft" align="right" valign="top"><a id="a1c624ed02505ff06099f03267ccfcc48" name="a1c624ed02505ff06099f03267ccfcc48"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>SHA384_BLOCK_SIZE</b>&#160;&#160;&#160;(128U)</td></tr>
-<tr class="separator:a1c624ed02505ff06099f03267ccfcc48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7071364cb94c9fcce009ba16a4bdca1"><td class="memItemLeft" align="right" valign="top"><a id="ac7071364cb94c9fcce009ba16a4bdca1" name="ac7071364cb94c9fcce009ba16a4bdca1"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>SHA512_BLOCK_SIZE</b>&#160;&#160;&#160;(128U)</td></tr>
-<tr class="separator:ac7071364cb94c9fcce009ba16a4bdca1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Software implementation of the SHA256, SHA384 and SHA512 algorithm. </p>
+<div class="textblock"><code>#include &quot;<a class="el" href="a00521.html">atca_crypto_sw_sha1.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00539.html">hashes/sha1_routines.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00548.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00359.html">cal_internal.h</a>&quot;</code><br />
+</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Wrapper API for SHA 1 routines. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="dir_39966be8f8e069f6fa92c98611834f6b.html">hashes</a></li><li class="navelem"><a class="el" href="a00518.html">sha2_routines.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="a00518.html">atca_crypto_sw_sha1.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

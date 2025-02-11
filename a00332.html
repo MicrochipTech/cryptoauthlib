@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: cal_internal.h File Reference</title>
+<title>CryptoAuthLib: atcacert_der.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -97,24 +97,51 @@ $(document).ready(function(){initNavTree('a00332.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">cal_internal.h File Reference</div></div>
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">atcacert_der.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Internal CryptoAuthLib Interfaces.  
+<p>function declarations required to work with DER encoded data related to X.509 certificates.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00815.html">atca_config_check.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00482.html">crypto/atca_crypto_sw.h</a>&quot;</code><br />
-<code>#include &quot;mbedtls/atca_mbedtls_wrap.h&quot;</code><br />
-</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Internal CryptoAuthLib Interfaces. </p>
+<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00305.html">atcacert.h</a>&quot;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga5866e20dc2c7f9d788924155eac4fece"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01503.html#ga5866e20dc2c7f9d788924155eac4fece">atcacert_der_enc_length</a> (size_t length, uint8_t *der_length, size_t *der_length_size)</td></tr>
+<tr class="memdesc:ga5866e20dc2c7f9d788924155eac4fece"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode a length in DER format.  <br /></td></tr>
+<tr class="separator:ga5866e20dc2c7f9d788924155eac4fece"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d4810aa2fd1db14a8f91204387fd972"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01503.html#ga9d4810aa2fd1db14a8f91204387fd972">atcacert_der_dec_length</a> (const uint8_t *der_length, size_t *der_length_size, size_t *length)</td></tr>
+<tr class="memdesc:ga9d4810aa2fd1db14a8f91204387fd972"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode a DER format length.  <br /></td></tr>
+<tr class="separator:ga9d4810aa2fd1db14a8f91204387fd972"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga95763146413c3fc1080241d73298b2b3"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcacert_der_adjust_length</b> (uint8_t *der_length, size_t *der_length_size, int delta_length, size_t *new_length)</td></tr>
+<tr class="separator:ga95763146413c3fc1080241d73298b2b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc86044101ad9a87556d49ab8bf892af"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01503.html#gadc86044101ad9a87556d49ab8bf892af">atcacert_der_enc_integer</a> (const uint8_t *int_data, size_t int_data_size, uint8_t is_unsigned, uint8_t *der_int, size_t *der_int_size)</td></tr>
+<tr class="memdesc:gadc86044101ad9a87556d49ab8bf892af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode an ASN.1 integer in DER format, including tag and length fields.  <br /></td></tr>
+<tr class="separator:gadc86044101ad9a87556d49ab8bf892af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5d7eff7a29bc02cfe16bc3d25e3ef2eb"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01503.html#ga5d7eff7a29bc02cfe16bc3d25e3ef2eb">atcacert_der_dec_integer</a> (const uint8_t *der_int, size_t *der_int_size, uint8_t *int_data, size_t *int_data_size)</td></tr>
+<tr class="memdesc:ga5d7eff7a29bc02cfe16bc3d25e3ef2eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode an ASN.1 DER encoded integer.  <br /></td></tr>
+<tr class="separator:ga5d7eff7a29bc02cfe16bc3d25e3ef2eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad1847e0167a5b90372f39f63ba979095"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01503.html#gad1847e0167a5b90372f39f63ba979095">atcacert_der_enc_ecdsa_sig_value</a> (const <a class="el" href="a01664.html">cal_buffer</a> *raw_sig, uint8_t *der_sig, size_t *der_sig_size)</td></tr>
+<tr class="memdesc:gad1847e0167a5b90372f39f63ba979095"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats a raw ECDSA P256 signature in the DER encoding found in X.509 certificates.  <br /></td></tr>
+<tr class="separator:gad1847e0167a5b90372f39f63ba979095"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8a3206e9e4d8ed94e4e2aa03778a259c"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01503.html#ga8a3206e9e4d8ed94e4e2aa03778a259c">atcacert_der_dec_ecdsa_sig_value</a> (const uint8_t *der_sig, size_t *der_sig_size, <a class="el" href="a01664.html">cal_buffer</a> *raw_sig)</td></tr>
+<tr class="memdesc:ga8a3206e9e4d8ed94e4e2aa03778a259c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses an ECDSA P256/P384/P521 signature in the DER encoding as found in X.509 certificates.  <br /></td></tr>
+<tr class="separator:ga8a3206e9e4d8ed94e4e2aa03778a259c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>function declarations required to work with DER encoded data related to X.509 certificates. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00332.html">cal_internal.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00332.html">atcacert_der.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

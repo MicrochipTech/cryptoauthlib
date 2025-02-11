@@ -1,17 +1,7 @@
 var a00743 =
 [
-    [ "pkcs11_ecc_key_info_s", "a01871.html", null ],
-    [ "pkcs11_rsa_key_info_s", "a01875.html", null ],
-    [ "pkcs11_key_info_s", "a01879.html", null ],
-    [ "pkcs11_ec_pbkey_asn1_hdr_p224", "a01477.html#ga7711abc98f6c6d6536c2a4d0065e1b4a", null ],
-    [ "pkcs11_ec_pbkey_asn1_hdr_p256", "a01477.html#gacf3b4678891994823f2cdd0cb8707ecc", null ],
-    [ "pkcs11_ec_pbkey_asn1_hdr_p384", "a01477.html#gadbc903025f5c5ea06b36fba39f30d305", null ],
-    [ "pkcs11_ec_pbkey_asn1_hdr_p521", "a01477.html#ga44f7303f7073c7f97c3e31ec5db97769", null ],
-    [ "pkcs11_key_private_attributes", "a01477.html#ga40d8e67ef0fae7bdc2dca013ad8410aa", null ],
-    [ "pkcs11_key_public_attributes", "a01477.html#gadf3e8d1e6b01d9fe85f54c9478d8d215", null ],
-    [ "pkcs11_key_secret_attributes", "a01477.html#ga6ef03269a32699359d90901cc84954f3", null ],
-    [ "pkcs11_x962_asn1_hdr_ec224", "a01477.html#gaaefbee7a7f8454014a46e969fa9912c3", null ],
-    [ "pkcs11_x962_asn1_hdr_ec256", "a01477.html#ga7fd56486be0426ec029cd60072ef62ba", null ],
-    [ "pkcs11_x962_asn1_hdr_ec384", "a01477.html#ga8ad0d2db3944821eb471e1a6e61532dd", null ],
-    [ "pkcs11_x962_asn1_hdr_ec521", "a01477.html#ga70a8c1bb6cec2636b206c588dc6354fd", null ]
+    [ "pkcs11_digest", "a00743.html#a81936ce8429c7a97bc42921589c1522e", null ],
+    [ "pkcs11_digest_final", "a00743.html#abd1c9ccc6899b550d241f007fd023d6b", null ],
+    [ "pkcs11_digest_init", "a00743.html#a903aed9c7d096dced1233a11539c781d", null ],
+    [ "pkcs11_digest_update", "a00743.html#a87a4b63b1a4ced5e40a1cc0bbc88599d", null ]
 ];

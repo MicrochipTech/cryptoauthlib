@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_mech.h File Reference</title>
+<title>CryptoAuthLib: pkcs11_find.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,32 +99,48 @@ $(document).ready(function(){initNavTree('a00752.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">pkcs11_mech.h File Reference</div></div>
+  <div class="headertitle"><div class="title">pkcs11_find.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>PKCS11 Library Mechanism Handling.  
+<p>PKCS11 Library Object Find/Searching.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;cryptoki.h&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00548.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00326.html">atcacert/atcacert_def.h</a>&quot;</code><br />
+<code>#include &quot;pkcs11_config.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00737.html">pkcs11_debug.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00767.html">pkcs11_init.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00794.html">pkcs11_os.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00812.html">pkcs11_slot.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00800.html">pkcs11_session.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00755.html">pkcs11_find.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00824.html">pkcs11_util.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00725.html">pkcs11_cert.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga9678c431b8d5479e53417b109b32c20f"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_mech_get_list</b> (CK_SLOT_ID slotID, CK_MECHANISM_TYPE_PTR pMechanismList, CK_ULONG_PTR pulCount)</td></tr>
-<tr class="separator:ga9678c431b8d5479e53417b109b32c20f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac66d133f84b945f9c26727ee9f7a7d57"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs_mech_get_info</b> (CK_SLOT_ID slotID, CK_MECHANISM_TYPE type, CK_MECHANISM_INFO_PTR pInfo)</td></tr>
-<tr class="separator:gac66d133f84b945f9c26727ee9f7a7d57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6fd109c0919489909cc4073866d1c466"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_find_init</b> (CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)</td></tr>
+<tr class="separator:ga6fd109c0919489909cc4073866d1c466"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5dbe038da3069861b8de9f77d0c06de1"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_find_continue</b> (CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE_PTR phObject, CK_ULONG ulMaxObjectCount, CK_ULONG_PTR pulObjectCount)</td></tr>
+<tr class="separator:ga5dbe038da3069861b8de9f77d0c06de1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacc5c7a788f0c4eafd4f0c1da2aaf0d60"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_find_finish</b> (CK_SESSION_HANDLE hSession)</td></tr>
+<tr class="separator:gacc5c7a788f0c4eafd4f0c1da2aaf0d60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0e2b3b381504c39a017a4232a35b672d"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_find_get_attribute</b> (CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)</td></tr>
+<tr class="separator:ga0e2b3b381504c39a017a4232a35b672d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>PKCS11 Library Mechanism Handling. </p>
+<div class="textblock"><p>PKCS11 Library Object Find/Searching. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b3c25b642613ea6a80d1cd59c6d313a8.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00752.html">pkcs11_mech.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b3c25b642613ea6a80d1cd59c6d313a8.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00752.html">pkcs11_find.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

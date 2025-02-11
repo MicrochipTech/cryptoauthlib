@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_host_config_check.h File Reference</title>
+<title>CryptoAuthLib: hal_windows_kit_uart.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,496 +98,306 @@ $(document).ready(function(){initNavTree('a00653.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
-  <div class="headertitle"><div class="title">atca_host_config_check.h File Reference</div></div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">hal_windows_kit_uart.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Consistency checks for configuration options.  
+<p>ATCA Hardware abstraction layer for Windows using UART.  
 <a href="#details">More...</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a6442329f443943bbc8f3e10dde67930d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#a6442329f443943bbc8f3e10dde67930d">ATCAH_INCLUDE_DATA</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:a6442329f443943bbc8f3e10dde67930d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a879c87175b07e859a15320e199a104a6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#a879c87175b07e859a15320e199a104a6">ATCAH_NONCE</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:a879c87175b07e859a15320e199a104a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae58a45ab173bf9ca7c4cdf4768fcf00e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#ae58a45ab173bf9ca7c4cdf4768fcf00e">ATCAH_IO_DECRYPT</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:ae58a45ab173bf9ca7c4cdf4768fcf00e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1515a97abca19263c1cf16dcbdd01944"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#a1515a97abca19263c1cf16dcbdd01944">ATCAH_VERIFY_MAC</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:a1515a97abca19263c1cf16dcbdd01944"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a745b85254a910c7d8edbea41ab927cf4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#a745b85254a910c7d8edbea41ab927cf4">ATCAH_SECUREBOOT_ENC</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:a745b85254a910c7d8edbea41ab927cf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1d0ffc3e79f52154b2e362b74b7b112"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#aa1d0ffc3e79f52154b2e362b74b7b112">ATCAH_SECUREBOOT_MAC</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:aa1d0ffc3e79f52154b2e362b74b7b112"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33ac8a876197c7774452b7b46411f188"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#a33ac8a876197c7774452b7b46411f188">ATCAH_MAC</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:a33ac8a876197c7774452b7b46411f188"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a063f7ad7678d60de756ef8526b9dfea1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#a063f7ad7678d60de756ef8526b9dfea1">ATCAH_CHECK_MAC</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:a063f7ad7678d60de756ef8526b9dfea1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70d0b80d637281693321866bd3c2735f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#a70d0b80d637281693321866bd3c2735f">ATCAH_GEN_OUTPUT_RESP_MAC</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:a70d0b80d637281693321866bd3c2735f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a86a40deff31dbaf005519aba627991"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#a6a86a40deff31dbaf005519aba627991">ATCAH_HMAC</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:a6a86a40deff31dbaf005519aba627991"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec5752be28ebfd8dc506bda7c36b9f7d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#aec5752be28ebfd8dc506bda7c36b9f7d">ATCAH_GENDIG</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:aec5752be28ebfd8dc506bda7c36b9f7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af25240ee5ff347e1cf2768bfd513345f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#af25240ee5ff347e1cf2768bfd513345f">ATCAH_GENDIVKEY</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:af25240ee5ff347e1cf2768bfd513345f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f0e6c501c2dc57b4ed68fe29780b062"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#a0f0e6c501c2dc57b4ed68fe29780b062">ATCAH_GEN_MAC</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:a0f0e6c501c2dc57b4ed68fe29780b062"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23dc9d3c6d3f23ac7463ef0fe29e25f0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#a23dc9d3c6d3f23ac7463ef0fe29e25f0">ATCAH_WRITE_AUTH_MAC</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:a23dc9d3c6d3f23ac7463ef0fe29e25f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13ed9a07ad5f74cfb67b7582c1b638a3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#a13ed9a07ad5f74cfb67b7582c1b638a3">ATCAH_PRIVWRITE_AUTH_MAC</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:a13ed9a07ad5f74cfb67b7582c1b638a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada4b87726e822b6e94dcc18eefc39049"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#ada4b87726e822b6e94dcc18eefc39049">ATCAH_DERIVE_KEY</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:ada4b87726e822b6e94dcc18eefc39049"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22a85235261861839a0db05649999ef5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#a22a85235261861839a0db05649999ef5">ATCAH_DERIVE_KEY_MAC</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:a22a85235261861839a0db05649999ef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae22d9aedde79fd4e9b29ff7cfd6c0e3b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#ae22d9aedde79fd4e9b29ff7cfd6c0e3b">ATCAH_DECRYPT</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:ae22d9aedde79fd4e9b29ff7cfd6c0e3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58d2f9f20485ae35c2208f3bce5cb4a7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#a58d2f9f20485ae35c2208f3bce5cb4a7">ATCAH_SHA256</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:a58d2f9f20485ae35c2208f3bce5cb4a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a371384b4f8d818c31dee337aa4e24403"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#a371384b4f8d818c31dee337aa4e24403">ATCAH_GEN_KEY_MSG</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:a371384b4f8d818c31dee337aa4e24403"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae427973632a62dfd8f35709c21993190"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#ae427973632a62dfd8f35709c21993190">ATCAH_CONFIG_TO_SIGN_INTERNAL</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:ae427973632a62dfd8f35709c21993190"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2e1b57a0f8a5dc87427b1eca18ac02f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#ad2e1b57a0f8a5dc87427b1eca18ac02f">ATCAH_SIGN_INTERNAL_MSG</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:ad2e1b57a0f8a5dc87427b1eca18ac02f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ecb26546b49e369aeaf86bccf10a2e9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#a2ecb26546b49e369aeaf86bccf10a2e9">ATCAH_ENCODE_COUNTER_MATCH</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:a2ecb26546b49e369aeaf86bccf10a2e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5220706535f7367e06aa2aadebc0b57"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#aa5220706535f7367e06aa2aadebc0b57">ATCAH_GEN_SESSION_KEY</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:aa5220706535f7367e06aa2aadebc0b57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd2c32968024ddc7c650102a5076d70b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#acd2c32968024ddc7c650102a5076d70b">ATCAH_DELETE_MAC</a>&#160;&#160;&#160;(CALIB_DELETE_EN)</td></tr>
-<tr class="separator:acd2c32968024ddc7c650102a5076d70b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2bd91852788e843c96613dcd2306d55e"><td class="memItemLeft" align="right" valign="top"><a id="a2bd91852788e843c96613dcd2306d55e" name="a2bd91852788e843c96613dcd2306d55e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAC_SW_SHA2_256</b>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:a2bd91852788e843c96613dcd2306d55e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="textblock"><code>#include &quot;<a class="el" href="a00548.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00557.html">atca_hal.h</a>&quot;</code><br />
+<code>#include &lt;windows.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;conio.h&gt;</code><br />
+<code>#include &lt;math.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01728.html">atca_uart_host_s</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:aa5e760da2db59b4d54f61979f56cce86"><td class="memItemLeft" align="right" valign="top"><a id="aa5e760da2db59b4d54f61979f56cce86" name="aa5e760da2db59b4d54f61979f56cce86"></a>
+typedef struct <a class="el" href="a01728.html">atca_uart_host_s</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atca_uart_host_t</b></td></tr>
+<tr class="separator:aa5e760da2db59b4d54f61979f56cce86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:afb6d836af248aed1afe715ae2f2f7c2b"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#afb6d836af248aed1afe715ae2f2f7c2b">hal_uart_init</a> (<a class="el" href="a01636.html">ATCAIface</a> iface, <a class="el" href="a01568.html">ATCAIfaceCfg</a> *cfg)</td></tr>
+<tr class="memdesc:afb6d836af248aed1afe715ae2f2f7c2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of UART init.  <br /></td></tr>
+<tr class="separator:afb6d836af248aed1afe715ae2f2f7c2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c5f894db539ea5cb0d5ae0fa38449d7"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#a1c5f894db539ea5cb0d5ae0fa38449d7">hal_uart_post_init</a> (<a class="el" href="a01636.html">ATCAIface</a> iface)</td></tr>
+<tr class="memdesc:a1c5f894db539ea5cb0d5ae0fa38449d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of UART post init.  <br /></td></tr>
+<tr class="separator:a1c5f894db539ea5cb0d5ae0fa38449d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae0b332270c1e8df223b430d8e8ddbbc"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#aae0b332270c1e8df223b430d8e8ddbbc">hal_uart_send</a> (<a class="el" href="a01636.html">ATCAIface</a> iface, uint8_t word_address, uint8_t *txdata, int txlength)</td></tr>
+<tr class="memdesc:aae0b332270c1e8df223b430d8e8ddbbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of UART send.  <br /></td></tr>
+<tr class="separator:aae0b332270c1e8df223b430d8e8ddbbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a0256b61c3579519f8cc6d6157bc126"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#a1a0256b61c3579519f8cc6d6157bc126">hal_uart_receive</a> (<a class="el" href="a01636.html">ATCAIface</a> iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
+<tr class="memdesc:a1a0256b61c3579519f8cc6d6157bc126"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of UART receive function.  <br /></td></tr>
+<tr class="separator:a1a0256b61c3579519f8cc6d6157bc126"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41ed83bbc8e0fd3abea7beb513fbdb96"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#a41ed83bbc8e0fd3abea7beb513fbdb96">hal_uart_control</a> (<a class="el" href="a01636.html">ATCAIface</a> iface, uint8_t option, void *param, size_t paramlen)</td></tr>
+<tr class="memdesc:a41ed83bbc8e0fd3abea7beb513fbdb96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform control operations for the UART.  <br /></td></tr>
+<tr class="separator:a41ed83bbc8e0fd3abea7beb513fbdb96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e0c17bf7342c21ca69d066eefa1f1eb"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00653.html#a1e0c17bf7342c21ca69d066eefa1f1eb">hal_uart_release</a> (void *hal_data)</td></tr>
+<tr class="memdesc:a1e0c17bf7342c21ca69d066eefa1f1eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">manages reference count on given bus and releases resource if no more refences exist  <br /></td></tr>
+<tr class="separator:a1e0c17bf7342c21ca69d066eefa1f1eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Consistency checks for configuration options. </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2021 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a063f7ad7678d60de756ef8526b9dfea1" name="a063f7ad7678d60de756ef8526b9dfea1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a063f7ad7678d60de756ef8526b9dfea1">&#9670;&#160;</a></span>ATCAH_CHECK_MAC</h2>
+<div class="textblock"><p>ATCA Hardware abstraction layer for Windows using UART. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a41ed83bbc8e0fd3abea7beb513fbdb96" name="a41ed83bbc8e0fd3abea7beb513fbdb96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41ed83bbc8e0fd3abea7beb513fbdb96">&#9670;&#160;</a></span>hal_uart_control()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ATCAH_CHECK_MAC&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+          <td class="memname">ATCA_STATUS hal_uart_control </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01636.html">ATCAIface</a>&#160;</td>
+          <td class="paramname"><em>iface</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>option</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>param</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>paramlen</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Requires: ATCAH_CHECK_MAC ATCAC_SW_SHA2_256</p>
-<p>Supported API's: atcah_check_mac</p>
-<p>Enable ATCAH_CHECK_MAC to perform the checkmac operation to generate client response on the host side </p>
+
+<p>Perform control operations for the UART. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>Interface to interact with. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">option</td><td>Control parameter identifier </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">param</td><td>Optional pointer to parameter value </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">paramlen</td><td>Length of the parameter </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
 
 </div>
 </div>
-<a id="ae427973632a62dfd8f35709c21993190" name="ae427973632a62dfd8f35709c21993190"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae427973632a62dfd8f35709c21993190">&#9670;&#160;</a></span>ATCAH_CONFIG_TO_SIGN_INTERNAL</h2>
+<a id="afb6d836af248aed1afe715ae2f2f7c2b" name="afb6d836af248aed1afe715ae2f2f7c2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb6d836af248aed1afe715ae2f2f7c2b">&#9670;&#160;</a></span>hal_uart_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ATCAH_CONFIG_TO_SIGN_INTERNAL&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+          <td class="memname">ATCA_STATUS hal_uart_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01636.html">ATCAIface</a>&#160;</td>
+          <td class="paramname"><em>iface</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a01568.html">ATCAIfaceCfg</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Requires: ATCAH_CONFIG_TO_SIGN_INTERNAL</p>
-<p>Supported API's: atcah_config_to_sign_internal</p>
-<p>Enable ATCAH_CONFIG_TO_SIGN_INTERNAL to populate the slot_config, key_config, and is_slot_locked fields in the <a class="el" href="a01787.html" title="Input/output parameters for calculating the message and digest used by the Sign(internal) command....">atca_sign_internal_in_out</a> structure from the provided config zone </p>
+
+<p>HAL implementation of UART init. </p>
+<p>this implementation assumes UART SERIAL PORT peripheral has been enabled by user . It only initialize an UART interface using given config.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hal</td><td>pointer to HAL specific data that is maintained by this HAL </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>pointer to HAL specific configuration data that is used to initialize this HAL </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
 
 </div>
 </div>
-<a id="ae22d9aedde79fd4e9b29ff7cfd6c0e3b" name="ae22d9aedde79fd4e9b29ff7cfd6c0e3b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae22d9aedde79fd4e9b29ff7cfd6c0e3b">&#9670;&#160;</a></span>ATCAH_DECRYPT</h2>
+<a id="a1c5f894db539ea5cb0d5ae0fa38449d7" name="a1c5f894db539ea5cb0d5ae0fa38449d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c5f894db539ea5cb0d5ae0fa38449d7">&#9670;&#160;</a></span>hal_uart_post_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ATCAH_DECRYPT&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+          <td class="memname">ATCA_STATUS hal_uart_post_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01636.html">ATCAIface</a>&#160;</td>
+          <td class="paramname"><em>iface</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Requires: ATCAH_DECRYPT</p>
-<p>Supported API's: atcah_decrypt</p>
-<p>Enable ATCAH_DECRYPT to decrypt 32-byte encrypted data received with the Read command </p>
+
+<p>HAL implementation of UART post init. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>instance </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
 
 </div>
 </div>
-<a id="acd2c32968024ddc7c650102a5076d70b" name="acd2c32968024ddc7c650102a5076d70b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd2c32968024ddc7c650102a5076d70b">&#9670;&#160;</a></span>ATCAH_DELETE_MAC</h2>
+<a id="a1a0256b61c3579519f8cc6d6157bc126" name="a1a0256b61c3579519f8cc6d6157bc126"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a0256b61c3579519f8cc6d6157bc126">&#9670;&#160;</a></span>hal_uart_receive()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ATCAH_DELETE_MAC&#160;&#160;&#160;(CALIB_DELETE_EN)</td>
+          <td class="memname">ATCA_STATUS hal_uart_receive </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01636.html">ATCAIface</a>&#160;</td>
+          <td class="paramname"><em>iface</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>word_address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>rxdata</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t *&#160;</td>
+          <td class="paramname"><em>rxlength</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Requires: ATCAH_DELETE_MAC ATCAC_SW_SHA2_256</p>
-<p>Supported API's: atcah_delete_mac</p>
-<p>Enable ATCAH_DELETE_MAC to calculate the mac </p>
+
+<p>HAL implementation of UART receive function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>Device to interact with. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">word_address</td><td>device transaction type </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">rxdata</td><td>Data received will be returned here. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">rxlength</td><td>As input, the size of the rxdata buffer. As output, the number of bytes received. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
 
 </div>
 </div>
-<a id="ada4b87726e822b6e94dcc18eefc39049" name="ada4b87726e822b6e94dcc18eefc39049"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada4b87726e822b6e94dcc18eefc39049">&#9670;&#160;</a></span>ATCAH_DERIVE_KEY</h2>
+<a id="a1e0c17bf7342c21ca69d066eefa1f1eb" name="a1e0c17bf7342c21ca69d066eefa1f1eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e0c17bf7342c21ca69d066eefa1f1eb">&#9670;&#160;</a></span>hal_uart_release()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ATCAH_DERIVE_KEY&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+          <td class="memname">ATCA_STATUS hal_uart_release </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>hal_data</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Requires: ATCAH_DERIVE_KEY ATCAC_SW_SHA2_256</p>
-<p>Supported API's: atcah_derive_key</p>
-<p>Enable ATCAH_DERIVE_KEY to derive a key with a key and TempKey </p>
+
+<p>manages reference count on given bus and releases resource if no more refences exist </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">hal_data</td><td>- opaque pointer to hal data structure - known only to the HAL implementation </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
 
 </div>
 </div>
-<a id="a22a85235261861839a0db05649999ef5" name="a22a85235261861839a0db05649999ef5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a22a85235261861839a0db05649999ef5">&#9670;&#160;</a></span>ATCAH_DERIVE_KEY_MAC</h2>
+<a id="aae0b332270c1e8df223b430d8e8ddbbc" name="aae0b332270c1e8df223b430d8e8ddbbc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae0b332270c1e8df223b430d8e8ddbbc">&#9670;&#160;</a></span>hal_uart_send()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ATCAH_DERIVE_KEY_MAC&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+          <td class="memname">ATCA_STATUS hal_uart_send </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01636.html">ATCAIface</a>&#160;</td>
+          <td class="paramname"><em>iface</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCAH_DERIVE_KEY_MAC ATCAC_SW_SHA2_256</p>
-<p>Supported API's: atcah_derive_key_mac</p>
-<p>Enable ATCAH_DERIVE_KEY_MAC to calculate the input MAC for a DeriveKey command </p>
-
-</div>
-</div>
-<a id="a2ecb26546b49e369aeaf86bccf10a2e9" name="a2ecb26546b49e369aeaf86bccf10a2e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ecb26546b49e369aeaf86bccf10a2e9">&#9670;&#160;</a></span>ATCAH_ENCODE_COUNTER_MATCH</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">#define ATCAH_ENCODE_COUNTER_MATCH&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>word_address</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCAH_ENCODE_COUNTER_MATCH</p>
-<p>Supported API's: atcah_encode_counter_match</p>
-<p>Enable ATCAH_ENCODE_COUNTER_MATCH to build the counter match value that needs to be stored in a slot </p>
-
-</div>
-</div>
-<a id="a371384b4f8d818c31dee337aa4e24403" name="a371384b4f8d818c31dee337aa4e24403"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a371384b4f8d818c31dee337aa4e24403">&#9670;&#160;</a></span>ATCAH_GEN_KEY_MSG</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">#define ATCAH_GEN_KEY_MSG&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>txdata</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCAH_SHA256 ATCAC_SW_SHA2_256</p>
-<p>Supported API's: atcah_gen_key_msg</p>
-<p>Enable ATCAH_GEN_KEY_MSG to calculate the PubKey digest created by GenKey and saved to TempKey </p>
-
-</div>
-</div>
-<a id="a0f0e6c501c2dc57b4ed68fe29780b062" name="a0f0e6c501c2dc57b4ed68fe29780b062"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0f0e6c501c2dc57b4ed68fe29780b062">&#9670;&#160;</a></span>ATCAH_GEN_MAC</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">#define ATCAH_GEN_MAC&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>txlength</em>&#160;</td>
         </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCAH_GEN_MAC ATCAC_SW_SHA2_256</p>
-<p>Supported API's: atcah_gen_mac</p>
-<p>Enable ATCAH_GEN_MAC to generate mac with session key with a plain text </p>
-
-</div>
-</div>
-<a id="a70d0b80d637281693321866bd3c2735f" name="a70d0b80d637281693321866bd3c2735f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70d0b80d637281693321866bd3c2735f">&#9670;&#160;</a></span>ATCAH_GEN_OUTPUT_RESP_MAC</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">#define ATCAH_GEN_OUTPUT_RESP_MAC&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Requires: ATCAH_GEN_OUTPUT_RESP_MAC ATCAC_SW_SHA2_256</p>
-<p>Supported API's: atcah_gen_output_resp_mac</p>
-<p>Enable ATCAH_GEN_OUTPUT_RESP_MAC to generate output response mac </p>
 
-</div>
-</div>
-<a id="aa5220706535f7367e06aa2aadebc0b57" name="aa5220706535f7367e06aa2aadebc0b57"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa5220706535f7367e06aa2aadebc0b57">&#9670;&#160;</a></span>ATCAH_GEN_SESSION_KEY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAH_GEN_SESSION_KEY&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCAH_GEN_SESSION_KEY ATCAC_SW_SHA2_256</p>
-<p>Supported API's: atcah_gen_Session_key</p>
-<p>Enable ATCAH_GEN_SESSION_KEY to calculate the session key for the ECC204 </p>
-
-</div>
-</div>
-<a id="aec5752be28ebfd8dc506bda7c36b9f7d" name="aec5752be28ebfd8dc506bda7c36b9f7d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aec5752be28ebfd8dc506bda7c36b9f7d">&#9670;&#160;</a></span>ATCAH_GENDIG</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAH_GENDIG&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCAH_GENDIG ATCAC_SW_SHA2_256</p>
-<p>Supported API's: atcah_gen_dig</p>
-<p>Enable ATCAH_GENDIG to combine the current TempKey with a stored value </p>
-
-</div>
-</div>
-<a id="af25240ee5ff347e1cf2768bfd513345f" name="af25240ee5ff347e1cf2768bfd513345f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af25240ee5ff347e1cf2768bfd513345f">&#9670;&#160;</a></span>ATCAH_GENDIVKEY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAH_GENDIVKEY&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCAH_GENDIVKEY ATCAC_SW_SHA2_256</p>
-<p>Supported API's: atcah_gendivkey</p>
-<p>Enable ATCAH_GENDIVKEY to generate the diversified key </p>
-
-</div>
-</div>
-<a id="a6a86a40deff31dbaf005519aba627991" name="a6a86a40deff31dbaf005519aba627991"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6a86a40deff31dbaf005519aba627991">&#9670;&#160;</a></span>ATCAH_HMAC</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAH_HMAC&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCAH_HMAC ATCAC_SW_SHA2_256 ATCAH_INCLUDE_DATA</p>
-<p>Supported API's: atcah_hmac</p>
-<p>Enable ATCAH_HMAC to generate an HMAC / SHA-256 hash of a key and other information </p>
-
-</div>
-</div>
-<a id="a6442329f443943bbc8f3e10dde67930d" name="a6442329f443943bbc8f3e10dde67930d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6442329f443943bbc8f3e10dde67930d">&#9670;&#160;</a></span>ATCAH_INCLUDE_DATA</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAH_INCLUDE_DATA&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCAH_INCLUDE_DATA</p>
-<p>Supported API's: atcah_include_data</p>
-<p>Enable ATCAH_INCLUDE_DATA to copy otp and sn data into a command buffer </p>
-
-</div>
-</div>
-<a id="ae58a45ab173bf9ca7c4cdf4768fcf00e" name="ae58a45ab173bf9ca7c4cdf4768fcf00e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae58a45ab173bf9ca7c4cdf4768fcf00e">&#9670;&#160;</a></span>ATCAH_IO_DECRYPT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAH_IO_DECRYPT&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCAH_IO_DECRYPT ATCAC_SW_SHA2_256</p>
-<p>Supported API's: atcah_io_decrypt</p>
-<p>Enable ATCAH_IO_DECRYPT to decrypt data that's been encrypted by the IO protection key.The ECDH and KDF commands on the ATECC608 are the only ones that support this operation </p>
-
-</div>
-</div>
-<a id="a33ac8a876197c7774452b7b46411f188" name="a33ac8a876197c7774452b7b46411f188"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a33ac8a876197c7774452b7b46411f188">&#9670;&#160;</a></span>ATCAH_MAC</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAH_MAC&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCAH_MAC ATCAC_SW_SHA2_256 ATCAH_INCLUDE_DATA</p>
-<p>Supported API's: atcah_mac</p>
-<p>Enable ATCAH_MAC to generate an SHA-256 digest (MAC) of a key, challenge, and other information </p>
-
-</div>
-</div>
-<a id="a879c87175b07e859a15320e199a104a6" name="a879c87175b07e859a15320e199a104a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a879c87175b07e859a15320e199a104a6">&#9670;&#160;</a></span>ATCAH_NONCE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAH_NONCE&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCAH_NONCE ATCAC_SW_SHA2_256</p>
-<p>Supported API's: atcah_nonce</p>
-<p>Enable ATCAH_NONCE to calculate host side nonce with the parameters passed </p>
-
-</div>
-</div>
-<a id="a13ed9a07ad5f74cfb67b7582c1b638a3" name="a13ed9a07ad5f74cfb67b7582c1b638a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a13ed9a07ad5f74cfb67b7582c1b638a3">&#9670;&#160;</a></span>ATCAH_PRIVWRITE_AUTH_MAC</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAH_PRIVWRITE_AUTH_MAC&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCAH_PRIVWRITE_AUTH_MAC ATCAC_SW_SHA2_256</p>
-<p>Supported API's: atcah_privwrite_auth_mac</p>
-<p>Enable ATCAH_PRIVWRITE_AUTH_MAC to calculate the input MAC for the PrivWrite command </p>
-
-</div>
-</div>
-<a id="a745b85254a910c7d8edbea41ab927cf4" name="a745b85254a910c7d8edbea41ab927cf4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a745b85254a910c7d8edbea41ab927cf4">&#9670;&#160;</a></span>ATCAH_SECUREBOOT_ENC</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAH_SECUREBOOT_ENC&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCAH_SECUREBOOT_ENC ATCAC_SW_SHA2_256</p>
-<p>Supported API's: atcah_secureboot_enc</p>
-<p>Enable ATCAH_SECUREBOOT_ENC to encrypt the digest for the SecureBoot command when using the encrypted digest / validating mac option </p>
-
-</div>
-</div>
-<a id="aa1d0ffc3e79f52154b2e362b74b7b112" name="aa1d0ffc3e79f52154b2e362b74b7b112"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa1d0ffc3e79f52154b2e362b74b7b112">&#9670;&#160;</a></span>ATCAH_SECUREBOOT_MAC</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAH_SECUREBOOT_MAC&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCAH_SECUREBOOT_MAC ATCAC_SW_SHA2_256</p>
-<p>Supported API's: atcah_secureboot_mac</p>
-<p>Enable ATCAH_SECUREBOOT_MAC to calculates the expected MAC returned from the SecureBoot command when verification is a success </p>
-
-</div>
-</div>
-<a id="a58d2f9f20485ae35c2208f3bce5cb4a7" name="a58d2f9f20485ae35c2208f3bce5cb4a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a58d2f9f20485ae35c2208f3bce5cb4a7">&#9670;&#160;</a></span>ATCAH_SHA256</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAH_SHA256&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCAH_SHA256 ATCAC_SW_SHA2_256</p>
-<p>Supported API's: atcah_sha256</p>
-<p>Enable ATCAH_SHA256 to create a SHA256 digest on a little-endian system </p>
-
-</div>
-</div>
-<a id="ad2e1b57a0f8a5dc87427b1eca18ac02f" name="ad2e1b57a0f8a5dc87427b1eca18ac02f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad2e1b57a0f8a5dc87427b1eca18ac02f">&#9670;&#160;</a></span>ATCAH_SIGN_INTERNAL_MSG</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAH_SIGN_INTERNAL_MSG&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCAH_SIGN_INTERNAL_MSG ATCAC_SW_SHA2_256</p>
-<p>Supported API's: atcah_sign_internal_msg</p>
-<p>Enable ATCAH_SIGN_INTERNAL_MSG to build the full message that would be signed by the Sign(Internal) command </p>
-
-</div>
-</div>
-<a id="a1515a97abca19263c1cf16dcbdd01944" name="a1515a97abca19263c1cf16dcbdd01944"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1515a97abca19263c1cf16dcbdd01944">&#9670;&#160;</a></span>ATCAH_VERIFY_MAC</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAH_VERIFY_MAC&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCAH_VERIFY_MAC ATCAC_SW_SHA2_256</p>
-<p>Supported API's: atcah_verify_mac</p>
-<p>Enable ATCAH_VERIFY_MAC to calculate the expected MAC on the host side for the Verify command </p>
-
-</div>
-</div>
-<a id="a23dc9d3c6d3f23ac7463ef0fe29e25f0" name="a23dc9d3c6d3f23ac7463ef0fe29e25f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a23dc9d3c6d3f23ac7463ef0fe29e25f0">&#9670;&#160;</a></span>ATCAH_WRITE_AUTH_MAC</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAH_WRITE_AUTH_MAC&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requires: ATCAH_WRITE_AUTH_MAC ATCAC_SW_SHA2_256</p>
-<p>Supported API's: atcah_write_auth_mac ECC204 specific API's: atcah_ecc204_write_auth_mac</p>
-<p>Enable ATCAH_WRITE_AUTH_MAC to calculate the input MAC for the Write command </p>
+<p>HAL implementation of UART send. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">iface</td><td>instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">word_address</td><td>transaction type </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">txdata</td><td>data to be send to device </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">txdata</td><td>pointer to space to bytes to send </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>number of bytes to send </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
 
 </div>
 </div>
@@ -596,7 +406,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b2187fb9aff39e17c00391b7def58804.html">host</a></li><li class="navelem"><a class="el" href="a00653.html">atca_host_config_check.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00653.html">hal_windows_kit_uart.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

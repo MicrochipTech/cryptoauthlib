@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_devtypes.h File Reference</title>
+<title>CryptoAuthLib: pkcs11_token.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,88 +99,59 @@ $(document).ready(function(){initNavTree('a00818.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
-  <div class="headertitle"><div class="title">atca_devtypes.h File Reference</div></div>
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">pkcs11_token.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Microchip Crypto Auth.  
+<p>PKCS11 Library Token Management &amp; Context.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00767.html">pkcs11_init.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00800.html">pkcs11_session.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga054acfe7d4dd4064f9d27a9ea7fc2337"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATSHA204A</b>&#160;&#160;&#160;(0U)</td></tr>
-<tr class="memdesc:ga054acfe7d4dd4064f9d27a9ea7fc2337"><td class="mdescLeft">&#160;</td><td class="mdescRight">The supported Device type in Cryptoauthlib library. <br /></td></tr>
-<tr class="separator:ga054acfe7d4dd4064f9d27a9ea7fc2337"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2b767a2b1d8cb0ae1e4f83ffd2085ea0"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATECC108A</b>&#160;&#160;&#160;(1U)</td></tr>
-<tr class="separator:ga2b767a2b1d8cb0ae1e4f83ffd2085ea0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac7a02cdce313ac78b17772f8793bd682"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATECC508A</b>&#160;&#160;&#160;(2U)</td></tr>
-<tr class="separator:gac7a02cdce313ac78b17772f8793bd682"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga90656b69df981c7e0201c728fe86b005"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATECC608A</b>&#160;&#160;&#160;(3U)</td></tr>
-<tr class="separator:ga90656b69df981c7e0201c728fe86b005"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac402c8eee4248972d6e6f1d992ba679d"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATECC608B</b>&#160;&#160;&#160;(3U)</td></tr>
-<tr class="separator:gac402c8eee4248972d6e6f1d992ba679d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga611aa2420e290e503ac4f4314c9c0be6"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATECC608</b>&#160;&#160;&#160;(3U)</td></tr>
-<tr class="separator:ga611aa2420e290e503ac4f4314c9c0be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf8b2c97b00d5b2af24a7951ff329752f"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATSHA206A</b>&#160;&#160;&#160;(4U)</td></tr>
-<tr class="separator:gaf8b2c97b00d5b2af24a7951ff329752f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac3953580d87655939c7317b2e50c7c3e"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TA100</b>&#160;&#160;&#160;(0x10U)</td></tr>
-<tr class="separator:gac3953580d87655939c7317b2e50c7c3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga37ebcb51388ab794050f341e43d610b0"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TA101</b>&#160;&#160;&#160;(0x11U)</td></tr>
-<tr class="separator:ga37ebcb51388ab794050f341e43d610b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5399e6ba1fbb64731761457c7a82f3f4"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ECC204</b>&#160;&#160;&#160;(0x20U)</td></tr>
-<tr class="separator:ga5399e6ba1fbb64731761457c7a82f3f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9c3e2dd3111e88755f38f8837b96a3b8"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TA010</b>&#160;&#160;&#160;(0x21U)</td></tr>
-<tr class="separator:ga9c3e2dd3111e88755f38f8837b96a3b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1b8f8e2f0e8fb67aaae0346d73aeb77f"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ECC206</b>&#160;&#160;&#160;(0x22U)</td></tr>
-<tr class="separator:ga1b8f8e2f0e8fb67aaae0346d73aeb77f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafe8f0370e1e659cf76fd87e317125750"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>RNG90</b>&#160;&#160;&#160;(0x23U)</td></tr>
-<tr class="separator:gafe8f0370e1e659cf76fd87e317125750"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3f3749b4860dc79e60660766c989d4b2"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>SHA104</b>&#160;&#160;&#160;(0x24U)</td></tr>
-<tr class="separator:ga3f3749b4860dc79e60660766c989d4b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabab8518eb86b1a9b4173c149cbb1db4f"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>SHA105</b>&#160;&#160;&#160;(0x25U)</td></tr>
-<tr class="separator:gabab8518eb86b1a9b4173c149cbb1db4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaa1b4923c2cdded417d2311798df3263"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>SHA106</b>&#160;&#160;&#160;(0x26U)</td></tr>
-<tr class="separator:gaaa1b4923c2cdded417d2311798df3263"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga509a3e67bf4310c53cb299df01509428"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_DEV_UNKNOWN</b>&#160;&#160;&#160;(0x7EU)</td></tr>
-<tr class="separator:ga509a3e67bf4310c53cb299df01509428"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7a85c2f84c672f43d1895d2013184371"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_DEV_INVALID</b>&#160;&#160;&#160;(0x7FU)</td></tr>
-<tr class="separator:ga7a85c2f84c672f43d1895d2013184371"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab112a8a280ac5ad6e11b5fe2cc0be0a0"><td class="memItemLeft" align="right" valign="top"><a id="ab112a8a280ac5ad6e11b5fe2cc0be0a0" name="ab112a8a280ac5ad6e11b5fe2cc0be0a0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SERIAL_NUM_SIZE</b>&#160;&#160;&#160;(9)</td></tr>
+<tr class="separator:ab112a8a280ac5ad6e11b5fe2cc0be0a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:gaf0b069b15260debc17d73fe47336338c"><td class="memItemLeft" align="right" valign="top">
-typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>ATCADeviceType</b></td></tr>
-<tr class="separator:gaf0b069b15260debc17d73fe47336338c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga7e207adf2d26c1d6ea64f7c60252bf45"><td class="memItemLeft" align="right" valign="top">CK_RV&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01510.html#ga7e207adf2d26c1d6ea64f7c60252bf45">pkcs11_token_init</a> (CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinLen, CK_UTF8CHAR_PTR pLabel)</td></tr>
+<tr class="separator:ga7e207adf2d26c1d6ea64f7c60252bf45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2ef67d42f228e64ff0f155049ab08f39"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_token_get_access_type</b> (CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, <a class="el" href="a01940.html">pkcs11_session_ctx_ptr</a> pSession)</td></tr>
+<tr class="separator:ga2ef67d42f228e64ff0f155049ab08f39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1fc2c1ef0c75903d41b324bdba988189"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_token_get_writable</b> (CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, <a class="el" href="a01940.html">pkcs11_session_ctx_ptr</a> pSession)</td></tr>
+<tr class="separator:ga1fc2c1ef0c75903d41b324bdba988189"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa62dd8ad822daf227624dc13b535e139"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_token_get_storage</b> (CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, <a class="el" href="a01940.html">pkcs11_session_ctx_ptr</a> pSession)</td></tr>
+<tr class="separator:gaa62dd8ad822daf227624dc13b535e139"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7bf2fea766cab4645fe615661bcf0db9"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_token_get_info</b> (CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo)</td></tr>
+<tr class="memdesc:ga7bf2fea766cab4645fe615661bcf0db9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains information about a particular token. <br /></td></tr>
+<tr class="separator:ga7bf2fea766cab4645fe615661bcf0db9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabb7fb69591f0539b9c2b686be0adddab"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_token_convert_pin_to_key</b> (const CK_UTF8CHAR_PTR pPin, const CK_ULONG ulPinLen, const CK_UTF8CHAR_PTR pSalt, const CK_ULONG ulSaltLen, CK_BYTE_PTR pKey, CK_ULONG ulKeyLen, pkcs11_slot_ctx_ptr slot_ctx)</td></tr>
+<tr class="separator:gabb7fb69591f0539b9c2b686be0adddab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf4c0c6a2d12d879308f2d42cc61ef401"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_token_random</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pRandomData, CK_ULONG ulRandomLen)</td></tr>
+<tr class="memdesc:gaf4c0c6a2d12d879308f2d42cc61ef401"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the specified amount of random data. <br /></td></tr>
+<tr class="separator:gaf4c0c6a2d12d879308f2d42cc61ef401"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga75272ae3120c6d9fc42862ac8b52da17"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_token_set_pin</b> (CK_SESSION_HANDLE hSession, CK_UTF8CHAR_PTR pOldPin, CK_ULONG ulOldLen, CK_UTF8CHAR_PTR pNewPin, CK_ULONG ulNewLen)</td></tr>
+<tr class="separator:ga75272ae3120c6d9fc42862ac8b52da17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Microchip Crypto Auth. </p>
+<div class="textblock"><p>PKCS11 Library Token Management &amp; Context. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00818.html">atca_devtypes.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b3c25b642613ea6a80d1cd59c6d313a8.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00818.html">pkcs11_token.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

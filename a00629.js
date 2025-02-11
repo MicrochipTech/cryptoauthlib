@@ -1,6 +1,9 @@
 var a00629 =
 [
-    [ "kit_id_from_devtype", "a01473.html#ga554072f32204a0eb8d7b8c7931e43343", null ],
-    [ "kit_interface", "a01473.html#ga33fe33933fb59dde6e6fb8975da6c12d", null ],
-    [ "kit_interface_from_kittype", "a01473.html#ga31075898964b61f4877ba882477b71c3", null ]
+    [ "ATCA_SWI_WAKE_WORD_ADDR", "a00629.html#a35e9d98d207f17ebac66dc86e29a6464", null ],
+    [ "BIT_DELAY_1H", "a00629.html#a1ce4882b7d053eafcec22cd84fb5727d", null ],
+    [ "BIT_DELAY_1L", "a00629.html#ad884cf7d66d88b38180369a791a9824b", null ],
+    [ "BIT_DELAY_5", "a00629.html#a2ced4699fc4ab5162dbb9453edecb32e", null ],
+    [ "BIT_DELAY_7", "a00629.html#abd0d20a34060650b8a2895c17f842f44", null ],
+    [ "RX_TX_DELAY", "a00629.html#a60ba93807a2c0ea2ce1432245f3f7da0", null ]
 ];

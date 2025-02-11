@@ -1,7 +1,12 @@
 var a00767 =
 [
-    [ "pkcs11_session_check", "a01477.html#ga7eb04614661e0cedf6cb926787f5ff9b", null ],
-    [ "pkcs11_session_closeall", "a01477.html#ga43525e77f9049b545fa09129cacf9c9a", null ],
-    [ "pkcs11_session_get_info", "a01477.html#ga236a002e179ed36a0b81399a3e11fcb8", null ],
-    [ "pkcs11_session_login", "a01477.html#ga4d70fd7e9799d0428c308a3e1ed146df", null ]
+    [ "pkcs11_dev_ctx", "a01888.html", null ],
+    [ "pkcs11_dev_res", "a01892.html", null ],
+    [ "pkcs11_dev_state", "a01896.html", "a01896" ],
+    [ "pkcs11_lib_ctx_s", "a01900.html", "a01900" ],
+    [ "pkcs11_lib_ctx", "a00767.html#a829124de0deebf29734cd6390a232292", null ],
+    [ "pkcs11_deinit", "a01510.html#gabff89fd0af2e75ee2db858f9fe934ac4", null ],
+    [ "pkcs11_get_context", "a01510.html#gae0e3060e6ae0dfc17a35881c223d8123", null ],
+    [ "pkcs11_init", "a01510.html#gaab9ef494fdc21911e700f2b9d62547ec", null ],
+    [ "pkcs11_init_check", "a01510.html#gadd899ffeae0146c08b249e3f551e21f8", null ]
 ];

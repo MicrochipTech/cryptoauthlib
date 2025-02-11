@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_version.h File Reference</title>
+<title>CryptoAuthLib: atca_devtypes.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,38 +98,89 @@ $(document).ready(function(){initNavTree('a00275.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
-  <div class="headertitle"><div class="title">atca_version.h File Reference</div></div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
+  <div class="headertitle"><div class="title">atca_devtypes.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Microchip CryptoAuth Library Version.  
+<p>Microchip Crypto Auth.  
 <a href="#details">More...</a></p>
-<table class="memberdecls">
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:aceddbd0ae1c41554eb2f0fabc0a2dc0c"><td class="memItemLeft" align="right" valign="top"><a id="aceddbd0ae1c41554eb2f0fabc0a2dc0c" name="aceddbd0ae1c41554eb2f0fabc0a2dc0c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_LIBRARY_VERSION_DATE</b>&#160;&#160;&#160;&quot;20240926&quot;</td></tr>
-<tr class="separator:aceddbd0ae1c41554eb2f0fabc0a2dc0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4634f4de0131c8eee8f064dc3e9064b"><td class="memItemLeft" align="right" valign="top"><a id="ab4634f4de0131c8eee8f064dc3e9064b" name="ab4634f4de0131c8eee8f064dc3e9064b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_LIBRARY_VERSION_MAJOR</b>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:ab4634f4de0131c8eee8f064dc3e9064b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ec591139c9e733853063ea898bac376"><td class="memItemLeft" align="right" valign="top"><a id="a0ec591139c9e733853063ea898bac376" name="a0ec591139c9e733853063ea898bac376"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_LIBRARY_VERSION_MINOR</b>&#160;&#160;&#160;7</td></tr>
-<tr class="separator:a0ec591139c9e733853063ea898bac376"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78849ac2eed512d15a0b22ca781f83e8"><td class="memItemLeft" align="right" valign="top"><a id="a78849ac2eed512d15a0b22ca781f83e8" name="a78849ac2eed512d15a0b22ca781f83e8"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_LIBRARY_VERSION_BUILD</b>&#160;&#160;&#160;6</td></tr>
-<tr class="separator:a78849ac2eed512d15a0b22ca781f83e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga054acfe7d4dd4064f9d27a9ea7fc2337"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATSHA204A</b>&#160;&#160;&#160;(0U)</td></tr>
+<tr class="memdesc:ga054acfe7d4dd4064f9d27a9ea7fc2337"><td class="mdescLeft">&#160;</td><td class="mdescRight">The supported Device type in Cryptoauthlib library. <br /></td></tr>
+<tr class="separator:ga054acfe7d4dd4064f9d27a9ea7fc2337"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2b767a2b1d8cb0ae1e4f83ffd2085ea0"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATECC108A</b>&#160;&#160;&#160;(1U)</td></tr>
+<tr class="separator:ga2b767a2b1d8cb0ae1e4f83ffd2085ea0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac7a02cdce313ac78b17772f8793bd682"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATECC508A</b>&#160;&#160;&#160;(2U)</td></tr>
+<tr class="separator:gac7a02cdce313ac78b17772f8793bd682"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga90656b69df981c7e0201c728fe86b005"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATECC608A</b>&#160;&#160;&#160;(3U)</td></tr>
+<tr class="separator:ga90656b69df981c7e0201c728fe86b005"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac402c8eee4248972d6e6f1d992ba679d"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATECC608B</b>&#160;&#160;&#160;(3U)</td></tr>
+<tr class="separator:gac402c8eee4248972d6e6f1d992ba679d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga611aa2420e290e503ac4f4314c9c0be6"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATECC608</b>&#160;&#160;&#160;(3U)</td></tr>
+<tr class="separator:ga611aa2420e290e503ac4f4314c9c0be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf8b2c97b00d5b2af24a7951ff329752f"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATSHA206A</b>&#160;&#160;&#160;(4U)</td></tr>
+<tr class="separator:gaf8b2c97b00d5b2af24a7951ff329752f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac3953580d87655939c7317b2e50c7c3e"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TA100</b>&#160;&#160;&#160;(0x10U)</td></tr>
+<tr class="separator:gac3953580d87655939c7317b2e50c7c3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga37ebcb51388ab794050f341e43d610b0"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TA101</b>&#160;&#160;&#160;(0x11U)</td></tr>
+<tr class="separator:ga37ebcb51388ab794050f341e43d610b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5399e6ba1fbb64731761457c7a82f3f4"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ECC204</b>&#160;&#160;&#160;(0x20U)</td></tr>
+<tr class="separator:ga5399e6ba1fbb64731761457c7a82f3f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9c3e2dd3111e88755f38f8837b96a3b8"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TA010</b>&#160;&#160;&#160;(0x21U)</td></tr>
+<tr class="separator:ga9c3e2dd3111e88755f38f8837b96a3b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1b8f8e2f0e8fb67aaae0346d73aeb77f"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ECC206</b>&#160;&#160;&#160;(0x22U)</td></tr>
+<tr class="separator:ga1b8f8e2f0e8fb67aaae0346d73aeb77f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafe8f0370e1e659cf76fd87e317125750"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>RNG90</b>&#160;&#160;&#160;(0x23U)</td></tr>
+<tr class="separator:gafe8f0370e1e659cf76fd87e317125750"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f3749b4860dc79e60660766c989d4b2"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>SHA104</b>&#160;&#160;&#160;(0x24U)</td></tr>
+<tr class="separator:ga3f3749b4860dc79e60660766c989d4b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabab8518eb86b1a9b4173c149cbb1db4f"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>SHA105</b>&#160;&#160;&#160;(0x25U)</td></tr>
+<tr class="separator:gabab8518eb86b1a9b4173c149cbb1db4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaa1b4923c2cdded417d2311798df3263"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>SHA106</b>&#160;&#160;&#160;(0x26U)</td></tr>
+<tr class="separator:gaaa1b4923c2cdded417d2311798df3263"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga509a3e67bf4310c53cb299df01509428"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_DEV_UNKNOWN</b>&#160;&#160;&#160;(0x7EU)</td></tr>
+<tr class="separator:ga509a3e67bf4310c53cb299df01509428"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a85c2f84c672f43d1895d2013184371"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_DEV_INVALID</b>&#160;&#160;&#160;(0x7FU)</td></tr>
+<tr class="separator:ga7a85c2f84c672f43d1895d2013184371"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gaf0b069b15260debc17d73fe47336338c"><td class="memItemLeft" align="right" valign="top">
+typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>ATCADeviceType</b></td></tr>
+<tr class="separator:gaf0b069b15260debc17d73fe47336338c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Microchip CryptoAuth Library Version. </p>
+<div class="textblock"><p>Microchip Crypto Auth. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00275.html">atca_version.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00275.html">atca_devtypes.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

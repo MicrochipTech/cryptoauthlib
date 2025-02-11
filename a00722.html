@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_find.c File Reference</title>
+<title>CryptoAuthLib: pkcs11_cert.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,49 +98,67 @@ $(document).ready(function(){initNavTree('a00722.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">pkcs11_find.c File Reference</div></div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">pkcs11_cert.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>PKCS11 Library Object Find/Searching.  
+<p>PKCS11 Library Certificate Handling.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00521.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00299.html">atcacert/atcacert_def.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00548.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00326.html">atcacert/atcacert_def.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00314.html">atcacert/atcacert_client.h</a>&quot;</code><br />
 <code>#include &quot;pkcs11_config.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00707.html">pkcs11_debug.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00737.html">pkcs11_init.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00764.html">pkcs11_os.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00782.html">pkcs11_slot.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00770.html">pkcs11_session.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00725.html">pkcs11_find.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00791.html">pkcs11_util.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00698.html">pkcs11_cert.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00737.html">pkcs11_debug.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00818.html">pkcs11_token.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00725.html">pkcs11_cert.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00794.html">pkcs11_os.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00824.html">pkcs11_util.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00812.html">pkcs11_slot.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga6fd109c0919489909cc4073866d1c466"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_find_init</b> (CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)</td></tr>
-<tr class="separator:ga6fd109c0919489909cc4073866d1c466"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5dbe038da3069861b8de9f77d0c06de1"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_find_continue</b> (CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE_PTR phObject, CK_ULONG ulMaxObjectCount, CK_ULONG_PTR pulObjectCount)</td></tr>
-<tr class="separator:ga5dbe038da3069861b8de9f77d0c06de1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacc5c7a788f0c4eafd4f0c1da2aaf0d60"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_find_finish</b> (CK_SESSION_HANDLE hSession)</td></tr>
-<tr class="separator:gacc5c7a788f0c4eafd4f0c1da2aaf0d60"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0e2b3b381504c39a017a4232a35b672d"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_find_get_attribute</b> (CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)</td></tr>
-<tr class="separator:ga0e2b3b381504c39a017a4232a35b672d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2c99ca41bc864122a36eed81ef1aca3d"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_cert_load</b> (pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pAttribute, <a class="el" href="a01560.html">ATCADevice</a> device)</td></tr>
+<tr class="separator:ga2c99ca41bc864122a36eed81ef1aca3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3d673b7d429238154436fc9576cee0a1"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_cert_x509_write</b> (CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, <a class="el" href="a01940.html">pkcs11_session_ctx_ptr</a> pSession)</td></tr>
+<tr class="separator:ga3d673b7d429238154436fc9576cee0a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaab381810e71304eb18e82ff7ad120d89"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_cert_clear_session_cache</b> (<a class="el" href="a01940.html">pkcs11_session_ctx_ptr</a> session_ctx)</td></tr>
+<tr class="separator:gaab381810e71304eb18e82ff7ad120d89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0ec5f49b41356f630b589cb41e4253e5"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_cert_clear_object_cache</b> (pkcs11_object_ptr pObject)</td></tr>
+<tr class="separator:ga0ec5f49b41356f630b589cb41e4253e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga8de4193ede04a12ab4e44b8df9eec478"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01880.html">pkcs11_attrib_model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01510.html#ga8de4193ede04a12ab4e44b8df9eec478">pkcs11_cert_x509public_attributes</a> []</td></tr>
+<tr class="separator:ga8de4193ede04a12ab4e44b8df9eec478"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd21e04ab9248b3d58c3f5e4bd076ac9"><td class="memItemLeft" align="right" valign="top">
+const CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_cert_x509public_attributes_count</b> = (CK_ULONG)(sizeof( <a class="el" href="a01510.html#ga8de4193ede04a12ab4e44b8df9eec478">pkcs11_cert_x509public_attributes</a> ) / sizeof( <a class="el" href="a01510.html#ga8de4193ede04a12ab4e44b8df9eec478">pkcs11_cert_x509public_attributes</a> [0]))</td></tr>
+<tr class="separator:gafd21e04ab9248b3d58c3f5e4bd076ac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc10a1f1b90bc7d2fb047db0af539e80"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01880.html">pkcs11_attrib_model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01510.html#gabc10a1f1b90bc7d2fb047db0af539e80">pkcs11_cert_wtlspublic_attributes</a> []</td></tr>
+<tr class="separator:gabc10a1f1b90bc7d2fb047db0af539e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad8232cd440c12745d24471e2676a117f"><td class="memItemLeft" align="right" valign="top">
+const CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_cert_wtlspublic_attributes_count</b> = (CK_ULONG)(sizeof( <a class="el" href="a01510.html#gabc10a1f1b90bc7d2fb047db0af539e80">pkcs11_cert_wtlspublic_attributes</a> ) / sizeof( <a class="el" href="a01510.html#gabc10a1f1b90bc7d2fb047db0af539e80">pkcs11_cert_wtlspublic_attributes</a> [0]))</td></tr>
+<tr class="separator:gad8232cd440c12745d24471e2676a117f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa471eb33699e2cba5dc3cc50a2d8df7"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01880.html">pkcs11_attrib_model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01510.html#gafa471eb33699e2cba5dc3cc50a2d8df7">pkcs11_cert_x509_attributes</a> []</td></tr>
+<tr class="separator:gafa471eb33699e2cba5dc3cc50a2d8df7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc2b14c7a052fdc0bb751259d28dfdc0"><td class="memItemLeft" align="right" valign="top">
+const CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_cert_x509_attributes_count</b> = (CK_ULONG)(sizeof( <a class="el" href="a01510.html#gafa471eb33699e2cba5dc3cc50a2d8df7">pkcs11_cert_x509_attributes</a> ) / sizeof( <a class="el" href="a01510.html#gafa471eb33699e2cba5dc3cc50a2d8df7">pkcs11_cert_x509_attributes</a> [0]))</td></tr>
+<tr class="separator:gadc2b14c7a052fdc0bb751259d28dfdc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>PKCS11 Library Object Find/Searching. </p>
+<div class="textblock"><p>PKCS11 Library Certificate Handling. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b3c25b642613ea6a80d1cd59c6d313a8.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00722.html">pkcs11_find.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b3c25b642613ea6a80d1cd59c6d313a8.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00722.html">pkcs11_cert.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

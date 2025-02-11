@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_jwt.c File Reference</title>
+<title>CryptoAuthLib: kit_protocol.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -97,26 +97,49 @@ $(document).ready(function(){initNavTree('a00656.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">atca_jwt.c File Reference</div></div>
+  <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">kit_protocol.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Utilities to create and verify a JSON Web Token (JWT)  
+<p>Microchip Crypto Auth hardware interface object.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00521.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00260.html">atca_helpers.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00500.html">crypto/atca_crypto_sw_sha2.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00659.html">jwt/atca_jwt.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &lt;stdio.h&gt;</code><br />
-</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Utilities to create and verify a JSON Web Token (JWT) </p>
+<code>#include &lt;limits.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00254.html">atca_compiler.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00659.html">kit_protocol.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00281.html">atca_helpers.h</a>&quot;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga8d90399e7f84850d1e8d4cd5e9f67fa8"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>KIT_MAX_SCAN_COUNT</b>&#160;&#160;&#160;8</td></tr>
+<tr class="separator:ga8d90399e7f84850d1e8d4cd5e9f67fa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc1b033607e06cff7464dc0a49df2744"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>KIT_MAX_TX_BUF</b>&#160;&#160;&#160;32</td></tr>
+<tr class="separator:gadc1b033607e06cff7464dc0a49df2744"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga554072f32204a0eb8d7b8c7931e43343"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#ga554072f32204a0eb8d7b8c7931e43343">kit_id_from_devtype</a> (ATCADeviceType devtype)</td></tr>
+<tr class="separator:ga554072f32204a0eb8d7b8c7931e43343"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31075898964b61f4877ba882477b71c3"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#ga31075898964b61f4877ba882477b71c3">kit_interface_from_kittype</a> (ATCAKitType kittype)</td></tr>
+<tr class="separator:ga31075898964b61f4877ba882477b71c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga33fe33933fb59dde6e6fb8975da6c12d"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#ga33fe33933fb59dde6e6fb8975da6c12d">kit_interface</a> (ATCAKitType kittype)</td></tr>
+<tr class="separator:ga33fe33933fb59dde6e6fb8975da6c12d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Microchip Crypto Auth hardware interface object. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_0f8c318486f9c8f97febe2dc0542d496.html">jwt</a></li><li class="navelem"><a class="el" href="a00656.html">atca_jwt.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00656.html">kit_protocol.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

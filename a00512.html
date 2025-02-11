@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: sha1_routines.h File Reference</title>
+<title>CryptoAuthLib: atca_crypto_sw_aes_cmac.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -97,81 +97,22 @@ $(document).ready(function(){initNavTree('a00512.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">sha1_routines.h File Reference</div></div>
+  <div class="headertitle"><div class="title">atca_crypto_sw_aes_cmac.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Software implementation of the SHA1 algorithm.  
+<p>Common Wrapper for host side AES-CMAC implementations that feature update APIs rather than an all at once implementation.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00239.html">atca_compiler.h</a>&quot;</code><br />
-<code>#include &lt;stdio.h&gt;</code><br />
-<code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;stddef.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01663.html">CL_HashContext</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a2c0958af86f0590374e4324757c537f2"><td class="memItemLeft" align="right" valign="top"><a id="a2c0958af86f0590374e4324757c537f2" name="a2c0958af86f0590374e4324757c537f2"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>U8</b>&#160;&#160;&#160;uint8_t</td></tr>
-<tr class="separator:a2c0958af86f0590374e4324757c537f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0b4d315e0f0b5d356886ec69d4bed08"><td class="memItemLeft" align="right" valign="top"><a id="ad0b4d315e0f0b5d356886ec69d4bed08" name="ad0b4d315e0f0b5d356886ec69d4bed08"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>U16</b>&#160;&#160;&#160;uint16_t</td></tr>
-<tr class="separator:ad0b4d315e0f0b5d356886ec69d4bed08"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f953f379d243081b950adb7f194b2e8"><td class="memItemLeft" align="right" valign="top"><a id="a8f953f379d243081b950adb7f194b2e8" name="a8f953f379d243081b950adb7f194b2e8"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>U32</b>&#160;&#160;&#160;uint32_t</td></tr>
-<tr class="separator:a8f953f379d243081b950adb7f194b2e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3015d84f1e64c03564961de070d25328"><td class="memItemLeft" align="right" valign="top"><a id="a3015d84f1e64c03564961de070d25328" name="a3015d84f1e64c03564961de070d25328"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>memcpy_P</b>&#160;&#160;&#160;memmove</td></tr>
-<tr class="separator:a3015d84f1e64c03564961de070d25328"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3541bc4d0b928b2faa9ca63a100d1b75"><td class="memItemLeft" align="right" valign="top"><a id="a3541bc4d0b928b2faa9ca63a100d1b75" name="a3541bc4d0b928b2faa9ca63a100d1b75"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>strcpy_P</b>&#160;&#160;&#160;strcpy</td></tr>
-<tr class="separator:a3541bc4d0b928b2faa9ca63a100d1b75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45e79c30522d47f4c30922b3d5b06b46"><td class="memItemLeft" align="right" valign="top"><a id="a45e79c30522d47f4c30922b3d5b06b46" name="a45e79c30522d47f4c30922b3d5b06b46"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>_WDRESET</b>()</td></tr>
-<tr class="separator:a45e79c30522d47f4c30922b3d5b06b46"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46388d9db8422abfea56ae2323f7a77c"><td class="memItemLeft" align="right" valign="top"><a id="a46388d9db8422abfea56ae2323f7a77c" name="a46388d9db8422abfea56ae2323f7a77c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>_NOP</b>()</td></tr>
-<tr class="separator:a46388d9db8422abfea56ae2323f7a77c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56a88d6165ee36c482ddc9b82826dd47"><td class="memItemLeft" align="right" valign="top"><a id="a56a88d6165ee36c482ddc9b82826dd47" name="a56a88d6165ee36c482ddc9b82826dd47"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>leftRotate</b>(x,  n)&#160;&#160;&#160;(x) = (((x) &lt;&lt; (n)) | ((x) &gt;&gt; (32 - (n))))</td></tr>
-<tr class="separator:a56a88d6165ee36c482ddc9b82826dd47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:aa7f5cbdb2069995d6ad84228b4896b59"><td class="memItemLeft" align="right" valign="top"><a id="aa7f5cbdb2069995d6ad84228b4896b59" name="aa7f5cbdb2069995d6ad84228b4896b59"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>shaEngine</b> (uint32_t *buf, uint32_t *h)</td></tr>
-<tr class="separator:aa7f5cbdb2069995d6ad84228b4896b59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affa9482d686cc435d640d67d7fa79772"><td class="memItemLeft" align="right" valign="top"><a id="affa9482d686cc435d640d67d7fa79772" name="affa9482d686cc435d640d67d7fa79772"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>CL_hashInit</b> (<a class="el" href="a01663.html">CL_HashContext</a> *ctx)</td></tr>
-<tr class="separator:affa9482d686cc435d640d67d7fa79772"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac647bbe11bef33bf113a08b8ea9ee799"><td class="memItemLeft" align="right" valign="top"><a id="ac647bbe11bef33bf113a08b8ea9ee799" name="ac647bbe11bef33bf113a08b8ea9ee799"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>CL_hashUpdate</b> (<a class="el" href="a01663.html">CL_HashContext</a> *ctx, const uint8_t *src, int nbytes)</td></tr>
-<tr class="separator:ac647bbe11bef33bf113a08b8ea9ee799"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f3bb1870c15bf1facf14c6b92549ce7"><td class="memItemLeft" align="right" valign="top"><a id="a6f3bb1870c15bf1facf14c6b92549ce7" name="a6f3bb1870c15bf1facf14c6b92549ce7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>CL_hashFinal</b> (<a class="el" href="a01663.html">CL_HashContext</a> *ctx, uint8_t *dest)</td></tr>
-<tr class="separator:a6f3bb1870c15bf1facf14c6b92549ce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50e72be6699b178f50b13857cdbb1ad5"><td class="memItemLeft" align="right" valign="top"><a id="a50e72be6699b178f50b13857cdbb1ad5" name="a50e72be6699b178f50b13857cdbb1ad5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>CL_hash</b> (uint8_t *msg, int msgBytes, uint8_t *dest)</td></tr>
-<tr class="separator:a50e72be6699b178f50b13857cdbb1ad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Software implementation of the SHA1 algorithm. </p>
+<div class="textblock"><code>#include &quot;<a class="el" href="a00509.html">atca_crypto_sw.h</a>&quot;</code><br />
+</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Common Wrapper for host side AES-CMAC implementations that feature update APIs rather than an all at once implementation. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="dir_39966be8f8e069f6fa92c98611834f6b.html">hashes</a></li><li class="navelem"><a class="el" href="a00512.html">sha1_routines.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_695be77052103537ae3c41f50bd7e0cc.html">crypto</a></li><li class="navelem"><a class="el" href="a00512.html">atca_crypto_sw_aes_cmac.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

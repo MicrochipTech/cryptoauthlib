@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: pkcs11_encrypt.c File Reference</title>
+<title>CryptoAuthLib: pkcs11_attrib.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,62 +99,45 @@ $(document).ready(function(){initNavTree('a00716.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">pkcs11_encrypt.c File Reference</div></div>
+  <div class="headertitle"><div class="title">pkcs11_attrib.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>PKCS11 Library Encrypt Support.  
+<p>PKCS11 Library Object Attributes Handling.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00521.html">cryptoauthlib.h</a>&quot;</code><br />
-<code>#include &lt;limits.h&gt;</code><br />
-<code>#include &quot;pkcs11_config.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00719.html">pkcs11_encrypt.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00707.html">pkcs11_debug.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00737.html">pkcs11_init.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00758.html">pkcs11_object.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00770.html">pkcs11_session.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00791.html">pkcs11_util.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00782.html">pkcs11_slot.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00743.html">pkcs11_key.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;pkcs11_config.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00719.html">pkcs11_attrib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00548.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00800.html">pkcs11_session.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga15ac03fa8dac568af6652d0ed4dd21b9"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_encrypt_init</b> (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hObject)</td></tr>
-<tr class="separator:ga15ac03fa8dac568af6652d0ed4dd21b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0df6b857ebf689b4891b37117922c2ca"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_encrypt</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pEncryptedData, CK_ULONG_PTR pulEncryptedDataLen)</td></tr>
-<tr class="separator:ga0df6b857ebf689b4891b37117922c2ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae037e8f4262948999f4e2fb526752a40"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_encrypt_update</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulDataLen, CK_BYTE_PTR pEncryptedData, CK_ULONG_PTR pulEncryptedDataLen)</td></tr>
-<tr class="separator:gae037e8f4262948999f4e2fb526752a40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaae94f85980031bec34148341efd537e3"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_encrypt_final</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncryptedData, CK_ULONG_PTR pulEncryptedDataLen)</td></tr>
-<tr class="memdesc:gaae94f85980031bec34148341efd537e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finishes a multiple-part encryption operation. <br /></td></tr>
-<tr class="separator:gaae94f85980031bec34148341efd537e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0fecfe06a4e6a9e96f783db39f5c3f1d"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_decrypt_init</b> (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hObject)</td></tr>
-<tr class="separator:ga0fecfe06a4e6a9e96f783db39f5c3f1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4b2aaee6288061f2d56f4e99f0178709"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_decrypt</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncryptedData, CK_ULONG ulEncryptedDataLen, CK_BYTE_PTR pData, CK_ULONG_PTR pulDataLen)</td></tr>
-<tr class="separator:ga4b2aaee6288061f2d56f4e99f0178709"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga000cfc27505b694c031f8b66979d0c1f"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_decrypt_update</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncryptedData, CK_ULONG ulEncryptedDataLen, CK_BYTE_PTR pData, CK_ULONG_PTR pulDataLen)</td></tr>
-<tr class="separator:ga000cfc27505b694c031f8b66979d0c1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga045a35287c46a29da2ad13e700087e0d"><td class="memItemLeft" align="right" valign="top">
-CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_decrypt_final</b> (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG_PTR pulDataLen)</td></tr>
-<tr class="memdesc:ga045a35287c46a29da2ad13e700087e0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finishes a multiple-part decryption operation. <br /></td></tr>
-<tr class="separator:ga045a35287c46a29da2ad13e700087e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8b1206a513938768655cdd541ffee9b3"><td class="memItemLeft" align="right" valign="top">CK_RV&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01510.html#ga8b1206a513938768655cdd541ffee9b3">pkcs11_attrib_fill</a> (CK_ATTRIBUTE_PTR pAttribute, const void *pData, const CK_ULONG ulSize)</td></tr>
+<tr class="memdesc:ga8b1206a513938768655cdd541ffee9b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform the nessasary checks and copy data into an attribute structure.  <br /></td></tr>
+<tr class="separator:ga8b1206a513938768655cdd541ffee9b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50e9c64b899d1b2f78c9634298225303"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_attrib_value</b> (CK_ATTRIBUTE_PTR pAttribute, const CK_ULONG ulValue, const CK_ULONG ulSize)</td></tr>
+<tr class="memdesc:ga50e9c64b899d1b2f78c9634298225303"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to write a numerical value to an attribute buffer. <br /></td></tr>
+<tr class="separator:ga50e9c64b899d1b2f78c9634298225303"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaed22ab3431bb96f2e6df488d5bf2e7f3"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_attrib_false</b> (CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, <a class="el" href="a01940.html">pkcs11_session_ctx_ptr</a> pSession)</td></tr>
+<tr class="separator:gaed22ab3431bb96f2e6df488d5bf2e7f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga090087761280c0cc4c4f48a9dd652c42"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_attrib_true</b> (CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, <a class="el" href="a01940.html">pkcs11_session_ctx_ptr</a> pSession)</td></tr>
+<tr class="separator:ga090087761280c0cc4c4f48a9dd652c42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gade797f1bf2991453561fb81e829ff706"><td class="memItemLeft" align="right" valign="top">
+CK_RV&#160;</td><td class="memItemRight" valign="bottom"><b>pkcs11_attrib_empty</b> (CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, <a class="el" href="a01940.html">pkcs11_session_ctx_ptr</a> pSession)</td></tr>
+<tr class="separator:gade797f1bf2991453561fb81e829ff706"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>PKCS11 Library Encrypt Support. </p>
+<div class="textblock"><p>PKCS11 Library Object Attributes Handling. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b3c25b642613ea6a80d1cd59c6d313a8.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00716.html">pkcs11_encrypt.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_b3c25b642613ea6a80d1cd59c6d313a8.html">pkcs11</a></li><li class="navelem"><a class="el" href="a00716.html">pkcs11_attrib.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

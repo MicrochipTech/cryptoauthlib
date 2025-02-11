@@ -1,10 +1,9 @@
 var a00626 =
 [
-    [ "atca_uart_host_s", "a01695.html", null ],
-    [ "hal_uart_control", "a00626.html#a41ed83bbc8e0fd3abea7beb513fbdb96", null ],
-    [ "hal_uart_init", "a00626.html#afb6d836af248aed1afe715ae2f2f7c2b", null ],
-    [ "hal_uart_post_init", "a00626.html#a1c5f894db539ea5cb0d5ae0fa38449d7", null ],
-    [ "hal_uart_receive", "a00626.html#a1a0256b61c3579519f8cc6d6157bc126", null ],
-    [ "hal_uart_release", "a00626.html#a1e0c17bf7342c21ca69d066eefa1f1eb", null ],
-    [ "hal_uart_send", "a00626.html#aae0b332270c1e8df223b430d8e8ddbbc", null ]
+    [ "hal_swi_gpio_control", "a00626.html#aaf7a492cce7f9a5fe5b817aae347ba3d", null ],
+    [ "hal_swi_gpio_init", "a00626.html#a56876f187f5f50c3cc8728ee21f0962c", null ],
+    [ "hal_swi_gpio_post_init", "a00626.html#a1527badd7e7e5f4d1e60eada509b1319", null ],
+    [ "hal_swi_gpio_receive", "a00626.html#a3415a23c978f3421bc01d069d1ab9180", null ],
+    [ "hal_swi_gpio_release", "a00626.html#aae0cb0a585b3eb7535c70047bef1f7c6", null ],
+    [ "hal_swi_gpio_send", "a00626.html#aea9aba476b50f5d4ef082c24f0cb6b68", null ]
 ];

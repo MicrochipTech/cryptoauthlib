@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['functionerror_0',['FunctionError',['../a02383.html',1,'cryptoauthlib::exceptions']]]
+  ['functionerror_0',['FunctionError',['../a02416.html',1,'cryptoauthlib::exceptions']]]
 ];

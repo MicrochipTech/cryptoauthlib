@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert.h File Reference</title>
+<title>CryptoAuthLib: atca_helpers.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,66 +98,865 @@ $(document).ready(function(){initNavTree('a00278.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
-  <div class="headertitle"><div class="title">atcacert.h File Reference</div></div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">atca_helpers.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Declarations common to all atcacert code.  
+<p>Helpers to support the CryptoAuthLib Basic API methods.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00281.html">atcacert_check_config.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00269.html">atca_status.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;ctype.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00548.html">cryptoauthlib.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00281.html">atca_helpers.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gaa93f0eb578d23995850d61f7d61c55c1"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>FALSE</b>&#160;&#160;&#160;(0)</td></tr>
-<tr class="separator:gaa93f0eb578d23995850d61f7d61c55c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa8cecfc5c5c054d2875c03e77b7be15d"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>TRUE</b>&#160;&#160;&#160;(1)</td></tr>
-<tr class="separator:gaa8cecfc5c5c054d2875c03e77b7be15d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7bd1ad830360fc8b988f855da6d0d5ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga7bd1ad830360fc8b988f855da6d0d5ba">ATCACERT_E_SUCCESS</a>&#160;&#160;&#160;<a class="el" href="a00269.html#ab132d69c7f94de708ffef02b6dc69d27">ATCA_SUCCESS</a></td></tr>
-<tr class="separator:ga7bd1ad830360fc8b988f855da6d0d5ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga048a6bb9781dbbc402409a172f976f74"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga048a6bb9781dbbc402409a172f976f74">ATCACERT_E_ERROR</a>&#160;&#160;&#160;<a class="el" href="a00269.html#aa1cd2b6470db000dd151f2a092f41edf">ATCA_GEN_FAIL</a></td></tr>
-<tr class="separator:ga048a6bb9781dbbc402409a172f976f74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47509d283523ab1892fb8746d6f4e37d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga47509d283523ab1892fb8746d6f4e37d">ATCACERT_E_BAD_PARAMS</a>&#160;&#160;&#160;<a class="el" href="a00269.html#a22c74ba87b45d105867f93c97b6dbe04">ATCA_BAD_PARAM</a></td></tr>
-<tr class="separator:ga47509d283523ab1892fb8746d6f4e37d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7a2e774fc8b12c4045dea335a86afca6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga7a2e774fc8b12c4045dea335a86afca6">ATCACERT_E_BUFFER_TOO_SMALL</a>&#160;&#160;&#160;<a class="el" href="a00269.html#ab1a2ea3166875b26f91e82767d6e3e1a">ATCA_SMALL_BUFFER</a></td></tr>
-<tr class="separator:ga7a2e774fc8b12c4045dea335a86afca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4b6db1523875a2b1453ef5e16989ecd4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga4b6db1523875a2b1453ef5e16989ecd4">ATCACERT_E_UNIMPLEMENTED</a>&#160;&#160;&#160;<a class="el" href="a00269.html#ad80a997b8786774af268692c936f90d9">ATCA_UNIMPLEMENTED</a></td></tr>
-<tr class="separator:ga4b6db1523875a2b1453ef5e16989ecd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaea155533fdd352d6602d3e2fc717930f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#gaea155533fdd352d6602d3e2fc717930f">ATCACERT_E_DECODING_ERROR</a>&#160;&#160;&#160;4</td></tr>
-<tr class="separator:gaea155533fdd352d6602d3e2fc717930f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaafd66d6744314225ead24b3901bd6372"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#gaafd66d6744314225ead24b3901bd6372">ATCACERT_E_INVALID_DATE</a>&#160;&#160;&#160;5</td></tr>
-<tr class="separator:gaafd66d6744314225ead24b3901bd6372"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5a7cb98e18ad338f2eaf6594acb67c32"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga5a7cb98e18ad338f2eaf6594acb67c32">ATCACERT_E_UNEXPECTED_ELEM_SIZE</a>&#160;&#160;&#160;7</td></tr>
-<tr class="separator:ga5a7cb98e18ad338f2eaf6594acb67c32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8e3e7c64650c92364bbac17f6a75474a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga8e3e7c64650c92364bbac17f6a75474a">ATCACERT_E_ELEM_MISSING</a>&#160;&#160;&#160;8</td></tr>
-<tr class="separator:ga8e3e7c64650c92364bbac17f6a75474a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga62604c78d688530173e203b02df180fa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga62604c78d688530173e203b02df180fa">ATCACERT_E_ELEM_OUT_OF_BOUNDS</a>&#160;&#160;&#160;9</td></tr>
-<tr class="separator:ga62604c78d688530173e203b02df180fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga822ee0620c8d2d12ff971b9b35f9f5cd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga822ee0620c8d2d12ff971b9b35f9f5cd">ATCACERT_E_BAD_CERT</a>&#160;&#160;&#160;10</td></tr>
-<tr class="separator:ga822ee0620c8d2d12ff971b9b35f9f5cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga01010ef58d52a05292f6a70ff3d53ce8"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCACERT_E_WRONG_CERT_DEF</b>&#160;&#160;&#160;11</td></tr>
-<tr class="separator:ga01010ef58d52a05292f6a70ff3d53ce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae1da5e02cd9b4ee7b8617d7bce0a5b5d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#gae1da5e02cd9b4ee7b8617d7bce0a5b5d">ATCACERT_E_VERIFY_FAILED</a>&#160;&#160;&#160;12</td></tr>
-<tr class="separator:gae1da5e02cd9b4ee7b8617d7bce0a5b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2396e500bd36c2316a1a6e13e3117958"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga2396e500bd36c2316a1a6e13e3117958">ATCACERT_E_INVALID_TRANSFORM</a>&#160;&#160;&#160;13</td></tr>
-<tr class="separator:ga2396e500bd36c2316a1a6e13e3117958"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42f1518aca295fab198d042b18fef075"><td class="memItemLeft" align="right" valign="top"><a id="a42f1518aca295fab198d042b18fef075" name="a42f1518aca295fab198d042b18fef075"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>B64_IS_EQUAL</b>&#160;&#160;&#160;(64u)</td></tr>
+<tr class="separator:a42f1518aca295fab198d042b18fef075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd4bf9cd40bc547cd53e2ef325a1c8d0"><td class="memItemLeft" align="right" valign="top"><a id="abd4bf9cd40bc547cd53e2ef325a1c8d0" name="abd4bf9cd40bc547cd53e2ef325a1c8d0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>B64_IS_INVALID</b>&#160;&#160;&#160;(-1)</td></tr>
+<tr class="separator:abd4bf9cd40bc547cd53e2ef325a1c8d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a63df1707f387c7d8cd9b5cc630585451"><td class="memItemLeft" align="right" valign="top"><a id="a63df1707f387c7d8cd9b5cc630585451" name="a63df1707f387c7d8cd9b5cc630585451"></a>
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>atcab_b64rules_default</b> (void)</td></tr>
+<tr class="separator:a63df1707f387c7d8cd9b5cc630585451"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2788ca7af14f8ddf1de38b6c3b295fc7"><td class="memItemLeft" align="right" valign="top"><a id="a2788ca7af14f8ddf1de38b6c3b295fc7" name="a2788ca7af14f8ddf1de38b6c3b295fc7"></a>
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>atcab_b64rules_mime</b> (void)</td></tr>
+<tr class="separator:a2788ca7af14f8ddf1de38b6c3b295fc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf3840c83fd2df68907173f95bdece7e"><td class="memItemLeft" align="right" valign="top"><a id="abf3840c83fd2df68907173f95bdece7e" name="abf3840c83fd2df68907173f95bdece7e"></a>
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>atcab_b64rules_urlsafe</b> (void)</td></tr>
+<tr class="separator:abf3840c83fd2df68907173f95bdece7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae31a9fd8e9deca79aa5fef0292fe5272"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#ae31a9fd8e9deca79aa5fef0292fe5272">atcab_bin2hex</a> (const uint8_t *bin, size_t bin_size, char *hex, size_t *hex_size)</td></tr>
+<tr class="memdesc:ae31a9fd8e9deca79aa5fef0292fe5272"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a binary buffer to a hex string for easy reading.  <br /></td></tr>
+<tr class="separator:ae31a9fd8e9deca79aa5fef0292fe5272"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7371f490659b6fd68739d2b1fee50696"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a7371f490659b6fd68739d2b1fee50696">atcab_reversal</a> (const uint8_t *bin, size_t bin_size, uint8_t *dest, size_t *dest_size)</td></tr>
+<tr class="memdesc:a7371f490659b6fd68739d2b1fee50696"><td class="mdescLeft">&#160;</td><td class="mdescRight">To reverse the input data.  <br /></td></tr>
+<tr class="separator:a7371f490659b6fd68739d2b1fee50696"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40b70cfab865fa4fd9a5e7a29ca59d38"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a40b70cfab865fa4fd9a5e7a29ca59d38">atcab_bin2hex_</a> (const uint8_t *bin, size_t bin_size, char *hex, size_t *hex_size, bool is_pretty, bool is_space, bool is_upper)</td></tr>
+<tr class="memdesc:a40b70cfab865fa4fd9a5e7a29ca59d38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that converts a binary buffer to a hex string suitable for easy reading.  <br /></td></tr>
+<tr class="separator:a40b70cfab865fa4fd9a5e7a29ca59d38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ef30ca351b13623043917b5ed86cbb8"><td class="memItemLeft" align="right" valign="top"><a id="a4ef30ca351b13623043917b5ed86cbb8" name="a4ef30ca351b13623043917b5ed86cbb8"></a>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcab_hex2bin_</b> (const char *hex, size_t hex_size, uint8_t *bin, size_t *bin_size, bool is_space)</td></tr>
+<tr class="separator:a4ef30ca351b13623043917b5ed86cbb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a481179181349c801c16fc1ab698f2f24"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a481179181349c801c16fc1ab698f2f24">atcab_hex2bin</a> (const char *ascii_hex, size_t ascii_hex_len, uint8_t *binary, size_t *bin_len)</td></tr>
+<tr class="memdesc:a481179181349c801c16fc1ab698f2f24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that converts a hex string to binary buffer.  <br /></td></tr>
+<tr class="separator:a481179181349c801c16fc1ab698f2f24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a929bf65cbc777bab7e533a2755cfad"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a7a929bf65cbc777bab7e533a2755cfad">isDigit</a> (char c)</td></tr>
+<tr class="memdesc:a7a929bf65cbc777bab7e533a2755cfad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks to see if a character is an ASCII representation of a digit ((c ge '0') and (c le '9'))  <br /></td></tr>
+<tr class="separator:a7a929bf65cbc777bab7e533a2755cfad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04fefe2ff5a7d2e937b2634acd22982a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a04fefe2ff5a7d2e937b2634acd22982a">isBlankSpace</a> (char c)</td></tr>
+<tr class="memdesc:a04fefe2ff5a7d2e937b2634acd22982a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks to see if a character is blank space.  <br /></td></tr>
+<tr class="separator:a04fefe2ff5a7d2e937b2634acd22982a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a592c23e94097ad5e212beb6390aa88c6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a592c23e94097ad5e212beb6390aa88c6">isAlpha</a> (char c)</td></tr>
+<tr class="memdesc:a592c23e94097ad5e212beb6390aa88c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks to see if a character is an ASCII representation of hex ((c &gt;= 'A') and (c &lt;= 'F')) || ((c &gt;= 'a') and (c &lt;= 'f'))  <br /></td></tr>
+<tr class="separator:a592c23e94097ad5e212beb6390aa88c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78abefc293c0a04d8ef649c94c8a1057"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a78abefc293c0a04d8ef649c94c8a1057">isHexAlpha</a> (char c)</td></tr>
+<tr class="memdesc:a78abefc293c0a04d8ef649c94c8a1057"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks to see if a character is an ASCII representation of hex ((c &gt;= 'A') and (c &lt;= 'F')) || ((c &gt;= 'a') and (c &lt;= 'f'))  <br /></td></tr>
+<tr class="separator:a78abefc293c0a04d8ef649c94c8a1057"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7ca9ee391118aafe6f3cf7df4fa5de3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#ab7ca9ee391118aafe6f3cf7df4fa5de3">isHex</a> (char c)</td></tr>
+<tr class="memdesc:ab7ca9ee391118aafe6f3cf7df4fa5de3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this character is a valid hex character or if this is blankspace (The character can be included in a valid hexstring).  <br /></td></tr>
+<tr class="separator:ab7ca9ee391118aafe6f3cf7df4fa5de3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39003da4dc8a0b8999f1325c2f96f641"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a39003da4dc8a0b8999f1325c2f96f641">isHexDigit</a> (char c)</td></tr>
+<tr class="memdesc:a39003da4dc8a0b8999f1325c2f96f641"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this character is a valid hex character.  <br /></td></tr>
+<tr class="separator:a39003da4dc8a0b8999f1325c2f96f641"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad017ae33af5a7ea062cea7d54de675a8"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#ad017ae33af5a7ea062cea7d54de675a8">packHex</a> (const char *ascii_hex, size_t ascii_hex_len, char *packed_hex, size_t *packed_len)</td></tr>
+<tr class="memdesc:ad017ae33af5a7ea062cea7d54de675a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove spaces from a ASCII hex string.  <br /></td></tr>
+<tr class="separator:ad017ae33af5a7ea062cea7d54de675a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac873a37c53fdd922d5b36efd737e3ec3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#ac873a37c53fdd922d5b36efd737e3ec3">isBase64</a> (char c, const uint8_t *rules)</td></tr>
+<tr class="memdesc:ac873a37c53fdd922d5b36efd737e3ec3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this character is a valid base 64 character or if this is space (A character can be included in a valid base 64 string).  <br /></td></tr>
+<tr class="separator:ac873a37c53fdd922d5b36efd737e3ec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad10d15454308230fbef54bdd43001ed2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#ad10d15454308230fbef54bdd43001ed2">isBase64Digit</a> (char c, const uint8_t *rules)</td></tr>
+<tr class="memdesc:ad10d15454308230fbef54bdd43001ed2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if this character is a valid base 64 character.  <br /></td></tr>
+<tr class="separator:ad10d15454308230fbef54bdd43001ed2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55ba8a1787f69d44d6e40db041fbd786"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a55ba8a1787f69d44d6e40db041fbd786">atcab_base64decode_</a> (const char *encoded, size_t encoded_size, uint8_t *data, size_t *data_size, const uint8_t *rules)</td></tr>
+<tr class="memdesc:a55ba8a1787f69d44d6e40db041fbd786"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode base64 string to data with ruleset option.  <br /></td></tr>
+<tr class="separator:a55ba8a1787f69d44d6e40db041fbd786"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeeff0177acf29e6e7b134a14d7119d69"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#aeeff0177acf29e6e7b134a14d7119d69">atcab_base64encode_</a> (const uint8_t *data, size_t data_size, char *encoded, size_t *encoded_size, const uint8_t *rules)</td></tr>
+<tr class="memdesc:aeeff0177acf29e6e7b134a14d7119d69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode data as base64 string with ruleset option.  <br /></td></tr>
+<tr class="separator:aeeff0177acf29e6e7b134a14d7119d69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3aa141525a1141f1a290e2a996da0c9c"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a3aa141525a1141f1a290e2a996da0c9c">atcab_base64encode</a> (const uint8_t *byte_array, size_t array_len, char *encoded, size_t *encoded_len)</td></tr>
+<tr class="memdesc:a3aa141525a1141f1a290e2a996da0c9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode data as base64 string.  <br /></td></tr>
+<tr class="separator:a3aa141525a1141f1a290e2a996da0c9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6073c5a05e0ad2e738f460e727014553"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a6073c5a05e0ad2e738f460e727014553">atcab_base64decode</a> (const char *encoded, size_t encoded_len, uint8_t *byte_array, size_t *array_len)</td></tr>
+<tr class="memdesc:a6073c5a05e0ad2e738f460e727014553"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode base64 string to data.  <br /></td></tr>
+<tr class="separator:a6073c5a05e0ad2e738f460e727014553"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72f385a8eafc464a05acfa54561fed63"><td class="memItemLeft" align="right" valign="top"><a id="a72f385a8eafc464a05acfa54561fed63" name="a72f385a8eafc464a05acfa54561fed63"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>atcab_pointer_delta</b> (const void *start, const void *end)</td></tr>
+<tr class="memdesc:a72f385a8eafc464a05acfa54561fed63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to calculate the number of bytes between two pointers. <br /></td></tr>
+<tr class="separator:a72f385a8eafc464a05acfa54561fed63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac37b319dabc5b9492a422f6d3d4e118b"><td class="memItemLeft" align="right" valign="top"><a id="ac37b319dabc5b9492a422f6d3d4e118b" name="ac37b319dabc5b9492a422f6d3d4e118b"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>atcab_memset_s</b> (void *dest, size_t destsz, int ch, size_t count)</td></tr>
+<tr class="memdesc:ac37b319dabc5b9492a422f6d3d4e118b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Guaranteed to perform memory writes regardless of optimization level. Matches memset_s signature. <br /></td></tr>
+<tr class="separator:ac37b319dabc5b9492a422f6d3d4e118b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13a4675d782c861977b653e3c2b354ba"><td class="memItemLeft" align="right" valign="top"><a id="a13a4675d782c861977b653e3c2b354ba" name="a13a4675d782c861977b653e3c2b354ba"></a>
+char&#160;</td><td class="memItemRight" valign="bottom"><b>lib_toupper</b> (char c)</td></tr>
+<tr class="memdesc:a13a4675d782c861977b653e3c2b354ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a character to uppercase. <br /></td></tr>
+<tr class="separator:a13a4675d782c861977b653e3c2b354ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada3308b30b1b1e40abb806dbc5476648"><td class="memItemLeft" align="right" valign="top"><a id="ada3308b30b1b1e40abb806dbc5476648" name="ada3308b30b1b1e40abb806dbc5476648"></a>
+char&#160;</td><td class="memItemRight" valign="bottom"><b>lib_tolower</b> (char c)</td></tr>
+<tr class="memdesc:ada3308b30b1b1e40abb806dbc5476648"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a character to lowercase. <br /></td></tr>
+<tr class="separator:ada3308b30b1b1e40abb806dbc5476648"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21594322838322aac744aaf655d77ec8"><td class="memItemLeft" align="right" valign="top"><a id="a21594322838322aac744aaf655d77ec8" name="a21594322838322aac744aaf655d77ec8"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>lib_strcasestr</b> (const char *haystack, const char *needle)</td></tr>
+<tr class="memdesc:a21594322838322aac744aaf655d77ec8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search for a substring in a case insenstive format. <br /></td></tr>
+<tr class="separator:a21594322838322aac744aaf655d77ec8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Declarations common to all atcacert code. </p>
-<p>These are common definitions used by all the atcacert code.</p>
+<div class="textblock"><p>Helpers to support the CryptoAuthLib Basic API methods. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a6073c5a05e0ad2e738f460e727014553" name="a6073c5a05e0ad2e738f460e727014553"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6073c5a05e0ad2e738f460e727014553">&#9670;&#160;</a></span>atcab_base64decode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS atcab_base64decode </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>encoded</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>encoded_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>byte_array</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>array_len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Decode base64 string to data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">encoded</td><td>Base64 string to be decoded. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">encoded_len</td><td>Size of the base64 string in bytes. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">byte_array</td><td>Decoded data will be returned here. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">array_len</td><td>As input, the size of the byte_array buffer. As output, the length of the decoded data.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="a55ba8a1787f69d44d6e40db041fbd786" name="a55ba8a1787f69d44d6e40db041fbd786"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55ba8a1787f69d44d6e40db041fbd786">&#9670;&#160;</a></span>atcab_base64decode_()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS atcab_base64decode_ </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>encoded</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>encoded_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>data_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>rules</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Decode base64 string to data with ruleset option. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">encoded</td><td>Base64 string to be decoded. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">encoded_size</td><td>Size of the base64 string in bytes. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">data</td><td>Decoded data will be returned here. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">data_size</td><td>As input, the size of the byte_array buffer. As output, the length of the decoded data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rules</td><td>base64 ruleset to use </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a3aa141525a1141f1a290e2a996da0c9c" name="a3aa141525a1141f1a290e2a996da0c9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3aa141525a1141f1a290e2a996da0c9c">&#9670;&#160;</a></span>atcab_base64encode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS atcab_base64encode </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>byte_array</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>array_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>encoded</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>encoded_len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Encode data as base64 string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">byte_array</td><td>Data to be encode in base64. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">array_len</td><td>Size of byte_array in bytes. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">encoded</td><td>Base64 output is returned here. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">encoded_len</td><td>As input, the size of the encoded buffer. As output, the length of the encoded base64 character string.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="aeeff0177acf29e6e7b134a14d7119d69" name="aeeff0177acf29e6e7b134a14d7119d69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeeff0177acf29e6e7b134a14d7119d69">&#9670;&#160;</a></span>atcab_base64encode_()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS atcab_base64encode_ </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>data_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>encoded</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>encoded_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>rules</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Encode data as base64 string with ruleset option. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>The input byte array that will be converted to base 64 encoded characters</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data_size</td><td>The length of the byte array</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">encoded</td><td>The output converted to base 64 encoded characters.</td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">encoded_size</td><td>Input: The size of the encoded buffer, Output: The length of the encoded base 64 character string</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rules</td><td>ruleset to use during encoding </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae31a9fd8e9deca79aa5fef0292fe5272" name="ae31a9fd8e9deca79aa5fef0292fe5272"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae31a9fd8e9deca79aa5fef0292fe5272">&#9670;&#160;</a></span>atcab_bin2hex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS atcab_bin2hex </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>bin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>bin_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>hex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>hex_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Convert a binary buffer to a hex string for easy reading. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bin</td><td>Input data to convert. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bin_size</td><td>Size of data to convert. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">hex</td><td>Buffer that receives hex string. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">hex_size</td><td>As input, the size of the hex buffer. As output, the size of the output hex. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="a40b70cfab865fa4fd9a5e7a29ca59d38" name="a40b70cfab865fa4fd9a5e7a29ca59d38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40b70cfab865fa4fd9a5e7a29ca59d38">&#9670;&#160;</a></span>atcab_bin2hex_()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS atcab_bin2hex_ </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>bin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>bin_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>hex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>hex_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>is_pretty</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>is_space</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>is_upper</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function that converts a binary buffer to a hex string suitable for easy reading. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bin</td><td>Input data to convert. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bin_size</td><td>Size of data to convert. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">hex</td><td>Buffer that receives hex string. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">hex_size</td><td>As input, the size of the hex buffer. As output, the size of the output hex. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">is_pretty</td><td>Indicates whether new lines should be added for pretty printing. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">is_space</td><td>Convert the output hex with space between it. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">is_upper</td><td>Convert the output hex to upper case.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="a481179181349c801c16fc1ab698f2f24" name="a481179181349c801c16fc1ab698f2f24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a481179181349c801c16fc1ab698f2f24">&#9670;&#160;</a></span>atcab_hex2bin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS atcab_hex2bin </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>ascii_hex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>ascii_hex_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>binary</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>bin_len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function that converts a hex string to binary buffer. </p>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ascii_hex</td><td>Input buffer to convert</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ascii_hex_len</td><td>Length of buffer to convert</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">binary</td><td>Buffer that receives binary</td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">bin_len</td><td>As input, the size of the bin buffer. As output, the size of the bin data. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7371f490659b6fd68739d2b1fee50696" name="a7371f490659b6fd68739d2b1fee50696"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7371f490659b6fd68739d2b1fee50696">&#9670;&#160;</a></span>atcab_reversal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS atcab_reversal </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>bin</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>bin_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>dest_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>To reverse the input data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bin</td><td>Input data to reverse. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bin_size</td><td>Size of data to reverse. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">dest</td><td>Buffer to store reversed binary data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dest_size</td><td>The size of the dest buffer.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="a592c23e94097ad5e212beb6390aa88c6" name="a592c23e94097ad5e212beb6390aa88c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a592c23e94097ad5e212beb6390aa88c6">&#9670;&#160;</a></span>isAlpha()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool isAlpha </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks to see if a character is an ASCII representation of hex ((c &gt;= 'A') and (c &lt;= 'F')) || ((c &gt;= 'a') and (c &lt;= 'f')) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">c</td><td>character to check </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the character is a hex </dd></dl>
+
+</div>
+</div>
+<a id="ac873a37c53fdd922d5b36efd737e3ec3" name="ac873a37c53fdd922d5b36efd737e3ec3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac873a37c53fdd922d5b36efd737e3ec3">&#9670;&#160;</a></span>isBase64()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool isBase64 </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>rules</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns true if this character is a valid base 64 character or if this is space (A character can be included in a valid base 64 string). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">c</td><td>character to check </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rules</td><td>base64 ruleset to use </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the character can be included in a valid base 64 string </dd></dl>
+
+</div>
+</div>
+<a id="ad10d15454308230fbef54bdd43001ed2" name="ad10d15454308230fbef54bdd43001ed2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad10d15454308230fbef54bdd43001ed2">&#9670;&#160;</a></span>isBase64Digit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool isBase64Digit </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>rules</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns true if this character is a valid base 64 character. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">c</td><td>character to check </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rules</td><td>base64 ruleset to use </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the character can be included in a valid base 64 string </dd></dl>
+
+</div>
+</div>
+<a id="a04fefe2ff5a7d2e937b2634acd22982a" name="a04fefe2ff5a7d2e937b2634acd22982a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04fefe2ff5a7d2e937b2634acd22982a">&#9670;&#160;</a></span>isBlankSpace()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool isBlankSpace </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks to see if a character is blank space. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">c</td><td>character to check </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the character is blankspace </dd></dl>
+
+</div>
+</div>
+<a id="a7a929bf65cbc777bab7e533a2755cfad" name="a7a929bf65cbc777bab7e533a2755cfad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a929bf65cbc777bab7e533a2755cfad">&#9670;&#160;</a></span>isDigit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool isDigit </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks to see if a character is an ASCII representation of a digit ((c ge '0') and (c le '9')) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">c</td><td>character to check </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the character is a digit </dd></dl>
+
+</div>
+</div>
+<a id="ab7ca9ee391118aafe6f3cf7df4fa5de3" name="ab7ca9ee391118aafe6f3cf7df4fa5de3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7ca9ee391118aafe6f3cf7df4fa5de3">&#9670;&#160;</a></span>isHex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool isHex </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns true if this character is a valid hex character or if this is blankspace (The character can be included in a valid hexstring). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">c</td><td>character to check </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the character can be included in a valid hexstring </dd></dl>
+
+</div>
+</div>
+<a id="a78abefc293c0a04d8ef649c94c8a1057" name="a78abefc293c0a04d8ef649c94c8a1057"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78abefc293c0a04d8ef649c94c8a1057">&#9670;&#160;</a></span>isHexAlpha()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool isHexAlpha </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks to see if a character is an ASCII representation of hex ((c &gt;= 'A') and (c &lt;= 'F')) || ((c &gt;= 'a') and (c &lt;= 'f')) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">c</td><td>character to check </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the character is a hex </dd></dl>
+
+</div>
+</div>
+<a id="a39003da4dc8a0b8999f1325c2f96f641" name="a39003da4dc8a0b8999f1325c2f96f641"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39003da4dc8a0b8999f1325c2f96f641">&#9670;&#160;</a></span>isHexDigit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool isHexDigit </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>c</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns true if this character is a valid hex character. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">c</td><td>character to check </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the character can be included in a valid hexstring </dd></dl>
+
+</div>
+</div>
+<a id="ad017ae33af5a7ea062cea7d54de675a8" name="ad017ae33af5a7ea062cea7d54de675a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad017ae33af5a7ea062cea7d54de675a8">&#9670;&#160;</a></span>packHex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS packHex </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>ascii_hex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>ascii_hex_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>packed_hex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>packed_len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Remove spaces from a ASCII hex string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ascii_hex</td><td>Initial hex string to remove blankspace from </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ascii_hex_len</td><td>Length of the initial hex string </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">packed_hex</td><td>Resulting hex string without blankspace </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">packed_len</td><td>In: Size to packed_hex buffer Out: Number of bytes in the packed hex string </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00278.html">atcacert.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00278.html">atca_helpers.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

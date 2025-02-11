@@ -6,7 +6,7 @@ var searchData=
   ['kit_5fhost_5fprocess_5fcmd_3',['kit_host_process_cmd',['../a00017.html#ac00c465f600b5dd1dcb85eddff61d93a',1,'kit_host_process_cmd(ascii_kit_host_context_t *ctx, const kit_host_map_entry_t *cmd_list, int argc, char *argv[], uint8_t *response, size_t *rlen):&#160;ascii_kit_host.c'],['../a00020.html#ac00c465f600b5dd1dcb85eddff61d93a',1,'kit_host_process_cmd(ascii_kit_host_context_t *ctx, const kit_host_map_entry_t *cmd_list, int argc, char *argv[], uint8_t *response, size_t *rlen):&#160;ascii_kit_host.c']]],
   ['kit_5fhost_5fprocess_5fline_4',['kit_host_process_line',['../a00017.html#a2067eeb11f190a7fb64217f917c3ff76',1,'kit_host_process_line(ascii_kit_host_context_t *ctx, uint8_t *input_line, size_t ilen, uint8_t *response, size_t *rlen):&#160;ascii_kit_host.c'],['../a00020.html#a2067eeb11f190a7fb64217f917c3ff76',1,'kit_host_process_line(ascii_kit_host_context_t *ctx, uint8_t *input_line, size_t ilen, uint8_t *response, size_t *rlen):&#160;ascii_kit_host.c']]],
   ['kit_5fhost_5ftask_5',['kit_host_task',['../a00017.html#ac2fa4cf8af951688c4be97cca0d23b71',1,'kit_host_task(ascii_kit_host_context_t *ctx):&#160;ascii_kit_host.c'],['../a00020.html#ac2fa4cf8af951688c4be97cca0d23b71',1,'kit_host_task(ascii_kit_host_context_t *ctx):&#160;ascii_kit_host.c']]],
-  ['kit_5fid_5ffrom_5fdevtype_6',['kit_id_from_devtype',['../a01473.html#ga554072f32204a0eb8d7b8c7931e43343',1,'kit_protocol.c']]],
-  ['kit_5finterface_7',['kit_interface',['../a01473.html#ga33fe33933fb59dde6e6fb8975da6c12d',1,'kit_protocol.c']]],
-  ['kit_5finterface_5ffrom_5fkittype_8',['kit_interface_from_kittype',['../a01473.html#ga31075898964b61f4877ba882477b71c3',1,'kit_protocol.c']]]
+  ['kit_5fid_5ffrom_5fdevtype_6',['kit_id_from_devtype',['../a01506.html#ga554072f32204a0eb8d7b8c7931e43343',1,'kit_protocol.c']]],
+  ['kit_5finterface_7',['kit_interface',['../a01506.html#ga33fe33933fb59dde6e6fb8975da6c12d',1,'kit_protocol.c']]],
+  ['kit_5finterface_5ffrom_5fkittype_8',['kit_interface_from_kittype',['../a01506.html#ga31075898964b61f4877ba882477b71c3',1,'kit_protocol.c']]]
 ];

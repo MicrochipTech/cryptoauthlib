@@ -1,10 +1,8 @@
 var a00578 =
 [
-    [ "atca_uart_host_s", "a01695.html", null ],
-    [ "hal_uart_control", "a00578.html#a41ed83bbc8e0fd3abea7beb513fbdb96", null ],
-    [ "hal_uart_init", "a00578.html#afb6d836af248aed1afe715ae2f2f7c2b", null ],
-    [ "hal_uart_post_init", "a00578.html#a1c5f894db539ea5cb0d5ae0fa38449d7", null ],
-    [ "hal_uart_receive", "a00578.html#a1a0256b61c3579519f8cc6d6157bc126", null ],
-    [ "hal_uart_release", "a00578.html#a1e0c17bf7342c21ca69d066eefa1f1eb", null ],
-    [ "hal_uart_send", "a00578.html#aae0b332270c1e8df223b430d8e8ddbbc", null ]
+    [ "hal_gpio_init", "a00578.html#a5159dcc0de9cf18a0a46d390fcde3d59", null ],
+    [ "hal_gpio_post_init", "a00578.html#a680903ede9921710475c23f3e0f5c56c", null ],
+    [ "hal_gpio_receive", "a00578.html#ac4ec5194f4ed97053e725b4f5d3b6db4", null ],
+    [ "hal_gpio_release", "a00578.html#a34a8c0ab6cfceb80c15080b571c0b3f7", null ],
+    [ "hal_gpio_send", "a00578.html#a0509181ebe5c1f3311cacc800796469b", null ]
 ];

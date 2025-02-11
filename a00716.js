@@ -1,5 +1,5 @@
 var a00716 =
 [
-    [ "pkcs11_decrypt_final", "a01477.html#ga045a35287c46a29da2ad13e700087e0d", null ],
-    [ "pkcs11_encrypt_final", "a01477.html#gaae94f85980031bec34148341efd537e3", null ]
+    [ "pkcs11_attrib_fill", "a01510.html#ga8b1206a513938768655cdd541ffee9b3", null ],
+    [ "pkcs11_attrib_value", "a01510.html#ga50e9c64b899d1b2f78c9634298225303", null ]
 ];

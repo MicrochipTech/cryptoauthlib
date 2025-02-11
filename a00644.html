@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: kit_protocol.c File Reference</title>
+<title>CryptoAuthLib: hal_uc3_i2c_asf.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,48 +98,54 @@ $(document).ready(function(){initNavTree('a00644.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">kit_protocol.c File Reference</div></div>
+  <div class="headertitle"><div class="title">hal_uc3_i2c_asf.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Microchip Crypto Auth hardware interface object.  
+<p>ATCA Hardware abstraction layer for SAMV71 I2C over ASF drivers.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;stdio.h&gt;</code><br />
-<code>#include &lt;limits.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00239.html">atca_compiler.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00629.html">kit_protocol.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00260.html">atca_helpers.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;asf.h&gt;</code><br />
+<code>#include &quot;twi.h&quot;</code><br />
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01712.html">atcaI2Cmaster</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">this is the hal_data for ATCA HAL for ASF SERCOM  <a href="a01712.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga8d90399e7f84850d1e8d4cd5e9f67fa8"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>KIT_MAX_SCAN_COUNT</b>&#160;&#160;&#160;8</td></tr>
-<tr class="separator:ga8d90399e7f84850d1e8d4cd5e9f67fa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadc1b033607e06cff7464dc0a49df2744"><td class="memItemLeft" align="right" valign="top">
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>KIT_MAX_TX_BUF</b>&#160;&#160;&#160;32</td></tr>
-<tr class="separator:gadc1b033607e06cff7464dc0a49df2744"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf89a7a4080a47aa10a5504291db285bf"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MAX_I2C_BUSES</b>&#160;&#160;&#160;3</td></tr>
+<tr class="separator:gaf89a7a4080a47aa10a5504291db285bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga06b19a932aea9cf3a5165fefacb24f7b"><td class="memItemLeft" align="right" valign="top">
+typedef struct <a class="el" href="a01712.html">atcaI2Cmaster</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ATCAI2CMaster_t</b></td></tr>
+<tr class="memdesc:ga06b19a932aea9cf3a5165fefacb24f7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">this is the hal_data for ATCA HAL for ASF SERCOM <br /></td></tr>
+<tr class="separator:ga06b19a932aea9cf3a5165fefacb24f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga554072f32204a0eb8d7b8c7931e43343"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01473.html#ga554072f32204a0eb8d7b8c7931e43343">kit_id_from_devtype</a> (ATCADeviceType devtype)</td></tr>
-<tr class="separator:ga554072f32204a0eb8d7b8c7931e43343"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga31075898964b61f4877ba882477b71c3"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01473.html#ga31075898964b61f4877ba882477b71c3">kit_interface_from_kittype</a> (ATCAKitType kittype)</td></tr>
-<tr class="separator:ga31075898964b61f4877ba882477b71c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga33fe33933fb59dde6e6fb8975da6c12d"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01473.html#ga33fe33933fb59dde6e6fb8975da6c12d">kit_interface</a> (ATCAKitType kittype)</td></tr>
-<tr class="separator:ga33fe33933fb59dde6e6fb8975da6c12d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc420e4b166a1b339d1a2687e0f12cb1"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#gadc420e4b166a1b339d1a2687e0f12cb1">change_i2c_speed</a> (<a class="el" href="a01636.html">ATCAIface</a> iface, uint32_t speed)</td></tr>
+<tr class="memdesc:gadc420e4b166a1b339d1a2687e0f12cb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">method to change the bus speec of I2C  <br /></td></tr>
+<tr class="separator:gadc420e4b166a1b339d1a2687e0f12cb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Microchip Crypto Auth hardware interface object. </p>
+<div class="textblock"><p>ATCA Hardware abstraction layer for SAMV71 I2C over ASF drivers. </p>
+<p>Prerequisite: add SERCOM I2C Master Polled support to application in Atmel Studio</p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00644.html">kit_protocol.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00644.html">hal_uc3_i2c_asf.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

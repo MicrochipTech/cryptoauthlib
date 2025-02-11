@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert_date.c File Reference</title>
+<title>CryptoAuthLib: atca_platform.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.6</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,63 +98,45 @@ $(document).ready(function(){initNavTree('a00290.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
-  <div class="headertitle"><div class="title">atcacert_date.c File Reference</div></div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">atca_platform.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Date handling with regard to certificates.  
+<p>Configure the platform interfaces for cryptoauthlib.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;string.h&gt;</code><br />
-<code>#include &lt;limits.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00293.html">atcacert_date.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00239.html">atca_compiler.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
 </div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a4f60d6c21f0543b2187329461cffd466"><td class="memItemLeft" align="right" valign="top"><a id="a4f60d6c21f0543b2187329461cffd466" name="a4f60d6c21f0543b2187329461cffd466"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>hal_memset_s</b>&#160;&#160;&#160;<a class="el" href="a00278.html#ac37b319dabc5b9492a422f6d3d4e118b">atcab_memset_s</a></td></tr>
+<tr class="separator:a4f60d6c21f0543b2187329461cffd466"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga208c468285600790ebcdba55a4ccf3a8"><td class="memItemLeft" align="right" valign="top">atcacert_date_format_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga208c468285600790ebcdba55a4ccf3a8">atcacert_date_from_asn1_tag</a> (const uint8_t tag)</td></tr>
-<tr class="memdesc:ga208c468285600790ebcdba55a4ccf3a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert the asn1 tag for the supported time formats into the local time format.  <br /></td></tr>
-<tr class="separator:ga208c468285600790ebcdba55a4ccf3a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga33f676825335d37da36aee1c93463829"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga33f676825335d37da36aee1c93463829">atcacert_date_enc</a> (atcacert_date_format_t format, const <a class="el" href="a01470.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp, uint8_t *formatted_date, size_t *formatted_date_size)</td></tr>
-<tr class="memdesc:ga33f676825335d37da36aee1c93463829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format a timestamp according to the format type.  <br /></td></tr>
-<tr class="separator:ga33f676825335d37da36aee1c93463829"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6a6ba4b1c683a72bd3bd34badbed7461"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga6a6ba4b1c683a72bd3bd34badbed7461">atcacert_date_dec</a> (atcacert_date_format_t format, const uint8_t *formatted_date, size_t formatted_date_size, <a class="el" href="a01470.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp)</td></tr>
-<tr class="memdesc:ga6a6ba4b1c683a72bd3bd34badbed7461"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse a formatted timestamp according to the specified format.  <br /></td></tr>
-<tr class="separator:ga6a6ba4b1c683a72bd3bd34badbed7461"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga82a0f236afa03da347abbee1db588cb3"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga82a0f236afa03da347abbee1db588cb3">atcacert_date_get_max_date</a> (atcacert_date_format_t format, <a class="el" href="a01470.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp)</td></tr>
-<tr class="memdesc:ga82a0f236afa03da347abbee1db588cb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the maximum date available for the given format.  <br /></td></tr>
-<tr class="separator:ga82a0f236afa03da347abbee1db588cb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaef5c4497cd5a21ae7952658aa9dc7a62"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#gaef5c4497cd5a21ae7952658aa9dc7a62">atcacert_date_enc_compcert</a> (const <a class="el" href="a01470.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *issue_date, uint8_t expire_years, uint8_t enc_dates[3])</td></tr>
-<tr class="memdesc:gaef5c4497cd5a21ae7952658aa9dc7a62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode the issue and expire dates in the format used by the compressed certificate.  <br /></td></tr>
-<tr class="separator:gaef5c4497cd5a21ae7952658aa9dc7a62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga949c368ba13b78caee11d2abe60de755"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga949c368ba13b78caee11d2abe60de755">atcacert_date_enc_compcert_ext</a> (const <a class="el" href="a01470.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *issue_date, uint8_t expire_years, uint8_t comp_cert[72u])</td></tr>
-<tr class="memdesc:ga949c368ba13b78caee11d2abe60de755"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encode the issue and expire dates in the format used by the compressed certificate.  <br /></td></tr>
-<tr class="separator:ga949c368ba13b78caee11d2abe60de755"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaab6bdf548ca56cec54441114a3152767"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#gaab6bdf548ca56cec54441114a3152767">atcacert_date_dec_compcert</a> (const uint8_t enc_dates[3], atcacert_date_format_t expire_date_format, <a class="el" href="a01470.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *issue_date, <a class="el" href="a01470.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *expire_date)</td></tr>
-<tr class="memdesc:gaab6bdf548ca56cec54441114a3152767"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode the issue and expire dates from the format used by the compressed certificate.  <br /></td></tr>
-<tr class="separator:gaab6bdf548ca56cec54441114a3152767"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5d9b9329445d9ac59e306531b9bc65f2"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga5d9b9329445d9ac59e306531b9bc65f2">atcacert_date_dec_compcert_ext</a> (const uint8_t comp_cert[72u], atcacert_date_format_t expire_date_format, <a class="el" href="a01470.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *issue_date, <a class="el" href="a01470.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *expire_date)</td></tr>
-<tr class="memdesc:ga5d9b9329445d9ac59e306531b9bc65f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode the issue and expire dates from the format used by the compressed certificate.  <br /></td></tr>
-<tr class="separator:ga5d9b9329445d9ac59e306531b9bc65f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6609f17be8ee9ba67f9c50a3790b9486"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga6609f17be8ee9ba67f9c50a3790b9486">atcacert_date_cmp</a> (const <a class="el" href="a01470.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp1, const <a class="el" href="a01470.html#ga4a59e158244def2c79227aa244bd59c2">atcacert_tm_utc_t</a> *timestamp2)</td></tr>
-<tr class="memdesc:ga6609f17be8ee9ba67f9c50a3790b9486"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare two dates.  <br /></td></tr>
-<tr class="separator:ga6609f17be8ee9ba67f9c50a3790b9486"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:ga66f248d2f10fc94689c6f1f92fdae5b4"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01470.html#ga66f248d2f10fc94689c6f1f92fdae5b4">ATCACERT_DATE_FORMAT_SIZES</a> [5]</td></tr>
-<tr class="separator:ga66f248d2f10fc94689c6f1f92fdae5b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa879f6b0c834e42325fff42d2087b84"><td class="memItemLeft" align="right" valign="top">
+void *&#160;</td><td class="memItemRight" valign="bottom"><b>hal_malloc</b> (size_t size)</td></tr>
+<tr class="separator:gafa879f6b0c834e42325fff42d2087b84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa6d47ddbfd92184e624c55bf69328e0"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>hal_free</b> (void *ptr)</td></tr>
+<tr class="separator:gafa6d47ddbfd92184e624c55bf69328e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21594322838322aac744aaf655d77ec8"><td class="memItemLeft" align="right" valign="top"><a id="a21594322838322aac744aaf655d77ec8" name="a21594322838322aac744aaf655d77ec8"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>lib_strcasestr</b> (const char *haystack, const char *needle)</td></tr>
+<tr class="memdesc:a21594322838322aac744aaf655d77ec8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search for a substring in a case insenstive format. <br /></td></tr>
+<tr class="separator:a21594322838322aac744aaf655d77ec8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Date handling with regard to certificates. </p>
+<div class="textblock"><p>Configure the platform interfaces for cryptoauthlib. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_26647cdac0a1f8c717d44b4eb3b4ec89.html">atcacert</a></li><li class="navelem"><a class="el" href="a00290.html">atcacert_date.c</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="a00290.html">atca_platform.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>
