@@ -26,7 +26,7 @@
  */
 
 #include "atca_test.h"
-#ifndef DO_NOT_TEST_CERT
+#if !defined(DO_NOT_TEST_CERT) && ATCACERT_COMPCERT_EN
 
 #include "atcacert/atcacert_date.h"
 
@@ -2266,4 +2266,238 @@ TEST(atcacert_date_dec, bad_params)
     ret = atcacert_date_dec(DATEFMT_RFC5280_GEN, NULL, ts_str_size, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
+
+// *INDENT-OFF* - Preserve formatting
+t_test_case_info atcacert_date_enc_iso8601_sep_tests[] =
+{
+#if ATCACERT_DATEFMT_ISO_EN
+    { REGISTER_TEST_CASE(atcacert_date_enc_iso8601_sep, good),        NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_iso8601_sep, min),         NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_iso8601_sep, max),         NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_iso8601_sep, bad_year),    NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_iso8601_sep, bad_month),   NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_iso8601_sep, bad_day),     NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_iso8601_sep, bad_hour),    NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_iso8601_sep, bad_min),     NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_iso8601_sep, bad_sec),     NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_iso8601_sep, bad_params),  NULL },
+#endif
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_date_enc_rfc5280_utc_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_utc, good),        NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_utc, min),         NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_utc, max),         NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_utc, y2k),         NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_utc, bad_year),    NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_utc, bad_month),   NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_utc, bad_day),     NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_utc, bad_hour),    NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_utc, bad_min),     NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_utc, bad_sec),     NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_utc, bad_params),  NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_date_enc_posix_uint32_be_tests[] =
+{
+#if ATCACERT_DATEFMT_POSIX_EN
+    { REGISTER_TEST_CASE(atcacert_date_enc_posix_uint32_be, good),       NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_posix_uint32_be, min),        NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_posix_uint32_be, large),      NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_posix_uint32_be, max),        NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_posix_uint32_be, bad_low),    NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_posix_uint32_be, bad_high),   NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_posix_uint32_be, bad_params), NULL },
+#endif
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_date_enc_posix_uint32_le_tests[] =
+{
+#if ATCACERT_DATEFMT_POSIX_EN
+    { REGISTER_TEST_CASE(atcacert_date_enc_posix_uint32_le, good),       NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_posix_uint32_le, min),        NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_posix_uint32_le, large),      NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_posix_uint32_le, max),        NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_posix_uint32_le, bad_low),    NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_posix_uint32_le, bad_high),   NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_posix_uint32_le, bad_params), NULL },
+#endif
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_date_enc_rfc5280_gen_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_gen, good),           NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_gen, min),            NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_gen, max),            NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_gen, bad_year),       NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_gen, bad_month),      NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_gen, bad_day),        NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_gen, bad_hour),       NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_gen, bad_min),        NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_gen, bad_sec),        NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_gen, bad_params),     NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_date_enc_compcert_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_date_enc_compcert, good),                 NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_compcert, min),                  NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_compcert, max),                  NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_enc_compcert, min_ext_issue_year),   NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_compcert, max_ext_issue_year),   NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_compcert, min_ext_expire_years), NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_compcert, max_ext_expire_years), NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_compcert, mixed_ext),            NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_compcert, bad_year),             NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_compcert, bad_month),            NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_compcert, bad_day),              NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_compcert, bad_hour),             NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_compcert, bad_expire),           NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc_compcert, bad_params),           NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_date_enc_tests[] =
+{
+#if ATCACERT_DATEFMT_ISO_EN
+    { REGISTER_TEST_CASE(atcacert_date_enc, iso8601_sep),                NULL },
+#endif
+    { REGISTER_TEST_CASE(atcacert_date_enc, rfc5280_utc),                NULL },
+#if ATCACERT_DATEFMT_POSIX_EN
+    { REGISTER_TEST_CASE(atcacert_date_enc, posix_uint32_be),            NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_enc, posix_uint32_le),            NULL },
+#endif
+    { REGISTER_TEST_CASE(atcacert_date_enc, rfc5280_gen),                NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc, small_buf),                  NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc, bad_format),                 NULL },
+    { REGISTER_TEST_CASE(atcacert_date_enc, bad_params),                 NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_date_dec_iso8601_sep_tests[] =
+{
+#if ATCACERT_DATEFMT_ISO_EN
+    { REGISTER_TEST_CASE(atcacert_date_dec_iso8601_sep, good),           NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec_iso8601_sep, min),            NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec_iso8601_sep, max),            NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_dec_iso8601_sep, bad_int),        NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec_iso8601_sep, bad_params),     NULL },
+#endif
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_date_dec_rfc5280_utc_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_utc, good),           NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_utc, min),            NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_utc, max),            NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_utc, y2k),            NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_utc, bad_int),        NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_utc, bad_params),     NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_date_dec_posix_uint32_be_tests[] =
+{
+#if ATCACERT_DATEFMT_POSIX_EN
+    { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_be, good),       NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_be, min),        NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_be, int32_max),  NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_be, large),      NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_be, max),        NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_be, bad_params), NULL },
+#endif
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_date_dec_posix_uint32_le_tests[] =
+{
+#if ATCACERT_DATEFMT_POSIX_EN
+    { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_le, good),       NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_le, min),        NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_le, int32_max),  NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_le, large),      NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_le, max),        NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_le, bad_params), NULL },
+#endif
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_date_dec_rfc5280_gen_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_gen, good),           NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_gen, min),            NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_gen, max),            NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_gen, bad_int),        NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_gen, bad_params),     NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_date_get_max_date_tests[] =
+{
+#if ATCACERT_DATEFMT_ISO_EN
+    { REGISTER_TEST_CASE(atcacert_date_get_max_date, iso8601_sep),       NULL },
+#endif
+    { REGISTER_TEST_CASE(atcacert_date_get_max_date, rfc5280_utc),       NULL },
+#if ATCACERT_DATEFMT_POSIX_EN
+    { REGISTER_TEST_CASE(atcacert_date_get_max_date, posix_uint32_be),   NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_get_max_date, posix_uint32_le),   NULL },
+#endif
+    { REGISTER_TEST_CASE(atcacert_date_get_max_date, rfc5280_gen),       NULL },
+    { REGISTER_TEST_CASE(atcacert_date_get_max_date, new_format),        NULL },
+    { REGISTER_TEST_CASE(atcacert_date_get_max_date, bad_params),        NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_date_dec_compcert_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_date_dec_compcert, good),                      NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec_compcert, min),                       NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec_compcert, max),                       NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_dec_compcert, posix_uint32_be),           NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec_compcert, bad_params),                NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec_compcert, expiry_date_extended_gen),  NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_dec_compcert, expiry_date_utc),           NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec_compcert, issue_date_extended_gen),   NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_date_dec_tests[] =
+{
+#if ATCACERT_DATEFMT_ISO_EN
+    { REGISTER_TEST_CASE(atcacert_date_dec, iso8601_sep),                NULL },
+#endif
+    { REGISTER_TEST_CASE(atcacert_date_dec, rfc5280_utc),                NULL },
+#if ATCACERT_DATEFMT_POSIX_EN
+    { REGISTER_TEST_CASE(atcacert_date_dec, posix_uint32_be),            NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_dec, posix_uint32_le),            NULL },
+#endif
+    { REGISTER_TEST_CASE(atcacert_date_dec, rfc5280_gen),                NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec, small_buf),                  NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_dec, bad_format),                 NULL },
+    { REGISTER_TEST_CASE(atcacert_date_dec, bad_params),                 NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
 #endif

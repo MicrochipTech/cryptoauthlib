@@ -31,7 +31,7 @@
 #include "app/tng/tngtls_cert_def_2_device.h"
 #include "atcacert/atcacert_def.h"
 
-#if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
+#if (defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)) && !defined(DO_NOT_TEST_CERT) && ATCACERT_COMPCERT_EN
 
 TEST_GROUP(tng_atcacert_client);
 
@@ -114,7 +114,9 @@ TEST(tng_atcacert_client, tng_atcacert_read_signer_cert)
     size_t cert_size = 0;
     uint8_t ca_public_key[ATCA_ECCP256_PUBKEY_SIZE];
     uint8_t tbs_digest[ATCA_SHA2_256_DIGEST_SIZE];
+    cal_buffer tbs_digest_buf = CAL_BUF_INIT(sizeof(tbs_digest), tbs_digest);
     uint8_t signature[ATCA_ECCP256_SIG_SIZE];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
 
     ret = tng_atcacert_max_signer_cert_size(&cert_size);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
@@ -133,14 +135,14 @@ TEST(tng_atcacert_client, tng_atcacert_read_signer_cert)
         &g_tngtls_cert_def_1_signer,
         cert,
         cert_size,
-        tbs_digest);
+        &tbs_digest_buf);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
     ret = atcacert_get_signature(
         &g_tngtls_cert_def_1_signer,
         cert,
         cert_size,
-        signature);
+        &sig);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
 #if ATCA_HOSTLIB_EN
@@ -254,7 +256,9 @@ TEST(tng_atcacert_client, tng_atcacert_read_device_cert_no_signer)
     const atcacert_def_t* cert_def = NULL;
     uint8_t ca_public_key[ATCA_ECCP256_PUBKEY_SIZE];
     uint8_t tbs_digest[ATCA_SHA2_256_DIGEST_SIZE];
+    cal_buffer tbs_digest_buf = CAL_BUF_INIT(sizeof(tbs_digest), tbs_digest);
     uint8_t signature[ATCA_ECCP256_SIG_SIZE];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
 
     ret = tng_atcacert_max_device_cert_size(&cert_size);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
@@ -273,14 +277,14 @@ TEST(tng_atcacert_client, tng_atcacert_read_device_cert_no_signer)
         cert_def,
         cert,
         cert_size,
-        tbs_digest);
+        &tbs_digest_buf);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
     ret = atcacert_get_signature(
         cert_def,
         cert,
         cert_size,
-        signature);
+        &sig);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
 #if ATCA_HOSTLIB_EN
@@ -326,7 +330,9 @@ TEST(tng_atcacert_client, tng_atcacert_read_device_cert_signer)
     const atcacert_def_t* cert_def = NULL;
     uint8_t ca_public_key[ATCA_ECCP256_PUBKEY_SIZE];
     uint8_t tbs_digest[ATCA_SHA2_256_DIGEST_SIZE];
+    cal_buffer tbs_digest_buf = CAL_BUF_INIT(sizeof(tbs_digest), tbs_digest);
     uint8_t signature[ATCA_ECCP256_SIG_SIZE];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
 
     ret = tng_atcacert_max_signer_cert_size(&signer_cert_size);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
@@ -352,14 +358,14 @@ TEST(tng_atcacert_client, tng_atcacert_read_device_cert_signer)
         cert_def,
         cert,
         cert_size,
-        tbs_digest);
+        &tbs_digest_buf);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
     ret = atcacert_get_signature(
         cert_def,
         cert,
         cert_size,
-        signature);
+        &sig);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
 #if ATCA_HOSTLIB_EN
@@ -405,7 +411,9 @@ TEST(tng_atcacert_client, tng_atcacert_read_device_cert_signer_with_ext_api)
     const atcacert_def_t* cert_def = NULL;
     uint8_t ca_public_key[ATCA_ECCP256_PUBKEY_SIZE];
     uint8_t tbs_digest[ATCA_SHA2_256_DIGEST_SIZE];
+    cal_buffer tbs_digest_buf = CAL_BUF_INIT(sizeof(tbs_digest), tbs_digest);
     uint8_t signature[ATCA_ECCP256_SIG_SIZE];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
 
     ret = tng_atcacert_max_signer_cert_size(&signer_cert_size);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
@@ -431,14 +439,14 @@ TEST(tng_atcacert_client, tng_atcacert_read_device_cert_signer_with_ext_api)
         cert_def,
         cert,
         cert_size,
-        tbs_digest);
+        &tbs_digest_buf);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
     ret = atcacert_get_signature(
         cert_def,
         cert,
         cert_size,
-        signature);
+        &sig);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
 
 #if ATCA_HOSTLIB_EN
@@ -540,7 +548,7 @@ TEST(tng_atcacert_client, tng_atcacert_device_public_key_cert)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info tng_atcacert_client_unit_test_info[] =
 {
-#if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
+#if (defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)) && !defined(DO_NOT_TEST_CERT) && ATCACERT_COMPCERT_EN
     { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_root_public_key),            atca_test_cond_ecc608 },
     { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_root_cert),                  atca_test_cond_ecc608 },
     { REGISTER_TEST_CASE(tng_atcacert_client, tng_atcacert_max_signer_cert_size),       atca_test_cond_ecc608 },

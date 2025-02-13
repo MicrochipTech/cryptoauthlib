@@ -32,7 +32,7 @@
 #include "atcacert_pem.h"
 #include "atca_helpers.h"
 
-#if ATCACERT_COMPCERT_EN
+#if ATCACERT_EN && ATCACERT_COMPCERT_EN
 
 ATCA_STATUS atcacert_encode_pem(const uint8_t* der,
                                 size_t         der_size,
@@ -50,11 +50,13 @@ ATCA_STATUS atcacert_encode_pem(const uint8_t* der,
 
     do
     {
+#if ATCA_CHECK_PARAMS_EN
         if (der == NULL || pem == NULL || pem_size == NULL || header == NULL || footer == NULL)
         {
             rv = ATCACERT_E_BAD_PARAMS;
             break;
         }
+#endif
         max_pem_size = *pem_size;
         *pem_size = 0; // Default to 0
 
@@ -121,12 +123,13 @@ ATCA_STATUS atcacert_decode_pem(const char* pem,
 
     do
     {
+#if ATCA_CHECK_PARAMS_EN
         if (pem == NULL || der == NULL || der_size == NULL || header == NULL || footer == NULL)
         {
             rv = ATCACERT_E_BAD_PARAMS;
             break;
         }
-
+#endif
         // Find the position of the header
         header_pos = strstr(pem, header);
         if (header_pos == NULL)

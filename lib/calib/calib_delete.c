@@ -55,34 +55,44 @@
  */
 ATCA_STATUS calib_delete_base(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t* mac)
 {
-    ATCAPacket packet;
+    ATCAPacket * packet = NULL;
     ATCA_STATUS status;
-
-    // Verify the inputs
-    if ((device == NULL) || (mac == NULL))
-    {
-        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
-    }
 
     do
     {
-        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
+        // Verify the inputs
+        if ((device == NULL) || (mac == NULL))
+        {
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
+        }
+
+        packet = calib_packet_alloc();
+        if(NULL == packet)
+        {
+            (void)ATCA_TRACE(ATCA_ALLOC_FAILURE, "calib_packet_alloc - failed");
+            status = ATCA_ALLOC_FAILURE;
+            break;
+        }
+
+        (void)memset(packet, 0x00, sizeof(ATCAPacket));
 
         // build Delete command
-        packet.param1 = mode;
-        packet.param2 = key_id;
+        packet->param1 = mode;
+        packet->param2 = key_id;
 
-        (void)memcpy(&packet.data[0], mac, DELETE_MAC_SIZE);
+        (void)memcpy(&packet->data[0], mac, DELETE_MAC_SIZE);
 
-        (void)atDelete(atcab_get_device_type_ext(device), &packet);
+        (void)atDelete(atcab_get_device_type_ext(device), packet);
 
-        if ((status = atca_execute_command((void*)&packet, device)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command((void*)packet, device)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "calib_delete - execution failed");
             break;
         }
     } while (false);
 
+    calib_packet_free(packet);
     return status;
 }
 

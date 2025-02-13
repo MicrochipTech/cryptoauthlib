@@ -110,6 +110,7 @@ TEST(atca_cmd_basic_test, sign_hw_verify)
     ATCA_STATUS status = ATCA_SUCCESS;
     uint8_t msg[ATCA_SHA256_DIGEST_SIZE];
     uint8_t public_key[ATCA_ECCP256_PUBKEY_SIZE];
+    cal_buffer public_key_buf = CAL_BUF_INIT(sizeof(public_key), public_key);
     uint8_t signature[ATCA_ECCP256_SIG_SIZE];
     uint16_t private_key_id = 0;
     bool is_verified = false;
@@ -125,7 +126,7 @@ TEST(atca_cmd_basic_test, sign_hw_verify)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Generate key pair
-    status = atca_test_genkey(private_key_id, public_key);
+    status = atca_test_genkey(atcab_get_device(), private_key_id, &public_key_buf);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Sign message
@@ -138,7 +139,7 @@ TEST(atca_cmd_basic_test, sign_hw_verify)
     TEST_ASSERT_EQUAL(true, is_verified);
 }
 
-#ifdef ATCA_ECC_SUPPORT
+#if ATCA_ECC_SUPPORT
 TEST_CONDITION(atca_cmd_basic_test, sign_internal_ecc)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
@@ -157,6 +158,7 @@ TEST(atca_cmd_basic_test, sign_internal_ecc)
     uint8_t config[128];
     uint8_t sn[9];
     uint8_t public_key[ATCA_PUB_KEY_SIZE];
+    cal_buffer public_key_buf = CAL_BUF_INIT(sizeof(public_key), public_key);
     uint8_t num_in[NONCE_NUMIN_SIZE];
     atca_temp_key_t temp_key;
     atca_nonce_in_out_t nonce_params;
@@ -177,7 +179,7 @@ TEST(atca_cmd_basic_test, sign_internal_ecc)
     memcpy(&sn[4], &config[8], 5);
 
     // Generate key pair and get public key
-    status = atca_test_genkey(private_key_id, public_key);
+    status = atca_test_genkey(atcab_get_device(), private_key_id, &public_key_buf);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Start with random nonce
@@ -247,10 +249,10 @@ t_test_case_info sign_basic_test_info[] =
 #if ATCA_HOSTLIB_EN
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sign_sw_verify),  atca_test_cond_p256_sign },
 #endif
-#if !ATCA_HOSTLIB_EN && (defined(ATCA_ECC_SUPPORT) || ATCA_TA_SUPPORT)
+#if !ATCA_HOSTLIB_EN && (ATCA_ECC_SUPPORT || ATCA_TA_SUPPORT)
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sign_hw_verify),  atca_test_cond_p256_sign_verify },
 #endif
-#ifdef ATCA_ECC_SUPPORT
+#if ATCA_ECC_SUPPORT
     { REGISTER_TEST_CASE(atca_cmd_basic_test, sign_internal_ecc), REGISTER_TEST_CONDITION(atca_cmd_basic_test, sign_internal_ecc) },
 #endif
 #if 0

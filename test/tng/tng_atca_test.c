@@ -27,7 +27,7 @@
 #include "atca_test.h"
 #include "app/tng/tng_atca.h"
 
-#if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
+#if (defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)) && ATCACERT_COMPCERT_EN
 
 TEST_GROUP(tng_atca);
 
@@ -69,7 +69,7 @@ TEST(tng_atca, tng_get_device_pubkey)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info tng_atca_unit_test_info[] =
 {
-#if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
+#if (defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)) && ATCACERT_COMPCERT_EN
     { REGISTER_TEST_CASE(tng_atca, tng_get_device_pubkey), atca_test_cond_ecc608 },
 #endif
     { (fp_test_case)NULL,                                  (uint8_t)0 },

@@ -55,57 +55,67 @@
  */
 ATCA_STATUS calib_secureboot(ATCADevice device, uint8_t mode, uint16_t param2, const uint8_t* digest, const uint8_t* signature, uint8_t* mac)
 {
-    ATCAPacket packet;
+    ATCAPacket * packet = NULL;
     ATCA_STATUS status;
-
-    if ((device == NULL) || (digest == NULL))
-    {
-        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
-    }
-
-    #if (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + SECUREBOOT_DIGEST_SIZE + SECUREBOOT_SIGNATURE_SIZE))
-    #if ATCA_PREPROCESSOR_WARNING
-    #warning "CA_MAX_PACKET_SIZE will not support full or fullcopy mode in secureboot command"
-    #endif
-    if (NULL != signature)
-    {
-        status = ATCA_TRACE(ATCA_INVALID_SIZE, "Unsupported parameter");
-    }
-    #endif
 
     do
     {
-        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
+        if ((device == NULL) || (digest == NULL))
+        {
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
+        }
 
-        packet.param1 = mode;
-        packet.param2 = param2;
+        #if (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + SECUREBOOT_DIGEST_SIZE + SECUREBOOT_SIGNATURE_SIZE))
+        #if ATCA_PREPROCESSOR_WARNING
+        #warning "CA_MAX_PACKET_SIZE will not support full or fullcopy mode in secureboot command"
+        #endif
+        if (NULL != signature)
+        {
+            status = ATCA_TRACE(ATCA_INVALID_SIZE, "Unsupported parameter");
+        }
+        #endif
 
-        (void)memcpy(packet.data, digest, SECUREBOOT_DIGEST_SIZE);
+        packet = calib_packet_alloc();
+        if(NULL == packet)
+        {
+            (void)ATCA_TRACE(ATCA_ALLOC_FAILURE, "calib_packet_alloc - failed");
+            status = ATCA_ALLOC_FAILURE;
+            break;
+        }
+        
+        (void)memset(packet, 0x00, sizeof(ATCAPacket));
+
+        packet->param1 = mode;
+        packet->param2 = param2;
+
+        (void)memcpy(packet->data, digest, SECUREBOOT_DIGEST_SIZE);
 
         if (NULL != signature)
         {
-            (void)memcpy(&packet.data[SECUREBOOT_DIGEST_SIZE], signature, SECUREBOOT_SIGNATURE_SIZE);
+            (void)memcpy(&packet->data[SECUREBOOT_DIGEST_SIZE], signature, SECUREBOOT_SIGNATURE_SIZE);
         }
 
-        if ((status = atSecureBoot(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
+        if ((status = atSecureBoot(atcab_get_device_type_ext(device), packet)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "atSecureBoot - failed");
             break;
         }
 
-        if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(packet, device)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "calib_secureboot - execution failed");
             break;
         }
 
-        if ((mac != NULL) && (packet.data[ATCA_COUNT_IDX] >= SECUREBOOT_RSP_SIZE_MAC))
+        if ((mac != NULL) && (packet->data[ATCA_COUNT_IDX] >= SECUREBOOT_RSP_SIZE_MAC))
         {
-            (void)memcpy(mac, &packet.data[ATCA_RSP_DATA_IDX], SECUREBOOT_MAC_SIZE);
+            (void)memcpy(mac, &packet->data[ATCA_RSP_DATA_IDX], SECUREBOOT_MAC_SIZE);
         }
 
     } while (false);
 
+    calib_packet_free(packet);
     return status;
 }
 #endif /* CALIB_SECUREBOOT_EN */

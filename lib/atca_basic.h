@@ -71,9 +71,11 @@ bool atcab_is_ta_device(ATCADeviceType dev_type);
 #include "crypto/atca_crypto_hw_aes.h"
 
 // Hardware Accelerated algorithms
+#if ATCAB_PBKDF2_SHA256_EN
 ATCA_STATUS atcab_pbkdf2_sha256_ext(ATCADevice device, const uint32_t iter, const uint16_t slot, const uint8_t* salt, const size_t salt_len, uint8_t* result,
                                     size_t result_len);
 ATCA_STATUS atcab_pbkdf2_sha256(const uint32_t iter, const uint16_t slot, const uint8_t* salt, const size_t salt_len, uint8_t* result, size_t result_len);
+#endif
 
 #ifdef ATCA_USE_ATCAB_FUNCTIONS
 

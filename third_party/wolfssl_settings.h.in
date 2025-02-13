@@ -60,6 +60,8 @@
 
 #define WOLFSSL_NOSHA512_256
 
+#define WOLFSSL_NO_ASN_STRICT
+
 #ifdef __cplusplus
     }   /* extern "C" */
 #endif

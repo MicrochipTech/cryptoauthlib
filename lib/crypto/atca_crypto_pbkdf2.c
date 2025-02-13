@@ -52,7 +52,7 @@ ATCA_STATUS atcac_pbkdf2_sha256(
     uint8_t temp2_digest[ATCA_SHA256_DIGEST_SIZE] = { 0 };
     atcac_sha2_256_ctx_t sha256_ctx;
 
-    if ((0U >= result_len) || (result_len > UINT32_MAX))
+    if ((0U >= result_len))
     {
         return status;
     }

@@ -55,11 +55,12 @@ TEST(atca_cmd_basic_test, sboot_digest)
     uint8_t digest[ATCA_KEY_SIZE];
     uint8_t signature[ATCA_SIG_SIZE];
     uint8_t public_key[72];
+    cal_buffer public_key_buf = CAL_BUF_INIT(ATCA_ECCP256_PUBKEY_SIZE, public_key);
 
     test_assert_data_is_locked();
 
     // Generate new key pair
-    status = atca_test_genkey(private_key_id, public_key);
+    status = atca_test_genkey(atcab_get_device(), private_key_id, &public_key_buf);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     // Reformat public key into padded format

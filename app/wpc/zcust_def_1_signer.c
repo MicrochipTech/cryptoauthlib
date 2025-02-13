@@ -95,6 +95,14 @@ const atcacert_cert_element_t g_cert_elements_1_signer[3] = {
 
 const atcacert_def_t g_cert_def_1_signer = {
     .type = CERTTYPE_X509,
+    .comp_cert_dev_loc = {
+        .zone = DEVZONE_DATA,
+        .slot = 14,
+        .is_genkey = 0,
+        .offset = 0,
+        .count = 72
+    },
+#if ATCACERT_COMPCERT_EN
     .template_id = 1,
     .chain_id = 3,
     .private_key_slot = 0,
@@ -120,13 +128,7 @@ const atcacert_def_t g_cert_def_1_signer = {
         .offset = 0,
         .count = 72
     },
-    .comp_cert_dev_loc = {
-        .zone = DEVZONE_DATA,
-        .slot = 14,
-        .is_genkey = 0,
-        .offset = 0,
-        .count = 72
-    },
+    
     .std_cert_elements = {
         { // STDCERT_PUBLIC_KEY
             .offset = 134,
@@ -165,5 +167,6 @@ const atcacert_def_t g_cert_def_1_signer = {
     .cert_elements_count = sizeof(g_cert_elements_1_signer) / sizeof(g_cert_elements_1_signer[0]),
     .cert_template = g_template_1_signer,
     .cert_template_size = sizeof(g_template_1_signer),
+#endif
     .ca_cert_def = NULL
 };

@@ -64,7 +64,7 @@
  */
 ATCA_STATUS calib_kdf(ATCADevice device, uint8_t mode, uint16_t key_id, const uint32_t details, const uint8_t* message, uint8_t* out_data, uint8_t* out_nonce)
 {
-    ATCAPacket packet;
+    ATCAPacket * packet = NULL;
     ATCA_STATUS status;
     uint16_t out_data_size = 0;
 
@@ -76,17 +76,25 @@ ATCA_STATUS calib_kdf(ATCADevice device, uint8_t mode, uint16_t key_id, const ui
             break;
         }
 
-        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
+        packet = calib_packet_alloc();
+        if(NULL == packet)
+        {
+            (void)ATCA_TRACE(ATCA_ALLOC_FAILURE, "calib_packet_alloc - failed");
+            status = ATCA_ALLOC_FAILURE;
+            break;
+        }
+
+        (void)memset(packet, 0x00, sizeof(ATCAPacket));
 
         // Build the KDF command
-        packet.param1 = mode;
-        packet.param2 = key_id;
+        packet->param1 = mode;
+        packet->param2 = key_id;
 
         // Add details parameter
-        packet.data[0] = (uint8_t)(details & 0x000000FFu);
-        packet.data[1] = (uint8_t)((details & 0x0000FF00u) >> 8u);
-        packet.data[2] = (uint8_t)((details & 0x00FF0000u) >> 16u);
-        packet.data[3] = (uint8_t)((details & 0xFF000000u) >> 24u);
+        packet->data[0] = (uint8_t)(details & 0x000000FFu);
+        packet->data[1] = (uint8_t)((details & 0x0000FF00u) >> 8u);
+        packet->data[2] = (uint8_t)((details & 0x00FF0000u) >> 16u);
+        packet->data[3] = (uint8_t)((details & 0xFF000000u) >> 24u);
 
         #if (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + KDF_DETAILS_SIZE + AES_DATA_SIZE))
         #if ATCA_PREPROCESSOR_WARNING
@@ -98,7 +106,7 @@ ATCA_STATUS calib_kdf(ATCADevice device, uint8_t mode, uint16_t key_id, const ui
         }
         #endif
 
-        if (((mode & KDF_MODE_ALG_MASK) != KDF_MODE_ALG_AES) && (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + KDF_DETAILS_SIZE + (packet.data[3] & 0xFFu))))
+        if (((mode & KDF_MODE_ALG_MASK) != KDF_MODE_ALG_AES) && (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + KDF_DETAILS_SIZE + (packet->data[3] & 0xFFu))))
         {
             status = ATCA_TRACE(ATCA_INVALID_SIZE, "Invalid packet size received");
             break;
@@ -108,23 +116,23 @@ ATCA_STATUS calib_kdf(ATCADevice device, uint8_t mode, uint16_t key_id, const ui
         if ((mode & KDF_MODE_ALG_MASK) == KDF_MODE_ALG_AES)
         {
             // AES algorithm has a fixed message size
-            (void)memcpy(&packet.data[KDF_DETAILS_SIZE], message, AES_DATA_SIZE);
+            (void)memcpy(&packet->data[KDF_DETAILS_SIZE], message, AES_DATA_SIZE);
         }
         else
         {
             // All other algorithms encode message size in the last byte of details
-            (void)memcpy(&packet.data[KDF_DETAILS_SIZE], message, packet.data[3]);
+            (void)memcpy(&packet->data[KDF_DETAILS_SIZE], message, packet->data[3]);
         }
 
         // Build command
-        if ((status = atKDF(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
+        if ((status = atKDF(atcab_get_device_type_ext(device), packet)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "atKDF - failed");
             break;
         }
 
         // Run command
-        if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(packet, device)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "calib_kdf - execution failed");
             break;
@@ -140,28 +148,29 @@ ATCA_STATUS calib_kdf(ATCADevice device, uint8_t mode, uint16_t key_id, const ui
         }
 
         // Return OutData if possible
-        if (out_data != NULL && packet.data[ATCA_COUNT_IDX] >= (ATCA_PACKET_OVERHEAD + out_data_size))
+        if (out_data != NULL && packet->data[ATCA_COUNT_IDX] >= (ATCA_PACKET_OVERHEAD + out_data_size))
         {
             if (CA_MAX_PACKET_SIZE < (ATCA_PACKET_OVERHEAD + out_data_size))
             {
                 (void)ATCA_TRACE(ATCA_INVALID_SIZE, "Invalid packet size received");
                 break;
             }
-            (void)memcpy(out_data, &packet.data[ATCA_RSP_DATA_IDX], out_data_size);
+            (void)memcpy(out_data, &packet->data[ATCA_RSP_DATA_IDX], out_data_size);
         }
 
         // return OutNonce if possible
-        if (out_nonce != NULL && packet.data[ATCA_COUNT_IDX] >= (ATCA_PACKET_OVERHEAD + out_data_size + 32u))
+        if (out_nonce != NULL && packet->data[ATCA_COUNT_IDX] >= (ATCA_PACKET_OVERHEAD + out_data_size + 32u))
         {
             if (CA_MAX_PACKET_SIZE < (ATCA_PACKET_OVERHEAD + out_data_size + 32u))
             {
                 (void)ATCA_TRACE(ATCA_INVALID_SIZE, "Invalid packet size received");
                 break;
             }
-            (void)memcpy(out_nonce, &packet.data[ATCA_RSP_DATA_IDX + out_data_size], 32);
+            (void)memcpy(out_nonce, &packet->data[ATCA_RSP_DATA_IDX + out_data_size], 32);
         }
     } while (false);
 
+    calib_packet_free(packet);
     return status;
 }
 #endif  /* CALIB_KDF */

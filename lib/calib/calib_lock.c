@@ -55,28 +55,37 @@
  */
 ATCA_STATUS calib_lock(ATCADevice device, uint8_t mode, uint16_t summary_crc)
 {
-    ATCAPacket packet;
+    ATCAPacket * packet = NULL;
     ATCA_STATUS status;
-
-    if (device == NULL)
-    {
-        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
-    }
-
-    // build command for lock zone and send
-    (void)memset(&packet, 0, sizeof(packet));
-    packet.param1 = mode;
-    packet.param2 = summary_crc;
 
     do
     {
-        if ((status = atLock(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
+        if (device == NULL)
+        {
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
+        }
+
+        packet = calib_packet_alloc();
+        if(NULL == packet)
+        {
+            (void)ATCA_TRACE(ATCA_ALLOC_FAILURE, "calib_packet_alloc - failed");
+            status = ATCA_ALLOC_FAILURE;
+            break;
+        }
+
+        // build command for lock zone and send
+        (void)memset(packet, 0, sizeof(ATCAPacket));
+        packet->param1 = mode;
+        packet->param2 = summary_crc;
+
+        if ((status = atLock(atcab_get_device_type_ext(device), packet)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "atLock - failed");
             break;
         }
 
-        if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(packet, device)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "calib_lock - execution failed");
             break;
@@ -84,6 +93,7 @@ ATCA_STATUS calib_lock(ATCADevice device, uint8_t mode, uint16_t summary_crc)
 
     } while (false);
 
+    calib_packet_free(packet);
     return status;
 }
 

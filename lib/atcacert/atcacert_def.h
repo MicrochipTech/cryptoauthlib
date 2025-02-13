@@ -54,10 +54,10 @@
 #define CA2_DEV_SN_SIZE_PART_1                  4u
 #define CA2_DEV_SN_SIZE_PART_2                  5u
 
-#define CA_DEV_SN_CONFIG_ZONE_OFFSET                 0u
-#define CA2_DEV_SN_CONFIG_ZONE_OFFSET_PART_1         0u
-#define CA2_DEV_SN_CONFIG_ZONE_OFFSET_PART_2         8u
-
+#define CA_DEV_SN_CONFIG_ZONE_OFFSET            0u
+#define CA2_DEV_SN_CONFIG_ZONE_OFFSET_PART_1    0u
+#define CA2_DEV_SN_CONFIG_ZONE_OFFSET_PART_2    8u
+#define TA_DEV_SN_DEDICATED_DATA_ZONE_OFFSET    0u
 
 /** \defgroup atcacert_ Certificate manipulation methods (atcacert_)
  *
@@ -103,6 +103,7 @@ typedef enum atcacert_device_zone_e
     DEVZONE_OTP     = 0x01, //!< One Time Programmable zone.
     DEVZONE_DATA    = 0x02, //!< Data zone (slots).
     DEVZONE_GENKEY  = 0x03, //!< Data zone - Generate Pubkey (slots).
+    DEVZONE_DEDICATED_DATA = 0x04, //!< Dedicated data zone.
     DEVZONE_NONE    = 0x07  //!< Special value used to indicate there is no device location.
 } atcacert_device_zone_t;
 
@@ -189,10 +190,11 @@ typedef struct atcacert_def_s
 {
     atcacert_cert_type_t    type;                                               //!< Certificate type.
     atcacert_device_loc_t   comp_cert_dev_loc;                                  //!< Where on the device the compressed cert can be found.
+    uint16_t                private_key_slot;                                   //!< If this is a device certificate template, this is the device slot for the device private key.
 #if ATCACERT_COMPCERT_EN
     uint8_t                         template_id;                                //!< ID for the this certificate definition (4-bit value).
     uint8_t                         chain_id;                                   //!< ID for the certificate chain this definition is a part of (4-bit value).
-    uint8_t                         private_key_slot;                           //!< If this is a device certificate template, this is the device slot for the device private key.
+    uint16_t                        std_sig_size;                               //!< Standard signature size of the certificate keytype.
     atcacert_cert_sn_src_t          sn_source;                                  //!< Where the certificate serial number comes from (4-bit value).
     atcacert_device_loc_t           cert_sn_dev_loc;                            //!< Only applies when sn_source is SNSRC_STORED or SNSRC_STORED_DYNAMIC. Describes where to get the certificate serial number on the device.
     atcacert_date_format_t          issue_date_format;                          //!< Format of the issue date in the certificate.
@@ -203,9 +205,9 @@ typedef struct atcacert_def_s
     atcacert_cert_loc_t             std_cert_elements[STDCERT_NUM_ELEMENTS];    //!< Where in the certificate template the standard cert elements are inserted.
     const atcacert_cert_element_t*  cert_elements;                              //!< Additional certificate elements outside of the standard certificate contents.
     uint8_t                         cert_elements_count;                        //!< Number of additional certificate elements in cert_elements.
+#endif
     const uint8_t*                  cert_template;                              //!< Pointer to the actual certificate template data.
     uint16_t                        cert_template_size;                         //!< Size of the certificate template in cert_template in bytes.
-#endif
     const struct atcacert_def_s* ca_cert_def;                                   //!< Certificate definition of the CA certificate
 #if ATCACERT_INTEGRATION_EN
     struct atcac_x509_ctx** parsed;
@@ -226,7 +228,7 @@ typedef struct atcacert_build_state_s
     ATCADeviceType          devtype;        //!< Device type info for the certificate being rebuilt.
     uint8_t                 device_sn[9];   //!< Storage for the device SN, when it's found.
     uint8_t                 is_comp_cert;   //!< Indicates the structure contains the compressed certificate.
-    uint8_t                 comp_cert[72];  //!< Storage for the compressed certificate when it's found.
+    uint8_t                 comp_cert[ATCACERT_COMP_CERT_MAX_SIZE];   //!< Storage for the compressed certificate when it's found.
 } atcacert_build_state_t;
 
 // Inform function naming when compiling in C++
@@ -274,9 +276,9 @@ ATCA_STATUS atcacert_get_device_locs(ATCADevice             device,
  * \param[in]  cert_size      As input, the size of the cert buffer in bytes. This value will be
  *                            adjusted to the current/final size of the certificate through the
  *                            building process.
- * \param[in]  ca_public_key  ECC P256 public key of the certificate authority (issuer) for the
- *                            certificate being built. Set to NULL if the authority key id is
- *                            not needed, set properly in the cert_def template, or stored on the
+ * \param[in]  ca_public_key  Buffer pointing to ECC P256/P384/P521 public key of the certificate authority
+ *                            (issuer) for the certificate being built. Set to NULL if the authority key id
+ *                            is not needed, set properly in the cert_def template, or stored on the
  *                            device as specified in the cert_def cert_elements.
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
@@ -286,7 +288,7 @@ ATCA_STATUS atcacert_cert_build_start(ATCADevice                device,
                                       const atcacert_def_t*     cert_def,
                                       uint8_t*                  cert,
                                       size_t*                   cert_size,
-                                      const uint8_t             ca_public_key[64]);
+                                      const cal_buffer*         ca_public_key);
 
 /**
  * \brief Process information read from the ATECC device. If it contains information for the
@@ -366,14 +368,14 @@ ATCA_STATUS atcacert_get_subject(const atcacert_def_t*  cert_def,
  * \param[in]    cert_def         Certificate definition for the certificate.
  * \param[in,out] cert             Certificate to update.
  * \param[in]    cert_size        Size of the certificate (cert) in bytes.
- * \param[in]    subj_public_key  Subject public key as X and Y integers concatenated together. 64 bytes.
+ * \param[in]    subj_public_key  Buffer pointing to the subject public key as X and Y integers concatenated together.
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_set_subj_public_key(const atcacert_def_t*  cert_def,
                                          uint8_t*               cert,
                                          size_t                 cert_size,
-                                         const uint8_t          subj_public_key[64]);
+                                         const cal_buffer*      subj_public_key);
 
 #endif /* ATCACERT_COMPCERT_EN */
 
@@ -413,11 +415,11 @@ ATCA_STATUS atcacert_get_subj_key_id(const atcacert_def_t * cert_def,
  * \brief Sets the signature in a certificate. This may alter the size of the X.509 certificates.
  *
  * \param[in]    cert_def       Certificate definition for the certificate.
- * \param[in,out] cert           Certificate to update.
- * \param[in,out] cert_size      As input, size of the certificate (cert) in bytes.
+ * \param[in,out] cert          Certificate to update.
+ * \param[in,out] cert_size     As input, size of the certificate (cert) in bytes.
  *                              As output, the new size of the certificate.
  * \param[in]    max_cert_size  Maximum size of the cert buffer.
- * \param[in]    signature      Signature as R and S integers concatenated together. 64 bytes.
+ * \param[in]    signature      Buffer pointing to the signature as R and S integers concatenated together.
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
@@ -425,7 +427,7 @@ ATCA_STATUS atcacert_set_signature(const atcacert_def_t*    cert_def,
                                    uint8_t*                 cert,
                                    size_t*                  cert_size,
                                    size_t                   max_cert_size,
-                                   const uint8_t            signature[64]);
+                                   const cal_buffer*        signature);
 
 /**
  * \brief Gets the signature from a certificate.
@@ -433,15 +435,15 @@ ATCA_STATUS atcacert_set_signature(const atcacert_def_t*    cert_def,
  * \param[in]  cert_def   Certificate definition for the certificate.
  * \param[in]  cert       Certificate to get element from.
  * \param[in]  cert_size  Size of the certificate (cert) in bytes.
- * \param[out] signature  Signature is returned in this buffer. Formatted at R and S integers
- *                        concatenated together. 64 bytes.
+ * \param[out] signature  Signature is returned in this buffer. Formatted at R and S integers 
+ *                        concatenated together.          
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_get_signature(const atcacert_def_t *   cert_def,
                                    const uint8_t *          cert,
                                    size_t                   cert_size,
-                                   uint8_t                  signature[64]);
+                                   cal_buffer*              signature);
 
 /**
  * \brief Sets the issue date (notBefore) in a certificate. Will be formatted according to the date
@@ -596,7 +598,7 @@ ATCA_STATUS atcacert_set_cert_sn(const atcacert_def_t*  cert_def,
 ATCA_STATUS atcacert_gen_cert_sn(const atcacert_def_t*  cert_def,
                                  uint8_t*               cert,
                                  size_t                 cert_size,
-                                 const uint8_t          device_sn[9]);
+                                 const uint8_t          device_sn[ATCA_MAX_SERNUM_SIZE]);
 
 /**
  * \brief Generates a serial number for the given serial number source.
@@ -604,8 +606,8 @@ ATCA_STATUS atcacert_gen_cert_sn(const atcacert_def_t*  cert_def,
  * \param[in]  sn_source  Generation scheme to use.
  * \param[in]  device_sn  Device serial number (9 bytes) to use if required.
  *                        Can be NULL if the sn_source does not use it.
- * \param[in]  public_key Certificate public key (64 bytes) to use if
- *                        required. Can be NULL if the sn_source does not use
+ * \param[in]  public_key Certificate public key to use if required. 
+ *                        Can be NULL if the sn_source does not use
  *                        it.
  * \param[in]  comp_cert  Compressed certificate, used for encoded dates
  *                        (including extended dates) or signer ID if required.
@@ -619,9 +621,9 @@ ATCA_STATUS atcacert_gen_cert_sn(const atcacert_def_t*  cert_def,
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_generate_sn(atcacert_cert_sn_src_t sn_source,
-                                 const uint8_t          device_sn[9],
-                                 const uint8_t          public_key[64],
-                                 const uint8_t          comp_cert[72],
+                                 const uint8_t          device_sn[ATCA_MAX_SERNUM_SIZE],
+                                 const cal_buffer*      public_key,
+                                 const uint8_t          comp_cert[ATCACERT_COMP_CERT_MAX_SIZE],
                                  size_t                 sn_size,
                                  uint8_t*               sn);
 
@@ -653,15 +655,14 @@ ATCA_STATUS atcacert_get_cert_sn(const atcacert_def_t*  cert_def,
  * \param[in]    cert_def         Certificate definition for the certificate.
  * \param[in,out] cert             Certificate to update.
  * \param[in]    cert_size        Size of the certificate (cert) in bytes.
- * \param[in]    auth_public_key  Authority public key as X and Y integers concatenated together.
- *                                64 bytes.
+ * \param[in]    auth_public_key  Buffer pointing to the authority public key as X and Y integers concatenated together.
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_set_auth_key_id(const atcacert_def_t*  cert_def,
                                      uint8_t*               cert,
                                      size_t                 cert_size,
-                                     const uint8_t          auth_public_key[64]);
+                                     const cal_buffer*      auth_public_key);
 
 /**
  * \brief Sets the authority key ID in a certificate.
@@ -705,7 +706,7 @@ ATCA_STATUS atcacert_get_auth_key_id(const atcacert_def_t * cert_def,
  * \param[in,out] cert_size      As input, size of the certificate (cert) in bytes.
  *                              As output, the new size of the certificate.
  * \param[in]    max_cert_size  Maximum size of the cert buffer.
- * \param[in]    comp_cert      Compressed certificate. 72 bytes.
+ * \param[in]    comp_cert      Compressed certificate.
  *
  * \return ATCACERT_E_SUCCESS on success. ATCACERT_E_WRONG_CERT_DEF if the template ID, chain ID, and/or SN source
  *         don't match between the cert_def and the compressed certificate.
@@ -714,7 +715,7 @@ ATCA_STATUS atcacert_set_comp_cert(const atcacert_def_t*    cert_def,
                                    uint8_t*                 cert,
                                    size_t*                  cert_size,
                                    size_t                   max_cert_size,
-                                   const uint8_t            comp_cert[72]);
+                                   const uint8_t            comp_cert[ATCACERT_COMP_CERT_MAX_SIZE]);
 
 /**
  * \brief Generate the compressed certificate for the given certificate.
@@ -737,14 +738,13 @@ ATCA_STATUS atcacert_set_comp_cert(const atcacert_def_t*    cert_def,
  *                          for.
  * \param[in]  cert_size    Size of the certificate (cert) in bytes.
  * \param[out] comp_cert    Compressed certificate is returned in this buffer.
- *                          72 bytes.
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_get_comp_cert(const atcacert_def_t *   cert_def,
                                    const uint8_t *          cert,
                                    size_t                   cert_size,
-                                   uint8_t                  comp_cert[72]);
+                                   uint8_t                  comp_cert[ATCACERT_COMP_CERT_MAX_SIZE]);
 
 /**
  * \brief Generate the compressed certificate for the given certificate with
@@ -782,7 +782,7 @@ ATCA_STATUS atcacert_get_comp_cert(const atcacert_def_t *   cert_def,
  *                             cert_def value. If false, an error would be
  *                             returned due to the mismatch.
  * \param[out] comp_cert       Compressed certificate is returned in this
- *                             buffer. 72 bytes.
+ *                             buffer.
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
@@ -792,7 +792,7 @@ ATCA_STATUS atcacert_get_comp_cert_ext(const atcacert_def_t*    cert_def,
                                        const atcacert_tm_utc_t* def_issue_date,
                                        const uint8_t*           def_signer_id,
                                        bool                     is_diff_expire_years_ok,
-                                       uint8_t                  comp_cert[72]);
+                                       uint8_t                  comp_cert[ATCACERT_COMP_CERT_MAX_SIZE]);
 
 /**
  * \brief Get a pointer to the TBS data in a certificate.
@@ -824,7 +824,7 @@ ATCA_STATUS atcacert_get_tbs(const atcacert_def_t*  cert_def,
 ATCA_STATUS atcacert_get_tbs_digest(const atcacert_def_t *  cert_def,
                                     const uint8_t *         cert,
                                     size_t                  cert_size,
-                                    uint8_t                 tbs_digest[32]);
+                                    cal_buffer*             tbs_digest);
 
 /**
  * \brief Sets an element in a certificate. The data_size must match the size in cert_loc.
@@ -876,13 +876,13 @@ ATCA_STATUS atcacert_get_cert_element(const atcacert_def_t*         cert_def,
  *        value of the BIT STRING subjectPublicKey (excluding the tag,
  *        length, and number of unused bits).
  *
- * \param[in] public_key  ECC P256 public key to calculate key key ID for. Formatted as the X and
- *                        Y integers concatenated together. 64 bytes.
+ * \param[in] public_key  Buffer pointing to the ECC P256/P384/P521 public key to calculate key key ID for.
+ *                        Formatted as the X and Y integers concatenated together.
  * \param[in] key_id      Calculated key ID will be returned in this buffer. 20 bytes.
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS atcacert_get_key_id(const uint8_t public_key[64], uint8_t key_id[20]);
+ATCA_STATUS atcacert_get_key_id(const cal_buffer* public_key, uint8_t key_id[20]);
 
 /**
  * \brief Merge a new device location into a list of device locations. If the new location overlaps
@@ -895,9 +895,10 @@ ATCA_STATUS atcacert_get_key_id(const uint8_t public_key[64], uint8_t key_id[20]
  * applies to the device_loc being added. Existing device locations in the list won't be modified
  * to match the block size.
  *
- * \param[in,out] device_locs            Existing device location list to merge the new device
+ * \param[in]     device                Device context pointer
+ * \param[in,out] device_locs           Existing device location list to merge the new device
  *                                      location into.
- * \param[in,out] device_locs_count      As input, the existing number of items in the device_locs
+ * \param[in,out] device_locs_count     As input, the existing number of items in the device_locs
  *                                      list. As output, the new size of the device_locs list.
  * \param[in]    device_locs_max_count  Maximum number of items the device_locs list can hold.
  * \param[in]    device_loc             New device location to be merged into the device_locs list.
@@ -906,7 +907,8 @@ ATCA_STATUS atcacert_get_key_id(const uint8_t public_key[64], uint8_t key_id[20]
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS atcacert_merge_device_loc(atcacert_device_loc_t*        device_locs,
+ATCA_STATUS atcacert_merge_device_loc(ATCADevice                    device,
+                                      atcacert_device_loc_t*        device_locs,
                                       size_t*                       device_locs_count,
                                       size_t                        device_locs_max_count,
                                       const atcacert_device_loc_t*  device_loc,
@@ -974,7 +976,6 @@ ATCA_STATUS atcacert_transform_data(atcacert_transform_t    transform,
  */
 ATCA_STATUS atcacert_max_cert_size(const atcacert_def_t*    cert_def,
                                    size_t*                  max_cert_size);
-#endif /* ATCACERT_COMPCERT_EN */
 
 /** \brief
  *
@@ -991,6 +992,8 @@ int atcacert_calc_expire_years(const atcacert_def_t*    cert_def,
                                size_t                   cert_size,
                                int                      issue_tm_year,
                                uint8_t*                 expire_years);
+#endif /* ATCACERT_COMPCERT_EN */
+
 /** @} */
 #ifdef __cplusplus
 }

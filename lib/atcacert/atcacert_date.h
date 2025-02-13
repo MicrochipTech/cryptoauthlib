@@ -88,7 +88,6 @@ typedef uint8_t atcacert_date_format_t;
 #define DATEFMT_RFC5280_GEN_SIZE     (15)
 #define DATEFMT_MAX_SIZE             DATEFMT_ISO8601_SEP_SIZE
 #define ATCACERT_DATE_FORMAT_SIZES_COUNT 5
-#define ATCACERT_COMP_CERT_MAX_SIZE      72u
 
 extern const size_t ATCACERT_DATE_FORMAT_SIZES[ATCACERT_DATE_FORMAT_SIZES_COUNT];
 

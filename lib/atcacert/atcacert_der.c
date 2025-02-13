@@ -29,7 +29,7 @@
 #include "atcacert_der.h"
 #include <string.h>
 
-#if ATCACERT_COMPCERT_EN
+#if ATCACERT_EN && ATCACERT_COMPCERT_EN
 
 #ifdef __COVERITY__
 #pragma coverity compliance block \
@@ -332,7 +332,7 @@ ATCA_STATUS atcacert_der_dec_integer(const uint8_t* der_int,
     return ATCACERT_E_SUCCESS;
 }
 
-ATCA_STATUS atcacert_der_enc_ecdsa_sig_value(const uint8_t raw_sig[64],
+ATCA_STATUS atcacert_der_enc_ecdsa_sig_value(const cal_buffer* raw_sig,
                                              uint8_t*      der_sig,
                                              size_t*       der_sig_size)
 {
@@ -340,26 +340,51 @@ ATCA_STATUS atcacert_der_enc_ecdsa_sig_value(const uint8_t raw_sig[64],
     size_t r_size = 0u;
     size_t s_size = 0u;
     size_t der_sig_size_calc = 0u;
+    size_t raw_sig_size = 0u;
+    uint8_t seq_length[3];
+    size_t seq_length_size = sizeof(seq_length);
+    size_t seq_total_size = 0u;
+    uint8_t bit_string_length[3]; 
+    size_t bit_string_length_size = sizeof(bit_string_length);
+    size_t offset = 0u;
 
-    ATCA_CHECK_INVALID((NULL == raw_sig) || (NULL == der_sig_size), ATCACERT_E_BAD_PARAMS);
+    ATCA_CHECK_INVALID((NULL == raw_sig) || (NULL == raw_sig->buf) || (NULL == der_sig_size), ATCACERT_E_BAD_PARAMS);
+
+    // Calculate the size of the raw signature (R and S components)
+    raw_sig_size = raw_sig->len / 2u;
 
     // Find size of the DER encoded R integer
-    ret = atcacert_der_enc_integer(&raw_sig[0], 32u, (uint8_t)TRUE, NULL, &r_size);
+    ret = atcacert_der_enc_integer(&(raw_sig->buf[0]), raw_sig_size, (uint8_t)TRUE, NULL, &r_size);
     if (ret != ATCACERT_E_SUCCESS)
     {
         return ret;
     }
 
     // Find size of the DER encoded S integer
-    ret = atcacert_der_enc_integer(&raw_sig[32], 32u, (uint8_t)TRUE, NULL, &s_size);
+    ret = atcacert_der_enc_integer(&(raw_sig->buf[raw_sig_size]), raw_sig_size, (uint8_t)TRUE, NULL, &s_size);
     if (ret != ATCACERT_E_SUCCESS)
     {
         return ret;
     }
 
-    // This calculation assumes all DER lengths are a single byte, which is fine for 32 byte
-    // R and S integers.
-    der_sig_size_calc = 5u + r_size + s_size;
+    // Calculate the size of the DER encoded sequence
+    ret = atcacert_der_enc_length(r_size + s_size, seq_length, &seq_length_size);
+    if (ret != ATCACERT_E_SUCCESS)
+    {
+        return ret;
+    }
+
+    seq_total_size = 1u + seq_length_size + r_size + s_size;          // include sequence tag (0x30)
+
+    // Calculate the size of the DER encoded bit string
+    ret = atcacert_der_enc_length(seq_total_size, bit_string_length, &bit_string_length_size);
+    if (ret != ATCACERT_E_SUCCESS)
+    {
+        return ret;
+    }
+
+    bit_string_length[bit_string_length_size - 1u] += 1u;
+    der_sig_size_calc = 2u + bit_string_length_size + seq_total_size; // include bit string tag (0x03) and bit string spare bits (0x00)
 
     if (der_sig != NULL && *der_sig_size < der_sig_size_calc)
     {
@@ -372,25 +397,27 @@ ATCA_STATUS atcacert_der_enc_ecdsa_sig_value(const uint8_t raw_sig[64],
     if (der_sig == NULL)
     {
         return ATCACERT_E_SUCCESS;                  // Caller just wanted the encoded size
-
     }
-    der_sig[0] = 0x03;                              // signatureValue bit string tag
-    der_sig[1] = (uint8_t)(der_sig_size_calc - 2u); // signatureValue bit string length
-    der_sig[2] = 0x00;                              // signatureValue bit string spare bits
 
+    der_sig[offset++] = 0x03;                                                   // signatureValue bit string tag
+    (void)memcpy(&der_sig[offset], bit_string_length, bit_string_length_size);  // signatureValue bit string length
+    offset += bit_string_length_size;
+    der_sig[offset++] = 0x00;                                                   // signatureValue bit string spare bits
     // signatureValue bit string value is the DER encoding of ECDSA-Sig-Value
-    der_sig[3] = 0x30;                              // sequence tag
-    der_sig[4] = (uint8_t)(der_sig_size_calc - 5u); // sequence length
+    der_sig[offset++] = 0x30;                                                   // sequence tag
+    (void)memcpy(&der_sig[offset], seq_length, seq_length_size);                // sequence length
+    offset += seq_length_size;
 
     // Add R integer
-    ret = atcacert_der_enc_integer(&raw_sig[0], 32u, (uint8_t)TRUE, &der_sig[5], &r_size);
+    ret = atcacert_der_enc_integer(&(raw_sig->buf[0]), raw_sig_size, (uint8_t)TRUE, &der_sig[offset], &r_size);
     if (ret != ATCACERT_E_SUCCESS)
     {
         return ret;
     }
+    offset += r_size;
 
     // Add S integer
-    ret = atcacert_der_enc_integer(&raw_sig[32], 32u, (uint8_t)TRUE, &der_sig[5u + r_size], &s_size);
+    ret = atcacert_der_enc_integer(&(raw_sig->buf[raw_sig_size]), raw_sig_size, (uint8_t)TRUE, &der_sig[offset], &s_size);
     if (ret != ATCACERT_E_SUCCESS)
     {
         return ret;
@@ -401,17 +428,19 @@ ATCA_STATUS atcacert_der_enc_ecdsa_sig_value(const uint8_t raw_sig[64],
 
 ATCA_STATUS atcacert_der_dec_ecdsa_sig_value(const uint8_t* der_sig,
                                              size_t*        der_sig_size,
-                                             uint8_t        raw_sig[64])
+                                             cal_buffer*    raw_sig)
 {
     ATCA_STATUS ret = 0;
     size_t curr_idx = 0u;
     size_t dec_size = 0u;
     size_t bs_length = 0u;
+    size_t bs_overhead_len = 0u;
     size_t seq_length = 0u;
     size_t r_size = 0u;
     size_t s_size = 0u;
-    uint8_t int_data[33];
+    uint8_t int_data[R_S_LEN + 1u];
     size_t int_data_size = 0u;
+    size_t rs_len = 0u;
 
     if (der_sig == NULL || der_sig_size == NULL)
     {
@@ -499,28 +528,30 @@ ATCA_STATUS atcacert_der_dec_ecdsa_sig_value(const uint8_t* der_sig,
     }
     curr_idx += r_size;
 
-    if (raw_sig != NULL)
+    if (raw_sig != NULL && raw_sig->buf != NULL)
     {
-        (void)memset(raw_sig, 0, 64);  // Zero out the raw sig as the decoded integers may not touch all bytes
+        (void)memset(raw_sig->buf, 0, raw_sig->len);  // Zero out the raw sig as the decoded integers may not touch all bytes
 
     }
-    if (int_data_size <= 32u)
+
+    rs_len = (NULL == raw_sig) ? (ATCA_ECCP256_SIG_SIZE / 2u) : (raw_sig->len) / 2u;
+    if (int_data_size <= rs_len)
     {
-        if (raw_sig != NULL)
+        if (raw_sig != NULL && raw_sig->buf != NULL)
         {
-            (void)memcpy(&raw_sig[32u - int_data_size], &int_data[0], int_data_size);
+            (void)memcpy(&raw_sig->buf[rs_len - int_data_size], &int_data[0], int_data_size);
         }
     }
-    else if (int_data_size == 33u)
+    else if (int_data_size == (rs_len + 1u))
     {
         if (int_data[0] != 0x00u)
         {
             return ATCACERT_E_DECODING_ERROR;  // R integer is too large
         }
         // DER integer was 0-padded to keep it positive
-        if (raw_sig != NULL)
+        if (raw_sig != NULL && raw_sig->buf != NULL)
         {
-            (void)memcpy(&raw_sig[0], &int_data[1], 32);
+            (void)memcpy(&raw_sig->buf[0], &int_data[1], rs_len);
         }
     }
     else
@@ -542,23 +573,23 @@ ATCA_STATUS atcacert_der_dec_ecdsa_sig_value(const uint8_t* der_sig,
     }
     curr_idx += s_size;
 
-    if (int_data_size <= 32u)
+    if (int_data_size <= rs_len)
     {
-        if (raw_sig != NULL)
+        if (raw_sig != NULL && raw_sig->buf != NULL)
         {
-            (void)memcpy(&raw_sig[64u - int_data_size], &int_data[0], int_data_size);
+            (void)memcpy(&raw_sig->buf[raw_sig->len - int_data_size], &int_data[0], int_data_size);
         }
     }
-    else if (int_data_size == 33u)
+    else if (int_data_size == (rs_len + 1u))
     {
         if (int_data[0] != 0x00u)
         {
             return ATCACERT_E_DECODING_ERROR;  // S integer is too large
         }
         // DER integer was 0-padded to keep it positive
-        if (raw_sig != NULL)
+        if (raw_sig != NULL && raw_sig->buf != NULL)
         {
-            (void)memcpy(&raw_sig[32], &int_data[1], 32);
+            (void)memcpy(&raw_sig->buf[rs_len], &int_data[1], rs_len);
         }
     }
     else
@@ -571,10 +602,18 @@ ATCA_STATUS atcacert_der_dec_ecdsa_sig_value(const uint8_t* der_sig,
         return ATCACERT_E_DECODING_ERROR;  // Unexpected extra data in sequence
 
     }
-    if (bs_length != r_size + s_size + 3u)
-    {
-        return ATCACERT_E_DECODING_ERROR;  // Unexpected extra data in bit string
 
+    bs_overhead_len = ((r_size + s_size) > 128u) ? 4u : 3u; // Determines short form or long form
+
+    if (true == (IS_ADD_SAFE_SIZE_T(r_size, s_size)))
+    {
+        if (true == (IS_ADD_SAFE_SIZE_T(r_size + s_size, bs_overhead_len)))
+        {
+            if (bs_length != r_size + s_size + bs_overhead_len)
+            {
+                return ATCACERT_E_DECODING_ERROR;  // Unexpected extra data in bit string
+            }
+        }
     }
     *der_sig_size = curr_idx;
 

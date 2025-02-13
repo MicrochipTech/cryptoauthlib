@@ -25,7 +25,7 @@
  * THIS SOFTWARE.
  */
 #include "atca_test.h"
-#ifndef DO_NOT_TEST_CERT
+#if !defined(DO_NOT_TEST_CERT) && ATCACERT_COMPCERT_EN
 
 #include "atcacert/atcacert_der.h"
 
@@ -39,10 +39,10 @@ TEST_TEAR_DOWN(atcacert_der_enc_ecdsa_sig_value)
 {
 }
 
-static void atcacert_der_enc_ecdsa_sig_value_test(const uint8_t raw_sig[64], const uint8_t* der_sig_ref, size_t der_sig_ref_size)
+static void atcacert_der_enc_ecdsa_sig_value_test(const cal_buffer* raw_sig, const uint8_t* der_sig_ref, size_t der_sig_ref_size)
 {
     int ret;
-    uint8_t der_sig[128];
+    uint8_t der_sig[142];
     size_t der_sig_size = sizeof(der_sig);
 
     ret = atcacert_der_enc_ecdsa_sig_value(raw_sig, der_sig, &der_sig_size);
@@ -72,8 +72,9 @@ TEST(atcacert_der_enc_ecdsa_sig_value, no_padding)
         0xA4, 0xF7, 0x62, 0x2A, 0x18, 0x61, 0x16, 0x2E, 0xFA, 0x0C, 0x74, 0x64, 0x22, 0x34, 0x37, 0x8F,
         0x40, 0x03, 0x62, 0xB5, 0xDB, 0x04, 0x2A, 0x65, 0x28
     };
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
 
-    atcacert_der_enc_ecdsa_sig_value_test(raw_sig, der_sig_ref, sizeof(der_sig_ref));
+    atcacert_der_enc_ecdsa_sig_value_test(&sig, der_sig_ref, sizeof(der_sig_ref));
 }
 
 TEST(atcacert_der_enc_ecdsa_sig_value, r_padding)
@@ -91,8 +92,9 @@ TEST(atcacert_der_enc_ecdsa_sig_value, r_padding)
         0x5C, 0xA4, 0xF7, 0x62, 0x2A, 0x18, 0x61, 0x16, 0x2E, 0xFA, 0x0C, 0x74, 0x64, 0x22, 0x34, 0x37,
         0x8F, 0x40, 0x03, 0x62, 0xB5, 0xDB, 0x04, 0x2A, 0x65, 0x28
     };
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
 
-    atcacert_der_enc_ecdsa_sig_value_test(raw_sig, der_sig_ref, sizeof(der_sig_ref));
+    atcacert_der_enc_ecdsa_sig_value_test(&sig, der_sig_ref, sizeof(der_sig_ref));
 }
 
 TEST(atcacert_der_enc_ecdsa_sig_value, s_padding)
@@ -110,8 +112,9 @@ TEST(atcacert_der_enc_ecdsa_sig_value, s_padding)
         0x5C, 0xA4, 0xF7, 0x62, 0x2A, 0x18, 0x61, 0x16, 0x2E, 0xFA, 0x0C, 0x74, 0x64, 0x22, 0x34, 0x37,
         0x8F, 0x40, 0x03, 0x62, 0xB5, 0xDB, 0x04, 0x2A, 0x65, 0x28
     };
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
 
-    atcacert_der_enc_ecdsa_sig_value_test(raw_sig, der_sig_ref, sizeof(der_sig_ref));
+    atcacert_der_enc_ecdsa_sig_value_test(&sig, der_sig_ref, sizeof(der_sig_ref));
 }
 
 TEST(atcacert_der_enc_ecdsa_sig_value, rs_padding)
@@ -129,8 +132,38 @@ TEST(atcacert_der_enc_ecdsa_sig_value, rs_padding)
         0xED, 0x5C, 0xA4, 0xF7, 0x62, 0x2A, 0x18, 0x61, 0x16, 0x2E, 0xFA, 0x0C, 0x74, 0x64, 0x22, 0x34,
         0x37, 0x8F, 0x40, 0x03, 0x62, 0xB5, 0xDB, 0x04, 0x2A, 0x65, 0x28
     };
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
 
-    atcacert_der_enc_ecdsa_sig_value_test(raw_sig, der_sig_ref, sizeof(der_sig_ref));
+    atcacert_der_enc_ecdsa_sig_value_test(&sig, der_sig_ref, sizeof(der_sig_ref));
+}
+
+TEST(atcacert_der_enc_ecdsa_sig_value, multi_byte_padding)
+{
+    uint8_t raw_sig[] = {
+        0x00, 0x6E, 0xEB, 0x8B, 0xF6, 0x28, 0x13, 0xDD, 0x21, 0x3D, 0xD6, 0xDA, 0xA3, 0xC1, 0x85, 0x56,
+        0x42, 0x1F, 0xD3, 0x66, 0x13, 0xB1, 0xB9, 0x4B, 0x6A, 0xBE, 0x7C, 0xCA, 0xEE, 0xCA, 0xB3, 0x13,
+        0xF5, 0x87, 0xE6, 0x51, 0xEF, 0xD8, 0xF9, 0x31, 0x25, 0xC9, 0xB8, 0x3B, 0x62, 0x1E, 0xBC, 0x33,
+        0x37, 0x4B, 0x1D, 0x88, 0x51, 0xB5, 0x47, 0x35, 0x41, 0xC6, 0xD2, 0x6C, 0xD4, 0x7C, 0xE7, 0x83,
+        0x39, 0xC1, 0x00, 0xD1, 0x35, 0xD2, 0x9C, 0x06, 0x2D, 0xD9, 0xC8, 0xF6, 0x27, 0xBC, 0xCA, 0x6A,
+        0xF3, 0xCF, 0x81, 0xEB, 0x86, 0x8A, 0xA4, 0x4D, 0x3C, 0x25, 0xB3, 0xF4, 0x07, 0x79, 0x08, 0xA5,
+        0x98, 0x84, 0x69, 0x3F, 0xD6, 0xAE, 0x49, 0xCE, 0x2E, 0xB5, 0x26, 0xE6, 0x17, 0xDB, 0x44, 0x8F,
+        0xD8, 0x89, 0xE9, 0x24, 0x0E, 0x1C, 0x99, 0x96, 0x97, 0x29, 0xD0, 0xD1, 0xE2, 0x02, 0x1B, 0xCB,
+        0x50, 0xAD, 0x0F, 0xA9
+    };
+    uint8_t der_sig_ref[] = {
+        0x03, 0x81, 0x8B, 0x00, 0x30, 0x81, 0x87, 0x02, 0x41, 0x6E, 0xEB, 0x8B, 0xF6, 0x28, 0x13, 0xDD,
+        0x21, 0x3D, 0xD6, 0xDA, 0xA3, 0xC1, 0x85, 0x56, 0x42, 0x1F, 0xD3, 0x66, 0x13, 0xB1, 0xB9, 0x4B,
+        0x6A, 0xBE, 0x7C, 0xCA, 0xEE, 0xCA, 0xB3, 0x13, 0xF5, 0x87, 0xE6, 0x51, 0xEF, 0xD8, 0xF9, 0x31,
+        0x25, 0xC9, 0xB8, 0x3B, 0x62, 0x1E, 0xBC, 0x33, 0x37, 0x4B, 0x1D, 0x88, 0x51, 0xB5, 0x47, 0x35,
+        0x41, 0xC6, 0xD2, 0x6C, 0xD4, 0x7C, 0xE7, 0x83, 0x39, 0xC1, 0x02, 0x42, 0x00, 0xD1, 0x35, 0xD2,
+        0x9C, 0x06, 0x2D, 0xD9, 0xC8, 0xF6, 0x27, 0xBC, 0xCA, 0x6A, 0xF3, 0xCF, 0x81, 0xEB, 0x86, 0x8A,
+        0xA4, 0x4D, 0x3C, 0x25, 0xB3, 0xF4, 0x07, 0x79, 0x08, 0xA5, 0x98, 0x84, 0x69, 0x3F, 0xD6, 0xAE,
+        0x49, 0xCE, 0x2E, 0xB5, 0x26, 0xE6, 0x17, 0xDB, 0x44, 0x8F, 0xD8, 0x89, 0xE9, 0x24, 0x0E, 0x1C,
+        0x99, 0x96, 0x97, 0x29, 0xD0, 0xD1, 0xE2, 0x02, 0x1B, 0xCB, 0x50, 0xAD, 0x0F, 0xA9
+    };
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
+
+    atcacert_der_enc_ecdsa_sig_value_test(&sig, der_sig_ref, sizeof(der_sig_ref));
 }
 
 TEST(atcacert_der_enc_ecdsa_sig_value, trim)
@@ -148,8 +181,9 @@ TEST(atcacert_der_enc_ecdsa_sig_value, trim)
         0x29, 0x97, 0x76, 0xBC, 0x3B, 0xF4, 0x9D, 0xBC, 0x34, 0x7C, 0x22, 0x96, 0xEA, 0xAF, 0x0C, 0x96,
         0x6B, 0xEC, 0x6E, 0xA7, 0x98
     };
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
 
-    atcacert_der_enc_ecdsa_sig_value_test(raw_sig, der_sig_ref, sizeof(der_sig_ref));
+    atcacert_der_enc_ecdsa_sig_value_test(&sig, der_sig_ref, sizeof(der_sig_ref));
 }
 
 TEST(atcacert_der_enc_ecdsa_sig_value, trim_all)
@@ -163,8 +197,9 @@ TEST(atcacert_der_enc_ecdsa_sig_value, trim_all)
     uint8_t der_sig_ref[] = {
         0x03, 0x09, 0x00, 0x30, 0x06, 0x02, 0x01, 0x00, 0x02, 0x01, 0x00
     };
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
 
-    atcacert_der_enc_ecdsa_sig_value_test(raw_sig, der_sig_ref, sizeof(der_sig_ref));
+    atcacert_der_enc_ecdsa_sig_value_test(&sig, der_sig_ref, sizeof(der_sig_ref));
 }
 
 TEST(atcacert_der_enc_ecdsa_sig_value, small_buf)
@@ -178,8 +213,9 @@ TEST(atcacert_der_enc_ecdsa_sig_value, small_buf)
         0x37, 0xA9, 0xFD, 0xF6, 0x17, 0xED, 0x5C, 0xA4, 0xF7, 0x62, 0x2A, 0x18, 0x61, 0x16, 0x2E, 0xFA,
         0x0C, 0x74, 0x64, 0x22, 0x34, 0x37, 0x8F, 0x40, 0x03, 0x62, 0xB5, 0xDB, 0x04, 0x2A, 0x65, 0x28
     };
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
 
-    ret = atcacert_der_enc_ecdsa_sig_value(raw_sig, der_sig, &der_sig_size);
+    ret = atcacert_der_enc_ecdsa_sig_value(&sig, der_sig, &der_sig_size);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_BUFFER_TOO_SMALL, ret, "Expected ATCACERT_E_BUFFER_TOO_SMALL");
     TEST_ASSERT_EQUAL_MESSAGE(74, der_sig_size, "Unexpected der_sig_size");
 }
@@ -195,6 +231,7 @@ TEST(atcacert_der_enc_ecdsa_sig_value, bad_params)
         0x37, 0xA9, 0xFD, 0xF6, 0x17, 0xED, 0x5C, 0xA4, 0xF7, 0x62, 0x2A, 0x18, 0x61, 0x16, 0x2E, 0xFA,
         0x0C, 0x74, 0x64, 0x22, 0x34, 0x37, 0x8F, 0x40, 0x03, 0x62, 0xB5, 0xDB, 0x04, 0x2A, 0x65, 0x28
     };
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
 
     ret = atcacert_der_enc_ecdsa_sig_value(NULL, der_sig, &der_sig_size);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_BAD_PARAMS, ret, "Expected ATCACERT_E_BAD_PARAMS");
@@ -202,13 +239,13 @@ TEST(atcacert_der_enc_ecdsa_sig_value, bad_params)
     ret = atcacert_der_enc_ecdsa_sig_value(NULL, NULL, &der_sig_size);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_BAD_PARAMS, ret, "Expected ATCACERT_E_BAD_PARAMS");
 
-    ret = atcacert_der_enc_ecdsa_sig_value(raw_sig, der_sig, NULL);
+    ret = atcacert_der_enc_ecdsa_sig_value(&sig, der_sig, NULL);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_BAD_PARAMS, ret, "Expected ATCACERT_E_BAD_PARAMS");
 
     ret = atcacert_der_enc_ecdsa_sig_value(NULL, der_sig, NULL);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_BAD_PARAMS, ret, "Expected ATCACERT_E_BAD_PARAMS");
 
-    ret = atcacert_der_enc_ecdsa_sig_value(raw_sig, NULL, NULL);
+    ret = atcacert_der_enc_ecdsa_sig_value(&sig, NULL, NULL);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_BAD_PARAMS, ret, "Expected ATCACERT_E_BAD_PARAMS");
 
     ret = atcacert_der_enc_ecdsa_sig_value(NULL, NULL, NULL);
@@ -225,20 +262,22 @@ TEST_TEAR_DOWN(atcacert_der_dec_ecdsa_sig_value)
 {
 }
 
-static void atcacert_der_dec_ecdsa_sig_value_test(const uint8_t* der_sig, size_t der_sig_size, const uint8_t raw_sig_ref[64])
+static void atcacert_der_dec_ecdsa_sig_value_test(const uint8_t* der_sig, size_t der_sig_size, const cal_buffer* raw_sig_ref)
 {
     int ret;
-    uint8_t raw_sig[64];
+    uint8_t raw_sig[ATCA_MAX_ECC_SIG_SIZE];
     size_t der_sig_size_ret = der_sig_size;
+    cal_buffer sig = CAL_BUF_INIT(raw_sig_ref->len, raw_sig);
+    cal_buffer ref_sig_size = CAL_BUF_INIT(raw_sig_ref->len, NULL);
 
-    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size_ret, raw_sig);
+    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size_ret, &sig);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_SUCCESS, ret, "Expected ATCACERT_E_SUCCESS");
     TEST_ASSERT_EQUAL_MESSAGE(der_sig_size, der_sig_size_ret, "Unexpected der_int_size_ret");
-    TEST_ASSERT_EQUAL_MEMORY_MESSAGE(raw_sig_ref, raw_sig, 64, "Unexpected raw_sig");
+    TEST_ASSERT_EQUAL_MEMORY_MESSAGE(raw_sig_ref->buf, raw_sig, sig.len, "Unexpected raw_sig");
 
     // Size only
     der_sig_size_ret = der_sig_size;
-    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size_ret, NULL);
+    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size_ret, &ref_sig_size);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_SUCCESS, ret, "Expected ATCACERT_E_SUCCESS");
     TEST_ASSERT_EQUAL_MESSAGE(der_sig_size, der_sig_size_ret, "Unexpected der_int_size_ret");
 }
@@ -251,6 +290,7 @@ TEST(atcacert_der_dec_ecdsa_sig_value, no_padding)
         0x37, 0xA9, 0xFD, 0xF6, 0x17, 0xED, 0x5C, 0xA4, 0xF7, 0x62, 0x2A, 0x18, 0x61, 0x16, 0x2E, 0xFA,
         0x0C, 0x74, 0x64, 0x22, 0x34, 0x37, 0x8F, 0x40, 0x03, 0x62, 0xB5, 0xDB, 0x04, 0x2A, 0x65, 0x28
     };
+    const cal_buffer raw_sig_ref_buf = CAL_BUF_INIT(sizeof(raw_sig_ref), raw_sig_ref);
     uint8_t der_sig[] = {
         0x03, 0x47, 0x00, 0x30, 0x44, 0x02, 0x20, 0x01, 0xB9, 0xB1, 0x0A, 0x5E, 0x15, 0xDF, 0xF2, 0x96,
         0x5B, 0x73, 0xFF, 0x5E, 0x02, 0x16, 0x24, 0x1B, 0xC8, 0x1D, 0x13, 0x80, 0xE8, 0xE9, 0x99, 0xB5,
@@ -259,7 +299,7 @@ TEST(atcacert_der_dec_ecdsa_sig_value, no_padding)
         0x40, 0x03, 0x62, 0xB5, 0xDB, 0x04, 0x2A, 0x65, 0x28
     };
 
-    atcacert_der_dec_ecdsa_sig_value_test(der_sig, sizeof(der_sig), raw_sig_ref);
+    atcacert_der_dec_ecdsa_sig_value_test(der_sig, sizeof(der_sig), &raw_sig_ref_buf);
 }
 
 TEST(atcacert_der_dec_ecdsa_sig_value, r_padding)
@@ -270,6 +310,7 @@ TEST(atcacert_der_dec_ecdsa_sig_value, r_padding)
         0x37, 0xA9, 0xFD, 0xF6, 0x17, 0xED, 0x5C, 0xA4, 0xF7, 0x62, 0x2A, 0x18, 0x61, 0x16, 0x2E, 0xFA,
         0x0C, 0x74, 0x64, 0x22, 0x34, 0x37, 0x8F, 0x40, 0x03, 0x62, 0xB5, 0xDB, 0x04, 0x2A, 0x65, 0x28
     };
+    const cal_buffer raw_sig_ref_buf = CAL_BUF_INIT(sizeof(raw_sig_ref), raw_sig_ref);
     uint8_t der_sig[] = {
         0x03, 0x48, 0x00, 0x30, 0x45, 0x02, 0x21, 0x00, 0xA2, 0xB9, 0xB1, 0x0A, 0x5E, 0x15, 0xDF, 0xF2,
         0x96, 0x5B, 0x73, 0xFF, 0x5E, 0x02, 0x16, 0x24, 0x1B, 0xC8, 0x1D, 0x13, 0x80, 0xE8, 0xE9, 0x99,
@@ -278,7 +319,7 @@ TEST(atcacert_der_dec_ecdsa_sig_value, r_padding)
         0x8F, 0x40, 0x03, 0x62, 0xB5, 0xDB, 0x04, 0x2A, 0x65, 0x28
     };
 
-    atcacert_der_dec_ecdsa_sig_value_test(der_sig, sizeof(der_sig), raw_sig_ref);
+    atcacert_der_dec_ecdsa_sig_value_test(der_sig, sizeof(der_sig), &raw_sig_ref_buf);
 }
 
 TEST(atcacert_der_dec_ecdsa_sig_value, s_padding)
@@ -289,6 +330,7 @@ TEST(atcacert_der_dec_ecdsa_sig_value, s_padding)
         0xA2, 0xA9, 0xFD, 0xF6, 0x17, 0xED, 0x5C, 0xA4, 0xF7, 0x62, 0x2A, 0x18, 0x61, 0x16, 0x2E, 0xFA,
         0x0C, 0x74, 0x64, 0x22, 0x34, 0x37, 0x8F, 0x40, 0x03, 0x62, 0xB5, 0xDB, 0x04, 0x2A, 0x65, 0x28
     };
+    const cal_buffer raw_sig_ref_buf = CAL_BUF_INIT(sizeof(raw_sig_ref), raw_sig_ref);
     uint8_t der_sig[] = {
         0x03, 0x48, 0x00, 0x30, 0x45, 0x02, 0x20, 0x37, 0xB9, 0xB1, 0x0A, 0x5E, 0x15, 0xDF, 0xF2, 0x96,
         0x5B, 0x73, 0xFF, 0x5E, 0x02, 0x16, 0x24, 0x1B, 0xC8, 0x1D, 0x13, 0x80, 0xE8, 0xE9, 0x99, 0xB5,
@@ -297,7 +339,7 @@ TEST(atcacert_der_dec_ecdsa_sig_value, s_padding)
         0x8F, 0x40, 0x03, 0x62, 0xB5, 0xDB, 0x04, 0x2A, 0x65, 0x28
     };
 
-    atcacert_der_dec_ecdsa_sig_value_test(der_sig, sizeof(der_sig), raw_sig_ref);
+    atcacert_der_dec_ecdsa_sig_value_test(der_sig, sizeof(der_sig), &raw_sig_ref_buf);
 }
 
 TEST(atcacert_der_dec_ecdsa_sig_value, rs_padding)
@@ -308,6 +350,7 @@ TEST(atcacert_der_dec_ecdsa_sig_value, rs_padding)
         0xA2, 0xA9, 0xFD, 0xF6, 0x17, 0xED, 0x5C, 0xA4, 0xF7, 0x62, 0x2A, 0x18, 0x61, 0x16, 0x2E, 0xFA,
         0x0C, 0x74, 0x64, 0x22, 0x34, 0x37, 0x8F, 0x40, 0x03, 0x62, 0xB5, 0xDB, 0x04, 0x2A, 0x65, 0x28
     };
+    const cal_buffer raw_sig_ref_buf = CAL_BUF_INIT(sizeof(raw_sig_ref), raw_sig_ref);
     uint8_t der_sig[] = {
         0x03, 0x49, 0x00, 0x30, 0x46, 0x02, 0x21, 0x00, 0xA2, 0xB9, 0xB1, 0x0A, 0x5E, 0x15, 0xDF, 0xF2,
         0x96, 0x5B, 0x73, 0xFF, 0x5E, 0x02, 0x16, 0x24, 0x1B, 0xC8, 0x1D, 0x13, 0x80, 0xE8, 0xE9, 0x99,
@@ -316,7 +359,36 @@ TEST(atcacert_der_dec_ecdsa_sig_value, rs_padding)
         0x37, 0x8F, 0x40, 0x03, 0x62, 0xB5, 0xDB, 0x04, 0x2A, 0x65, 0x28
     };
 
-    atcacert_der_dec_ecdsa_sig_value_test(der_sig, sizeof(der_sig), raw_sig_ref);
+    atcacert_der_dec_ecdsa_sig_value_test(der_sig, sizeof(der_sig), &raw_sig_ref_buf);
+}
+
+TEST(atcacert_der_dec_ecdsa_sig_value, multi_byte_padding)
+{
+    uint8_t raw_sig_ref[] = {
+        0x00, 0x6E, 0xEB, 0x8B, 0xF6, 0x28, 0x13, 0xDD, 0x21, 0x3D, 0xD6, 0xDA, 0xA3, 0xC1, 0x85, 0x56,
+        0x42, 0x1F, 0xD3, 0x66, 0x13, 0xB1, 0xB9, 0x4B, 0x6A, 0xBE, 0x7C, 0xCA, 0xEE, 0xCA, 0xB3, 0x13,
+        0xF5, 0x87, 0xE6, 0x51, 0xEF, 0xD8, 0xF9, 0x31, 0x25, 0xC9, 0xB8, 0x3B, 0x62, 0x1E, 0xBC, 0x33,
+        0x37, 0x4B, 0x1D, 0x88, 0x51, 0xB5, 0x47, 0x35, 0x41, 0xC6, 0xD2, 0x6C, 0xD4, 0x7C, 0xE7, 0x83,
+        0x39, 0xC1, 0x00, 0xD1, 0x35, 0xD2, 0x9C, 0x06, 0x2D, 0xD9, 0xC8, 0xF6, 0x27, 0xBC, 0xCA, 0x6A,
+        0xF3, 0xCF, 0x81, 0xEB, 0x86, 0x8A, 0xA4, 0x4D, 0x3C, 0x25, 0xB3, 0xF4, 0x07, 0x79, 0x08, 0xA5,
+        0x98, 0x84, 0x69, 0x3F, 0xD6, 0xAE, 0x49, 0xCE, 0x2E, 0xB5, 0x26, 0xE6, 0x17, 0xDB, 0x44, 0x8F,
+        0xD8, 0x89, 0xE9, 0x24, 0x0E, 0x1C, 0x99, 0x96, 0x97, 0x29, 0xD0, 0xD1, 0xE2, 0x02, 0x1B, 0xCB,
+        0x50, 0xAD, 0x0F, 0xA9
+    };
+    const cal_buffer raw_sig_ref_buf = CAL_BUF_INIT(sizeof(raw_sig_ref), raw_sig_ref);
+    uint8_t der_sig[] = {
+        0x03, 0x81, 0x8B, 0x00, 0x30, 0x81, 0x87, 0x02, 0x41, 0x6E, 0xEB, 0x8B, 0xF6, 0x28, 0x13, 0xDD,
+        0x21, 0x3D, 0xD6, 0xDA, 0xA3, 0xC1, 0x85, 0x56, 0x42, 0x1F, 0xD3, 0x66, 0x13, 0xB1, 0xB9, 0x4B,
+        0x6A, 0xBE, 0x7C, 0xCA, 0xEE, 0xCA, 0xB3, 0x13, 0xF5, 0x87, 0xE6, 0x51, 0xEF, 0xD8, 0xF9, 0x31,
+        0x25, 0xC9, 0xB8, 0x3B, 0x62, 0x1E, 0xBC, 0x33, 0x37, 0x4B, 0x1D, 0x88, 0x51, 0xB5, 0x47, 0x35,
+        0x41, 0xC6, 0xD2, 0x6C, 0xD4, 0x7C, 0xE7, 0x83, 0x39, 0xC1, 0x02, 0x42, 0x00, 0xD1, 0x35, 0xD2,
+        0x9C, 0x06, 0x2D, 0xD9, 0xC8, 0xF6, 0x27, 0xBC, 0xCA, 0x6A, 0xF3, 0xCF, 0x81, 0xEB, 0x86, 0x8A,
+        0xA4, 0x4D, 0x3C, 0x25, 0xB3, 0xF4, 0x07, 0x79, 0x08, 0xA5, 0x98, 0x84, 0x69, 0x3F, 0xD6, 0xAE,
+        0x49, 0xCE, 0x2E, 0xB5, 0x26, 0xE6, 0x17, 0xDB, 0x44, 0x8F, 0xD8, 0x89, 0xE9, 0x24, 0x0E, 0x1C,
+        0x99, 0x96, 0x97, 0x29, 0xD0, 0xD1, 0xE2, 0x02, 0x1B, 0xCB, 0x50, 0xAD, 0x0F, 0xA9
+    };
+
+    atcacert_der_dec_ecdsa_sig_value_test(der_sig, sizeof(der_sig), &raw_sig_ref_buf);
 }
 
 TEST(atcacert_der_dec_ecdsa_sig_value, trim)
@@ -327,6 +399,7 @@ TEST(atcacert_der_dec_ecdsa_sig_value, trim)
         0x00, 0x00, 0x00, 0x02, 0x0F, 0x9C, 0xCE, 0xF6, 0x45, 0xCC, 0xD1, 0x29, 0x97, 0x76, 0xBC, 0x3B,
         0xF4, 0x9D, 0xBC, 0x34, 0x7C, 0x22, 0x96, 0xEA, 0xAF, 0x0C, 0x96, 0x6B, 0xEC, 0x6E, 0xA7, 0x98
     };
+    const cal_buffer raw_sig_ref_buf = CAL_BUF_INIT(sizeof(raw_sig_ref), raw_sig_ref);
     uint8_t der_sig[] = {
         0x03, 0x43, 0x00, 0x30, 0x40, 0x02, 0x1F, 0x01, 0xEE, 0x14, 0x70, 0xE4, 0x08, 0xF0, 0x66, 0x0D,
         0x9B, 0xED, 0xB0, 0x7B, 0x8C, 0x5B, 0xCB, 0x1A, 0x1A, 0xB1, 0x61, 0x21, 0xB0, 0xE9, 0x4D, 0x4D,
@@ -335,7 +408,7 @@ TEST(atcacert_der_dec_ecdsa_sig_value, trim)
         0x6B, 0xEC, 0x6E, 0xA7, 0x98
     };
 
-    atcacert_der_dec_ecdsa_sig_value_test(der_sig, sizeof(der_sig), raw_sig_ref);
+    atcacert_der_dec_ecdsa_sig_value_test(der_sig, sizeof(der_sig), &raw_sig_ref_buf);
 }
 
 TEST(atcacert_der_dec_ecdsa_sig_value, trim_all)
@@ -346,11 +419,12 @@ TEST(atcacert_der_dec_ecdsa_sig_value, trim_all)
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
     };
+    const cal_buffer raw_sig_ref_buf = CAL_BUF_INIT(sizeof(raw_sig_ref), raw_sig_ref);
     uint8_t der_sig[] = {
         0x03, 0x09, 0x00, 0x30, 0x06, 0x02, 0x01, 0x00, 0x02, 0x01, 0x00
     };
 
-    atcacert_der_dec_ecdsa_sig_value_test(der_sig, sizeof(der_sig), raw_sig_ref);
+    atcacert_der_dec_ecdsa_sig_value_test(der_sig, sizeof(der_sig), &raw_sig_ref_buf);
 }
 
 TEST(atcacert_der_dec_ecdsa_sig_value, bad_bs_tag)
@@ -364,11 +438,12 @@ TEST(atcacert_der_dec_ecdsa_sig_value, bad_bs_tag)
     };
     int ret;
     uint8_t raw_sig[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
     size_t der_sig_size = sizeof(der_sig);
 
     der_sig[0]++; // Change bit string tag
 
-    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, raw_sig);
+    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, &sig);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_DECODING_ERROR, ret, "Expected ATCACERT_E_DECODING_ERROR");
 }
 
@@ -383,11 +458,12 @@ TEST(atcacert_der_dec_ecdsa_sig_value, bad_bs_length_low)
     };
     int ret;
     uint8_t raw_sig[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
     size_t der_sig_size = sizeof(der_sig);
 
     der_sig[1]--; // Decrement bit string length
 
-    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, raw_sig);
+    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, &sig);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_DECODING_ERROR, ret, "Expected ATCACERT_E_DECODING_ERROR");
 }
 
@@ -402,11 +478,12 @@ TEST(atcacert_der_dec_ecdsa_sig_value, bad_bs_length_high)
     };
     int ret;
     uint8_t raw_sig[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
     size_t der_sig_size = sizeof(der_sig);
 
     der_sig[1]++; // Increment bit string length
 
-    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, raw_sig);
+    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, &sig);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_DECODING_ERROR, ret, "Expected ATCACERT_E_DECODING_ERROR");
 }
 
@@ -421,11 +498,12 @@ TEST(atcacert_der_dec_ecdsa_sig_value, bad_bs_extra_data)
     };
     int ret;
     uint8_t raw_sig[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
     size_t der_sig_size = sizeof(der_sig);
 
     der_sig[1]++; // Increment bit string length
 
-    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, raw_sig);
+    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, &sig);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_DECODING_ERROR, ret, "Expected ATCACERT_E_DECODING_ERROR");
 }
 
@@ -440,11 +518,12 @@ TEST(atcacert_der_dec_ecdsa_sig_value, bad_bs_spare_bits)
     };
     int ret;
     uint8_t raw_sig[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
     size_t der_sig_size = sizeof(der_sig);
 
     der_sig[2]++; // Change bit string spare bits
 
-    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, raw_sig);
+    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, &sig);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_DECODING_ERROR, ret, "Expected ATCACERT_E_DECODING_ERROR");
 }
 
@@ -459,11 +538,12 @@ TEST(atcacert_der_dec_ecdsa_sig_value, bad_seq_tag)
     };
     int ret;
     uint8_t raw_sig[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
     size_t der_sig_size = sizeof(der_sig);
 
     der_sig[3]++; // Change sequence tag
 
-    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, raw_sig);
+    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, &sig);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_DECODING_ERROR, ret, "Expected ATCACERT_E_DECODING_ERROR");
 }
 
@@ -478,11 +558,12 @@ TEST(atcacert_der_dec_ecdsa_sig_value, bad_seq_length_low)
     };
     int ret;
     uint8_t raw_sig[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
     size_t der_sig_size = sizeof(der_sig);
 
     der_sig[4]--; // Decrement sequence length
 
-    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, raw_sig);
+    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, &sig);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_DECODING_ERROR, ret, "Expected ATCACERT_E_DECODING_ERROR");
 }
 
@@ -497,11 +578,12 @@ TEST(atcacert_der_dec_ecdsa_sig_value, bad_seq_length_high)
     };
     int ret;
     uint8_t raw_sig[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
     size_t der_sig_size = sizeof(der_sig);
 
     der_sig[4]++; // Increment sequence length
 
-    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, raw_sig);
+    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, &sig);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_DECODING_ERROR, ret, "Expected ATCACERT_E_DECODING_ERROR");
 }
 
@@ -516,11 +598,12 @@ TEST(atcacert_der_dec_ecdsa_sig_value, bad_seq_extra_data)
     };
     int ret;
     uint8_t raw_sig[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
     size_t der_sig_size = sizeof(der_sig);
 
     der_sig[4]++; // Increment sequence length
 
-    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, raw_sig);
+    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, &sig);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_DECODING_ERROR, ret, "Expected ATCACERT_E_DECODING_ERROR");
 }
 
@@ -535,11 +618,12 @@ TEST(atcacert_der_dec_ecdsa_sig_value, bad_rint_tag)
     };
     int ret;
     uint8_t raw_sig[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
     size_t der_sig_size = sizeof(der_sig);
 
     der_sig[5]++; // Change integer tag
 
-    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, raw_sig);
+    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, &sig);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_DECODING_ERROR, ret, "Expected ATCACERT_E_DECODING_ERROR");
 }
 
@@ -554,11 +638,12 @@ TEST(atcacert_der_dec_ecdsa_sig_value, bad_rint_length_low)
     };
     int ret;
     uint8_t raw_sig[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
     size_t der_sig_size = sizeof(der_sig);
 
     der_sig[6]--; // Decrement integer length
 
-    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, raw_sig);
+    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, &sig);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_DECODING_ERROR, ret, "Expected ATCACERT_E_DECODING_ERROR");
 }
 
@@ -573,11 +658,12 @@ TEST(atcacert_der_dec_ecdsa_sig_value, bad_rint_length_high)
     };
     int ret;
     uint8_t raw_sig[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
     size_t der_sig_size = sizeof(der_sig);
 
     der_sig[6]++; // Increment integer length
 
-    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, raw_sig);
+    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, &sig);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_DECODING_ERROR, ret, "Expected ATCACERT_E_DECODING_ERROR");
 }
 
@@ -592,11 +678,12 @@ TEST(atcacert_der_dec_ecdsa_sig_value, bad_sint_tag)
     };
     int ret;
     uint8_t raw_sig[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
     size_t der_sig_size = sizeof(der_sig);
 
     der_sig[39]++; // Change integer tag
 
-    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, raw_sig);
+    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, &sig);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_DECODING_ERROR, ret, "Expected ATCACERT_E_DECODING_ERROR");
 }
 
@@ -611,11 +698,12 @@ TEST(atcacert_der_dec_ecdsa_sig_value, bad_sint_length_low)
     };
     int ret;
     uint8_t raw_sig[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
     size_t der_sig_size = sizeof(der_sig);
 
     der_sig[40]--; // Decrement integer length
 
-    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, raw_sig);
+    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, &sig);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_DECODING_ERROR, ret, "Expected ATCACERT_E_DECODING_ERROR");
 }
 
@@ -630,11 +718,12 @@ TEST(atcacert_der_dec_ecdsa_sig_value, bad_sint_length_high)
     };
     int ret;
     uint8_t raw_sig[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
     size_t der_sig_size = sizeof(der_sig);
 
     der_sig[40]++; // Increment integer length
 
-    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, raw_sig);
+    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, &sig);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_DECODING_ERROR, ret, "Expected ATCACERT_E_DECODING_ERROR");
 }
 
@@ -649,11 +738,12 @@ TEST(atcacert_der_dec_ecdsa_sig_value, bad_rint_too_large)
     };
     int ret;
     uint8_t raw_sig[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
     size_t der_sig_size = sizeof(der_sig);
 
     der_sig[7]++; // Alter padding byte
 
-    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, raw_sig);
+    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, &sig);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_DECODING_ERROR, ret, "Expected ATCACERT_E_DECODING_ERROR");
 }
 
@@ -668,12 +758,59 @@ TEST(atcacert_der_dec_ecdsa_sig_value, bad_sint_too_large)
     };
     int ret;
     uint8_t raw_sig[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(raw_sig), raw_sig);
     size_t der_sig_size = sizeof(der_sig);
 
     der_sig[41]++; // Alter padding byte
 
-    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, raw_sig);
+    ret = atcacert_der_dec_ecdsa_sig_value(der_sig, &der_sig_size, &sig);
     TEST_ASSERT_EQUAL_MESSAGE(ATCACERT_E_DECODING_ERROR, ret, "Expected ATCACERT_E_DECODING_ERROR");
 }
+
+// *INDENT-OFF* - Preserve formatting
+t_test_case_info atcacert_der_enc_ecdsa_sig_value_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_der_enc_ecdsa_sig_value, no_padding),         NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_ecdsa_sig_value, r_padding),          NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_ecdsa_sig_value, s_padding),          NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_ecdsa_sig_value, rs_padding),         NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_ecdsa_sig_value, multi_byte_padding), NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_ecdsa_sig_value, trim),               NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_ecdsa_sig_value, trim_all),           NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_ecdsa_sig_value, small_buf),          NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_ecdsa_sig_value, bad_params),         NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_der_dec_ecdsa_sig_value_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, no_padding),            NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, r_padding),             NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, s_padding),             NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, rs_padding),            NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, multi_byte_padding),    atca_test_cond_ta },
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, trim),                  NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, trim_all),              NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, bad_bs_tag),            NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, bad_bs_length_low),     NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, bad_bs_length_high),    NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, bad_bs_extra_data),     NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, bad_bs_spare_bits),     NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, bad_seq_tag),           NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, bad_seq_length_low),    NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, bad_seq_length_high),   NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, bad_seq_extra_data),    NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, bad_rint_tag),          NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, bad_rint_length_low),   NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, bad_rint_length_high),  NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, bad_sint_tag),          NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, bad_sint_length_low),   NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, bad_sint_length_high),  NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, bad_rint_too_large),    NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_ecdsa_sig_value, bad_sint_too_large),    NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
 
 #endif

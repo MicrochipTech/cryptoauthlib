@@ -42,6 +42,12 @@
 extern "C" {
 #endif
 
+typedef struct calib_packet_cache_s
+{
+    ATCAPacket packet_pool;
+    bool used;
+}calib_packet_cache_t;
+
 ATCAPacket* calib_packet_alloc(void);
 
 void calib_packet_free(ATCAPacket* packet);

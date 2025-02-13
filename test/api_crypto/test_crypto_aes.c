@@ -61,7 +61,7 @@ TEST(atcac_aes, aes128_gcm_nist)
     ctx = atcac_aes_gcm_ctx_new();
 #else
     atcac_aes_gcm_ctx_t gcm_ctx;
-    ctx = &pkey_ctx_inst;
+    ctx = &gcm_ctx;
 #endif
 
     for (test_index = 0; test_index < GCM_TEST_VECTORS_COUNT; test_index++)

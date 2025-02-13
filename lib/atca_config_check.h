@@ -36,8 +36,17 @@
 
 /** Library Configuration File - All build attributes should be included in
     atca_config.h */
-#ifndef LIBRARY_BUILD_EN
-#include "atca_config.h"
+#if defined(LIBRARY_BUILD_EN)
+    #define LIBRARY_BUILD_EN_CHECK 1
+#else
+    #define LIBRARY_BUILD_EN_CHECK 0
+    #include "atca_config.h"
+#endif
+
+#if defined(LIBRARY_USAGE_EN)
+    #define LIBRARY_USAGE_EN_CHECK 1
+#else
+    #define LIBRARY_USAGE_EN_CHECK 0
 #endif
 
 /* Configuration Macros to detect device classes */
@@ -54,6 +63,8 @@
 #if defined(ATCA_ATECC108A_SUPPORT) || defined(ATCA_ATECC508A_SUPPORT) \
     || defined(ATCA_ATECC608_SUPPORT)
 #define ATCA_ECC_SUPPORT    DEFAULT_ENABLED
+#else
+#define ATCA_ECC_SUPPORT    DEFAULT_DISABLED
 #endif
 
 /* Support for a second generation of cryptoauth parts */
@@ -71,7 +82,7 @@
 #endif
 
 /* Classic Cryptoauth Devices */
-#if defined(ATCA_SHA_SUPPORT) || defined(ATCA_ECC_SUPPORT) || ATCA_CA2_SUPPORT
+#if defined(ATCA_SHA_SUPPORT) || ATCA_ECC_SUPPORT || ATCA_CA2_SUPPORT
 #define ATCA_CA_SUPPORT     DEFAULT_ENABLED
 #else
 #define ATCA_CA_SUPPORT     DEFAULT_DISABLED
@@ -124,13 +135,6 @@
  */
 #ifndef MULTIPART_BUF_EN
 #define MULTIPART_BUF_EN        (DEFAULT_DISABLED)
-#endif
-
-/** \def ATCACERT_EN
- * Enables the ATCACERT x509 handling module
- */
-#ifndef ATCACERT_EN
-#define ATCACERT_EN             (DEFAULT_ENABLED)
 #endif
 
 #ifndef ATCA_NO_HEAP

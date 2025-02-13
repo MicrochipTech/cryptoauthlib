@@ -28,6 +28,8 @@
 #include "atcacert/atcacert_def.h"
 #include "tngtls_cert_def_1_signer.h"
 
+#if ATCACERT_COMPCERT_EN
+
 SHARED_LIB_EXPORT const uint8_t g_tngtls_cert_template_1_signer[TNGTLS_CERT_TEMPLATE_1_SIGNER_SIZE] = {
     0x30, 0x82, 0x02, 0x04, 0x30, 0x82, 0x01, 0xaa, 0xa0, 0x03, 0x02, 0x01, 0x02, 0x02, 0x10, 0x44,
     0x0e, 0xe4, 0x17, 0x0c, 0xb5, 0x45, 0xce, 0x59, 0x69, 0x8e, 0x30, 0x56, 0x99, 0x0a, 0x5d, 0x30,
@@ -151,3 +153,5 @@ SHARED_LIB_EXPORT const atcacert_def_t g_tngtls_cert_def_1_signer = {
     .cert_template_size  = (uint16_t)(sizeof(g_tngtls_cert_template_1_signer)),
     .ca_cert_def         = NULL
 };
+
+#endif

@@ -72,33 +72,44 @@ def updateDevCfgList(dev_cfg, inc):
         add_value_to_list(caldevcfglist, dev_cfg.lower())
     else:
         del_value_from_list(caldevcfglist, dev_cfg.lower())
-    
+
 
 def calExtendDevCfgList(symbol, event):
     global caldevcfglist
     Database.sendMessage('cryptoauthlib', 'EXTEND_DEV_CFG_LIST', {'new_list': caldevcfglist, 'cnt': len(caldevcfglist)})
 
 
-def updateSwiBbInterfaceSettings(symbol, swi_bb_iface):
-    if swi_bb_iface:
-        symbol.getComponent().getSymbolByID('HAL_INTERFACE').setValue("GPIO")
-        updateSercomPlibList("GPIO_SWI_BB", swi_bb_iface)
-    else:
-        if symbol.getComponent().getSymbolByID('INTERFACE').getReadOnly():
-            pass
+def updateSwiBbInterfaceSettings(symbol, event):
+    symObj = event['symbol']
+    updateId = event['id'].upper()
+    selected_key = symObj.getSelectedKey()
+    component = symbol.getComponent().getID()
+    if updateId == 'INTERFACE':
+        if selected_key == 'ATCA_SWI_BB_IFACE':
+            symbol.getComponent().getSymbolByID('SWIBB_ENABLED').setValue(True)
+            symbol.getComponent().getSymbolByID('HAL_INTERFACE').setValue("GPIO")
         else:
-            try:
-                symbol.getComponent().getSymbolByID('HAL_INTERFACE').clearValue()
-            except AttributeError:
+            symbol.getComponent().getSymbolByID('SWIBB_ENABLED').setValue(False)
+            if symbol.getComponent().getSymbolByID('INTERFACE').getReadOnly():
                 pass
-        updateSercomPlibList("GPIO_SWI_BB", swi_bb_iface)
+            else:
+                try:
+                    symbol.getComponent().getSymbolByID('HAL_INTERFACE').clearValue()
+                except AttributeError:
+                    pass
+    swibbPin = symbol.getComponent().getSymbolByID('SWIBB_CRYPTO_PIN').getSelectedKey()
+    Database.sendMessage(
+        "cryptoauthlib", 'UPDATE_SWI_BB_LIST',
+        {'id': component,
+         'inc': symbol.getComponent().getSymbolByID('SWIBB_ENABLED').getValue(),
+         'pin': swibbPin}
+    )
 
 
 def updatePartInterfaceSettings(symbol, event):
     symObj = event['symbol']
     updateId = event['id'].upper()
     selected_key = symObj.getSelectedKey()
-    SWI_BB_IFACE = False
 
     if updateId == 'INTERFACE':
         if selected_key == 'ATCA_SPI_IFACE':
@@ -110,11 +121,9 @@ def updatePartInterfaceSettings(symbol, event):
             symbol.setVisible('SWI_UART' in symbol.getID())
             symbol.getComponent().getSymbolByID('I2C_ADDR').setVisible(False)
         elif selected_key == 'ATCA_SWI_BB_IFACE':
-            SWI_BB_IFACE = True
             symbol.setVisible('SWIBB' in symbol.getID())
             symbol.getComponent().getSymbolByID('I2C_ADDR').setVisible(False)
 
-        updateSwiBbInterfaceSettings(symbol, SWI_BB_IFACE)
     elif updateId == 'PART_TYPE':
         if selected_key == "TNGTLS":
             Database.activateComponents(['cryptoauthlib_tng'])
@@ -192,13 +201,13 @@ def instantiateComponent(deviceComponent, index):
     elif 'SHA105' in deviceID:
         deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['sha105'])
     elif 'SHA' in deviceID:
-        deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['sha'])  
+        deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['sha'])
     elif 'TA' in deviceID:
         deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['ta100'])
 
     deviceAddress.setDependencies(updatePartInterfaceSettings, ["INTERFACE"])
     deviceAddress.setVisible(True)
-    
+
     swiUartComment = deviceComponent.createCommentSymbol("SWI_UART_COMMENT", interfaceType)
     swiUartComment.setLabel("!!! Select UART Ring buffer mode in UART configuration.!!! ")
     swiUartComment.setDependencies(updatePartInterfaceSettings, ["INTERFACE"])
@@ -230,6 +239,11 @@ def instantiateComponent(deviceComponent, index):
     swibbCryptoPin.setDisplayMode("Description")
     swibbCryptoPin.setDependencies(updatePartInterfaceSettings, ["INTERFACE"])
     swibbCryptoPin.setVisible(False)
+
+    swibbEnabled = deviceComponent.createBooleanSymbol("SWIBB_ENABLED", None)
+    swibbEnabled.setDependencies(updateSwiBbInterfaceSettings, ["INTERFACE", "SWIBB_CRYPTO_PIN"])
+    swibbEnabled.setDefaultValue(False)
+    swibbEnabled.setVisible(False)
 
     availablePinDictionary = {}
     availablePinDictionary = Database.sendMessage("core", "PIN_LIST", availablePinDictionary)
@@ -346,3 +360,9 @@ def onAttachmentDisconnected(source, target):
         updateSercomPlibList(target['id'], False)
 
 
+def destroyComponent(deviceComponent):
+    if deviceComponent.getSymbolByID('INTERFACE').getSelectedKey() == "ATCA_SWI_BB_IFACE":
+        component = deviceComponent.getID()
+        swiBBpin = deviceComponent.getSymbolByID('SWIBB_CRYPTO_PIN').getSelectedKey()
+        Database.sendMessage("cryptoauthlib", 'UPDATE_SWI_BB_LIST',
+                             {'id': component, 'inc': False, 'pin': swiBBpin})

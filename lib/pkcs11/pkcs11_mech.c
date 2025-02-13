@@ -230,6 +230,8 @@ static pcks11_mech_table_e pkcs11_mech_list_ta[] = {
     //CKM_DH_PKCS_KEY_PAIR_GEN,
     //CKM_DH_PKCS_DERIVE,
     { CKM_SHA256,                                                                                                { 256, 256, CKF_HW | CKF_DIGEST                                                              } },
+    { CKM_SHA384,                                                                                                { 384, 384, CKF_DIGEST                                                                       } },
+    { CKM_SHA512,                                                                                                { 512, 512, CKF_DIGEST                                                                       } },
     { CKM_SHA256_HMAC,                                                                                           { 256, 256, CKF_HW | CKF_SIGN | CKF_VERIFY                                                   } },
     { CKM_SHA256_HMAC_GENERAL,                                                                                   { 256, 256, CKF_HW | CKF_SIGN | CKF_VERIFY                                                   } },
     //{ CKM_GENERIC_SECRET_KEY_GEN,{ 0,   0,   CKF_HW | CKF_GENERATE | CKF_GENERATE_KEY_PAIR } },

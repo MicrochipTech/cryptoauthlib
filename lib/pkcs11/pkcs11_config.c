@@ -230,11 +230,11 @@ void pkcs11_config_init_cert(pkcs11_object_ptr pObject, const char * label, size
 #define PKCS11_CONFIG_U32_MAX       0xFFFFFFFFL
 #endif
 
-static size_t pkcs11_config_load_file(FILE* fp, char ** buffer)
+static size_t pkcs11_config_load_file(FILE* fp, char ** buf)
 {
     size_t size = 0u;
 
-    if (NULL != buffer)
+    if (NULL != buf)
     {
         /* Get file size */
         (void)fseek(fp, 0L, SEEK_END);
@@ -251,14 +251,14 @@ static size_t pkcs11_config_load_file(FILE* fp, char ** buffer)
         if (0 < fsize)
         {
             size = (size_t)fsize;
-            *buffer = (char*)pkcs11_os_malloc(size);
-            if (NULL != *buffer)
+            *buf = (char*)pkcs11_os_malloc(size);
+            if (NULL != *buf)
             {
-                (void)memset(*buffer, 0, size);
-                if (size != fread(*buffer, 1, size, fp))
+                (void)memset(*buf, 0, size);
+                if (size != fread(*buf, 1, size, fp))
                 {
-                    pkcs11_os_free(*buffer);
-                    *buffer = NULL;
+                    pkcs11_os_free(*buf);
+                    *buf = NULL;
                     size = 0;
                 }
             }
@@ -1119,10 +1119,10 @@ CK_RV pkcs11_config_remove_object(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_pt
 CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
 {
 #ifndef _WIN32
-    DIR* d;
+    DIR* directory;
     struct dirent* de;
     FILE* fp;
-    char* buffer;
+    char* buf;
     size_t buflen;
     int argc = 0;
     CK_BYTE i = 0;
@@ -1147,13 +1147,13 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
     fp = fopen(ATCA_LIBRARY_CONF, "rb");
     if (NULL != fp)
     {
-        buflen = pkcs11_config_load_file(fp, &buffer);
+        buflen = pkcs11_config_load_file(fp, &buf);
         (void)fclose(fp);
         fp = NULL;
 
         if (0u < buflen)
         {
-            if (0 < (argc = pkcs11_config_parse_buffer(buffer, buflen, sizeof(argv) / sizeof(argv[0]), argv)))
+            if (0 < (argc = pkcs11_config_parse_buffer(buf, buflen, (int)(sizeof(argv) / sizeof(argv[0])), argv)))
             {
                 if (strcmp("filestore", argv[0]) == 0)
                 {
@@ -1171,7 +1171,7 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
             {
                 PKCS11_DEBUG("Failed to parse the configuration file: %s\n", ATCA_LIBRARY_CONF);
             }
-            pkcs11_os_free(buffer);
+            pkcs11_os_free(buf);
         }
     }
     else
@@ -1179,11 +1179,11 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
         rv = CKR_GENERAL_ERROR;
     }
 
-    if (NULL != (d = opendir((char*)pLibCtx->config_path)))
+    if (NULL != (directory = opendir((char*)pLibCtx->config_path)))
     {
         /*Update all the conf file names*/
         /* coverity[misra_c_2012_rule_13_5_violation] readdir is needed for the loop */
-        while ((CKR_OK == rv) && (NULL != (de = readdir(d))))
+        while ((CKR_OK == rv) && (NULL != (de = readdir(directory))))
         {
             if ((uint8_t)DT_REG == de->d_type)
             {
@@ -1216,7 +1216,7 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
         i = 0;
 
         /* close directory */
-        (void)closedir(d);
+        (void)closedir(directory);
     }
     else
     {
@@ -1273,7 +1273,7 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
                 pkcs11_os_free(filename);
                 if (NULL != fp)
                 {
-                    buflen = pkcs11_config_load_file(fp, &buffer);
+                    buflen = pkcs11_config_load_file(fp, &buf);
 
                     if (0U < buflen)
                     {
@@ -1301,7 +1301,7 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
                             else
                             {
                                 /* Load configuration untill max PKCS11 slots allowed*/
-                                pkcs11_os_free(buffer);
+                                pkcs11_os_free(buf);
                                 (void)fclose(fp);
                                 break;
                             }
@@ -1309,7 +1309,7 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
 
                         if (CKR_OK == rv)
                         {
-                            if (0 < (argc = pkcs11_config_parse_buffer(buffer, buflen, sizeof(argv) / sizeof(argv[0]), argv)))
+                            if (0 < (argc = pkcs11_config_parse_buffer(buf, buflen, (int)(sizeof(argv) / sizeof(argv[0])), argv)))
                             {
                                 rv = pkcs11_config_parse_slot_file(slot_ctx, argc, argv);
                                 PKCS11_DEBUG("Load conf file status [%d] slot_id [%d]\n", slot_ctx->slot_id);
@@ -1333,7 +1333,7 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
                             updateConfFileData[i]->initialized = true;
                         }
 #endif
-                        pkcs11_os_free(buffer);
+                        pkcs11_os_free(buf);
                     }
                     (void)fclose(fp);
 
@@ -1400,7 +1400,7 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
                                 pkcs11_os_free(handlefilename);
                                 if (NULL != fp)
                                 {
-                                    buflen = pkcs11_config_load_file(fp, &buffer);
+                                    buflen = pkcs11_config_load_file(fp, &buf);
 
                                     if (0u < buflen)
                                     {
@@ -1415,7 +1415,7 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
 
                                         if (0 != errno)
                                         {
-                                            pkcs11_os_free(buffer);
+                                            pkcs11_os_free(buf);
                                             (void)fclose(fp);
                                             break;
                                         }
@@ -1429,7 +1429,7 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
                                         if (CKR_OK == rv)
                                         {
                                             (void)memset(argv, 0, sizeof(argv));
-                                            if (0 < (argc = pkcs11_config_parse_buffer(buffer, buflen, sizeof(argv) / sizeof(argv[0]), argv)))
+                                            if (0 < (argc = pkcs11_config_parse_buffer(buf, buflen, (int)(sizeof(argv) / sizeof(argv[0])), argv)))
                                             {
                                                 rv = pkcs11_config_parse_object_file(slot_ctx, handle, argc, argv);
                                                 PKCS11_DEBUG("Load Handle file status [%d] slot_id [%d]\n", slot_ctx->slot_id);
@@ -1453,7 +1453,7 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
                                             /* Child conf loaded successfully*/
                                             updateConfFileData[idx]->initialized = true;
                                         }
-                                        pkcs11_os_free(buffer);
+                                        pkcs11_os_free(buf);
 
                                     }
                                     (void)fclose(fp);

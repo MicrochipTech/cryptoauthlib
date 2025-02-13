@@ -173,6 +173,14 @@ bool atca_test_cond_aes128_ecb(void)
     return (ATECC608 == dev_type) || atcab_is_ta_device(dev_type);
 }
 
+/** \brief Configured device supports AES CCM operations */
+bool atca_test_cond_aes_ccm(void)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return (ATECC608 == dev_type) || atcab_is_ta_device(dev_type);
+}
+
 /** \brief Configured device is a second generation cryptoauth part */
 bool atca_test_cond_ca2(void)
 {

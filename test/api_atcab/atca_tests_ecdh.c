@@ -45,6 +45,8 @@ TEST(atca_cmd_basic_test, ecdh)
     ATCA_STATUS status;
     uint8_t read_key_id = 0x04;
     uint8_t pub_alice[ATCA_PUB_KEY_SIZE], pub_bob[ATCA_PUB_KEY_SIZE];
+    cal_buffer pub_alice_buf = CAL_BUF_INIT(sizeof(pub_alice), pub_alice);
+    cal_buffer pub_bob_buf = CAL_BUF_INIT(sizeof(pub_bob), pub_bob);
     uint8_t pms_alice[ECDH_KEY_SIZE], pms_bob[ECDH_KEY_SIZE];
     uint8_t read_key[ATCA_KEY_SIZE];
     uint16_t key_id_alice, key_id_bob;
@@ -70,7 +72,7 @@ TEST(atca_cmd_basic_test, ecdh)
     memset(pub_alice, 0x44, ATCA_PUB_KEY_SIZE);
     memset(pub_bob, 0x44, ATCA_PUB_KEY_SIZE);
 
-    status = atca_test_genkey(key_id_alice, pub_alice);
+    status = atca_test_genkey(atcab_get_device(), key_id_alice, &pub_alice_buf);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
 #ifdef ATCA_PRINTF
@@ -82,7 +84,7 @@ TEST(atca_cmd_basic_test, ecdh)
 
     TEST_ASSERT_NOT_EQUAL_MESSAGE(0, memcmp(pub_alice, frag, sizeof(frag)), "Alice key not initialized");
 
-    status = atca_test_genkey(key_id_bob, pub_bob);
+    status = atca_test_genkey(atcab_get_device(), key_id_bob, &pub_bob_buf);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_NOT_EQUAL_MESSAGE(0, memcmp(pub_bob, frag, sizeof(frag)), "Bob key not initialized");
 
@@ -134,6 +136,8 @@ TEST(atca_cmd_basic_test, ecdh_simple)
 {
     ATCA_STATUS status;
     uint8_t pub_alice[ATCA_ECCP256_PUBKEY_SIZE], pub_bob[ATCA_ECCP256_PUBKEY_SIZE];
+    cal_buffer pub_alice_buf = CAL_BUF_INIT(sizeof(pub_alice), pub_alice);
+    cal_buffer pub_bob_buf = CAL_BUF_INIT(sizeof(pub_bob), pub_bob);
     uint8_t pms_alice[ATCA_ECCP256_KEY_SIZE], pms_bob[ATCA_ECCP256_KEY_SIZE];
     uint16_t key_id_alice, key_id_bob;
     uint8_t frag[4] = { 0x44, 0x44, 0x44, 0x44 };
@@ -155,7 +159,7 @@ TEST(atca_cmd_basic_test, ecdh_simple)
     memset(pub_alice, 0x44, ATCA_ECCP256_PUBKEY_SIZE);
     memset(pub_bob, 0x44, ATCA_ECCP256_PUBKEY_SIZE);
 
-    status = atca_test_genkey(key_id_alice, pub_alice);
+    status = atca_test_genkey(atcab_get_device(), key_id_alice, &pub_alice_buf);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
 #ifdef ATCA_PRINTF
@@ -167,7 +171,7 @@ TEST(atca_cmd_basic_test, ecdh_simple)
 
     TEST_ASSERT_NOT_EQUAL_MESSAGE(0, memcmp(pub_alice, frag, sizeof(frag)), "Alice key not initialized");
 
-    status = atca_test_genkey(key_id_bob, pub_bob);
+    status = atca_test_genkey(atcab_get_device(), key_id_bob, &pub_bob_buf);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_NOT_EQUAL_MESSAGE(0, memcmp(pub_bob, frag, sizeof(frag)), "Bob key not initialized");
 
@@ -209,6 +213,8 @@ TEST(atca_cmd_basic_test, ecdh_protection_key)
 {
     ATCA_STATUS status;
     uint8_t pub_alice[ATCA_PUB_KEY_SIZE], pub_bob[ATCA_PUB_KEY_SIZE];
+    cal_buffer pub_alice_buf = CAL_BUF_INIT(sizeof(pub_alice), pub_alice);
+    cal_buffer pub_bob_buf = CAL_BUF_INIT(sizeof(pub_bob), pub_bob);
     uint8_t pms_alice[ECDH_KEY_SIZE], pms_bob[ECDH_KEY_SIZE];
     uint8_t key_id_bob = 2;
     uint16_t tempkey_alice = 0xFFFF;
@@ -226,7 +232,7 @@ TEST(atca_cmd_basic_test, ecdh_protection_key)
     memset(pub_bob, 0x44, ATCA_PUB_KEY_SIZE);
 
     //Generating Alice private key in tempkey and public key from tempkey.
-    status = atca_test_genkey(tempkey_alice, pub_alice);
+    status = atca_test_genkey(atcab_get_device(), tempkey_alice, &pub_alice_buf);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_NOT_EQUAL_MESSAGE(0, memcmp(pub_alice, frag, sizeof(frag)), "Alice key not initialized");
 
@@ -238,7 +244,7 @@ TEST(atca_cmd_basic_test, ecdh_protection_key)
 #endif
 
     //Generating Bob public key from private key in slot
-    status = atca_test_genkey(key_id_bob, pub_bob);
+    status = atca_test_genkey(atcab_get_device(), key_id_bob, &pub_bob_buf);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_NOT_EQUAL_MESSAGE(0, memcmp(pub_bob, frag, sizeof(frag)), "Bob key not initialized");
 

@@ -24,16 +24,19 @@
  * THIS SOFTWARE.
  */
 #include "atca_test.h"
-#if defined(ATCA_ECC_SUPPORT) && !defined(DO_NOT_TEST_CERT)
-
 #include "atcacert/atcacert_host_hw.h"
 #include "atca_basic.h"
 #include "test_cert_def_0_device.h"
 #include "test_cert_def_1_signer.h"
+#include "test_cert_def_13_signer.h"
+#include "test_cert_def_14_device.h"
 #include <string.h>
+
+#if !defined(DO_NOT_TEST_CERT) && ATCACERT_COMPCERT_EN
 
 extern ATCAIfaceCfg *gCfg;
 
+#if ATCA_ECC_SUPPORT 
 static const uint8_t g_signer_cert[] = {
     0x30, 0x82, 0x01, 0xB0, 0x30, 0x82, 0x01, 0x57, 0xA0, 0x03, 0x02, 0x01, 0x02, 0x02, 0x03, 0x40,
     0xC4, 0x8B, 0x30, 0x0A, 0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x04, 0x03, 0x02, 0x30, 0x36,
@@ -144,10 +147,11 @@ TEST(atcacert_host_hw, atcacert_verify_cert_hw)
 {
     int ret = 0;
     uint8_t signer_public_key[64];
+    cal_buffer test_signer_1_ca_public_key = CAL_BUF_INIT(ATCA_ECCP256_PUBKEY_SIZE, g_test_signer_1_ca_public_key);
     cal_buffer signer_pubkey = CAL_BUF_INIT(sizeof(signer_public_key), signer_public_key);
 
     // Validate signer cert against its certificate authority (CA) public key
-    ret = atcacert_verify_cert_hw(&g_test_cert_def_1_signer,  g_signer_cert, sizeof(g_signer_cert), g_test_signer_1_ca_public_key);
+    ret = atcacert_verify_cert_hw(atcab_get_device(), &g_test_cert_def_1_signer,  g_signer_cert, sizeof(g_signer_cert), &test_signer_1_ca_public_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     // Get the signer's public key from its certificate
@@ -155,7 +159,7 @@ TEST(atcacert_host_hw, atcacert_verify_cert_hw)
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     // Validate the device cert against its certificate authority (CA) which is the signer
-    ret = atcacert_verify_cert_hw(&g_test_cert_def_0_device, g_device_cert, sizeof(g_device_cert), signer_public_key);
+    ret = atcacert_verify_cert_hw(atcab_get_device(), &g_test_cert_def_0_device, g_device_cert, sizeof(g_device_cert), &signer_pubkey);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 }
 
@@ -163,6 +167,7 @@ TEST(atcacert_host_hw, atcacert_verify_cert_hw_verify_failed)
 {
     int ret = 0;
     uint8_t bad_cert[sizeof(g_signer_cert)];
+    cal_buffer test_signer_1_ca_public_key = CAL_BUF_INIT(ATCA_ECCP256_PUBKEY_SIZE, g_test_signer_1_ca_public_key);
     size_t public_key_offset = g_test_cert_def_1_signer.std_cert_elements[STDCERT_PUBLIC_KEY].offset;
 
     memcpy(bad_cert, g_signer_cert, sizeof(bad_cert));
@@ -171,14 +176,16 @@ TEST(atcacert_host_hw, atcacert_verify_cert_hw_verify_failed)
     bad_cert[public_key_offset]++;
 
     // Validate signer cert against its certificate authority (CA) public key
-    ret = atcacert_verify_cert_hw(&g_test_cert_def_1_signer, bad_cert, sizeof(bad_cert), g_test_signer_1_ca_public_key);
+    ret = atcacert_verify_cert_hw(atcab_get_device(), &g_test_cert_def_1_signer, bad_cert, sizeof(bad_cert), &test_signer_1_ca_public_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_VERIFY_FAILED, ret);
 }
 
 TEST(atcacert_host_hw, atcacert_verify_cert_hw_short_cert)
 {
+    cal_buffer test_signer_1_ca_public_key = CAL_BUF_INIT(ATCA_ECCP256_PUBKEY_SIZE, g_test_signer_1_ca_public_key);
+
     // Cert size is shortened so the TBS will run past the end of the cert
-    int ret = atcacert_verify_cert_hw(&g_test_cert_def_1_signer,  g_signer_cert, sizeof(g_signer_cert) - 100, g_test_signer_1_ca_public_key);
+    int ret = atcacert_verify_cert_hw(atcab_get_device(), &g_test_cert_def_1_signer,  g_signer_cert, sizeof(g_signer_cert) - 100, &test_signer_1_ca_public_key);
 
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_CERT, ret);
 }
@@ -187,6 +194,7 @@ TEST(atcacert_host_hw, atcacert_verify_cert_hw_bad_sig)
 {
     int ret = 0;
     uint8_t bad_cert[sizeof(g_signer_cert)];
+    cal_buffer test_signer_1_ca_public_key = CAL_BUF_INIT(ATCA_ECCP256_PUBKEY_SIZE, g_test_signer_1_ca_public_key);
 
     memcpy(bad_cert, g_signer_cert, sizeof(bad_cert));
 
@@ -194,33 +202,34 @@ TEST(atcacert_host_hw, atcacert_verify_cert_hw_bad_sig)
     bad_cert[g_test_cert_def_1_signer.std_cert_elements[STDCERT_SIGNATURE].offset]++;
 
     // Validate signer cert against its certificate authority (CA) public key
-    ret = atcacert_verify_cert_hw(&g_test_cert_def_1_signer,  bad_cert, sizeof(bad_cert), g_test_signer_1_ca_public_key);
+    ret = atcacert_verify_cert_hw(atcab_get_device(), &g_test_cert_def_1_signer,  bad_cert, sizeof(bad_cert), &test_signer_1_ca_public_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_DECODING_ERROR, ret);
 }
 
 TEST(atcacert_host_hw, atcacert_verify_cert_hw_bad_params)
 {
     int ret = 0;
+    cal_buffer test_signer_1_ca_public_key = CAL_BUF_INIT(ATCA_ECCP256_PUBKEY_SIZE, g_test_signer_1_ca_public_key);
 
-    ret = atcacert_verify_cert_hw(NULL,  g_signer_cert, sizeof(g_signer_cert), g_test_signer_1_ca_public_key);
+    ret = atcacert_verify_cert_hw(atcab_get_device(), NULL,  g_signer_cert, sizeof(g_signer_cert), &test_signer_1_ca_public_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_verify_cert_hw(&g_test_cert_def_1_signer,  NULL, sizeof(g_signer_cert), g_test_signer_1_ca_public_key);
+    ret = atcacert_verify_cert_hw(atcab_get_device(), &g_test_cert_def_1_signer,  NULL, sizeof(g_signer_cert), &test_signer_1_ca_public_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_verify_cert_hw(NULL,  NULL, sizeof(g_signer_cert), g_test_signer_1_ca_public_key);
+    ret = atcacert_verify_cert_hw(atcab_get_device(), NULL,  NULL, sizeof(g_signer_cert), &test_signer_1_ca_public_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_verify_cert_hw(&g_test_cert_def_1_signer,  g_signer_cert, sizeof(g_signer_cert), NULL);
+    ret = atcacert_verify_cert_hw(atcab_get_device(), &g_test_cert_def_1_signer,  g_signer_cert, sizeof(g_signer_cert), NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_verify_cert_hw(NULL,  g_signer_cert, sizeof(g_signer_cert), NULL);
+    ret = atcacert_verify_cert_hw(atcab_get_device(), NULL,  g_signer_cert, sizeof(g_signer_cert), NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_verify_cert_hw(&g_test_cert_def_1_signer,  NULL, sizeof(g_signer_cert), NULL);
+    ret = atcacert_verify_cert_hw(atcab_get_device(), &g_test_cert_def_1_signer,  NULL, sizeof(g_signer_cert), NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_verify_cert_hw(NULL,  NULL, sizeof(g_signer_cert), NULL);
+    ret = atcacert_verify_cert_hw(atcab_get_device(), NULL,  NULL, sizeof(g_signer_cert), NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
 
@@ -230,6 +239,8 @@ TEST(atcacert_host_hw, atcacert_gen_challenge_hw)
     uint8_t init[32];
     uint8_t challenge1[32];
     uint8_t challenge2[32];
+    cal_buffer challenge1_buf = CAL_BUF_INIT(sizeof(challenge1), challenge1);
+    cal_buffer challenge2_buf = CAL_BUF_INIT(sizeof(challenge2), challenge2);
     bool lockstate = false;
 
     /* The random command for unlocked cryptoauth devices returns
@@ -245,11 +256,11 @@ TEST(atcacert_host_hw, atcacert_gen_challenge_hw)
     memcpy(challenge1, init, sizeof(challenge1));
     memcpy(challenge2, init, sizeof(challenge2));
 
-    ret = atcacert_gen_challenge_hw(challenge1);
+    ret = atcacert_gen_challenge_hw(atcab_get_device(), &challenge1_buf);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT(memcmp(init, challenge1, sizeof(init)) != 0);
 
-    ret = atcacert_gen_challenge_hw(challenge2);
+    ret = atcacert_gen_challenge_hw(atcab_get_device(), &challenge2_buf);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT(memcmp(init, challenge2, sizeof(init)) != 0);
 
@@ -258,7 +269,7 @@ TEST(atcacert_host_hw, atcacert_gen_challenge_hw)
 
 TEST(atcacert_host_hw, atcacert_gen_challenge_hw_bad_params)
 {
-    int ret = atcacert_gen_challenge_hw(NULL);
+    int ret = atcacert_gen_challenge_hw(atcab_get_device(), NULL);
 
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
@@ -266,8 +277,11 @@ TEST(atcacert_host_hw, atcacert_gen_challenge_hw_bad_params)
 TEST(atcacert_host_hw, atcacert_verify_response_hw)
 {
     int ret = 0;
+    cal_buffer pub_key = CAL_BUF_INIT(sizeof(g_public_key), g_public_key);
+    cal_buffer challenge = CAL_BUF_INIT(sizeof(g_challenge), g_challenge);
+    cal_buffer response = CAL_BUF_INIT(sizeof(g_response), g_response);
 
-    ret = atcacert_verify_response_hw(g_public_key, g_challenge, g_response);
+    ret = atcacert_verify_response_hw(atcab_get_device(), &pub_key, &challenge, &response);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 }
 
@@ -278,8 +292,11 @@ TEST(atcacert_host_hw, atcacert_verify_response_hw_bad_challenge)
         0x0d, 0xa6, 0x34, 0xc8, 0x37, 0x2f, 0x87, 0x99, 0x99, 0x7e, 0x9e, 0xe9, 0xd5, 0xbc, 0x72, 0x71,
         0x84, 0xd1, 0x97, 0x0a, 0xea, 0xfe, 0xac, 0x60, 0x7e, 0xd1, 0x3e, 0x12, 0xb7, 0x32, 0x25, 0xf1
     };
+    cal_buffer pub_key = CAL_BUF_INIT(sizeof(g_public_key), g_public_key);
+    cal_buffer challenge_buf = CAL_BUF_INIT(sizeof(challenge), challenge);
+    cal_buffer response = CAL_BUF_INIT(sizeof(g_response), g_response);
 
-    ret = atcacert_verify_response_hw(g_public_key, challenge, g_response);
+    ret = atcacert_verify_response_hw(atcab_get_device(), &pub_key, &challenge_buf, &response);
     TEST_ASSERT_EQUAL(ATCACERT_E_VERIFY_FAILED, ret);
 }
 
@@ -292,8 +309,11 @@ TEST(atcacert_host_hw, atcacert_verify_response_hw_bad_response)
         0x3B, 0xFA, 0xA0, 0x64, 0x0B, 0x27, 0xA3, 0x45, 0xD1, 0xC9, 0x07, 0xFE, 0x12, 0xFD, 0x9A, 0xF6,
         0xFF, 0x6E, 0x38, 0x64, 0xBE, 0xCA, 0x57, 0x60, 0xE1, 0x78, 0x95, 0x59, 0x73, 0x97, 0x03, 0x44
     };
+    cal_buffer pub_key = CAL_BUF_INIT(sizeof(g_public_key), g_public_key);
+    cal_buffer challenge = CAL_BUF_INIT(sizeof(g_challenge), g_challenge);
+    cal_buffer response_buf = CAL_BUF_INIT(sizeof(response), response);
 
-    ret = atcacert_verify_response_hw(g_public_key, g_challenge, response);
+    ret = atcacert_verify_response_hw(atcab_get_device(), &pub_key, &challenge, &response_buf);
     TEST_ASSERT_EQUAL(ATCACERT_E_VERIFY_FAILED, ret);
 }
 
@@ -306,8 +326,11 @@ TEST(atcacert_host_hw, atcacert_verify_response_hw_bad_public_key)
         0x61, 0x10, 0xF8, 0x74, 0x34, 0x95, 0xCF, 0x33, 0x6F, 0xA4, 0xF1, 0xAB, 0xBD, 0xDE, 0x11, 0xB1,
         0xE2, 0x9E, 0x82, 0x8E, 0x8E, 0x78, 0x55, 0x32, 0x1D, 0x8D, 0x8C, 0xFA, 0x02, 0xDC, 0xCB, 0xD8
     };
+    cal_buffer pub_key = CAL_BUF_INIT(sizeof(public_key), public_key);
+    cal_buffer challenge = CAL_BUF_INIT(sizeof(g_challenge), g_challenge);
+    cal_buffer response = CAL_BUF_INIT(sizeof(g_response), g_response);
 
-    ret = atcacert_verify_response_hw(public_key, g_challenge, g_response);
+    ret = atcacert_verify_response_hw(atcab_get_device(), &pub_key, &challenge, &response);
     TEST_ASSERT_EQUAL(ATCACERT_E_VERIFY_FAILED, ret);
 }
 
@@ -320,34 +343,301 @@ TEST(atcacert_host_hw, atcacert_verify_response_hw_malformed_public_key)
         0x96, 0xE9, 0x18, 0x4D, 0xB7, 0x0D, 0x23, 0xFB, 0xE6, 0x11, 0xEC, 0x5B, 0xFA, 0xFC, 0x29, 0x49,
         0xA8, 0x1E, 0x64, 0x61, 0xDE, 0x07, 0xA9, 0xBE, 0x0E, 0xF9, 0x2C, 0x30, 0x89, 0x24, 0x1E, 0x34
     };
+    cal_buffer pub_key = CAL_BUF_INIT(sizeof(public_key), public_key);
+    cal_buffer challenge = CAL_BUF_INIT(sizeof(g_challenge), g_challenge);
+    cal_buffer response = CAL_BUF_INIT(sizeof(g_response), g_response);
 
-    ret = atcacert_verify_response_hw(public_key, g_challenge, g_response);
+    ret = atcacert_verify_response_hw(atcab_get_device(), &pub_key, &challenge, &response);
     TEST_ASSERT_EQUAL(ATCA_EXECUTION_ERROR, ret); // Malformed public key results in an execution failure on the verify command
 }
 
 TEST(atcacert_host_hw, atcacert_verify_response_hw_bad_params)
 {
     int ret = 0;
+    cal_buffer pub_key = CAL_BUF_INIT(sizeof(g_public_key), g_public_key);
+    cal_buffer challenge = CAL_BUF_INIT(sizeof(g_challenge), g_challenge);
+    cal_buffer response = CAL_BUF_INIT(sizeof(g_response), g_response);
 
-    ret = atcacert_verify_response_hw(NULL, g_challenge, g_response);
+    ret = atcacert_verify_response_hw(atcab_get_device(), NULL, &challenge, &response);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_verify_response_hw(g_public_key, NULL, g_response);
+    ret = atcacert_verify_response_hw(atcab_get_device(), &pub_key, NULL, &response);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_verify_response_hw(NULL, NULL, g_response);
+    ret = atcacert_verify_response_hw(atcab_get_device(), NULL, NULL, &response);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_verify_response_hw(g_public_key, g_challenge, NULL);
+    ret = atcacert_verify_response_hw(atcab_get_device(), &pub_key, &challenge, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_verify_response_hw(NULL, g_challenge, NULL);
+    ret = atcacert_verify_response_hw(atcab_get_device(), NULL, &challenge, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_verify_response_hw(g_public_key, NULL, NULL);
+    ret = atcacert_verify_response_hw(atcab_get_device(), &pub_key, NULL, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_verify_response_hw(NULL, NULL, NULL);
+    ret = atcacert_verify_response_hw(atcab_get_device(), NULL, NULL, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
+#endif
+
+#if ATCA_TA_SUPPORT
+
+TEST_GROUP(atcacert_host_hw_ta);
+
+TEST_SETUP(atcacert_host_hw_ta)
+{
+    int ret = 0;
+    bool lockstate = 0;
+    bool is_ta_device = false;
+
+    ret = atcab_init(gCfg);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+
+    is_ta_device = atcab_is_ta_device(atcab_get_device_type());
+    if(false == is_ta_device)
+    {
+        TEST_IGNORE_MESSAGE("This Test group can be run on TA devices only");
+    }
+
+    ret = atcab_is_config_locked(&lockstate);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
+    if (!lockstate)
+    {
+        TEST_IGNORE_MESSAGE("Config zone must be locked for this test.");
+    }
+}
+
+TEST_TEAR_DOWN(atcacert_host_hw_ta)
+{
+    ATCA_STATUS status;
+
+    status = atcab_release();
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+}
+
+static const uint8_t g_p521_signer_cert[] = {
+    0x30, 0x82, 0x02, 0x25, 0x30, 0x82, 0x01, 0x86, 0xA0, 0x03, 0x02, 0x01, 0x02, 0x02, 0x03, 0x40,
+    0xC4, 0x8B, 0x30, 0x0A, 0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x04, 0x03, 0x02, 0x30, 0x2C,
+    0x31, 0x10, 0x30, 0x0E, 0x06, 0x03, 0x55, 0x04, 0x0A, 0x0C, 0x07, 0x45, 0x78, 0x61, 0x6D, 0x70,
+    0x6C, 0x65, 0x31, 0x18, 0x30, 0x16, 0x06, 0x03, 0x55, 0x04, 0x03, 0x0C, 0x0F, 0x45, 0x78, 0x61,
+    0x6D, 0x70, 0x6C, 0x65, 0x20, 0x52, 0x6F, 0x6F, 0x74, 0x20, 0x54, 0x41, 0x30, 0x1E, 0x17, 0x0D,
+    0x32, 0x35, 0x30, 0x31, 0x31, 0x38, 0x32, 0x30, 0x30, 0x30, 0x30, 0x30, 0x5A, 0x17, 0x0D, 0x33,
+    0x35, 0x30, 0x31, 0x31, 0x38, 0x32, 0x30, 0x30, 0x30, 0x30, 0x30, 0x5A, 0x30, 0x33, 0x31, 0x10,
+    0x30, 0x0E, 0x06, 0x03, 0x55, 0x04, 0x0A, 0x0C, 0x07, 0x45, 0x78, 0x61, 0x6D, 0x70, 0x6C, 0x65,
+    0x31, 0x1F, 0x30, 0x1D, 0x06, 0x03, 0x55, 0x04, 0x03, 0x0C, 0x16, 0x45, 0x78, 0x61, 0x6D, 0x70,
+    0x6C, 0x65, 0x20, 0x54, 0x41, 0x20, 0x53, 0x69, 0x67, 0x6E, 0x65, 0x72, 0x20, 0x43, 0x34, 0x38,
+    0x42, 0x30, 0x81, 0x9B, 0x30, 0x10, 0x06, 0x07, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x02, 0x01, 0x06,
+    0x05, 0x2B, 0x81, 0x04, 0x00, 0x23, 0x03, 0x81, 0x86, 0x00, 0x04, 0x01, 0x1B, 0x55, 0x41, 0x63,
+    0xB6, 0xD1, 0x66, 0xB9, 0x36, 0x3B, 0x73, 0x79, 0x45, 0xFF, 0x49, 0xE4, 0xA6, 0x72, 0xCC, 0x8C,
+    0x28, 0xB5, 0x90, 0xA7, 0xA7, 0x2A, 0x97, 0x37, 0x45, 0x2F, 0x6C, 0x4E, 0x61, 0x65, 0x67, 0x1F,
+    0x35, 0x20, 0xAE, 0xFE, 0x53, 0xD2, 0xFD, 0x69, 0x1C, 0xC5, 0x7F, 0x42, 0xEF, 0x4C, 0xE6, 0x67,
+    0x1C, 0x31, 0x34, 0xF3, 0xF3, 0xFC, 0x04, 0x13, 0x6F, 0x38, 0x64, 0x2E, 0x01, 0x01, 0x91, 0x0F,
+    0x97, 0x44, 0x5F, 0xD7, 0xF7, 0x94, 0x33, 0xDD, 0xCE, 0xBA, 0x18, 0x14, 0x1F, 0x92, 0x13, 0x47,
+    0x5D, 0x81, 0xF0, 0x78, 0x07, 0x7B, 0xCE, 0x97, 0x85, 0xEB, 0xEF, 0xF0, 0x47, 0xB9, 0x14, 0x69,
+    0x85, 0xF3, 0x78, 0xE4, 0x5D, 0x07, 0xA0, 0x8B, 0xCC, 0xAA, 0x21, 0x8F, 0xEB, 0xBE, 0x5D, 0x3C,
+    0x43, 0xEA, 0x46, 0x22, 0xDF, 0x89, 0xB6, 0x93, 0x3B, 0x17, 0xB2, 0x90, 0x9D, 0x41, 0x54, 0xA3,
+    0x4D, 0x30, 0x4B, 0x30, 0x09, 0x06, 0x03, 0x55, 0x1D, 0x13, 0x04, 0x02, 0x30, 0x00, 0x30, 0x1D,
+    0x06, 0x03, 0x55, 0x1D, 0x0E, 0x04, 0x16, 0x04, 0x14, 0xC8, 0x69, 0x00, 0x1E, 0x62, 0xAC, 0x04,
+    0x36, 0x88, 0xDF, 0xE7, 0xF7, 0xD3, 0x98, 0xF5, 0x10, 0x7C, 0xE0, 0xF4, 0x3D, 0x30, 0x1F, 0x06,
+    0x03, 0x55, 0x1D, 0x23, 0x04, 0x18, 0x30, 0x16, 0x80, 0x14, 0xC0, 0x11, 0xD2, 0x51, 0x3D, 0xAF,
+    0x6B, 0xC0, 0x60, 0xF0, 0x87, 0x36, 0x85, 0xA4, 0xA0, 0x34, 0xE5, 0xDC, 0x33, 0xA3, 0x30, 0x0A,
+    0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x04, 0x03, 0x02, 0x03, 0x81, 0x8C, 0x00, 0x30, 0x81,
+    0x88, 0x02, 0x42, 0x00, 0xAC, 0x64, 0xC2, 0x94, 0xC4, 0x96, 0xFA, 0x55, 0xC1, 0x84, 0x13, 0x46,
+    0x2F, 0x25, 0x75, 0x59, 0x9D, 0x8F, 0xF2, 0x23, 0x6B, 0xE7, 0x6A, 0xF8, 0x8C, 0x84, 0x59, 0x40,
+    0xA4, 0x43, 0x57, 0x24, 0x1D, 0xA4, 0x0B, 0xFD, 0x67, 0x0F, 0x97, 0xE2, 0x0F, 0x51, 0xB2, 0xBB,
+    0xD2, 0x82, 0x57, 0xDF, 0xFA, 0xE5, 0xB6, 0xA2, 0x8F, 0xCC, 0xB3, 0xB9, 0x57, 0x7F, 0xBE, 0x77,
+    0xA9, 0x43, 0x3F, 0x08, 0xAF, 0x02, 0x42, 0x01, 0x76, 0x63, 0xEA, 0x63, 0x6B, 0xCF, 0x72, 0x6A,
+    0xB9, 0x51, 0x0F, 0xC8, 0x5F, 0xE0, 0x66, 0x82, 0x0F, 0x7E, 0x43, 0x02, 0xFA, 0x4B, 0x5E, 0x2A,
+    0xC2, 0xF7, 0x44, 0x3A, 0xCC, 0x5E, 0x93, 0xC6, 0xC0, 0x59, 0xE4, 0x42, 0x72, 0xF7, 0x28, 0x2E,
+    0x37, 0x61, 0xC0, 0xFA, 0x51, 0x29, 0xBE, 0xEC, 0x84, 0x06, 0x1D, 0x1F, 0x18, 0x53, 0x8D, 0xA0,
+    0xA2, 0x92, 0xCF, 0x91, 0x49, 0x51, 0xA7, 0x50, 0x6B
+};
+
+TEST_CONDITION(atcacert_host_hw_ta, verify_chain_cond)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return (TA101 == dev_type);
+}
+
+#if ATCAC_SHA384_EN && ATCAC_SHA512_EN
+TEST(atcacert_host_hw_ta, atcacert_verify_cert_hw)
+{
+    int ret = 0;
+    uint8_t signer_public_key[132];
+    cal_buffer test_p521_signer_13_ca_public_key = CAL_BUF_INIT(ATCA_ECCP521_PUBKEY_SIZE, g_test_p521_signer_13_ca_public_key);
+    cal_buffer signer_pubkey = CAL_BUF_INIT(sizeof(signer_public_key), signer_public_key);
+    static const uint8_t p384_device_cert[] = {
+        0x30, 0x82, 0x02, 0x0E, 0x30, 0x82, 0x01, 0x6F, 0xA0, 0x03, 0x02, 0x01, 0x02, 0x02, 0x09, 0x40,
+        0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x30, 0x0A, 0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE,
+        0x3D, 0x04, 0x03, 0x02, 0x30, 0x33, 0x31, 0x10, 0x30, 0x0E, 0x06, 0x03, 0x55, 0x04, 0x0A, 0x0C,
+        0x07, 0x45, 0x78, 0x61, 0x6D, 0x70, 0x6C, 0x65, 0x31, 0x1F, 0x30, 0x1D, 0x06, 0x03, 0x55, 0x04,
+        0x03, 0x0C, 0x16, 0x45, 0x78, 0x61, 0x6D, 0x70, 0x6C, 0x65, 0x20, 0x54, 0x41, 0x20, 0x53, 0x69,
+        0x67, 0x6E, 0x65, 0x72, 0x20, 0x43, 0x34, 0x38, 0x42, 0x30, 0x1E, 0x17, 0x0D, 0x32, 0x35, 0x30,
+        0x31, 0x32, 0x30, 0x32, 0x30, 0x30, 0x30, 0x30, 0x30, 0x5A, 0x17, 0x0D, 0x33, 0x35, 0x30, 0x31,
+        0x32, 0x30, 0x32, 0x30, 0x30, 0x30, 0x30, 0x30, 0x5A, 0x30, 0x35, 0x31, 0x10, 0x30, 0x0E, 0x06,
+        0x03, 0x55, 0x04, 0x0A, 0x0C, 0x07, 0x45, 0x78, 0x61, 0x6D, 0x70, 0x6C, 0x65, 0x31, 0x21, 0x30,
+        0x1F, 0x06, 0x03, 0x55, 0x04, 0x03, 0x0C, 0x18, 0x45, 0x78, 0x61, 0x6D, 0x70, 0x6C, 0x65, 0x20,
+        0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x20, 0x43, 0x65, 0x72, 0x74, 0x20, 0x58, 0x58, 0x58, 0x58,
+        0x30, 0x76, 0x30, 0x10, 0x06, 0x07, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x02, 0x01, 0x06, 0x05, 0x2B,
+        0x81, 0x04, 0x00, 0x22, 0x03, 0x62, 0x00, 0x04, 0x23, 0xE8, 0xAD, 0xF0, 0xB8, 0x79, 0x30, 0xA5,
+        0x0D, 0xD3, 0x6D, 0x0F, 0xFB, 0x4B, 0xFD, 0x94, 0x76, 0xC0, 0xC6, 0x9F, 0x6B, 0x42, 0x2F, 0x85,
+        0xEC, 0x08, 0x5C, 0xFB, 0xB7, 0xBC, 0xE1, 0x73, 0xFC, 0xAE, 0xF5, 0x70, 0x96, 0xD9, 0xDF, 0x2D,
+        0xD6, 0x25, 0xAF, 0xA7, 0xA1, 0x96, 0xAA, 0x0D, 0xE0, 0x1A, 0x21, 0x21, 0x2F, 0x94, 0xF9, 0x09,
+        0xE5, 0x90, 0x22, 0xFD, 0xE3, 0x66, 0xA4, 0x02, 0x8C, 0xAF, 0x81, 0x8C, 0x33, 0x80, 0xFF, 0x92,
+        0xCF, 0x6A, 0xA7, 0x95, 0x6B, 0x2C, 0x78, 0xA6, 0xE2, 0xB1, 0x35, 0xDE, 0x47, 0x48, 0x1B, 0xEE,
+        0x05, 0xE1, 0x62, 0x1D, 0xE9, 0x79, 0x76, 0xC2, 0xA3, 0x4D, 0x30, 0x4B, 0x30, 0x09, 0x06, 0x03,
+        0x55, 0x1D, 0x13, 0x04, 0x02, 0x30, 0x00, 0x30, 0x1D, 0x06, 0x03, 0x55, 0x1D, 0x0E, 0x04, 0x16,
+        0x04, 0x14, 0x93, 0x09, 0x1C, 0xFD, 0x7C, 0x25, 0x9B, 0xE2, 0x16, 0xB2, 0x11, 0x70, 0xD1, 0xE3,
+        0xD0, 0x1C, 0xCB, 0xDB, 0x4E, 0x74, 0x30, 0x1F, 0x06, 0x03, 0x55, 0x1D, 0x23, 0x04, 0x18, 0x30,
+        0x16, 0x80, 0x14, 0xC8, 0x69, 0x00, 0x1E, 0x62, 0xAC, 0x04, 0x36, 0x88, 0xDF, 0xE7, 0xF7, 0xD3,
+        0x98, 0xF5, 0x10, 0x7C, 0xE0, 0xF4, 0x3D, 0x30, 0x0A, 0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE, 0x3D,
+        0x04, 0x03, 0x02, 0x03, 0x81, 0x8C, 0x00, 0x30, 0x81, 0x88, 0x02, 0x42, 0x01, 0x7B, 0x3F, 0xB7,
+        0xC2, 0x5D, 0xEF, 0x06, 0x05, 0x57, 0x15, 0xA8, 0x51, 0xDF, 0x61, 0x22, 0xB8, 0xB7, 0x63, 0x77,
+        0xAE, 0xB7, 0xB6, 0xD5, 0x49, 0xD4, 0x2F, 0x81, 0x0B, 0x31, 0xF0, 0x53, 0xF0, 0xA1, 0x35, 0x2B,
+        0x53, 0x9B, 0x1E, 0x7F, 0x5D, 0x01, 0x26, 0xE3, 0xD1, 0x6D, 0xC3, 0xF0, 0x5C, 0x58, 0x6C, 0xF8,
+        0x09, 0x7A, 0xF4, 0x85, 0xD4, 0x73, 0x83, 0x8C, 0xC1, 0x41, 0x8B, 0x2D, 0x5B, 0x56, 0x02, 0x42,
+        0x01, 0x64, 0x39, 0xAA, 0x61, 0x2D, 0x49, 0x14, 0xE4, 0x50, 0xC8, 0x1C, 0x4C, 0x00, 0x43, 0x0F,
+        0x9E, 0xA5, 0xF4, 0x45, 0x2F, 0x01, 0x53, 0x99, 0x05, 0x44, 0x29, 0x9A, 0xC2, 0xB3, 0xED, 0xD6,
+        0x9D, 0xC9, 0x42, 0x16, 0x7D, 0xF9, 0xB0, 0xB7, 0x7A, 0xF9, 0x15, 0x6D, 0x75, 0x53, 0x99, 0x55,
+        0x41, 0xAE, 0xB9, 0x28, 0x2A, 0xCD, 0x94, 0xB2, 0x9C, 0xA5, 0xF2, 0x01, 0x5E, 0xA3, 0x2E, 0x4C,
+        0x63, 0xE9
+    };
+
+    // Validate signer cert against its certificate authority (CA) public key
+    ret = atcacert_verify_cert_hw(atcab_get_device(), &g_test_p521_cert_def_13_signer,  g_p521_signer_cert, sizeof(g_p521_signer_cert), &test_p521_signer_13_ca_public_key);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    // Get the signer's public key from its certificate
+    ret = atcacert_get_subj_public_key(&g_test_p521_cert_def_13_signer, g_p521_signer_cert, sizeof(g_p521_signer_cert), &signer_pubkey);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    // Validate the device cert against its certificate authority (CA) which is the signer
+    ret = atcacert_verify_cert_hw(atcab_get_device(), &g_test_p384_cert_def_14_device, p384_device_cert, sizeof(p384_device_cert), &signer_pubkey);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+}
+#endif
+
+TEST(atcacert_host_hw_ta, atcacert_verify_cert_hw_bad_params)
+{
+    int ret = 0;
+    cal_buffer test_signer_13_ca_public_key = CAL_BUF_INIT(ATCA_ECCP521_PUBKEY_SIZE, g_test_p521_signer_13_ca_public_key);
+
+    ret = atcacert_verify_cert_hw(atcab_get_device(), NULL,  g_p521_signer_cert, sizeof(g_p521_signer_cert), &test_signer_13_ca_public_key);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_verify_cert_hw(atcab_get_device(), &g_test_p521_cert_def_13_signer,  NULL, sizeof(g_p521_signer_cert), &test_signer_13_ca_public_key);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_verify_cert_hw(atcab_get_device(), NULL,  NULL, sizeof(g_p521_signer_cert), &test_signer_13_ca_public_key);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_verify_cert_hw(atcab_get_device(), &g_test_p521_cert_def_13_signer,  g_p521_signer_cert, sizeof(g_p521_signer_cert), NULL);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_verify_cert_hw(atcab_get_device(), NULL,  g_p521_signer_cert, sizeof(g_p521_signer_cert), NULL);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_verify_cert_hw(atcab_get_device(), &g_test_p521_cert_def_13_signer,  NULL, sizeof(g_p521_signer_cert), NULL);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+
+    ret = atcacert_verify_cert_hw(atcab_get_device(), NULL,  NULL, sizeof(g_p521_signer_cert), NULL);
+    TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);   
+}
+
+TEST(atcacert_host_hw_ta, atcacert_gen_challenge_hw)
+{
+    int ret = 0;
+    uint8_t init[95];
+    uint8_t challenge1[95];
+    uint8_t challenge2[95];
+    cal_buffer challenge1_buf = CAL_BUF_INIT(sizeof(challenge1), challenge1);
+    cal_buffer challenge2_buf = CAL_BUF_INIT(sizeof(challenge2), challenge2);
+
+    memset(init, 0, sizeof(init));
+    memcpy(challenge1, init, sizeof(challenge1));
+    memcpy(challenge2, init, sizeof(challenge2));
+
+    ret = atcacert_gen_challenge_hw(atcab_get_device(), &challenge1_buf);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT(memcmp(init, challenge1, sizeof(init)) != 0);
+
+    ret = atcacert_gen_challenge_hw(atcab_get_device(), &challenge2_buf);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT(memcmp(init, challenge2, sizeof(init)) != 0);
+
+    TEST_ASSERT(memcmp(challenge1, challenge2, sizeof(challenge1)) != 0);
+}
+
+TEST(atcacert_host_hw_ta, atcacert_verify_response_hw)
+{
+    int ret = 0;
+    uint8_t public_key[] = {
+        0xA5, 0x0F, 0x93, 0x34, 0x8E, 0x71, 0x1F, 0xC2, 0xFE, 0x4F, 0xBA, 0xCF, 0xD3, 0xFB, 0xB0, 0x64,
+        0xA5, 0x55, 0xB2, 0xB7, 0x3C, 0x82, 0x60, 0xAC, 0x02, 0xAA, 0x04, 0x94, 0x00, 0x2A, 0x77, 0x7F,
+        0x6F, 0xA5, 0x64, 0x14, 0x27, 0x6B, 0xA9, 0x2E, 0x54, 0xFD, 0x37, 0x4D, 0x37, 0x83, 0x4C, 0xE5,
+        0xF4, 0x70, 0x72, 0x1E, 0xB1, 0x22, 0xD0, 0xAB, 0xF4, 0x57, 0x0A, 0x7F, 0xCF, 0x54, 0x01, 0x25,
+        0x19, 0xAC, 0xE5, 0x95, 0x43, 0xAD, 0xFF, 0x2D, 0x87, 0xD1, 0xCE, 0x2D, 0xF6, 0x4D, 0xAF, 0x67,
+        0xA4, 0x3D, 0x47, 0x48, 0x39, 0xA8, 0x64, 0x2F, 0xCB, 0x3A, 0x3E, 0x11, 0xCA, 0xDA, 0x4F, 0xB5
+    };
+    uint8_t challenge_buf[] = {
+        0x0c, 0xa6, 0x34, 0xc8, 0x37, 0x2f, 0x87, 0x99, 0x99, 0x7e, 0x9e, 0xe9, 0xd5, 0xbc, 0x72, 0x71,
+        0x84, 0xd1, 0x97, 0x0a, 0xea, 0xfe, 0xac, 0x60, 0x7e, 0xd1, 0x3e, 0x12, 0xb7, 0x32, 0x25, 0xf1,
+        0x67, 0x20, 0x34, 0x96, 0x67, 0x55, 0x49, 0x72, 0x83, 0x14, 0x5d, 0x13, 0xa1, 0xc2, 0xde, 0x88
+    };
+    uint8_t response_buf[] = {
+        0xDD, 0xC3, 0xFF, 0x62, 0xE8, 0x4A, 0x18, 0x34, 0xC0, 0x83, 0x7D, 0xA8, 0xE9, 0x0B, 0x1D, 0xCB,
+        0x83, 0x12, 0x71, 0x3E, 0x80, 0xDF, 0x12, 0xE4, 0xCB, 0x72, 0x9F, 0xC5, 0x4A, 0xC7, 0x2C, 0x2A,
+        0x84, 0x8B, 0xD3, 0xBB, 0x9C, 0x16, 0x0F, 0xC9, 0x9D, 0x2C, 0x21, 0x59, 0x19, 0x78, 0xD7, 0xAA,
+        0x6B, 0x8D, 0xAA, 0x11, 0x28, 0xF1, 0x83, 0x15, 0xB4, 0x4A, 0xE7, 0xFC, 0x03, 0x81, 0xAC, 0x9B,
+        0x5C, 0xC1, 0xFA, 0x81, 0x53, 0x27, 0xA1, 0xAE, 0xB8, 0xCA, 0x9B, 0x2F, 0xFF, 0x24, 0x6B, 0x4B,
+        0x69, 0x38, 0xAF, 0x46, 0x4B, 0x3D, 0x94, 0xBD, 0x79, 0xFF, 0xDE, 0xF4, 0x66, 0xF6, 0xA6, 0x79
+    };
+    cal_buffer pub_key = CAL_BUF_INIT(sizeof(public_key), public_key);
+    cal_buffer challenge = CAL_BUF_INIT(sizeof(challenge_buf), challenge_buf);
+    cal_buffer response = CAL_BUF_INIT(sizeof(response_buf), response_buf);
+
+    ret = atcacert_verify_response_hw(atcab_get_device(), &pub_key, &challenge, &response);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+}
+#endif
+
+// *INDENT-OFF* - Preserve formatting
+t_test_case_info atcacert_host_hw_tests[] =
+{
+#if ATCA_ECC_SUPPORT
+    { REGISTER_TEST_CASE(atcacert_host_hw, atcacert_verify_cert_hw),                          atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atcacert_host_hw, atcacert_verify_cert_hw_verify_failed),            atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atcacert_host_hw, atcacert_verify_cert_hw_short_cert),               atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atcacert_host_hw, atcacert_verify_cert_hw_bad_sig),                  atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atcacert_host_hw, atcacert_verify_cert_hw_bad_params),               atca_test_cond_ecc608 },
+
+    { REGISTER_TEST_CASE(atcacert_host_hw, atcacert_gen_challenge_hw),                        atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atcacert_host_hw, atcacert_gen_challenge_hw_bad_params),             atca_test_cond_ecc608 },
+
+    { REGISTER_TEST_CASE(atcacert_host_hw, atcacert_verify_response_hw),                      atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atcacert_host_hw, atcacert_verify_response_hw_bad_challenge),        atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atcacert_host_hw, atcacert_verify_response_hw_bad_response),         atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atcacert_host_hw, atcacert_verify_response_hw_bad_public_key),       atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atcacert_host_hw, atcacert_verify_response_hw_malformed_public_key), atca_test_cond_ecc608 },
+    { REGISTER_TEST_CASE(atcacert_host_hw, atcacert_verify_response_hw_bad_params),           atca_test_cond_ecc608 },
+#endif
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_host_hw_ta_tests[] =
+{
+#if ATCA_TA_SUPPORT
+#if ATCAC_SHA384_EN && ATCAC_SHA512_EN
+    { REGISTER_TEST_CASE(atcacert_host_hw_ta, atcacert_verify_cert_hw),                       REGISTER_TEST_CONDITION(atcacert_host_hw_ta, verify_chain_cond) },
+#endif
+    { REGISTER_TEST_CASE(atcacert_host_hw_ta, atcacert_verify_cert_hw_bad_params),            REGISTER_TEST_CONDITION(atcacert_host_hw_ta, verify_chain_cond) },
+    { REGISTER_TEST_CASE(atcacert_host_hw_ta, atcacert_gen_challenge_hw),                     REGISTER_TEST_CONDITION(atcacert_host_hw_ta, verify_chain_cond) },
+    { REGISTER_TEST_CASE(atcacert_host_hw_ta, atcacert_verify_response_hw),                   REGISTER_TEST_CONDITION(atcacert_host_hw_ta, verify_chain_cond) },
+#endif
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
 #endif

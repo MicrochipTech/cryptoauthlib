@@ -34,8 +34,13 @@ extern "C" {
 
 #include "atca_test.h"
 
+extern t_test_case_info* atcacert_data_test_list[];
+extern t_test_case_info* atcacert_io_test_list[];
+
 /* Console Functions */
+void run_all_cert_data_tests(void);
 int certdata_unit_tests(int argc, char* argv[]);
+void run_all_cert_io_tests(void);
 int certio_unit_tests(int argc, char* argv[]);
 
 #ifdef __cplusplus

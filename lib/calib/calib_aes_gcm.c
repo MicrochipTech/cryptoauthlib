@@ -365,7 +365,7 @@ static ATCA_STATUS calib_aes_gcm_update(ATCADevice device, atca_aes_gcm_ctx_t* c
     if (ctx->partial_aad_size > 0u)
     {
         // We have a partial block of AAD that needs to be added
-        if (ATCA_SUCCESS != (status = calib_aes_ghash(device, ctx->h, ctx->partial_aad, ctx->partial_aad_size, ctx->y)))
+        if (ATCA_SUCCESS != (status = calib_aes_ghash(device, ctx->h, ctx->partial_aad, (size_t)ctx->partial_aad_size, ctx->y)))
         {
             RETURN(status, "GCM - S (AAD partial) failed");
         }

@@ -45,7 +45,15 @@ typedef struct pkcs11_session_mech_ctx_s
     atca_sha256_ctx_t       sha256;
 #else
     atcac_hmac_ctx_t        hmac;
+#if (ATCAC_SHA256_EN)    
     atcac_sha2_256_ctx_t    sha256;
+#endif
+#if (ATCAC_SHA384_EN)    
+    atcac_sha2_384_ctx_t    sha384;
+#endif
+#if (ATCAC_SHA512_EN)
+    atcac_sha2_512_ctx_t    sha512;
+#endif
 #endif
     atca_aes_cmac_ctx_t cmac;
     atca_aes_cbc_ctx_t  cbc;

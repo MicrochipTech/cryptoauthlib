@@ -1163,7 +1163,7 @@ ATCA_STATUS atcab_ecdh_base(uint8_t mode, uint16_t key_id, const uint8_t* public
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#ifdef ATCA_ECC_SUPPORT
+#if ATCA_ECC_SUPPORT
         status = calib_ecdh_base(g_atcab_device_ptr, mode, key_id, public_key, pms, out_nonce);
 #endif
     }
@@ -1197,7 +1197,7 @@ ATCA_STATUS atcab_ecdh(uint16_t key_id, const uint8_t* public_key, uint8_t* pms)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#ifdef ATCA_ECC_SUPPORT
+#if ATCA_ECC_SUPPORT
         status = calib_ecdh(g_atcab_device_ptr, key_id, public_key, pms);
 #endif
     }
@@ -1245,7 +1245,7 @@ ATCA_STATUS atcab_ecdh_enc(uint16_t key_id, const uint8_t* public_key, uint8_t* 
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#ifdef ATCA_ECC_SUPPORT
+#if ATCA_ECC_SUPPORT
 #ifdef ATCA_USE_CONSTANT_HOST_NONCE
         status = calib_ecdh_enc(g_atcab_device_ptr, key_id, public_key, pms, read_key, read_key_id);
 #else
@@ -2388,7 +2388,7 @@ ATCA_STATUS atcab_priv_write(uint16_t key_id, const uint8_t priv_key[36], uint16
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#ifdef ATCA_ECC_SUPPORT
+#if ATCA_ECC_SUPPORT
 #ifdef ATCA_USE_CONSTANT_HOST_NONCE
         status = calib_priv_write(g_atcab_device_ptr, key_id, priv_key, write_key_id, write_key);
 #else
@@ -3732,7 +3732,7 @@ ATCA_STATUS atcab_sign_base(uint8_t mode, uint16_t key_id, uint8_t* signature)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#ifdef ATCA_ECC_SUPPORT
+#if ATCA_ECC_SUPPORT
         status = calib_sign_base(g_atcab_device_ptr, mode, key_id, signature);
 #endif
     }
@@ -3831,7 +3831,7 @@ ATCA_STATUS atcab_sign_internal(uint16_t key_id, bool is_invalidate, bool is_ful
 
     if (atcab_is_ca_device(dev_type))
     {
-#ifdef ATCA_ECC_SUPPORT
+#if ATCA_ECC_SUPPORT
         status = calib_sign_internal(g_atcab_device_ptr, key_id, is_invalidate, is_full_sn, signature);
 #endif
     }
@@ -3923,7 +3923,7 @@ ATCA_STATUS atcab_verify(uint8_t mode, uint16_t key_id, const uint8_t* signature
 
     if (atcab_is_ca_device(dev_type))
     {
-#ifdef ATCA_ECC_SUPPORT
+#if ATCA_ECC_SUPPORT
         status = calib_verify(g_atcab_device_ptr, mode, key_id, signature, public_key, other_data, mac);
 #endif
     }
@@ -3967,7 +3967,7 @@ ATCA_STATUS atcab_verify_extern_ext(ATCADevice device, const uint8_t* message, c
 
     if (atcab_is_ca_device(dev_type))
     {
-#ifdef ATCA_ECC_SUPPORT
+#if ATCA_ECC_SUPPORT
         status = calib_verify_extern(device, message, signature, public_key, is_verified);
 #endif
     }
@@ -4081,7 +4081,7 @@ ATCA_STATUS atcab_verify_stored_ext(ATCADevice device, const uint8_t* message, c
 
     if (atcab_is_ca_device(dev_type))
     {
-#ifdef ATCA_ECC_SUPPORT
+#if ATCA_ECC_SUPPORT
         status = calib_verify_stored(device, message, signature, key_id, is_verified);
 #endif
     }
@@ -4146,7 +4146,7 @@ ATCA_STATUS atcab_verify_stored_with_tempkey(const uint8_t* signature, uint16_t 
 
     if (atcab_is_ca_device(dev_type))
     {
-#ifdef ATCA_ECC_SUPPORT
+#if ATCA_ECC_SUPPORT
         status = calib_verify_stored_with_tempkey(g_atcab_device_ptr, signature, key_id, is_verified);
 #endif
     }
@@ -4227,7 +4227,7 @@ ATCA_STATUS atcab_verify_validate(uint16_t key_id, const uint8_t* signature, con
 
     if (atcab_is_ca_device(dev_type))
     {
-#ifdef ATCA_ECC_SUPPORT
+#if ATCA_ECC_SUPPORT
         status = calib_verify_validate(g_atcab_device_ptr, key_id, signature, other_data, is_verified);
 #endif
     }
@@ -4268,7 +4268,7 @@ ATCA_STATUS atcab_verify_invalidate(uint16_t key_id, const uint8_t* signature, c
 
     if (atcab_is_ca_device(dev_type))
     {
-#ifdef ATCA_ECC_SUPPORT
+#if ATCA_ECC_SUPPORT
         status = calib_verify_invalidate(g_atcab_device_ptr, key_id, signature, other_data, is_verified);
 #endif
     }

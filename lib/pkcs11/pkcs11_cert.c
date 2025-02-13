@@ -61,7 +61,7 @@ static pkcs11_cert_cache pkcs11_cert_cache_list[PKCS11_MAX_CERTS_CACHED];
 #endif
 
 
-#if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
+#if (defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)) && ATCACERT_COMPCERT_EN
 static CK_RV pkcs11_cert_check_trust_data(pkcs11_object_ptr pObject, pkcs11_session_ctx_ptr pSession)
 {
     CK_RV rv = CKR_ARGUMENTS_BAD;
@@ -188,6 +188,7 @@ static CK_RV pkcs11_cert_load_ca(pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pAt
 #else
             ATCA_STATUS status = ATCA_SUCCESS;
             uint8_t ca_key[64] = { 0 };
+            cal_buffer ca_key_buf = CAL_BUF_INIT(sizeof(ca_key), ca_key);
 
             if (NULL != cert_cfg->ca_cert_def)
             {
@@ -206,7 +207,7 @@ static CK_RV pkcs11_cert_load_ca(pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pAt
                 return CKR_DEVICE_ERROR;
             }
 
-            cert_status = atcacert_read_cert_ext(device, (atcacert_def_t*)pObject->data, (cert_cfg->ca_cert_def != NULL) ? ca_key : NULL,
+            cert_status = atcacert_read_cert_ext(device, (atcacert_def_t*)pObject->data, (cert_cfg->ca_cert_def != NULL) ? &ca_key_buf : NULL,
                                                  (uint8_t*)pAttribute->pValue, &temp);
 #endif
             pAttribute->ulValueLen = (uint32_t)(temp & 0xffffffffu);
@@ -222,7 +223,7 @@ static CK_RV pkcs11_cert_load_ca(pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pAt
         }
         else
         {
-            size_t cert_size;
+            size_t cert_size = 0u;
 
             if (ATCACERT_E_SUCCESS != atcacert_read_cert_size_ext(device, cert_cfg, &cert_size))
             {

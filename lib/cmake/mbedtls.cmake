@@ -11,7 +11,7 @@ file(GLOB MBEDTLS_LIB_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "${CMAKE_BINARY_D
 
 add_library(mbedtls STATIC ${MBEDTLS_LIB_SRC})
 
-target_compile_definitions(mbedtls PUBLIC -DMBEDTLS_CMAC_C)
+target_compile_definitions(mbedtls PUBLIC -DMBEDTLS_CMAC_C -DMBEDTLS_X509_ALLOW_UNSUPPORTED_CRITICAL_EXTENSION)
 if(NOT MSVC)
 target_compile_options(mbedtls PRIVATE -fPIC)
 endif()

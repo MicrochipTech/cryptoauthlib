@@ -1,5 +1,5 @@
 #include "atca_test.h"
-#ifndef DO_NOT_TEST_CERT
+#if !defined(DO_NOT_TEST_CERT) && ATCACERT_COMPCERT_EN
 #include "atcacert/atcacert_def.h"
 
 const uint8_t g_test_device_9_ca_public_key[64] = {

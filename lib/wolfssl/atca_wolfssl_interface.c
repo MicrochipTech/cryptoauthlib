@@ -38,8 +38,8 @@
 #ifdef ATCA_WOLFSSL
 #include "crypto/atca_crypto_sw.h"
 #include "atca_wolfssl_internal.h"
-#include "wolfssl/wolfssl/internal.h"
-#include "wolfssl/wolfssl/ssl.h"
+#include "wolfssl/internal.h"
+#include "wolfssl/ssl.h"
 
 /** \brief Return Random Bytes
  *
@@ -48,11 +48,11 @@
 ATCA_STATUS atcac_sw_random(uint8_t* data, size_t data_size)
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
-    RNG rng;
+    WC_RNG rng;
 
     if (0 == wc_InitRng(&rng))
     {
-        if (UINT32_MAX <= data_size)
+        if (data_size <= UINT32_MAX)
         {
             if (0 == wc_RNG_GenerateBlock(&rng, data, (word32)data_size))
             {
@@ -649,49 +649,76 @@ ATCA_STATUS atcac_pk_init(
     bool                    pubkey  /**< [in] buffer is a public key */
     )
 {
-    ATCA_STATUS status = ATCA_BAD_PARAM;
-
-    ((void)buflen);
+    ATCA_STATUS status = ATCA_SUCCESS;
 
     if (NULL != ctx)
     {
-        if (0u == key_type)
-        {
-            ctx->ptr = wc_ecc_key_new(NULL);
+        int curve_id = -1;
+        int key_size = 0;
 
-            if (NULL != ctx->ptr)
+        switch (key_type)
+        {
+            case ATCA_KEY_TYPE_ECCP256:
+                curve_id = (int)ECC_SECP256R1;
+                key_size = (int)ATCA_ECCP256_PUBKEY_SIZE / 2;
+                break;
+    #if ATCA_TA_SUPPORT
+            case TA_KEY_TYPE_ECCP224:
+                curve_id = (int)ECC_SECP224R1;
+                key_size = (int)ATCA_ECCP224_PUBKEY_SIZE / 2;
+                break;
+            case TA_KEY_TYPE_ECCP384:
+                curve_id = (int)ECC_SECP384R1;
+                key_size = (int)ATCA_ECCP384_PUBKEY_SIZE / 2;
+                break;
+            case TA_KEY_TYPE_ECCP521:
+                curve_id = (int)ECC_SECP521R1;
+                key_size = (int)ATCA_ECCP521_PUBKEY_SIZE / 2;
+                break;
+    #endif
+            default:
+                status = ATCA_BAD_PARAM;
+                break;
+        }
+        if(ATCA_SUCCESS != status)
+        {
+            return status;
+        }
+
+        ctx->ptr = wc_ecc_key_new(NULL);
+
+        if (NULL != ctx->ptr)
+        {
+            /* coverity[misra_c_2012_rule_10_3_violation:FALSE] */
+            int ret = (0 == wc_ecc_set_curve((ecc_key*)ctx->ptr, key_size, (sword32)curve_id)) ? 0 : 1;
+
+            if (0 == ret)
             {
-                /* coverity[misra_c_2012_rule_10_3_violation:FALSE] */
-                int ret = (0 == wc_ecc_set_curve((ecc_key*)ctx->ptr, 32, (sword32)ECC_SECP256R1)) ? 0 : 1;
+                if (pubkey)
+                {
+                    uint8_t buf_copy[ATCA_MAX_ECC_PB_KEY_SIZE] = { 0x00 };
+                    (void)memcpy(&buf_copy, buf, sizeof(buf_copy));
+                    /* Configure the public key */
+                    ret = wc_ecc_import_unsigned((ecc_key*)ctx->ptr, (byte*)buf_copy, (byte*)&buf_copy[buflen / 2u], NULL, (sword32)curve_id);
+                }
+                else
+                {
+                    /* Configure a private key */
+                    ret = wc_ecc_import_private_key((const byte*)buf, (word32)(buflen & UINT32_MAX), NULL, 0, (ecc_key*)ctx->ptr);
+                }
 
                 if (0 == ret)
                 {
-                    if (pubkey)
-                    {
-                        uint8_t buf_copy[64] = { 0x00 };
-                        (void)memcpy(&buf_copy, buf, sizeof(buf_copy));
-                        /* Configure the public key */
-                        ret = wc_ecc_import_unsigned((ecc_key*)ctx->ptr, (byte*)buf_copy, (byte*)&buf_copy[32], NULL, (sword32)ECC_SECP256R1);
-
-                    }
-                    else
-                    {
-                        /* Configure a private key */
-                        ret = wc_ecc_import_private_key((const byte*)buf, 32, NULL, 0, (ecc_key*)ctx->ptr);
-                    }
-
-                    if (0 == ret)
-                    {
-                        status = ATCA_SUCCESS;
-                    }
-                    else
-                    {
-                        wc_ecc_key_free((ecc_key*)(ctx->ptr));
-                        status = ATCA_GEN_FAIL;
-                    }
+                    status = ATCA_SUCCESS;
+                }
+                else
+                {
+                    wc_ecc_key_free((ecc_key*)(ctx->ptr));
+                    status = ATCA_GEN_FAIL;
                 }
             }
         }
+
         if (ATCA_SUCCESS == status)
         {
             ctx->key_type = key_type;
@@ -717,7 +744,7 @@ ATCA_STATUS atcac_pk_init_pem(
     {
         word32 inOutIdx = 0;
         status = ATCA_FUNC_FAIL;
-        uint8_t derbuf[121] = { 0u };   //! ECC_SECP256R1 MAX DER size
+        uint8_t derbuf[255] = { 0u };   //! ECC_SECP521R1 MAX DER size
         size_t derbuflen = sizeof(derbuf);
         int ret;
 
@@ -741,26 +768,47 @@ ATCA_STATUS atcac_pk_init_pem(
 
                 if (NULL != ctx->ptr)
                 {
-                    ret = (0 == wc_ecc_set_curve((ecc_key*)ctx->ptr, 32, (sword32)ECC_SECP256R1)) ? 0 : 1;
+                    if (pubkey)
+                    {
+                        ret = wc_EccPublicKeyDecode(derbuf, &inOutIdx, (ecc_key*)ctx->ptr, (word32)derbuflen);
+                    }
+                    else
+                    {
+                        ret = wc_EccPrivateKeyDecode(derbuf, &inOutIdx, (ecc_key*)ctx->ptr, (word32)derbuflen);
+                    }
 
                     if (0 == ret)
                     {
-                        if (pubkey)
+                        uint8_t pubKey[ATCA_MAX_ECC_PB_KEY_SIZE + 1u];
+                        word32 pubKeyLen = (uint32_t)(sizeof(pubKey));
+                        ret = wc_ecc_export_x963((ecc_key*)ctx->ptr, pubKey, &pubKeyLen);
+                        if (0 == ret)
                         {
-                            ret = wc_EccPublicKeyDecode(derbuf, &inOutIdx, (ecc_key*)ctx->ptr, (word32)derbuflen);
-                        }
-                        else
-                        {
-                            ret = wc_EccPrivateKeyDecode(derbuf, &inOutIdx, (ecc_key*)ctx->ptr, (word32)derbuflen);
+                            switch (pubKeyLen)
+                            {
+                            case ATCA_ECCP256_PUBKEY_SIZE + 1u:
+                                ctx->key_type = ATCA_KEY_TYPE_ECCP256;
+                                break;
+                        #if ATCA_TA_SUPPORT
+                            case ATCA_ECCP224_PUBKEY_SIZE + 1u:
+                                ctx->key_type = TA_KEY_TYPE_ECCP224;
+                                break;
+                            case ATCA_ECCP384_PUBKEY_SIZE + 1u:
+                                ctx->key_type = TA_KEY_TYPE_ECCP384;
+                                break;
+                            case ATCA_ECCP521_PUBKEY_SIZE + 1u:
+                                ctx->key_type = TA_KEY_TYPE_ECCP521;
+                                break;
+                        #endif
+                            default:
+                                ret = -1;
+                                break;
+                            }
                         }
                         status = (0 == ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
                     }
-                    if (ATCA_SUCCESS == status)
-                    {
-                        ctx->key_type = 0;
-                    }
                 }
-            }
+            }     
         }
     }
     return status;
@@ -776,7 +824,7 @@ ATCA_STATUS atcac_pk_public(
     size_t*                 buflen
     )
 {
-    ATCA_STATUS status = ATCA_BAD_PARAM;
+    ATCA_STATUS status = ATCA_SUCCESS;
 
     if (NULL != ctx  && NULL != ctx->ptr && NULL != buf)
     {
@@ -786,16 +834,35 @@ ATCA_STATUS atcac_pk_public(
         }
 
         int ret = -1;
+        word32 xlen = 0u;
+        word32 ylen = 0u;
 
-        if (0U == ctx->key_type)
+        switch (ctx->key_type)
         {
-            word32 xlen = 32;
-            word32 ylen = 32;
-
-            ret = wc_ecc_export_public_raw((ecc_key*)ctx->ptr, (byte*)buf, &xlen, (byte*)&buf[32], &ylen);
+            case ATCA_KEY_TYPE_ECCP256:
+                xlen = ylen = ATCA_ECCP256_PUBKEY_SIZE / 2u;
+                break;
+        #if ATCA_TA_SUPPORT
+            case TA_KEY_TYPE_ECCP224:
+                xlen = ylen = ATCA_ECCP224_PUBKEY_SIZE / 2u;
+                break;
+            case TA_KEY_TYPE_ECCP384:
+                xlen = ylen = ATCA_ECCP384_PUBKEY_SIZE / 2u;
+                break;
+            case TA_KEY_TYPE_ECCP521:
+                xlen = ylen = ATCA_ECCP521_PUBKEY_SIZE / 2u;
+                break;
+        #endif
+            default:
+                status = ATCA_BAD_PARAM;
+                break;
         }
 
-        status = (0 == ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+        if (status == ATCA_SUCCESS)
+        {
+            ret = wc_ecc_export_public_raw((ecc_key*)ctx->ptr, (byte*)&buf[0], &xlen, (byte*)&buf[ylen], &ylen);
+            status = (0 == ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
+        }
     }
     return status;
 }
@@ -842,32 +909,63 @@ ATCA_STATUS atcac_pk_sign(
 
         if (0 == ret)
         {
-            if ((0u == ctx->key_type) && (ATCA_SHA256_DIGEST_SIZE == dig_len))
+            uint8_t sig[ATCA_MAX_ECC_SIG_SIZE + ATCA_ECC_SIG_OVERHEAD_SIZE];
+            word32 siglen = 0u;
+            word32 rlen = 0u, slen = 0u;
+
+            (void)memset(signature, 0, *sig_len);
+
+            switch (ctx->key_type)
             {
-                uint8_t sig[72];
-                word32 siglen = 72;
-                word32 rlen = 32;
-                word32 slen = 32;
-
-                (void)memset(signature, 0, *sig_len);
-
-                ret = wc_ecc_sign_hash((const byte*)digest, (word32)dig_len, (byte*)sig, &siglen, &rng, (ecc_key*)ctx->ptr);
-
-                if (0 == ret)
-                {
-                    ret = wc_ecc_sig_to_rs((byte*)sig, siglen, (byte*)signature, &rlen, (byte*)&signature[32], &slen);
-                }
-
-                if (0 == ret)
-                {
-                    *sig_len = 64;
-                }
+                case ATCA_KEY_TYPE_ECCP256:
+                    rlen = ATCA_ECCP256_SIG_SIZE / 2u;
+                    slen = ATCA_ECCP256_SIG_SIZE / 2u;
+                    siglen = rlen + slen + ATCA_ECC_SIG_OVERHEAD_SIZE;
+                    ret = wc_ecc_sign_hash((const byte*)digest, (word32)(dig_len & UINT32_MAX), (byte*)sig, &siglen, &rng, (ecc_key*)ctx->ptr);
+                    if (0 == ret)
+                    {
+                        ret = wc_ecc_sig_to_rs((byte*)sig, siglen, (byte*)signature, &rlen, (byte*)&signature[rlen], &slen);
+                    }
+                    if (0 == ret)
+                    {
+                        *sig_len = ATCA_ECCP256_SIG_SIZE;
+                    }
+                    break;
+            #if ATCA_TA_SUPPORT
+                case TA_KEY_TYPE_ECCP384:
+                    rlen = ATCA_ECCP384_SIG_SIZE / 2u;
+                    slen = ATCA_ECCP384_SIG_SIZE / 2u;
+                    siglen = rlen + slen + ATCA_ECC_SIG_OVERHEAD_SIZE;
+                    ret = wc_ecc_sign_hash((const byte*)digest, (word32)(dig_len & UINT32_MAX), (byte*)sig, &siglen, &rng, (ecc_key*)ctx->ptr);
+                    if (0 == ret)
+                    {
+                        ret = wc_ecc_sig_to_rs((byte*)sig, siglen, (byte*)signature, &rlen, (byte*)&signature[rlen], &slen);
+                    }
+                    if (0 == ret)
+                    {
+                        *sig_len = ATCA_ECCP384_SIG_SIZE;
+                    }
+                    break;
+                case TA_KEY_TYPE_ECCP521:
+                    rlen = ATCA_ECCP521_SIG_SIZE / 2u;
+                    slen = ATCA_ECCP521_SIG_SIZE / 2u;
+                    siglen = rlen + slen + ATCA_ECC_SIG_OVERHEAD_SIZE;
+                    ret = wc_ecc_sign_hash((const byte*)digest, (word32)(dig_len & UINT32_MAX), (byte*)sig, &siglen, &rng, (ecc_key*)ctx->ptr);
+                    if (0 == ret)
+                    {
+                        ret = wc_ecc_sig_to_rs((byte*)sig, siglen, (byte*)signature, &rlen, (byte*)&signature[rlen], &slen);
+                    }
+                    if (0 == ret)
+                    {
+                        *sig_len = ATCA_ECCP521_SIG_SIZE;
+                    }
+                    break;
+            #endif
+                default:
+                    ret = -1;
+                    break;
             }
-            else
-            {
-                // ret = wc_SignatureGenerateHash(WC_HASH_TYPE_SHA256, WC_SIGNATURE_TYPE_RSA, digest, dig_len, signature,
-                //                                *sig_len, (RsaKey*)ctx->ptr, 32, &rng);
-            }
+
             (void)wc_FreeRng(&rng);
         }
         status = (0 == ret) ? ATCA_SUCCESS : ATCA_FUNC_FAIL;
@@ -889,21 +987,26 @@ ATCA_STATUS atcac_pk_verify(
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if ((NULL != ctx) && (NULL != ctx->ptr) && (NULL != signature) && (NULL != digest)
-        && (ATCA_SHA256_DIGEST_SIZE == dig_len))
+    if ((NULL != ctx) && (NULL != ctx->ptr) && (NULL != signature) && (NULL != digest))
     {
         int ret = -1;
         int res = 0;
-        if ((0u == ctx->key_type) && (ATCA_ECCP256_SIG_SIZE == sig_len))
-        {
-            uint8_t sig[72];
-            word32 len = 72;
 
-            ret = (0 == wc_ecc_rs_raw_to_sig(signature, 32, &signature[32], 32, (byte*)sig, &len)) ? 0 : 1;
+        if (ctx->key_type < ATCA_KEY_TYPE_ECC_COUNT)
+        {
+            uint8_t sig[ATCA_MAX_ECC_SIG_SIZE + ATCA_ECC_SIG_OVERHEAD_SIZE];
+            word32 len = 0u;
+
+            if (true == IS_ADD_SAFE_UINT32_T((uint32_t)(sig_len & UINT32_MAX), ATCA_ECC_SIG_OVERHEAD_SIZE))
+            {
+                len = (uint32_t)((sig_len + ATCA_ECC_SIG_OVERHEAD_SIZE) & UINT32_MAX);
+            }
+
+            ret = (0 == wc_ecc_rs_raw_to_sig(signature, (word32)((sig_len / 2u) & UINT32_MAX), &signature[sig_len / 2u], (word32)((sig_len / 2u) & UINT32_MAX), (byte*)sig, &len)) ? 0 : 1;
 
             if (0 == ret)
             {
-                ret = wc_ecc_verify_hash((byte*)sig, len, (const byte*)digest, (word32)dig_len, &res, (ecc_key*)ctx->ptr);
+                ret = wc_ecc_verify_hash((byte*)sig, len, (const byte*)digest, (word32)(dig_len & UINT32_MAX), &res, (ecc_key*)ctx->ptr);
             }
         }
         else
@@ -1047,79 +1150,90 @@ ATCA_STATUS atcac_get_subj_public_key(const struct atcac_x509_ctx* cert, cal_buf
 
     if (NULL != cert && NULL != subj_public_key)
     {
-        WOLFSSL_EVP_PKEY* key;
+        DecodedCert decoded_cert;
+        const byte* cert_buf;
+        int cert_size = 0, ret = 0;
 
-        if (NULL != (key = wolfSSL_X509_get_pubkey(get_wssl_cert_from_atcac_ctx(cert))))
+        (void)memset(&decoded_cert, 0, sizeof(DecodedCert));
+
+        /* Extract the raw certificate buffer and size from the WOLFSSL_X509 structure */
+        cert_buf = wolfSSL_X509_get_der(get_wssl_cert_from_atcac_ctx(cert), &cert_size);
+        
+        if (cert_size <= 0)
         {
-            if (EVP_PKEY_EC == key->type)
-            {
-                ecc_key pubKeyEcc;
-                (void)memset(&pubKeyEcc, 0, sizeof(ecc_key));
-                word32 idx = 0;
-                if (0 == wc_ecc_init(&pubKeyEcc))
-                {
-                    int pkey_sz = key->pkey_sz; // Cast to signed int
+            return status;
+        }
 
-                    if (pkey_sz >= 0)
+        /* Initialize DecodedCert with the certificate buffer */
+        (void)InitDecodedCert(&decoded_cert, cert_buf, (word32)cert_size, NULL);
+        
+        /* Parse the certificate to extract fields */
+        ret = ParseCert(&decoded_cert, (int)CERT_TYPE, 0, NULL);
+        if (0 != ret)
+        {
+            return ATCA_FUNC_FAIL;
+        }
+
+        if ((word32)ECDSAk == decoded_cert.keyOID)
+        {
+            ecc_key pubKeyEcc;
+            (void)memset(&pubKeyEcc, 0, sizeof(ecc_key));
+            word32 idx = 0;
+            if (0 == wc_ecc_init(&pubKeyEcc))
+            {
+                if (0 == wc_EccPublicKeyDecode(decoded_cert.publicKey, &idx, &pubKeyEcc, decoded_cert.pubKeySize))
+                {
+                    /* coverity[misra_c_2012_rule_9_1_violation:SUPPRESS] wc_ecc_init is called to initialize pubKeyEcc */
+                    if (NULL != pubKeyEcc.dp)
                     {
-                        if (0 == wc_EccPublicKeyDecode((byte*)key->pkey.ptr, &idx, &pubKeyEcc, (word32)key->pkey_sz))
+                        word32 xlen = (word32)pubKeyEcc.dp->size;
+                        word32 ylen = (word32)pubKeyEcc.dp->size;
+                        if (0 == wc_ecc_export_public_raw(&pubKeyEcc, (byte*)subj_public_key->buf, &xlen,
+                            (byte*)&subj_public_key->buf[pubKeyEcc.dp->size], &ylen))
                         {
-                            /* coverity[misra_c_2012_rule_9_1_violation:SUPPRESS] wc_ecc_init is called to initialize pubKeyEcc */
-                            if (NULL != pubKeyEcc.dp)
-                            {
-                                word32 xlen = (word32)pubKeyEcc.dp->size;
-                                word32 ylen = (word32)pubKeyEcc.dp->size;
-                                if (0 == wc_ecc_export_public_raw(&pubKeyEcc, (byte*)subj_public_key->buf, &xlen,
-                                                                  (byte*)&subj_public_key->buf[pubKeyEcc.dp->size], &ylen))
-                                {
-                                    subj_public_key->len = (word64)(xlen) + (word64)(ylen);
-                                    status = ATCA_SUCCESS;
-                                }
-                            }
+                            subj_public_key->len = (word64)(xlen)+(word64)(ylen);
+                            status = ATCA_SUCCESS;
                         }
                     }
                 }
-                wolfSSL_EVP_PKEY_free(key);
-                if (0 != wc_ecc_free(&pubKeyEcc))
+                /* Free the ECC key structure */
+                (void)wc_ecc_free(&pubKeyEcc);
+            }
+        }
+        else if ((word32)RSAk == decoded_cert.keyOID)
+        {
+            RsaKey rsaKey;
+            (void)memset(&rsaKey, 0, sizeof(RsaKey));
+            word32 idx = 0;
+
+            if (0 == wc_InitRsaKey(&rsaKey, NULL))
+            {
+                if (0 == wc_RsaPublicKeyDecode(decoded_cert.publicKey, &idx, &rsaKey, decoded_cert.pubKeySize))
+                {
+                    int nlen = mp_unsigned_bin_size(&rsaKey.n);
+                    // Check buffer size before storing public key 
+                    if ((nlen > 0) && ((unsigned long)nlen <= subj_public_key->len))
+                    {
+                        if (0 == mp_to_unsigned_bin(&rsaKey.n, (byte*)subj_public_key->buf))
+                        {
+                            subj_public_key->len = (word64)nlen;
+                            status = ATCA_SUCCESS;
+                        }
+                    }
+                }
+
+                if (0 != wc_FreeRsaKey(&rsaKey))
                 {
                     status = ATCA_BAD_PARAM;
                 }
             }
-            else
-            {
-                RsaKey rsaKey;
-                (void)memset(&rsaKey, 0, sizeof(RsaKey));
-                word32 idx = 0;
-
-                if (0 == wc_InitRsaKey(&rsaKey, NULL))
-                {
-                    int pkey_sz = key->pkey_sz; // Cast to signed int
-
-                    if (pkey_sz >= 0)
-                    {
-                        if (0 == wc_RsaPublicKeyDecode((byte*)key->pkey.ptr, &idx, &rsaKey, (word32)key->pkey_sz))
-                        {
-                            int nlen = mp_unsigned_bin_size(&rsaKey.n);
-                            // Check buffer size before storing public key 
-                            if ((nlen > 0) && ((unsigned long)nlen <= subj_public_key->len))
-                            {
-                                if (0 == mp_to_unsigned_bin(&rsaKey.n, (byte*)subj_public_key->buf))
-                                {
-                                    subj_public_key->len = (word64)nlen;
-                                    status = ATCA_SUCCESS;
-                                }
-                            }
-                        }
-                    }
-                    wolfSSL_EVP_PKEY_free(key);
-                    if (0 != wc_FreeRsaKey(&rsaKey))
-                    {
-                        status = ATCA_BAD_PARAM;
-                    }
-                }
-            }
+        }
+        else
+        {
+            status = ATCA_BAD_PARAM;
         }
     }
+
     return status;
 }
 

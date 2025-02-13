@@ -40,6 +40,64 @@
 extern "C" {
 #endif
 
+/*
+ * Format version 0 supports ECCP256 curve
+ * +-------------------------------------------------------------------------------------------------------------------------------+
+ * |                                                    Signature: 64 bytes                                                        |
+ * |                                                       Bytes 0 to 63                                                           |
+ * +-------------------------------------------------------------------------------------------------------------------------------+
+ * | Byte 64       | Byte 65       | Byte 66       | Byte 67       | Byte 68       | Byte 69       | Byte 70       | Byte 71       |
+ * +---------------+---------------+-----------------------------------------------------------------------------------------------+
+ * | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | |
+ * | 5 bits  | 4 bits| 5 bits  | 5 bits  | 5 bits  |             16 bits           | 4 bits| 4 bits| 4 bits| 4 bits|     8 bits    |
+ * |  Issue  | Issue |  Issue  | Issue   | Expire  |            Signer ID          |Templa | Chain |  SN   | Format|    Reserved   |
+ * |  Year   | Month |  Day    | Hour    | Years   |                               | te ID |   ID  | Source|Version|               |
+ * +---------+-------+---------+---------+---------+-------------------------------+-------+-------+-------+-------+---------------+
+ *
+ * Minutes and seconds are always zero.
+ */
+#define FORMAT_VERSION_0                        0u
+/*
+ * Format version 1 supports extended years (Issue years and Expire years from 2031 to 2127)
+ * +-------------------------------------------------------------------------------------------------------------------------------------+
+ * |                                                    Signature: 64 bytes                                                              |
+ * |                                                       Bytes 0 to 63                                                                 |
+ * +-------------------------------------------------------------------------------------------------------------------------------------+
+ * | Byte 64       | Byte 65       | Byte 66       | Byte 67       | Byte 68       | Byte 69       | Byte 70       | Byte 71             |
+ * +---------------+---------------+-----------------------------------------------------------------------------------------------------+
+ * | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | |  | | |  | |
+ * | 5 bits  | 4 bits| 5 bits  | 5 bits  | 5 bits  |             16 bits           | 4 bits| 4 bits| 4 bits| 4 bits|  2  |  2   | 4 bits |
+ * |  Issue  | Issue |  Issue  | Issue   | Expire  |            Signer ID          |Templa | Chain |  SN   | Format| bits| bits |Reserved|
+ * |  Year   | Month |   Day   | Hour    | Years   |                               | te ID |   ID  | Source|Version|Issue|Expire|        |
+ * |         |       |         |         |         |                               |       |       |       |       |Years|Years |        |
+ * +---------+-------+---------+---------+---------+-------------------------------+-------+-------+-------+-------+-----+------+--------+
+ *
+ * Minutes and seconds are always zero.
+ */
+#define FORMAT_VERSION_1                        1u
+/*
+ * Format version 2 supports ECC higher curves (ECCP384/ECCP521)
+ * +-------------------------------------------------------------------------------------------------------------------------------------+
+ * |                                                    Signature: 64 bytes                                                              |
+ * |                                                       Bytes 0 to 63                                                                 |
+ * +-------------------------------------------------------------------------------------------------------------------------------------+
+ * | Byte 64       | Byte 65       | Byte 66       | Byte 67       | Byte 68       | Byte 69       | Byte 70       | Byte 71             |
+ * +---------------+---------------+-----------------------------------------------------------------------------------------------------+
+ * | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | |  | | |  | |
+ * | 5 bits  | 4 bits| 5 bits  | 5 bits  | 5 bits  |             16 bits           | 4 bits| 4 bits| 4 bits| 4 bits|  2  |  2   | 4 bits |
+ * |  Issue  | Issue |  Issue  | Issue   | Expire  |            Signer ID          |Templa | Chain |  SN   | Format| bits| bits |Reserved|
+ * |  Year   | Month |   Day   | Hour    | Years   |                               | te ID |   ID  | Source|Version|Issue|Expire|        |
+ * |         |       |         |         |         |                               |       |       |       |       |Years|Years |        |
+ * +---------+-------+---------+---------+---------+-------------------------------+-------+-------+-------+-------+-----+------+--------+
+ * |                                                       Signature:                                                                    |
+ * |                                                 ECCP256 - Reserved                                                                  |
+ * |                                                 ECCP384 - Bytes 72 to 103                                                           |
+ * |                                                 ECCP521 - Bytes 72 to 139                                                           |
+ * +-------------------------------------------------------------------------------------------------------------------------------------+
+ *
+ * Minutes and seconds are always zero.
+ */
+#define FORMAT_VERSION_2                        2u
 
 /** \defgroup atcacert_ Certificate manipulation methods (atcacert_)
  *

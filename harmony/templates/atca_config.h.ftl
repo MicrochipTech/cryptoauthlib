@@ -310,13 +310,27 @@
         </#if>
 </#if>
 
+/* Atcacert functionality required by the library  */
+
+<#if cal_atcacert_full_stored == false>
+        <#lt>#define ATCACERT_FULLSTOREDCERT_EN           (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCACERT_FULLSTOREDCERT_EN           (FEATURE_ENABLED)
+</#if>
+
+<#if cal_atcacert_compressed == false>
+        <#lt>#define ATCACERT_COMPCERT_EN                 (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCACERT_COMPCERT_EN                 (FEATURE_ENABLED)
+</#if>
+
 /* Host side Cryptographic functionality required by the library  */
 
 /* Crypto Hardware AES Configurations */
 <#if cal_hw_aes == false>
         <#lt>#define ATCAB_AES_EXTRAS_EN                (FEATURE_DISABLED)
 <#else>
-        <#lt>#define ATCAB_AES_EXTRAS_EN                (ATCAB_AES_EN)
+        <#lt>#define ATCAB_AES_EXTRAS_EN                (CALIB_AES_EN || TALIB_AES_EN || LIBRARY_USAGE_EN_CHECK)
 
         <#if cal_crypto_aes_cbc_encrypt == false>
             <#lt>#define ATCAB_AES_CBC_ENCRYPT_EN       (FEATURE_DISABLED)
@@ -431,9 +445,11 @@
 </#if>
 
 <#if CAL_ENABLE_RTOS>
+<#if CAL_ENABLE_HEAP>
 /** Define platform malloc/free */
 #define ATCA_PLATFORM_MALLOC    OSAL_Malloc
 #define ATCA_PLATFORM_FREE      OSAL_Free
+</#if>
 
 /** Use RTOS timers (i.e. delays that yield when the scheduler is running) */
 #ifndef ATCA_USE_RTOS_TIMER
@@ -443,9 +459,11 @@
 #define atca_delay_ms   hal_rtos_delay_ms
 #define atca_delay_us   hal_delay_us
 <#else>
+<#if CAL_ENABLE_HEAP>
 /** Define platform malloc/free */
 #define ATCA_PLATFORM_MALLOC    malloc
 #define ATCA_PLATFORM_FREE      free
+</#if>
 
 #define atca_delay_ms   hal_delay_ms
 #define atca_delay_us   hal_delay_us
@@ -616,31 +634,6 @@ typedef struct atca_plib_swi_api
     atca_swi_set_pin_input        set_pin_input_dir;
 }atca_plib_bb_api_t;
 <#assign is_atca_plib_bb_exists = "True">
-
-/**
- * \name Macros for Bit-Banged SWI Timing
- *
- * Times to drive bits at 230.4 kbps.
-   @{ */
-
-//! delay macro for width of one pulse (start pulse or zero pulse)
-//! should be 4.34 us, is 4.05 us
-
-#define BIT_DELAY_1L        atca_delay_us(4)
-//! should be 4.34 us, is 4.05us
-#define BIT_DELAY_1H        atca_delay_us(4)
-
-//! time to keep pin high for five pulses plus stop bit (used to bit-bang CryptoAuth 'zero' bit)
-//! should be 26.04 us, is 26.92 us
-#define BIT_DELAY_5        atca_delay_us(26)    // considering pin set delay
-
-//! time to keep pin high for seven bits plus stop bit (used to bit-bang CryptoAuth 'one' bit)
-//! should be 34.72 us, is 35.13 us
-#define BIT_DELAY_7        atca_delay_us(34)    // considering pin set delay
-
-//! turn around time when switching from receive to transmit
-//! should be 93 us (Setting little less value as there would be other process before these steps)
-#define RX_TX_DELAY        atca_delay_us(65)
 
 </#if>
 </#if>

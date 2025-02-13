@@ -199,7 +199,7 @@
  * Supported API's: atcac_sha256_hmac_init, atcac_sha256_hmac_update, atcac_sha256_hmac_finish
  **/
 #ifndef ATCA_CRYPTO_SHA2_HMAC_EN
-#define ATCA_CRYPTO_SHA2_HMAC_EN            (ATCAC_SHA256_HMAC_EN && !ATCA_HOSTLIB_EN)
+#define ATCA_CRYPTO_SHA2_HMAC_EN            (ATCAC_SHA256_HMAC_EN && !ATCA_HOSTLIB_EN && !LIBRARY_BUILD_EN_CHECK)
 #endif
 
 /** \def ATCA_CRYPTO_SHA2_HMAC_CTR_EN
@@ -254,21 +254,42 @@
  * Enable ATCA_CRYPTO_AES_GCM_EN to enable AES GCM host side api
  */
 #ifndef ATCA_CRYPTO_AES_GCM_EN
-#define ATCA_CRYPTO_AES_GCM_EN              (!ATCA_HOSTLIB_EN)
+#define ATCA_CRYPTO_AES_GCM_EN              (!ATCA_HOSTLIB_EN && (LIBRARY_BUILD_EN_CHECK || LIBRARY_USAGE_EN_CHECK))
 #endif /* ATCA_CRYPTO_AES_GCM_EN */
 
 /** \def ATCAC_AES_CMAC_EN
  * Indicates if this module is a provider of an AES-CMAC implementation
  */
 #ifndef ATCAC_AES_CMAC_EN
-#define ATCAC_AES_CMAC_EN                    (ATCA_HOSTLIB_EN)
+#define ATCAC_AES_CMAC_EN                   (ATCA_HOSTLIB_EN)
 #endif /* ATCAC_AES_CMAC_EN */
 
 /** \def ATCA_CRYPTO_AES_CMAC_EN
  * Enable ATCA_CRYPTO_AES_CMAC_EN to enable AES CMAC host side api
  */
 #ifndef ATCA_CRYPTO_AES_CMAC_EN
-#define ATCA_CRYPTO_AES_CMAC_EN             (!ATCA_HOSTLIB_EN)
+#define ATCA_CRYPTO_AES_CMAC_EN             (!ATCA_HOSTLIB_EN && (LIBRARY_BUILD_EN_CHECK || LIBRARY_USAGE_EN_CHECK))
 #endif /* ATCA_CRYPTO_AES_CMAC_EN */
+
+/** \def MAX_HMAC_CTX_SIZE
+ * Set to Maximum HMAC context size
+ */
+#ifndef MAX_HMAC_CTX_SIZE
+#define MAX_HMAC_CTX_SIZE                   (648)
+#endif /* MAX_HMAC_CTX_SIZE */
+
+/** \def MAX_AES_CMAC_CTX_SIZE
+ * Set to Maximum AES CMAC context size
+ */
+#ifndef MAX_AES_CMAC_CTX_SIZE
+#define MAX_AES_CMAC_CTX_SIZE               (600)
+#endif /* MAX_AES_CMAC_CTX_SIZE */
+
+/** \def MAX_AES_GCM_CTX_SIZE
+ * Set to Maximum AES GCM context size
+ */
+#ifndef MAX_AES_GCM_CTX_SIZE
+#define MAX_AES_GCM_CTX_SIZE                (540)
+#endif /* MAX_AES_GCM_CTX_SIZE */
 
 #endif /* CRYPTO_CONFIG_CHECK_H */

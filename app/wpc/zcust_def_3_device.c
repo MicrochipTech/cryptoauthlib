@@ -38,6 +38,7 @@ static struct atcac_x509_ctx* parsed;
 const atcacert_def_t g_cert_def_3_device = {
     .type = CERTTYPE_X509_FULL_STORED,
     .private_key_slot = 0,
+#if ATCACERT_COMPCERT_EN
     .public_key_dev_loc = {
         .zone = DEVZONE_DATA,
         .slot = 0,
@@ -45,6 +46,7 @@ const atcacert_def_t g_cert_def_3_device = {
         .offset = 0,
         .count = 64
     },
+#endif
     .comp_cert_dev_loc = {
         .zone = DEVZONE_DATA,
         .slot = 1,

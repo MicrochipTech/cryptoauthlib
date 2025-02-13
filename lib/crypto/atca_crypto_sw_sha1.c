@@ -37,7 +37,7 @@
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 
-int atcac_sw_sha1_init(struct atcac_sha1_ctx* ctx)
+ATCA_STATUS atcac_sw_sha1_init(struct atcac_sha1_ctx* ctx)
 {
     if (sizeof(CL_HashContext) > sizeof(atcac_sha1_ctx_t))
     {
@@ -55,7 +55,7 @@ int atcac_sw_sha1_init(struct atcac_sha1_ctx* ctx)
     \param[in] data_size  Data size in bytes
     \return ATCA_SUCCESS
  */
-int atcac_sw_sha1_update(struct atcac_sha1_ctx* ctx, const uint8_t* data, size_t data_size)
+ATCA_STATUS atcac_sw_sha1_update(struct atcac_sha1_ctx* ctx, const uint8_t* data, size_t data_size)
 {
     CL_hashUpdate((CL_HashContext*)ctx, data, (int)data_size);
 
@@ -67,7 +67,7 @@ int atcac_sw_sha1_update(struct atcac_sha1_ctx* ctx, const uint8_t* data, size_t
  * \param[out] digest  Digest is returned here (20 bytes)
  * \return ATCA_SUCCESS
  */
-int atcac_sw_sha1_finish(struct atcac_sha1_ctx* ctx, uint8_t digest[ATCA_SHA1_DIGEST_SIZE])
+ATCA_STATUS atcac_sw_sha1_finish(struct atcac_sha1_ctx* ctx, uint8_t digest[ATCA_SHA1_DIGEST_SIZE])
 {
     CL_hashFinal((CL_HashContext*)ctx, digest);
 

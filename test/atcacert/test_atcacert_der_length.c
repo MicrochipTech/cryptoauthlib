@@ -25,7 +25,7 @@
  * THIS SOFTWARE.
  */
 #include "atca_test.h"
-#ifndef DO_NOT_TEST_CERT
+#if !defined(DO_NOT_TEST_CERT) && ATCACERT_COMPCERT_EN
 
 #include "atcacert/atcacert_der.h"
 
@@ -346,4 +346,31 @@ TEST(atcacert_der_dec_length, bad_params)
     ret = atcacert_der_dec_length(NULL, NULL, &length);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
+
+// *INDENT-OFF* - Preserve formatting
+t_test_case_info atcacert_der_enc_length_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_der_enc_length, short_form),       NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_length, long_form_2byte),  NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_length, long_form_3byte),  NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_length, long_form_4byte),  NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_length, long_form_5byte),  NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_length, small_buf),        NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_length, bad_params),       NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_der_dec_length_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_der_dec_length, good),             NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_length, zero_size),        NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_length, not_enough_data),  NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_length, indefinite_form),  NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_length, too_large),        NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_length, bad_params),       NULL },
+
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
 #endif

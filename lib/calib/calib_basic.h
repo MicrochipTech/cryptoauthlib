@@ -26,23 +26,22 @@ ATCA_STATUS calib_sleep(ATCADevice device);
 ATCA_STATUS calib_exit(ATCADevice device);
 ATCA_STATUS calib_get_addr(uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint16_t* addr);
 ATCA_STATUS calib_get_zone_size(ATCADevice device, uint8_t zone, uint16_t slot, size_t* size);
-ATCA_STATUS calib_ca2_get_addr(uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint16_t* addr);
 
 /* Helper Functions */
 ATCA_STATUS calib_is_locked(ATCADevice device, uint8_t zone, bool* is_locked);
 ATCA_STATUS calib_is_slot_locked(ATCADevice device, uint16_t slot, bool* is_locked);
+#if ATCA_CA2_SUPPORT
+ATCA_STATUS calib_ca2_get_addr(uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint16_t* addr);
 ATCA_STATUS calib_ca2_is_locked(ATCADevice device, uint8_t zone, bool* is_locked);
 ATCA_STATUS calib_ca2_is_data_locked(ATCADevice device, bool* is_locked);
 ATCA_STATUS calib_ca2_is_config_locked(ATCADevice device, bool* is_locked);
+ATCADeviceType calib_get_devicetype_with_device_id(uint8_t device_id, uint8_t device_revision);
+#endif
 ATCADeviceType calib_get_devicetype(uint8_t revision[4]);
 
 #if CALIB_READ_EN || CALIB_READ_CA2_EN
 ATCA_STATUS calib_is_locked_ext(ATCADevice device, uint8_t zone, bool* is_locked);
 ATCA_STATUS calib_is_private(ATCADevice device, uint16_t slot, bool* is_private);
-#endif
-
-#if ATCA_CA2_SUPPORT
-ATCADeviceType calib_get_devicetype_with_device_id(uint8_t device_id, uint8_t device_revision);
 #endif
 
 //AES command functions

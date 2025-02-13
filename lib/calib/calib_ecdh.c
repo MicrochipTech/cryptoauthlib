@@ -58,7 +58,7 @@
  */
 ATCA_STATUS calib_ecdh_base(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t* public_key, uint8_t* pms, uint8_t* out_nonce)
 {
-    ATCAPacket packet;
+    ATCAPacket * packet = NULL;
     ATCA_STATUS status;
 
     do
@@ -69,37 +69,47 @@ ATCA_STATUS calib_ecdh_base(ATCADevice device, uint8_t mode, uint16_t key_id, co
             break;
         }
 
-        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
+
+        packet = calib_packet_alloc();
+        if(NULL == packet)
+        {
+            (void)ATCA_TRACE(ATCA_ALLOC_FAILURE, "calib_packet_alloc - failed");
+            status = ATCA_ALLOC_FAILURE;
+            break;
+        }
+
+        (void)memset(packet, 0x00, sizeof(ATCAPacket));
 
         // Build Command
-        packet.param1 = mode;
-        packet.param2 = key_id;
-        (void)memcpy(packet.data, public_key, ATCA_PUB_KEY_SIZE);
+        packet->param1 = mode;
+        packet->param2 = key_id;
+        (void)memcpy(packet->data, public_key, ATCA_PUB_KEY_SIZE);
 
-        if ((status = atECDH(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
+        if ((status = atECDH(atcab_get_device_type_ext(device), packet)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "atECDH - failed");
             break;
         }
 
-        if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(packet, device)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "calib_ecdh_base - execution failed");
             break;
         }
 
-        if (pms != NULL && packet.data[ATCA_COUNT_IDX] >= (3u + ATCA_KEY_SIZE))
+        if (pms != NULL && packet->data[ATCA_COUNT_IDX] >= (3u + ATCA_KEY_SIZE))
         {
-            (void)memcpy(pms, &packet.data[ATCA_RSP_DATA_IDX], ATCA_KEY_SIZE);
+            (void)memcpy(pms, &packet->data[ATCA_RSP_DATA_IDX], ATCA_KEY_SIZE);
         }
 
-        if (out_nonce != NULL && packet.data[ATCA_COUNT_IDX] >= (3u + ATCA_KEY_SIZE * 2u))
+        if (out_nonce != NULL && packet->data[ATCA_COUNT_IDX] >= (3u + ATCA_KEY_SIZE * 2u))
         {
-            (void)memcpy(out_nonce, &packet.data[ATCA_RSP_DATA_IDX + ATCA_KEY_SIZE], ATCA_KEY_SIZE);
+            (void)memcpy(out_nonce, &packet->data[ATCA_RSP_DATA_IDX + ATCA_KEY_SIZE], ATCA_KEY_SIZE);
         }
 
     } while (false);
 
+    calib_packet_free(packet);
     return status;
 }
 

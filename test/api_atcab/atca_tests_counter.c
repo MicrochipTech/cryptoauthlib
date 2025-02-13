@@ -33,7 +33,7 @@
 
 #if TEST_ATCAB_COUNTER_EN
 
-#ifdef ATCA_ECC_SUPPORT
+#if ATCA_ECC_SUPPORT
 
 TEST_CONDITION(atca_cmd_basic_test, counter_test)
 {
@@ -247,7 +247,7 @@ t_test_case_info counter_basic_test_info[] =
 #if ATCA_CA_SUPPORT || ATCA_CA2_SUPPORT
     { REGISTER_TEST_CASE(atca_cmd_basic_test, counter_write_test), REGISTER_TEST_CONDITION(atca_cmd_basic_test, counter_write_test) },
 #endif
-#ifdef ATCA_ECC_SUPPORT
+#if ATCA_ECC_SUPPORT
     { REGISTER_TEST_CASE(atca_cmd_basic_test, counter_test),       REGISTER_TEST_CONDITION(atca_cmd_basic_test, counter_test) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, counter_match),      atca_test_cond_ecc608 },
 #endif

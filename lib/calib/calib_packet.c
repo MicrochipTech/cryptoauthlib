@@ -35,22 +35,42 @@
 #include "calib_packet.h"
 
 #ifdef ATCA_NO_HEAP
+
+#ifndef CA_MAX_PACKET_CACHE
+    #ifdef __XC8
+        #define CA_MAX_PACKET_CACHE (1)
+    #else
+        #define CA_MAX_PACKET_CACHE (2)
+    #endif
+#else
+    #if CA_MAX_PACKET_CACHE < 2
+        #error "CA_MAX_PACKET_CACHE must be greater than or equal to 2 if ATCA_NO_HEAP is set"
+    #endif
+#endif
+
+static calib_packet_cache_t calib_packet_cache[CA_MAX_PACKET_CACHE];
+
 ATCAPacket* calib_packet_alloc(void)
 {
-    static ATCAPacket packet;   // Static variable, allocated in BSS segment
+    ATCAPacket* packet = NULL;
 
-    return &packet;
+    for (uint8_t i = 0; i < CA_MAX_PACKET_CACHE; i++)
+    {
+        if (false == calib_packet_cache[i].used) 
+        {
+            calib_packet_cache[i].used = true; 
+            packet =  &calib_packet_cache[i].packet_pool; 
+            break;
+        }
+    }
+
+    return packet; 
 }
 #else
 ATCAPacket* calib_packet_alloc(void)
 {
     ATCAPacket* packet = (ATCAPacket*)hal_malloc(sizeof(ATCAPacket));   // Allocate memory on the heap
 
-    if (NULL == packet)
-    {
-        // Handle memory allocation failure
-        return NULL;
-    }
     return packet;
 }
 #endif
@@ -58,9 +78,19 @@ ATCAPacket* calib_packet_alloc(void)
 #ifdef ATCA_NO_HEAP
 void calib_packet_free(ATCAPacket* packet)
 {
-    if (NULL != packet)
+    if (packet == NULL)
     {
-        (void)memset(packet, 0x00, sizeof(ATCAPacket));
+        return; 
+    }
+
+    for (uint8_t i = 0; i < CA_MAX_PACKET_CACHE; i++)
+    {
+        if (&calib_packet_cache[i].packet_pool == packet) 
+        {
+            memset(&calib_packet_cache[i].packet_pool, 0x00, sizeof(ATCAPacket)); 
+            calib_packet_cache[i].used = false; 
+            break;
+        }
     }
 }
 #else

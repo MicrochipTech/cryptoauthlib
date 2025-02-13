@@ -77,6 +77,10 @@ selected plus however additional slots one would like */
 /** Define WPC to be supported. */
 #cmakedefine ATCA_WPC_SUPPORT
 
+/** Define SHA options to be supported. */
+#cmakedefine01 ATCAC_SHA384_EN
+#cmakedefine01 ATCAC_SHA512_EN
+
 /** Define Software Crypto Library to Use - if none are defined use the
     cryptoauthlib version where applicable */
 #cmakedefine ATCA_MBEDTLS
@@ -102,8 +106,12 @@ selected plus however additional slots one would like */
 /** Enable Strict ISO/C99 compliance */
 #cmakedefine ATCA_STRICT_C99
 
-/** Enable ATCACERT Module */
-#cmakedefine01 ATCACERT_EN
+/** Atcacert module configurations */
+#cmakedefine01 ATCACERT_COMPCERT_EN
+#cmakedefine01 ATCACERT_FULLSTOREDCERT_EN 
+
+/** Enable ATCACERT Full Certificate Integration */
+#cmakedefine01 ATCACERT_INTEGRATION_EN
 
 /******************** Device Configuration Section *************************/
 

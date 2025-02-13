@@ -29,36 +29,83 @@
 #include "atca_basic.h"
 #include "crypto/atca_crypto_sw_sha2.h"
 
+#if ATCACERT_EN
 
 #if ATCACERT_HW_VERIFY_EN && ATCACERT_COMPCERT_EN
-ATCA_STATUS atcacert_verify_cert_hw(const atcacert_def_t* cert_def,
+ATCA_STATUS atcacert_verify_cert_hw(ATCADevice            device,
+                                    const atcacert_def_t* cert_def,
                                     const uint8_t*        cert,
                                     size_t                cert_size,
-                                    const uint8_t         ca_public_key[64])
+                                    cal_buffer*           ca_public_key)
 {
     ATCA_STATUS ret = 0;
-    uint8_t tbs_digest[32] = { 0 };
-    uint8_t signature[64];
+    uint8_t tbs_digest[ATCA_SHA2_512_DIGEST_SIZE] = { 0 };
+    cal_buffer dig = CAL_BUF_INIT(0u, tbs_digest);
+    uint8_t signature[ATCA_MAX_ECC_SIG_SIZE];
+    cal_buffer sig = CAL_BUF_INIT(0u, signature);
     bool is_verified = false;
+    ATCADeviceType dev_type = atcab_get_device_type_ext(device);
+#if ATCA_TA_SUPPORT
+    uint8_t key_type = ATCA_KEY_TYPE_ECCP256;
+#endif
 
-    if (cert_def == NULL || ca_public_key == NULL || cert == NULL)
+#if ATCA_CHECK_PARAMS_EN
+    if (device == NULL || cert_def == NULL || ca_public_key == NULL || cert == NULL)
     {
         return ATCACERT_E_BAD_PARAMS;
     }
+#endif
 
-    ret = atcacert_get_tbs_digest(cert_def, cert, cert_size, tbs_digest);
+    switch(ca_public_key->len)
+    {
+        case ATCA_ECCP256_PUBKEY_SIZE:
+            dig.len = ATCA_SHA2_256_DIGEST_SIZE;
+            break;
+#if ATCA_TA_SUPPORT
+        case ATCA_ECCP384_PUBKEY_SIZE:
+            key_type = TA_KEY_TYPE_ECCP384;
+            dig.len = ATCA_SHA2_384_DIGEST_SIZE;
+            break;
+        case ATCA_ECCP521_PUBKEY_SIZE:
+            key_type = TA_KEY_TYPE_ECCP521;
+            dig.len = ATCA_SHA2_512_DIGEST_SIZE;
+            break;
+#endif
+        default:
+            ret = ATCACERT_E_BAD_PARAMS;
+            break;
+    }
     if (ret != ATCACERT_E_SUCCESS)
     {
         return ret;
     }
 
-    ret = atcacert_get_signature(cert_def, cert, cert_size, signature);
+    ret = atcacert_get_tbs_digest(cert_def, cert, cert_size, &dig);
     if (ret != ATCACERT_E_SUCCESS)
     {
         return ret;
     }
 
-    ret = atcab_verify_extern(tbs_digest, signature, ca_public_key, &is_verified);
+    sig.len = (0u == cert_def->std_sig_size) ? ATCA_ECCP256_SIG_SIZE : cert_def->std_sig_size;
+    ret = atcacert_get_signature(cert_def, cert, cert_size, &sig);
+    if (ret != ATCACERT_E_SUCCESS)
+    {
+        return ret;
+    }
+
+#if ATCA_CA_SUPPORT || ATCA_CA2_SUPPORT
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
+    {
+        ret = atcab_verify_extern(tbs_digest, signature, ca_public_key->buf, &is_verified);
+    }
+#endif
+#if ATCA_TA_SUPPORT
+    if (atcab_is_ta_device(dev_type))
+    {
+        ret = talib_verify_extern(device, key_type, TA_HANDLE_INPUT_BUFFER, ca_public_key, &sig,
+                                  &dig, &is_verified);                 
+    }
+#endif
     if (ret != ATCA_SUCCESS)
     {
         return ret;
@@ -69,31 +116,86 @@ ATCA_STATUS atcacert_verify_cert_hw(const atcacert_def_t* cert_def,
 #endif
 
 #if ATCACERT_HW_CHALLENGE_EN
-ATCA_STATUS atcacert_gen_challenge_hw(uint8_t challenge[32])
+ATCA_STATUS atcacert_gen_challenge_hw(ATCADevice device, cal_buffer* challenge)
 {
-    if (challenge == NULL)
+    ATCADeviceType dev_type = atcab_get_device_type_ext(device);
+    ATCA_STATUS ret = 0;
+
+#if ATCA_CHECK_PARAMS_EN
+    if (device == NULL || challenge == NULL)
     {
         return ATCACERT_E_BAD_PARAMS;
     }
+#endif
 
-    return atcab_random(challenge);
+#if ATCA_CA_SUPPORT || ATCA_CA2_SUPPORT
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
+    {
+       ret = atcab_random(challenge->buf);
+    }
+#endif
+#if ATCA_TA_SUPPORT
+    if (atcab_is_ta_device(dev_type))
+    {
+        ret = talib_random(device, NULL, challenge);
+    }
+#endif
+    return ret;
 }
 #endif
 
-#if ATCACERT_HW_VERIFY_EN
-ATCA_STATUS atcacert_verify_response_hw(const uint8_t device_public_key[64],
-                                        const uint8_t challenge[32],
-                                        const uint8_t response[64])
+#if ATCACERT_HW_VERIFY_EN && ATCACERT_COMPCERT_EN
+ATCA_STATUS atcacert_verify_response_hw(ATCADevice  device,
+                                        cal_buffer* device_public_key,
+                                        cal_buffer* challenge,
+                                        cal_buffer* response)
 {
     ATCA_STATUS ret = 0;
     bool is_verified = false;
+    ATCADeviceType dev_type = atcab_get_device_type_ext(device);
+#if ATCA_TA_SUPPORT
+    uint8_t key_type = 0u;
+#endif
 
-    if (device_public_key == NULL || challenge == NULL || response == NULL)
+#if ATCA_CHECK_PARAMS_EN
+    if (device == NULL || device_public_key == NULL || challenge == NULL || response == NULL)
     {
         return ATCACERT_E_BAD_PARAMS;
     }
+#endif
 
-    ret = atcab_verify_extern(challenge, response, device_public_key, &is_verified);
+#if ATCA_CA_SUPPORT || ATCA_CA2_SUPPORT
+    if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
+    {
+        ret = atcab_verify_extern(challenge->buf, response->buf, device_public_key->buf, &is_verified);
+    }
+#endif
+#if ATCA_TA_SUPPORT
+    if (atcab_is_ta_device(dev_type))
+    {
+        switch(device_public_key->len)
+        {
+            case ATCA_ECCP256_PUBKEY_SIZE:
+                key_type = TA_KEY_TYPE_ECCP256;
+                break;
+            case ATCA_ECCP384_PUBKEY_SIZE:
+                key_type = TA_KEY_TYPE_ECCP384;
+                break;
+            case ATCA_ECCP521_PUBKEY_SIZE:
+                key_type = TA_KEY_TYPE_ECCP521;
+                break;
+            default:
+                ret = ATCA_BAD_PARAM;
+                break;
+        }
+
+        if (ret == ATCA_SUCCESS)
+        {
+            ret = talib_verify_extern(device, key_type, TA_HANDLE_INPUT_BUFFER, device_public_key,
+                                      response, challenge, &is_verified);
+        }
+    }
+#endif
     if (ret != ATCA_SUCCESS)
     {
         return ret;
@@ -102,3 +204,5 @@ ATCA_STATUS atcacert_verify_response_hw(const uint8_t device_public_key[64],
     return is_verified ? ATCACERT_E_SUCCESS : ATCACERT_E_VERIFY_FAILED;
 }
 #endif
+
+#endif /* ATCACERT_EN */

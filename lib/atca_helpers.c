@@ -80,34 +80,34 @@ static void uint8_to_hex(uint8_t num, char* hex_str)
     if (nibble < 10u)
     {
         /* coverity[misra_c_2012_rule_10_3_violation:FALSE] */
-        *(hex_str++) = (int8_t)'0' + (int8_t)nibble;
+        *(hex_str++) = (char)('0' + nibble);
     }
     else
     {
         /* coverity[misra_c_2012_rule_10_3_violation:FALSE] */
-        *(hex_str++) = (int8_t)'A' + ((int8_t)nibble - 10);
+        *(hex_str++) = (char)('A' + (nibble - 10u));
     }
     nibble = num & 0x0Fu;
     if (nibble < 10u)
     {
-        *(hex_str++) = (int8_t)'0' + (int8_t)nibble;
+        *(hex_str++) = (char)('0' + nibble);
     }
     else
     {
-        *(hex_str++) = (int8_t)'A' + ((int8_t)nibble - 10);
+        *(hex_str++) = (char)('A' + (nibble - 10u));
     }
 }
 
-static void hex_to_lowercase(char *buffer, size_t length)
+static void hex_to_lowercase(char *buf, size_t length)
 {
     size_t index;
 
-    if ((buffer != NULL) && (length > 0u))
+    if ((buf != NULL) && (length > 0u))
     {
         for (index = 0; index < length; index++)
         {
             /* coverity[cert_int31_c_violation:FALSE] tolower may only return valid ascii values which by definition fit within a char type */
-            buffer[index] = lib_tolower(buffer[index]);
+            buf[index] = lib_tolower(buf[index]);
         }
     }
 }
@@ -944,8 +944,8 @@ char lib_toupper(char c)
 {
     if (((int8_t)'a' <= (int8_t)c) && ((int8_t)'z' >= (int8_t)c))
     {
-        /* coverity[misra_c_2012_rule_10_3_violation:FALSE] */
-        return (int8_t)c - (int8_t)'a' + (int8_t)'A';
+        /* coverity[cert_str34_c_violation:FALSE] */
+        return (c - 'a' + 'A');
     }
     else
     {
@@ -958,8 +958,8 @@ char lib_tolower(char c)
 {
     if (((int8_t)'A' <= (int8_t)c) && ((int8_t)'Z' >= (int8_t)c))
     {
-        /* coverity[misra_c_2012_rule_10_3_violation:FALSE] */
-        return (int8_t)c - (int8_t)'A' + (int8_t)'a';
+        /* coverity[cert_str34_c_violation:FALSE] */
+        return (c - 'A' + 'a');
     }
     else
     {

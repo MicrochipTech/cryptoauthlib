@@ -91,10 +91,13 @@ typedef struct wpc_slot_info_s
 #if !WPC_STRICT_SLOT_INDEX_EN
     uint8_t id;
 #endif
-    uint16_t              handle;       // Chain digest Handle
-    const uint8_t*        root;         // Root digest
-    uint8_t*              mfg;          // Manufacturer certificate
-    const atcacert_def_t* def;          // Cert def
+    uint16_t                handle; // Chain digest Handle
+    const uint8_t*          root;   // Root digest
+    uint8_t*                mfg;    // Manufacturer certificate
+    const atcacert_def_t*   def;    // Cert def
+#if ATCA_TA_SUPPORT
+    uint16_t root_dgst_handle;      // Root Digest Handle
+#endif
 } wpc_slot_info_t;
 
 #if ATCA_ECC_SUPPORT
@@ -105,9 +108,15 @@ typedef struct wpc_slot_info_s
     #endif
 #elif ATCA_CA2_SUPPORT
     #if !WPC_STRICT_SLOT_INDEX_EN
-    #define WPC_INFO(n)                { n, WPC_CHAIN_DIGEST_HANDLE_ ## n, WPC_CHAIN_ROOT_DIGEST_ ## n, WPC_CHAIN_MFG_CERT_ ## n, &WPC_CHAIN_CERT_DEF_ ## n}
+    #define WPC_INFO(n)                { n, WPC_CHAIN_DIGEST_HANDLE_ ## n, WPC_CHAIN_ROOT_DIGEST_ ## n, WPC_CHAIN_MFG_CERT_ ## n, &WPC_CHAIN_CERT_DEF_ ## n }
     #else
-    #define WPC_INFO(n)                { WPC_CHAIN_DIGEST_HANDLE_ ## n, WPC_CHAIN_ROOT_DIGEST_ ## n, WPC_CHAIN_MFG_CERT_ ## n, &WPC_CHAIN_CERT_DEF_ ## n}
+    #define WPC_INFO(n)                { WPC_CHAIN_DIGEST_HANDLE_ ## n, WPC_CHAIN_ROOT_DIGEST_ ## n, WPC_CHAIN_MFG_CERT_ ## n, &WPC_CHAIN_CERT_DEF_ ## n }
+    #endif
+#elif ATCA_TA_SUPPORT
+    #if !WPC_STRICT_SLOT_INDEX_EN
+    #define WPC_INFO(n)                { n, WPC_CHAIN_DIGEST_HANDLE_ ## n, NULL, NULL, &WPC_CHAIN_CERT_DEF_ ## n, WPC_CHAIN_ROOT_DIGEST_HANDLE_ ## n }
+    #else
+    #define WPC_INFO(n)                { WPC_CHAIN_DIGEST_HANDLE_ ## n, NULL, NULL, &WPC_CHAIN_CERT_DEF_ ## n, WPC_CHAIN_ROOT_DIGEST_HANDLE_ ## n }
     #endif
 #endif
 
@@ -149,11 +158,12 @@ uint8_t wpccert_get_slots_populated(void)
 }
 
 ATCA_STATUS wpccert_get_slot_info(
-    uint16_t *             handle,          /**< [out] Digest handle */
-    const atcacert_def_t** def,             /**< [out] Chain definition (device) */
-    uint8_t**              mfg,             /**< [out] Manufacture cert */
-    uint8_t *        	   root_dgst,       /**< [out] Root digest */
-    uint8_t                slot             /**< [in] Chain slot number */
+    uint16_t *              handle,             /**< [out] Digest handle */
+    const atcacert_def_t**  def,                /**< [out] Chain definition (device) */
+    uint8_t**               mfg,                /**< [out] Manufacture cert */
+    uint8_t *               root_dgst,          /**< [out] Root digest */
+    uint16_t *              root_dgst_handle,   /**< [out] Root digest handle*/
+    uint8_t                 slot                /**< [in] Chain slot number */
     )
 {
 #if WPC_STRICT_SLOT_INDEX_EN
@@ -170,10 +180,16 @@ ATCA_STATUS wpccert_get_slot_info(
     {
         *mfg = wpc_slot_info[slot].mfg;
     }
-    if(root_dgst)
+    if (root_dgst)
     {
-        *root_dgst = wpc_slot_info[slot].root
+        *root_dgst = wpc_slot_info[slot].root;
     }
+#if ATCA_TA_SUPPORT
+    if (root_dgst_handle)
+    {
+        *root_dgst_handle = wpc_slot_info[slot].root_dgst_handle;
+    }
+#endif
     return ATCA_SUCCESS;
 #else
     uint8_t i;
@@ -189,14 +205,20 @@ ATCA_STATUS wpccert_get_slot_info(
             {
                 *def = wpc_slot_info[i].def;
             }
-            if(mfg)
+            if (mfg)
             {
                 *mfg = wpc_slot_info[i].mfg;
             }
-            if(root_dgst)
-    		{
+            if (root_dgst)
+            {
                 *root_dgst = wpc_slot_info[slot].root;
-    		}
+            }
+#if ATCA_TA_SUPPORT
+            if (root_dgst_handle)
+            {
+                *root_dgst_handle = wpc_slot_info[slot].root_dgst_handle;
+            }
+#endif
             return ATCA_SUCCESS;
         }
     }
@@ -206,8 +228,8 @@ ATCA_STATUS wpccert_get_slot_info(
 #endif
 
 ATCA_STATUS wpccert_read_cert_size(ATCADevice               device,
-                                    const atcacert_def_t*   cert_def,
-                                    size_t*                 cert_size)
+                                   const atcacert_def_t*    cert_def,
+                                   size_t*                  cert_size)
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
@@ -220,7 +242,7 @@ ATCA_STATUS wpccert_read_cert_size(ATCADevice               device,
     {
         uint8_t cert_hdr[4u] = { 0x00 };
         if (ATCA_SUCCESS != (status = atcab_read_bytes_zone_ext(device, (uint8_t)cert_def->comp_cert_dev_loc.zone,
-                                                                   cert_def->comp_cert_dev_loc.slot, 0u, cert_hdr, sizeof(cert_hdr))))
+                                                                cert_def->comp_cert_dev_loc.slot, 0u, cert_hdr, sizeof(cert_hdr))))
         {
             status = ATCA_TRACE(status, "atcab_read_bytes_zone_ext execution is failed for wpccert_read_cert_size");
             return status;
@@ -235,15 +257,16 @@ ATCA_STATUS wpccert_read_cert_size(ATCADevice               device,
         size_t buflen = sizeof(buffer);
         size_t max_cert_size;
         atcacert_device_loc_t comp_cert_loc = cert_def->comp_cert_dev_loc;
+        cal_buffer sig_buf = CAL_BUF_INIT(ATCA_ECCP256_SIG_SIZE, &buffer[8]);
 
-         /* Read cert size */
+        /* Read cert size */
         if (ATCA_SUCCESS != (status =  atcab_read_bytes_zone_ext(device, comp_cert_loc.zone, comp_cert_loc.slot, 0, &buffer[8], 64)))
         {
             status = ATCA_TRACE(status, "read_sig failed");
             return status;
         }
 
-        if (ATCA_SUCCESS != (status = atcacert_der_enc_ecdsa_sig_value(&buffer[8], buffer, &buflen)))
+        if (ATCA_SUCCESS != (status = atcacert_der_enc_ecdsa_sig_value(&sig_buf, buffer, &buflen)))
         {
             status = ATCA_TRACE(status, "ecdsa signature encode failed");
             return status;
@@ -268,16 +291,18 @@ ATCA_STATUS wpccert_read_cert_size(ATCADevice               device,
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS wpccert_read_cert(
-    ATCADevice            device,
-    const atcacert_def_t *cert_def,
-    uint8_t *             cert,
-    size_t *              cert_size)
+    ATCADevice              device,
+    const atcacert_def_t *  cert_def,
+    uint8_t *               cert,
+    size_t *                cert_size)
 {
     ATCA_STATUS status = ATCA_UNIMPLEMENTED;
+
 #if ATCA_ECC_SUPPORT
     uint8_t subj_public_key[72];
     uint8_t buffer[75], enc_dates[3];
     size_t buflen = sizeof(buffer);
+    cal_buffer buf = CAL_BUF_INIT(buflen, buffer);
     size_t max_cert_size = 0;
     atcacert_device_loc_t comp_cert_loc = cert_def->comp_cert_dev_loc;
     atcacert_device_loc_t cert_sn_loc = cert_def->cert_sn_dev_loc;
@@ -296,45 +321,45 @@ ATCA_STATUS wpccert_read_cert(
         }
 
         if (ATCA_SUCCESS != (status = atcab_read_bytes_zone_ext(device, (uint8_t)cert_def->comp_cert_dev_loc.zone,
-                                                                   cert_def->comp_cert_dev_loc.slot, 0u, cert, *cert_size)))
+                                                                cert_def->comp_cert_dev_loc.slot, 0u, cert, *cert_size)))
         {
             status = ATCA_TRACE(status, "read cert failed");
             return status;
         }
 
         #if ATCACERT_INTEGRATION_EN
-            cal_buffer buf = CAL_BUF_INIT(*cert_size, cert);
-            /* Load parsed certificate if not already done */
-            if (NULL == *cert_def->parsed)
+        cal_buffer buf = CAL_BUF_INIT(*cert_size, cert);
+        /* Load parsed certificate if not already done */
+        if (NULL == *cert_def->parsed)
+        {
+            if (ATCACERT_E_SUCCESS != (status = atcac_parse_der(cert_def->parsed, &buf)))
             {
-                if (ATCACERT_E_SUCCESS != (status = atcac_parse_der(cert_def->parsed, &buf)))
-                {
-                    return status;
-                }
+                return status;
             }
+        }
         #endif
     }
     else
     {
 #if ATCA_ECC_SUPPORT
-       if(ATCA_SUCCESS != wpccert_read_cert_size(device, cert_def, cert_size))
-       {
+        if (ATCA_SUCCESS != wpccert_read_cert_size(device, cert_def, cert_size))
+        {
             return status;
-       }
+        }
 
         memcpy(cert, cert_def->cert_template, *cert_size);
         max_cert_size = cert_def->std_cert_elements[STDCERT_SIGNATURE].offset + buflen;
 
         // set comp_cert
         if (ATCA_SUCCESS != (status = atcab_read_bytes_zone_ext(device, comp_cert_loc.zone, comp_cert_loc.slot,
-                                                            comp_cert_loc.offset, buffer, comp_cert_loc.count)))
+                                                                comp_cert_loc.offset, buffer, comp_cert_loc.count)))
         {
             status = ATCA_TRACE(status, "read comp cert failed");
             return status;
         }
 
         // set signature
-        if (ATCA_SUCCESS != (status = atcacert_set_signature(cert_def, cert, cert_size, max_cert_size, buffer)))
+        if (ATCA_SUCCESS != (status = atcacert_set_signature(cert_def, cert, cert_size, max_cert_size, &buf)))
         {
             status = ATCA_TRACE(status, "set signature failed");
             return status;
@@ -342,7 +367,7 @@ ATCA_STATUS wpccert_read_cert(
 
         memcpy(enc_dates, &buffer[64], 3);
         if (ATCA_SUCCESS != (status = atcacert_date_dec_compcert(enc_dates, cert_def->expire_date_format,
-                                                                &issue_date, &expire_date)))
+                                                                 &issue_date, &expire_date)))
         {
             status = ATCA_TRACE(status, "atcacert_date_dec_compcert failed");
             return status;
@@ -361,7 +386,7 @@ ATCA_STATUS wpccert_read_cert(
         if (cert_sn_loc.zone != DEVZONE_NONE)
         {
             if (ATCA_SUCCESS != (status = atcab_read_bytes_zone_ext(device, cert_sn_loc.zone, cert_sn_loc.slot,
-                                                                cert_sn_loc.offset, buffer, cert_sn_loc.count)))
+                                                                    cert_sn_loc.offset, buffer, cert_sn_loc.count)))
             {
                 status = ATCA_TRACE(status, "read cert sn failed");
                 return status;
@@ -424,8 +449,8 @@ ATCA_STATUS wpccert_read_cert(
                 return status;
             }
 
-            sn[0] &= 0x7F;      // Ensure the SN is positive
-            sn[0] |= 0x40;      // Ensure the SN doesn't have any trimmable bytes
+            sn[0] &= 0x7F;  // Ensure the SN is positive
+            sn[0] |= 0x40;  // Ensure the SN doesn't have any trimmable bytes
 
             memcpy(&cert[cert_def->std_cert_elements[STDCERT_CERT_SN].offset], sn, cert_def->std_cert_elements[STDCERT_CERT_SN].count);
         }
@@ -440,15 +465,19 @@ ATCA_STATUS wpccert_read_cert(
 ATCA_STATUS wpccert_write_cert(ATCADevice device, const atcacert_def_t* cert_def, const uint8_t* cert, size_t cert_size)
 {
     ATCA_STATUS status;
+
+#if ATCA_ECC_SUPPORT
     atcacert_device_loc_t comp_cert_loc = cert_def->comp_cert_dev_loc;
     atcacert_device_loc_t public_key_loc = cert_def->public_key_dev_loc;
     atcacert_device_loc_t cert_sn_loc = cert_def->cert_sn_dev_loc;
-    uint8_t temp_buf[256]; // Must be at least 72 bytes
+    uint8_t temp_buf[256];  // Must be at least 72 bytes
+    cal_buffer buf = CAL_BUF_INIT(sizeof(temp_buf), temp_buf);
     uint8_t formatted_date[DATEFMT_MAX_SIZE];
     size_t der_sig_size = 0;
     size_t formatted_date_size = ATCACERT_DATE_FORMAT_SIZES[cert_def->issue_date_format];
     size_t sig_offset = cert_def->std_cert_elements[STDCERT_SIGNATURE].offset;
     atcacert_tm_utc_t issue_date;
+#endif
 
     if (cert_def == NULL || cert == NULL)
     {
@@ -458,15 +487,16 @@ ATCA_STATUS wpccert_write_cert(ATCADevice device, const atcacert_def_t* cert_def
 
     if (CERTTYPE_X509_FULL_STORED == cert_def->type)
     {
-         status = atcab_write_bytes_zone_ext(device, (uint8_t)cert_def->comp_cert_dev_loc.zone,
-                                             cert_def->comp_cert_dev_loc.slot, 0, cert, cert_size);
+        status = atcab_write_bytes_zone_ext(device, (uint8_t)cert_def->comp_cert_dev_loc.zone,
+                                            cert_def->comp_cert_dev_loc.slot, 0, cert, cert_size);
     }
     else
     {
+#if ATCA_ECC_SUPPORT
         // get comp cert
         der_sig_size = cert_size - sig_offset;
 
-        if (ATCA_SUCCESS != (status = atcacert_der_dec_ecdsa_sig_value(&cert[sig_offset], &der_sig_size, &temp_buf[0])))
+        if (ATCA_SUCCESS != (status = atcacert_der_dec_ecdsa_sig_value(&cert[sig_offset], &der_sig_size, &buf)))
         {
             status = ATCA_TRACE(status, "atcacert_der_dec_ecdsa_sig_value failed");
             return status;
@@ -496,10 +526,10 @@ ATCA_STATUS wpccert_write_cert(ATCADevice device, const atcacert_def_t* cert_def
         temp_buf[71] = 0;
 
         if (ATCA_SUCCESS != (status = atcab_write_bytes_zone_ext(device,
-                                                                comp_cert_loc.zone,
-                                                                comp_cert_loc.slot,
-                                                                comp_cert_loc.offset,
-                                                                temp_buf, comp_cert_loc.count)))
+                                                                 comp_cert_loc.zone,
+                                                                 comp_cert_loc.slot,
+                                                                 comp_cert_loc.offset,
+                                                                 temp_buf, comp_cert_loc.count)))
         {
             status = ATCA_TRACE(status, "compcert write failed");
             return status;
@@ -510,10 +540,10 @@ ATCA_STATUS wpccert_write_cert(ATCADevice device, const atcacert_def_t* cert_def
         {
             memcpy(temp_buf, &cert[cert_def->std_cert_elements[STDCERT_CERT_SN].offset], cert_sn_loc.count);
             if (ATCA_SUCCESS != (status = atcab_write_bytes_zone_ext(device,
-                                                                    cert_sn_loc.zone,
-                                                                    cert_sn_loc.slot,
-                                                                    cert_sn_loc.offset,
-                                                                    temp_buf, cert_sn_loc.count)))
+                                                                     cert_sn_loc.zone,
+                                                                     cert_sn_loc.slot,
+                                                                     cert_sn_loc.offset,
+                                                                     temp_buf, cert_sn_loc.count)))
             {
                 status = ATCA_TRACE(status, "write cert serial number failed");
                 return status;
@@ -528,10 +558,10 @@ ATCA_STATUS wpccert_write_cert(ATCADevice device, const atcacert_def_t* cert_def
             if (public_key_loc.count == 72)
             {
                 // Public key is formatted with padding bytes in front of the X and Y components
-                memmove(&temp_buf[40], &temp_buf[32], 32);   // Move Y to padded position
-                memset(&temp_buf[36], 0, sizeof(uint32_t));  // Add Y padding bytes
-                memmove(&temp_buf[4], &temp_buf[0], 32);     // Move X to padded position
-                memset(&temp_buf[0], 0, sizeof(uint32_t));   // Add X padding bytes
+                memmove(&temp_buf[40], &temp_buf[32], 32);  // Move Y to padded position
+                memset(&temp_buf[36], 0, sizeof(uint32_t)); // Add Y padding bytes
+                memmove(&temp_buf[4], &temp_buf[0], 32);    // Move X to padded position
+                memset(&temp_buf[0], 0, sizeof(uint32_t));  // Add X padding bytes
             }
             else if (public_key_loc.count != 64)
             {
@@ -540,10 +570,10 @@ ATCA_STATUS wpccert_write_cert(ATCADevice device, const atcacert_def_t* cert_def
             }
 
             if (ATCA_SUCCESS != (status = atcab_write_bytes_zone_ext(device,
-                                                                    public_key_loc.zone,
-                                                                    public_key_loc.slot,
-                                                                    public_key_loc.offset,
-                                                                    temp_buf, public_key_loc.count)))
+                                                                     public_key_loc.zone,
+                                                                     public_key_loc.slot,
+                                                                     public_key_loc.offset,
+                                                                     temp_buf, public_key_loc.count)))
             {
                 status = ATCA_TRACE(status, "write subj public key failed");
                 return status;
@@ -556,15 +586,16 @@ ATCA_STATUS wpccert_write_cert(ATCADevice device, const atcacert_def_t* cert_def
             memcpy(temp_buf, &cert[cert_def->cert_elements[i].cert_loc.offset], cert_def->cert_elements[i].cert_loc.count);
             comp_cert_loc = cert_def->cert_elements[i].device_loc;
             if (ATCA_SUCCESS != (status = atcab_write_bytes_zone_ext(device,
-                                                                    comp_cert_loc.zone,
-                                                                    comp_cert_loc.slot,
-                                                                    comp_cert_loc.offset,
-                                                                    temp_buf, comp_cert_loc.count)))
+                                                                     comp_cert_loc.zone,
+                                                                     comp_cert_loc.slot,
+                                                                     comp_cert_loc.offset,
+                                                                     temp_buf, comp_cert_loc.count)))
             {
                 status = ATCA_TRACE(status, "write cert elements failed");
                 return status;
             }
         }
+#endif
     }
 
     return status;
@@ -576,7 +607,7 @@ ATCA_STATUS wpccert_read_pdu_cert(ATCADevice device, uint8_t* cert, size_t* cert
     ATCA_STATUS status;
     const atcacert_def_t* chain;
 
-    if (ATCA_SUCCESS == (status = wpccert_get_slot_info(NULL, &chain, NULL, NULL, slot)))
+    if (ATCA_SUCCESS == (status = wpccert_get_slot_info(NULL, &chain, NULL, NULL, NULL, slot)))
     {
         status = wpccert_read_cert(device, chain, cert, cert_size);
     }
@@ -589,20 +620,20 @@ ATCA_STATUS wpccert_read_mfg_cert(ATCADevice device, uint8_t* cert, size_t* cert
     const atcacert_def_t* chain;
     uint8_t *mfg;
 
-    if (ATCA_SUCCESS == (status = wpccert_get_slot_info(NULL, &chain, &mfg , NULL, slot)))
+    if (ATCA_SUCCESS == (status = wpccert_get_slot_info(NULL, &chain, &mfg, NULL, NULL, slot)))
     {
-        if(NULL == chain)
+        if (NULL == chain)
         {
             status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL Pointer receieved for cert def");
             return status;
         }
 
-        if(NULL != chain->ca_cert_def)
+        if (NULL != chain->ca_cert_def)
         {
-            //! CA device MFG Cert
+            //! CA or TA device MFG Cert
             status = wpccert_read_cert(device, chain->ca_cert_def, cert, cert_size);
         }
-        else if(NULL != mfg)
+        else if (NULL != mfg)
         {
             //! CA2 device MFG Cert
             memcpy(cert, mfg, *cert_size);
@@ -627,7 +658,13 @@ ATCA_STATUS wpccert_public_key(const atcacert_def_t* cert_def, uint8_t* public_k
 
     if (cert == NULL)
     {
-        atcacert_device_loc_t public_key_loc = cert_def->public_key_dev_loc;
+        atcacert_device_loc_t public_key_loc;
+
+        memset(&public_key_loc, 0, sizeof(atcacert_device_loc_t));
+
+#if ATCACERT_COMPCERT_EN
+        (void)memcpy(&public_key_loc, &cert_def->public_key_dev_loc, sizeof(atcacert_device_loc_t));
+#endif
         uint8_t raw_public_key[72];
 
         if (public_key_loc.is_genkey)
@@ -654,8 +691,8 @@ ATCA_STATUS wpccert_public_key(const atcacert_def_t* cert_def, uint8_t* public_k
         if (public_key_loc.count == 72)
         {
             // Public key is formatted with padding bytes in front of the X and Y components
-            memmove(&public_key[0], &raw_public_key[4], 32);   // Move X
-            memmove(&public_key[32], &raw_public_key[40], 32); // Move Y
+            memmove(&public_key[0], &raw_public_key[4], 32);    // Move X
+            memmove(&public_key[32], &raw_public_key[40], 32);  // Move Y
         }
         else
         {
@@ -673,7 +710,9 @@ ATCA_STATUS wpccert_public_key(const atcacert_def_t* cert_def, uint8_t* public_k
         }
         else
         {
+#if ATCACERT_COMPCERT_EN
             memcpy(public_key, &cert[cert_def->std_cert_elements[STDCERT_PUBLIC_KEY].offset], ATCA_PUB_KEY_SIZE);
+#endif
         }
     }
 

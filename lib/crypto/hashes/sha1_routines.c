@@ -39,11 +39,11 @@
 void CL_hashInit(CL_HashContext *ctx)
 {
     static const U32 hashContext_h_init[] = {
-        0x67452301,
-        0xefcdab89,
-        0x98badcfe,
-        0x10325476,
-        0xc3d2e1f0
+        0x67452301U,
+        0xefcdab89U,
+        0x98badcfeU,
+        0x10325476U,
+        0xc3d2e1f0U
     };
 
     // Initialize context
@@ -73,8 +73,8 @@ void CL_hashUpdate(CL_HashContext *ctx, const U8 *src, int nbytes)
 
     // Get number of free bytes in the buf
     freeBytes = (U8)(ctx->byteCount);
-    freeBytes &= 63;
-    freeBytes = (U8)(64 - freeBytes);
+    freeBytes &= 63u;
+    freeBytes = (U8)(64u - freeBytes);
 
     while (nbytes > 0)
     {
@@ -87,14 +87,14 @@ void CL_hashUpdate(CL_HashContext *ctx, const U8 *src, int nbytes)
         }
 
         // Copy src bytes to buf
-        if (i == 64)
+        if (i == 64u)
         {
             (void)memcpy(((U8*)ctx->buf), src, i);
         }
         else
         {
             // Have to use memcpy, size is other than 64 bytes.
-            (void)memcpy(((U8*)ctx->buf) + 64 - freeBytes, src, i);
+            (void)memcpy(((U8*)ctx->buf) + 64u - freeBytes, src, i);
         }
 
         // Adjust for transferred bytes
@@ -103,20 +103,20 @@ void CL_hashUpdate(CL_HashContext *ctx, const U8 *src, int nbytes)
         freeBytes -= i;
 
         // Do SHA crunch if buf is full
-        if (freeBytes == 0)
+        if (freeBytes == 0u)
         {
             shaEngine(ctx->buf, ctx->h);
         }
 
         // Update 64-bit byte count
         temp32 = (ctx->byteCount += i);
-        if (temp32 == 0)
+        if (temp32 == 0u)
         {
             ++ctx->byteCountHi;
         }
 
         // Set up for next iteration
-        freeBytes = 64;
+        freeBytes = 64u;
     }
 }
 
@@ -139,21 +139,21 @@ void CL_hashFinal(CL_HashContext *ctx, U8 *dest)
     U8 *ptr;
 
     /* Append pad byte, clear trailing bytes */
-    nbytes = (U8)(ctx->byteCount) & 63;
-    ((U8*)ctx->buf)[nbytes] = 0x80;
-    for (i = (nbytes + 1); i < 64; i++)
+    nbytes = (U8)(ctx->byteCount & 63u);
+    ((U8*)ctx->buf)[nbytes] = 0x80u;
+    for (i = (nbytes + 1u); i < 64u; i++)
     {
-        ((U8*)ctx->buf)[i] = 0;
+        ((U8*)ctx->buf)[i] = 0u;
     }
 
     /*
        If no room for an 8-byte count at end of buf, digest the buf,
        then clear it
      */
-    if (nbytes > (64 - 9))
+    if (nbytes > (64u - 9u))
     {
         shaEngine(ctx->buf, ctx->h);
-        (void)memset(ctx->buf, 0, 64);
+        (void)memset(ctx->buf, 0, 64u);
     }
 
     /*
@@ -161,20 +161,20 @@ void CL_hashFinal(CL_HashContext *ctx, U8 *dest)
        bytes, not bits, so we left-shift our byte count by 3 as we do
        this.
      */
-    temp = ctx->byteCount << 3; // low 4 bytes of bit count
-    ptr = &((U8*)ctx->buf)[63]; // point to low byte of bit count
-    for (i = 0; i < 4; i++)
+    temp = ctx->byteCount << 3u; // low 4 bytes of bit count
+    ptr = &((U8*)ctx->buf)[63u]; // point to low byte of bit count
+    for (i = 0; i < 4u; i++)
     {
         *ptr-- = (U8)temp;
-        temp >>= 8;
+        temp >>= 8u;
     }
     //
-    temp = ctx->byteCountHi << 3;
-    temp |= ctx->byteCount >> (32 - 3); // high 4 bytes of bit count
-    for (i = 0; i < 4; i++)
+    temp = ctx->byteCountHi << 3u;
+    temp |= ctx->byteCount >> (32u - 3u); // high 4 bytes of bit count
+    for (i = 0u; i < 4u; i++)
     {
         *ptr-- = (U8)temp;
-        temp >>= 8;
+        temp >>= 8u;
     }
     //show("final SHA crunch", ctx->buf, 64);
 
@@ -182,7 +182,7 @@ void CL_hashFinal(CL_HashContext *ctx, U8 *dest)
     shaEngine(ctx->buf, ctx->h);
 
     /* Unpack chaining variables to dest bytes. */
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < 5u; i++)
     {
         temp = ATCA_UINT32_BE_TO_HOST(ctx->h[i]);
         (void)memcpy(dest, &temp, sizeof(temp));
@@ -224,7 +224,7 @@ void shaEngine(U32 *buf, U32 *h)
 
     U8 t;
     U32 a, b, c, d, e;
-    U32 temp = 0;
+    U64 temp = 0u;
     U8 *p;
     U32 *w = (U32*)buf;
 
@@ -234,13 +234,14 @@ void shaEngine(U32 *buf, U32 *h)
        overlays w[0,...,15].
      */
     p = (U8*)w;
-    for (t = 0; t < 16; t++)
+    for (t = 0u; t < 16u; t++)
     {
-        temp = (temp << 8) | *p++;
-        temp = (temp << 8) | *p++;
-        temp = (temp << 8) | *p++;
-        temp = (temp << 8) | *p++;
-        w[t] = temp;
+        temp = (temp << 8u) | *p++;
+        temp = (temp << 8u) | *p++;
+        temp = (temp << 8u) | *p++;
+        temp = (temp << 8u) | *p++;
+        /* coverity[cert_int31_c_violation:FALSE] temp is always less than UINT32_MAX */
+        w[t] = (U32)temp;
     }
 
     /*
@@ -264,44 +265,60 @@ void shaEngine(U32 *buf, U32 *h)
     e = h[4];
 
     /* Now do the 80 rounds */
-    for (t = 0; t < 80; t++)
+    for (t = 0u; t < 80u; t++)
     {
 
         temp = a;
         leftRotate(temp, 5);
         temp += e;
-        temp += w[t & 0xf];
+        if(true == IS_ADD_SAFE_UINT64_T(temp, w[t & 0xfu]))
+        {
+            temp += w[t & 0xfu];
+        }
 
-        if (t < 20)
+        if (t < 20u)
         {
             temp += (b & c) | (~b & d);
-            temp += 0x5a827999L;
+            if(true == IS_ADD_SAFE_UINT64_T(temp, 0x5a827999U))
+            {
+                temp += 0x5a827999U;
+            }
         }
-        else if (t < 40)
+        else if (t < 40u)
         {
             temp += b ^ c ^ d;
-            temp += 0x6ed9eba1L;
+            if(true == IS_ADD_SAFE_UINT64_T(temp, 0x6ed9eba1U))
+            {
+                temp += 0x6ed9eba1U;
+            }
         }
-        else if (t < 60)
+        else if (t < 60u)
         {
             temp += (b & c) | (b & d) | (c & d);
-            temp += 0x8f1bbcdcL;
+            if(true == IS_ADD_SAFE_UINT64_T(temp, 0x8f1bbcdcU))
+            {
+                temp += 0x8f1bbcdcU;
+            }
         }
         else
         {
             temp += b ^ c ^ d;
-            temp += 0xca62c1d6L;
+            if(true == IS_ADD_SAFE_UINT64_T(temp, 0xca62c1d6U))
+            {
+                temp += 0xca62c1d6U;
+            }
         }
 
         e = d;
         d = c;
         c = b; leftRotate(c, 30);
         b = a;
-        a = temp;
+        a = (U32)temp;
 
-        temp = w[t & 0xf] ^ w[(t - 3) & 0xf] ^ w[(t - 8) & 0xf] ^ w[(t - 14) & 0xf];
+        temp = (U64)(w[t & 0xfu]) ^ (U64)(w[(t - 3u) & 0xfu]) ^ (U64)(w[(t - 8u) & 0xfu]) ^ (U64)(w[(t - 14u) & 0xfu]);
+        
         leftRotate(temp, 1);
-        w[t & 0xf] = temp;
+        w[t & 0xfu] = (uint32_t)temp;
 
     }
 

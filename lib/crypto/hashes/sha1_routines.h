@@ -60,6 +60,10 @@
 #define U32 uint32_t
 #endif
 
+#ifndef U64
+#define U64 uint64_t
+#endif
+
 
 #ifndef memcpy_P
 #define memcpy_P memmove

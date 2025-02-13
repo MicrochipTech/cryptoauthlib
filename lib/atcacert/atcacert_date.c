@@ -30,6 +30,7 @@
 #include "atcacert_date.h"
 #include "atca_compiler.h"
 
+#if ATCACERT_EN
 
 const size_t ATCACERT_DATE_FORMAT_SIZES[ATCACERT_DATE_FORMAT_SIZES_COUNT] = {
     DATEFMT_ISO8601_SEP_SIZE,
@@ -1206,7 +1207,7 @@ ATCA_STATUS atcacert_date_enc_compcert_ext(const atcacert_tm_utc_t* issue_date,
     // Compressed certificate format version is the lower 4 bits of byte 70
     format_version = comp_cert[70] & (uint8_t)0x0Fu;
 
-    if (format_version == 0u)
+    if (format_version == FORMAT_VERSION_0)
     {
         // This version handles years from 2000 to 2031
         if ((issue_date->tm_year + 1900) < 2000 || (issue_date->tm_year + 1900) > 2031)
@@ -1219,7 +1220,7 @@ ATCA_STATUS atcacert_date_enc_compcert_ext(const atcacert_tm_utc_t* issue_date,
             return ATCACERT_E_INVALID_DATE;
         }
     }
-    else if (format_version == 1u)
+    else if (format_version == FORMAT_VERSION_1 || format_version == FORMAT_VERSION_2)
     {
         // This version extends years from 2000 to 2127
         if ((issue_date->tm_year + 1900) < 2000 || (issue_date->tm_year + 1900) > 2127)
@@ -1317,7 +1318,7 @@ ATCA_STATUS atcacert_date_dec_compcert_ext(const uint8_t            comp_cert[AT
      * Minutes and seconds are always zero.
      *
      * If extended dates are used then the format version must be 1
-     * and the issue year and expire years get a couple extra bits
+     * or 2 and the issue year and expire years get a couple extra bits
      * in the last byte of the compressed certificate.
      * +-------------------------------------------+
      * | Byte 71                                   |
@@ -1328,7 +1329,6 @@ ATCA_STATUS atcacert_date_dec_compcert_ext(const uint8_t            comp_cert[AT
      * |               | (MSbits)      |           |
      * +---------------+---------------+-----------+
      */
-
     if (comp_cert == NULL || issue_date == NULL || expire_date == NULL ||
         expire_date_format >= sizeof(ATCACERT_DATE_FORMAT_SIZES) / sizeof(ATCACERT_DATE_FORMAT_SIZES[0]))
     {
@@ -1341,7 +1341,7 @@ ATCA_STATUS atcacert_date_dec_compcert_ext(const uint8_t            comp_cert[AT
     // Compressed certificate format version is the lower 4 bits of byte 70
     uint8_t format_version = comp_cert[70] & (uint8_t)0x0Fu;
 
-    if (format_version == 1u)
+    if (format_version == FORMAT_VERSION_1 || format_version == FORMAT_VERSION_2)
     {
         /*
            =================================================================
@@ -1354,14 +1354,14 @@ ATCA_STATUS atcacert_date_dec_compcert_ext(const uint8_t            comp_cert[AT
            Extended expiry years from 71[5:4] is copied to expire_years [6:5]
            =================================================================
          */
-        expire_years = (comp_cert[66] & (uint8_t)0x1F) | ((comp_cert[71] & (uint8_t)0x30u) << 1);
+        expire_years = (uint8_t)((comp_cert[66] & 0x1Fu) | ((comp_cert[71] & 0x30u) << 1u));
     }
     else
     {   
         issue_date->tm_year = (int)((uint8_t)((((comp_cert[64] & (uint8_t)0xF8u) >> 3u)) + 100u));
         expire_years = (comp_cert[66] & (uint8_t)0x1F);
     }
-    issue_date->tm_mon  = (int)(uint8_t)(((((comp_cert[64] & (uint8_t)0x07) << 1u) | ((comp_cert[65] & (uint8_t)0x80) >> 7u)) - 1u) & 0x0Fu);
+    issue_date->tm_mon = (int)((uint8_t)((uint8_t)((((comp_cert[64] & (uint8_t)0x07) << 1u) | ((comp_cert[65] & (uint8_t)0x80) >> 7u)) - 1u)) & 0x0Fu);
     issue_date->tm_mday = (int)((uint8_t)((comp_cert[65] & (uint8_t)0x7C) >> 2u));
     issue_date->tm_hour = (int)((uint8_t)(((comp_cert[65] & (uint8_t)0x03) << 3u) | ((comp_cert[66] & (uint8_t)0xE0) >> 5u)));
 
@@ -1445,3 +1445,5 @@ int atcacert_date_cmp(const atcacert_tm_utc_t* timestamp1, const atcacert_tm_utc
     }
     return 0;
 }
+
+#endif /* ATCACERT_EN */

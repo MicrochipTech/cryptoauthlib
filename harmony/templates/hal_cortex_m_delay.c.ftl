@@ -32,6 +32,7 @@
  */
 
 #include <stdint.h>
+#include "definitions.h"
 
 #ifndef CONF_CPU_FREQUENCY
 #define CONF_CPU_FREQUENCY ${core.CPU_CLOCK_FREQUENCY}
@@ -53,37 +54,41 @@
 #define CPU_FREQ_POWER 9
 #endif
 
+#ifndef DELAY_CYCLES_US
+#if defined __GNUC__
+#define DELAY_CYCLES_US(cycles) \
+    do { \
+        __asm volatile ( \
+            ".syntax unified\n" \
+            "__usdelay:\n" \
+            "subs %[cycles], %[cycles], #1\n" \
+            "bhi __usdelay\n" \
+            ".syntax divided" \
+            : [cycles] "+r" (cycles) \
+        ); \
+    } while (0)
+#elif defined (__CC_ARM) || defined (__ICCARM__)
+#define DELAY_CYCLES_US(cycles) \
+   do { \
+        __asm volatile ( \
+            "__usdelay:\n"            \
+            "subs %[cycles], %[cycles], #1\n" \
+            "bhi __usdelay\n"         \
+            : [cycles] "+r"(cycles) \
+        ); \
+    } while (0)
+#endif
+#endif /* ifndef DELAY_CYCLES_US*/
 
-/**
- * \brief Retrieve the amount of cycles to delay for the given amount of us
- */
-static inline uint32_t _get_cycles_for_us_internal(const uint32_t us, const uint32_t freq, const uint8_t power)
-{
-    switch (power) {
-    case 9:
-        return (us * (freq / 1000000) - 1) + 1;
-    case 8:
-        return (us * (freq / 100000) - 1) / 10 + 1;
-    case 7:
-        return (us * (freq / 10000) - 1) / 100 + 1;
-    case 6:
-        return (us * (freq / 1000) - 1) / 1000 + 1;
-    case 5:
-        return (us * (freq / 100) - 1) / 10000 + 1;
-    case 4:
-        return (us * (freq / 10) - 1) / 100000 + 1;
-    default:
-        return (us * freq - 1) / 1000000 + 1;
-    }
-}
-
-/**
- * \brief Retrieve the amount of cycles to delay for the given amount of us
- */
-uint32_t _get_cycles_for_us(const uint32_t us)
-{
-    return _get_cycles_for_us_internal(us, CONF_CPU_FREQUENCY, CPU_FREQ_POWER);
-}
+#if ((__CORTEX_M == 7u))
+    //! ((Time  * Frequency ) / (10 ^ 6) )
+    #define GET_CYCLES_FOR_US_INTERNAL(us, freq)        ((us) * ((freq) / 1000000))
+    #define MS_CYCLE_COUNT_DIVIDER                      (1u)
+#else
+    //! ((Time  * Frequency ) / ((10 ^ 6) * 3) )
+    #define GET_CYCLES_FOR_US_INTERNAL(us, freq)        ((us) * ((freq) / 3000000))
+    #define MS_CYCLE_COUNT_DIVIDER                            (3u)
+#endif
 
 /**
  * \brief Retrieve the amount of cycles to delay for the given amount of ms
@@ -151,7 +156,8 @@ void _delay_cycles(void *const hw, uint32_t cycles)
  */
 void hal_delay_us(const uint32_t us)
 {
-    _delay_cycles((void*)0, _get_cycles_for_us(us));
+    uint32_t cycles = (GET_CYCLES_FOR_US_INTERNAL(us,CONF_CPU_FREQUENCY));
+    DELAY_CYCLES_US(cycles);
 }
 
 /**
@@ -159,5 +165,5 @@ void hal_delay_us(const uint32_t us)
  */
 void hal_delay_ms(const uint32_t ms)
 {
-    _delay_cycles((void*)0,_get_cycles_for_ms(ms));
+    _delay_cycles((void*)0,(_get_cycles_for_ms(ms)/ MS_CYCLE_COUNT_DIVIDER));
 }

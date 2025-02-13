@@ -71,10 +71,12 @@
 ATCA_STATUS calib_verify(ATCADevice device, uint8_t mode, uint16_t key_id, const uint8_t* signature, const uint8_t* public_key, const uint8_t* other_data,
                          uint8_t* mac)
 {
-    ATCAPacket packet;
+    ATCAPacket * packet = NULL;
     ATCA_STATUS status;
+
     uint8_t verify_mode = (mode & VERIFY_MODE_MASK);
 
+    
     do
     {
         if ((device == NULL) || (verify_mode == VERIFY_MODE_EXTERNAL && public_key == NULL) ||
@@ -110,42 +112,51 @@ ATCA_STATUS calib_verify(ATCADevice device, uint8_t mode, uint16_t key_id, const
         }
         #endif
 
-        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
+        packet = calib_packet_alloc();
+        if(NULL == packet)
+        {
+            (void)ATCA_TRACE(ATCA_ALLOC_FAILURE, "calib_packet_alloc - failed");
+            status = ATCA_ALLOC_FAILURE;
+            break;
+        }
+
+        (void)memset(packet, 0x00, sizeof(ATCAPacket));
 
         // Build the verify command
-        packet.param1 = mode;
-        packet.param2 = key_id;
-        (void)memcpy(&packet.data[0], signature, ATCA_SIG_SIZE);
+        packet->param1 = mode;
+        packet->param2 = key_id;
+        (void)memcpy(&packet->data[0], signature, ATCA_SIG_SIZE);
         if (verify_mode == VERIFY_MODE_EXTERNAL)
         {
-            (void)memcpy(&packet.data[ATCA_SIG_SIZE], public_key, ATCA_PUB_KEY_SIZE);
+            (void)memcpy(&packet->data[ATCA_SIG_SIZE], public_key, ATCA_PUB_KEY_SIZE);
         }
 
         if ((verify_mode == VERIFY_MODE_VALIDATE) || (verify_mode == VERIFY_MODE_INVALIDATE))
         {
-            (void)memcpy(&packet.data[ATCA_SIG_SIZE], other_data, VERIFY_OTHER_DATA_SIZE);
+            (void)memcpy(&packet->data[ATCA_SIG_SIZE], other_data, VERIFY_OTHER_DATA_SIZE);
         }
 
-        if ((status = atVerify(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
+        if ((status = atVerify(atcab_get_device_type_ext(device), packet)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "atVerify - failed");
             break;
         }
 
-        if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(packet, device)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "calib_verify - execution failed");
             break;
         }
 
         // The Verify command may return MAC if requested
-        if ((mac != NULL) && (packet.data[ATCA_COUNT_IDX] >= (ATCA_PACKET_OVERHEAD + MAC_SIZE)))
+        if ((mac != NULL) && (packet->data[ATCA_COUNT_IDX] >= (ATCA_PACKET_OVERHEAD + MAC_SIZE)))
         {
-            (void)memcpy(mac, &packet.data[ATCA_RSP_DATA_IDX], MAC_SIZE);
+            (void)memcpy(mac, &packet->data[ATCA_RSP_DATA_IDX], MAC_SIZE);
         }
 
     } while (false);
 
+    calib_packet_free(packet);
     return status;
 }
 #endif /* CALIB_VERIFY */

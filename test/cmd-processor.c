@@ -41,11 +41,11 @@
 #include "api_calib/test_calib.h"
 #endif
 
-#if ((ATCA_CA_SUPPORT) || (ATCA_CA2_CERT_SUPPORT)) && !defined(DO_NOT_TEST_CERT)
+#ifndef DO_NOT_TEST_CERT
 #include "atcacert/test_atcacert.h"
 #endif
 
-#if ATCA_TA_SUPPORT && !defined(LIBRARY_USAGE_EN)
+#if ATCA_TA_SUPPORT && !LIBRARY_USAGE_EN_CHECK
 #include "api_talib/test_talib.h"
 #endif
 

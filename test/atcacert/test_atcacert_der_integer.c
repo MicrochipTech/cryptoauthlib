@@ -25,7 +25,7 @@
  * THIS SOFTWARE.
  */
 #include "atca_test.h"
-#ifndef DO_NOT_TEST_CERT
+#if !defined(DO_NOT_TEST_CERT) && ATCACERT_COMPCERT_EN
 
 #include "atcacert/atcacert_der.h"
 #include <string.h>
@@ -494,4 +494,45 @@ TEST(atcacert_der_dec_integer, bad_params)
     ret = atcacert_der_dec_integer(NULL, NULL, NULL, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
+
+// *INDENT-OFF* - Preserve formatting
+t_test_case_info atcacert_der_enc_integer_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_der_enc_integer, signed_min),              NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_integer, signed_1byte),            NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_integer, signed_multi_byte),       NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_integer, signed_large),            NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_integer, signed_trim_1_pos),       NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_integer, signed_trim_multi_pos),   NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_integer, signed_trim_all_pos),     NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_integer, signed_trim_1_neg),       NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_integer, signed_trim_multi_neg),   NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_integer, signed_trim_all_neg),     NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_integer, unsigned_min),            NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_integer, unsigned_min_pad),        NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_integer, unsigned_multi_byte),     NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_integer, unsigned_multi_byte_pad), NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_integer, unsigned_large),          NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_integer, unsigned_large_pad),      NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_integer, unsigned_trim_1_pos),     NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_integer, unsigned_trim_multi_pos), NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_integer, unsigned_trim_all_pos),   NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_integer, unsigned_trim_neg_pad),   NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_integer, small_buf),               NULL },
+    { REGISTER_TEST_CASE(atcacert_der_enc_integer, bad_params),              NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_der_dec_integer_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_der_dec_integer, good),             NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_integer, good_large),       NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_integer, zero_size),        NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_integer, not_enough_data),  NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_integer, small_buf),        NULL },
+    { REGISTER_TEST_CASE(atcacert_der_dec_integer, bad_params),       NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
 #endif

@@ -246,7 +246,8 @@ def test_atcacert_struct_sizes(test_atcacert_init_lib, struct_name):
 
 def test_atcacert_get_response(test_atcacert_init):
     device_private_key_slot = 1
-    challenge = bytearray(32)
+    challenge_buf = bytearray(32)
+    challenge = cal_buffer(len(challenge_buf), challenge_buf)
     response = bytearray(64)
     assert atcacert_get_response(device_private_key_slot, challenge, response) == CertStatus.ATCACERT_E_SUCCESS
     assert response == bytearray(atcab_mock.r_response)
@@ -254,7 +255,8 @@ def test_atcacert_get_response(test_atcacert_init):
 
 def test_atcacert_read_cert(test_atcacert_init):
     cert_def = atcacert_def_t()
-    ca_public_key = bytearray(64)
+    ca_pubkey = bytearray(64)
+    ca_public_key = cal_buffer(len(ca_pubkey), ca_pubkey)
     cert = bytearray(65)
     cert_size = AtcaReference(len(cert))
     assert atcacert_read_cert(cert_def, ca_public_key, cert, cert_size) == CertStatus.ATCACERT_E_SUCCESS
@@ -405,6 +407,9 @@ def test_atcacert_round_trip_qa(test_atcacert_init_live):
     # Create a device certificate using the device key information and test signing key
     (cert, ca_pub_key) = create_device_cert(cert_def)
 
+    # Create a ca_public_key object
+    ca_public_key = cal_buffer(len(ca_pub_key), ca_pub_key)
+
     # Write the device certificate
     assert CertStatus.ATCACERT_E_SUCCESS == atcacert_write_cert(cert_def, cert, len(cert))
 
@@ -412,7 +417,7 @@ def test_atcacert_round_trip_qa(test_atcacert_init_live):
     qa_cert_len = AtcaReference(0)
     assert CertStatus.ATCACERT_E_SUCCESS == atcacert_max_cert_size(cert_def, qa_cert_len)
     qa_cert = bytearray(qa_cert_len.value)
-    assert CertStatus.ATCACERT_E_SUCCESS == atcacert_read_cert(cert_def, ca_pub_key, qa_cert, qa_cert_len)
+    assert CertStatus.ATCACERT_E_SUCCESS == atcacert_read_cert(cert_def, ca_public_key, qa_cert, qa_cert_len)
 
     print('Input: ', len(cert))
     print(pretty_print_hex(cert))

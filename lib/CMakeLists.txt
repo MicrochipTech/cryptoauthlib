@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1.0)
+cmake_minimum_required(VERSION 3.10.0)
 project(cryptoauth C)
 
 include(CheckSymbolExists)
@@ -37,6 +37,14 @@ option(ATCA_TNG_LEGACY_SUPPORT "Include previous version of Trust & Go Certifica
 # WPC Options
 option(ATCA_WPC_SUPPORT "Include WPC Certificates")
 
+# SHA Options
+option(ATCAC_SHA384_EN "Include SHA384 support" OFF)
+option(ATCAC_SHA512_EN "Include SHA512 support" OFF)
+
+# Certificate Options
+option(ATCACERT_COMPCERT_EN       "Include Compressed Certificate support" ON)
+option(ATCACERT_FULLSTOREDCERT_EN "Include Full Certificate support" ON)
+
 # Device enablement
 option(ATCA_ATSHA204A_SUPPORT "Include support for ATSHA204A device" ON)
 option(ATCA_ATSHA206A_SUPPORT "Include support for ATSHA206A device" ON)
@@ -68,6 +76,11 @@ if (ATCA_MBEDTLS AND (ATCA_WOLFSSL OR ATCA_OPENSSL))
 message(FATAL_ERROR "Only one external SSL/TLS library can be supported")
 elseif (ATCA_WOLFSSL AND (ATCA_MBEDTLS OR ATCA_OPENSSL))
 message(FATAL_ERROR "Only one external SSL/TLS library can be supported")
+endif()
+
+# Full certificate integration option
+if (ATCA_MBEDTLS OR ATCA_WOLFSSL OR ATCA_OPENSSL)
+option(ATCACERT_INTEGRATION_EN "Enable ATCACERT full certificate integration" ON)
 endif()
 
 # Check Platform Information

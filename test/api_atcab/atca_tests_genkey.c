@@ -41,6 +41,7 @@ TEST(atca_cmd_basic_test, genkey)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     uint8_t public_key[64];
+    cal_buffer public_key_buf = CAL_BUF_INIT(sizeof(public_key), public_key);
     uint8_t frag[4] = { 0x44, 0x44, 0x44, 0x44 };
     uint16_t private_key_id;
 
@@ -56,7 +57,7 @@ TEST(atca_cmd_basic_test, genkey)
     status = atca_test_config_get_id(TEST_TYPE_ECC_GENKEY, &private_key_id);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-    status = atca_test_genkey(private_key_id, public_key);
+    status = atca_test_genkey(atcab_get_device(), private_key_id, &public_key_buf);
     TEST_ASSERT_EQUAL_MESSAGE(ATCA_SUCCESS, status, "Key generation failed");
 
     // spot check public key for bogus data, there should be none

@@ -70,8 +70,9 @@ typedef struct
  */
 ATCA_STATUS calib_sha_base(ATCADevice device, uint8_t mode, uint16_t length, const uint8_t* message, uint8_t* data_out, uint16_t* data_out_size)
 {
-    ATCAPacket packet;
+    ATCAPacket * packet = NULL;
     ATCA_STATUS status;
+
     uint8_t cmd_mode = (mode & SHA_MODE_MASK);
 
     ATCA_CHECK_INVALID_MSG(NULL == device, ATCA_BAD_PARAM, "NULL pointer received");
@@ -87,41 +88,50 @@ ATCA_STATUS calib_sha_base(ATCADevice device, uint8_t mode, uint16_t length, con
 
     do
     {
-        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
+        packet = calib_packet_alloc();
+        if(NULL == packet)
+        {
+            (void)ATCA_TRACE(ATCA_ALLOC_FAILURE, "calib_packet_alloc - failed");
+            status = ATCA_ALLOC_FAILURE;
+            break;
+        }
+
+        (void)memset(packet, 0x00, sizeof(ATCAPacket));
 
         //Build Command
-        packet.param1 = mode;
-        packet.param2 = cmd_mode != SHA_MODE_ECC204_HMAC_START ? length : 0u;
+        packet->param1 = mode;
+        packet->param2 = cmd_mode != SHA_MODE_ECC204_HMAC_START ? length : 0u;
 
         if (cmd_mode != SHA_MODE_SHA256_PUBLIC && cmd_mode != SHA_MODE_HMAC_START && length != 0u)
         {
-            (void)memcpy(packet.data, message, (size_t)length);
+            (void)memcpy(packet->data, message, (size_t)length);
         }
 
-        if ((status = atSHA(atcab_get_device_type_ext(device), &packet, length)) != ATCA_SUCCESS)
+        if ((status = atSHA(atcab_get_device_type_ext(device), packet, length)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "atSHA - failed");
             break;
         }
 
-        if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(packet, device)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "calib_sha_base - exection failed");
             break;
         }
 
-        if ((data_out != NULL) && (packet.data[ATCA_COUNT_IDX] > 4u))
+        if ((data_out != NULL) && (packet->data[ATCA_COUNT_IDX] > 4u))
         {
-            if ((uint16_t)packet.data[ATCA_COUNT_IDX] - ATCA_PACKET_OVERHEAD > *data_out_size)
+            if ((uint16_t)packet->data[ATCA_COUNT_IDX] - ATCA_PACKET_OVERHEAD > *data_out_size)
             {
                 status = ATCA_SMALL_BUFFER;
                 break;
             }
-            *data_out_size = ((uint16_t)packet.data[ATCA_COUNT_IDX] - ATCA_PACKET_OVERHEAD) & UINT16_MAX;
-            (void)memcpy(data_out, &packet.data[ATCA_RSP_DATA_IDX], *data_out_size);
+            *data_out_size = ((uint16_t)packet->data[ATCA_COUNT_IDX] - ATCA_PACKET_OVERHEAD) & UINT16_MAX;
+            (void)memcpy(data_out, &packet->data[ATCA_RSP_DATA_IDX], *data_out_size);
         }
     } while (false);
 
+    calib_packet_free(packet);
     return status;
 }
 

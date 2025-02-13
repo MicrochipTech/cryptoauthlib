@@ -25,7 +25,7 @@
  * THIS SOFTWARE.
  */
 #include "atca_test.h"
-#ifndef DO_NOT_TEST_CERT
+#if !defined(DO_NOT_TEST_CERT) && ATCACERT_COMPCERT_EN
 
 #include "atcacert/atcacert_def.h"
 #include "atca_basic.h"
@@ -34,6 +34,9 @@
 #include "test_cert_def_3_device.h"
 #include "test_cert_def_6_device.h"
 #include "test_cert_def_7_signer.h"
+#include "test_cert_def_13_signer.h"
+#include "test_cert_def_14_device.h"
+#include "test_cert_def_16_signer.h"
 #include <string.h>
 
 extern ATCAIfaceCfg *gCfg;
@@ -80,8 +83,9 @@ TEST(atcacert_get_key_id, good)
         0xD2, 0xBE, 0x95, 0x5D
     };
     uint8_t key_id[sizeof(key_id_ref)];
+    cal_buffer pubkey = CAL_BUF_INIT(sizeof(public_key), public_key);
 
-    ret = atcacert_get_key_id(public_key, key_id);
+    ret = atcacert_get_key_id(&pubkey, key_id);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(key_id_ref, key_id, sizeof(key_id));
 }
@@ -90,17 +94,40 @@ TEST(atcacert_get_key_id, bad_params)
 {
     int ret = 0;
     uint8_t key_id[20];
+    cal_buffer test_pubkey = CAL_BUF_INIT(sizeof(g_test_public_key), g_test_public_key);
 
     ret = atcacert_get_key_id(NULL, key_id);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_get_key_id(g_test_public_key, NULL);
+    ret = atcacert_get_key_id(&test_pubkey, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
     ret = atcacert_get_key_id(NULL, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
 
+TEST(atcacert_get_key_id, good_p384)
+{
+    int ret = 0;
+    static const uint8_t public_key[ATCA_ECCP384_PUBKEY_SIZE] = {
+        0xE7, 0x5E, 0x16, 0x3B, 0x6B, 0xEF, 0x6B, 0x87, 0x8B, 0x69, 0xAD, 0x67, 0x0B, 0x48, 0x8A, 0x40,
+        0x69, 0x48, 0x3D, 0x9A, 0xAD, 0x19, 0xAC, 0xD8, 0x12, 0xC9, 0x6A, 0xF8, 0x6A, 0x36, 0xD5, 0x48,
+        0x00, 0xE3, 0x72, 0xAE, 0xC7, 0x19, 0x6E, 0xD0, 0x31, 0x46, 0x35, 0xA5, 0xF7, 0x39, 0x98, 0x29,
+        0x32, 0x60, 0x91, 0x2E, 0x7D, 0x07, 0x16, 0xC5, 0xEC, 0x23, 0x01, 0x5C, 0xDC, 0x6B, 0x73, 0x45,
+        0x16, 0x11, 0x0C, 0x27, 0xD6, 0x56, 0xBC, 0x20, 0x73, 0x6D, 0x4C, 0x8D, 0x2A, 0xD8, 0x6A, 0xAF,
+        0x00, 0xEB, 0xF7, 0x7C, 0x84, 0xA5, 0x67, 0x15, 0xED, 0x34, 0x28, 0xCC, 0x48, 0x17, 0xBB, 0x2B
+    };
+    static const uint8_t key_id_ref[20] = {
+        0x93, 0x09, 0x1C, 0xFD, 0x7C, 0x25, 0x9B, 0xE2, 0x16, 0xB2, 0x11, 0x70, 0xD1, 0xE3, 0xD0, 0x1C,
+        0xCB, 0xDB, 0x4E, 0x74
+    };
+    uint8_t key_id[sizeof(key_id_ref)];
+    cal_buffer pubkey = CAL_BUF_INIT(sizeof(public_key), public_key);
+
+    ret = atcacert_get_key_id(&pubkey, key_id);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT_EQUAL_MEMORY(key_id_ref, key_id, sizeof(key_id));
+}
 
 TEST_GROUP(atcacert_set_cert_element);
 
@@ -410,10 +437,11 @@ TEST(atcacert_set_subj_public_key, good)
         0xA9, 0x1B, 0xB3, 0xB1, 0xC7, 0x3E, 0xB2, 0x66, 0x74, 0x6C, 0x20, 0x53, 0x0A, 0x3B, 0x90, 0x77,
         0x6C, 0xA9, 0xC7, 0x79, 0x0D
     };
+    cal_buffer test_public_key = CAL_BUF_INIT(sizeof(g_test_public_key), g_test_public_key);
 
     TEST_ASSERT_EQUAL(g_cert_def.cert_template_size, sizeof(cert_template_ref));
 
-    ret = atcacert_set_subj_public_key(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, g_test_public_key);
+    ret = atcacert_set_subj_public_key(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, &test_public_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(cert_template_ref, g_cert_def_cert_template, g_cert_def.cert_template_size);
 }
@@ -421,14 +449,15 @@ TEST(atcacert_set_subj_public_key, good)
 TEST(atcacert_set_subj_public_key, bad_params)
 {
     int ret = 0;
+    cal_buffer test_public_key = CAL_BUF_INIT(sizeof(g_test_public_key), g_test_public_key);
 
-    ret = atcacert_set_subj_public_key(NULL, g_cert_def_cert_template, g_cert_def.cert_template_size, g_test_public_key);
+    ret = atcacert_set_subj_public_key(NULL, g_cert_def_cert_template, g_cert_def.cert_template_size, &test_public_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_set_subj_public_key(&g_cert_def, NULL, g_cert_def.cert_template_size, g_test_public_key);
+    ret = atcacert_set_subj_public_key(&g_cert_def, NULL, g_cert_def.cert_template_size, &test_public_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_set_subj_public_key(NULL, NULL, g_cert_def.cert_template_size, g_test_public_key);
+    ret = atcacert_set_subj_public_key(NULL, NULL, g_cert_def.cert_template_size, &test_public_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
     ret = atcacert_set_subj_public_key(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, NULL);
@@ -501,6 +530,25 @@ TEST(atcacert_get_subj_public_key, bad_params)
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
 
+TEST(atcacert_get_subj_public_key, good_p384)
+{
+    int ret = 0;
+    useCert(&g_test_p384_cert_def_14_device);
+    static const uint8_t public_key_ref[] = {
+        0xE7, 0x5E, 0x16, 0x3B, 0x6B, 0xEF, 0x6B, 0x87, 0x8B, 0x69, 0xAD, 0x67, 0x0B, 0x48, 0x8A, 0x40,
+        0x69, 0x48, 0x3D, 0x9A, 0xAD, 0x19, 0xAC, 0xD8, 0x12, 0xC9, 0x6A, 0xF8, 0x6A, 0x36, 0xD5, 0x48,
+        0x00, 0xE3, 0x72, 0xAE, 0xC7, 0x19, 0x6E, 0xD0, 0x31, 0x46, 0x35, 0xA5, 0xF7, 0x39, 0x98, 0x29,
+        0x32, 0x60, 0x91, 0x2E, 0x7D, 0x07, 0x16, 0xC5, 0xEC, 0x23, 0x01, 0x5C, 0xDC, 0x6B, 0x73, 0x45,
+        0x16, 0x11, 0x0C, 0x27, 0xD6, 0x56, 0xBC, 0x20, 0x73, 0x6D, 0x4C, 0x8D, 0x2A, 0xD8, 0x6A, 0xAF,
+        0x00, 0xEB, 0xF7, 0x7C, 0x84, 0xA5, 0x67, 0x15, 0xED, 0x34, 0x28, 0xCC, 0x48, 0x17, 0xBB, 0x2B
+    };
+    uint8_t public_key[ATCA_ECCP384_PUBKEY_SIZE];
+    cal_buffer pubkey = CAL_BUF_INIT(sizeof(public_key), public_key);
+
+    ret = atcacert_get_subj_public_key(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, &pubkey);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT_EQUAL_MEMORY(public_key_ref, public_key, sizeof(public_key));
+}
 
 TEST_GROUP(atcacert_get_subj_key_id);
 
@@ -575,6 +623,7 @@ TEST(atcacert_set_signature, non_x509)
         0xa9, 0x12, 0x89, 0xb5, 0xae, 0x90, 0x02, 0x7c, 0xbc, 0xb1, 0xc7, 0x44, 0x3a, 0x8a, 0x00, 0xbd,
         0x15, 0xf2, 0xf5, 0x6f, 0x55, 0x01, 0xd1, 0x7a, 0xdf, 0xef, 0x48, 0x6b, 0x89, 0xf0, 0xc6, 0xaf
     };
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
     static const uint8_t cert_template_ref[] = {
         0x30, 0x82, 0x01, 0xB1, 0x30, 0x82, 0x01, 0x57, 0xA0, 0x03, 0x02, 0x01, 0x02, 0x02, 0x03, 0x40,
         0x01, 0x02, 0x30, 0x0A, 0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x04, 0x03, 0x02, 0x30, 0x36,
@@ -618,7 +667,7 @@ TEST(atcacert_set_signature, non_x509)
         g_cert_def_cert_template,
         &cert_template_size,
         sizeof(g_cert_def_cert_template),
-        signature);
+        &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL(cert_template_size_ref, cert_template_size);
     TEST_ASSERT_EQUAL_MEMORY(cert_template_ref, g_cert_def_cert_template, cert_template_size);
@@ -633,6 +682,7 @@ TEST(atcacert_set_signature, x509_same_size)
         0xa9, 0x12, 0x89, 0xb5, 0xae, 0x90, 0x02, 0x7c, 0xbc, 0xb1, 0xc7, 0x44, 0x3a, 0x8a, 0x00, 0xbd,
         0x15, 0xf2, 0xf5, 0x6f, 0x55, 0x01, 0xd1, 0x7a, 0xdf, 0xef, 0x48, 0x6b, 0x89, 0xf0, 0xc6, 0xaf
     };
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
     static const uint8_t cert_template_ref[] = {
         0x30, 0x82, 0x01, 0xB1, 0x30, 0x82, 0x01, 0x57, 0xA0, 0x03, 0x02, 0x01, 0x02, 0x02, 0x03, 0x40,
         0x01, 0x02, 0x30, 0x0A, 0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x04, 0x03, 0x02, 0x30, 0x36,
@@ -673,7 +723,7 @@ TEST(atcacert_set_signature, x509_same_size)
         g_cert_def_cert_template,
         &cert_template_size,
         sizeof(g_cert_def_cert_template),
-        signature);
+        &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL(cert_template_size_ref, cert_template_size);
     TEST_ASSERT_EQUAL_MEMORY(cert_template_ref, g_cert_def_cert_template, cert_template_size);
@@ -688,6 +738,7 @@ TEST(atcacert_set_signature, x509_bigger)
         0xa9, 0x12, 0x89, 0xb5, 0xae, 0x90, 0x02, 0x7c, 0xbc, 0xb1, 0xc7, 0x44, 0x3a, 0x8a, 0x00, 0xbd,
         0x15, 0xf2, 0xf5, 0x6f, 0x55, 0x01, 0xd1, 0x7a, 0xdf, 0xef, 0x48, 0x6b, 0x89, 0xf0, 0xc6, 0xaf
     };
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
     static const uint8_t cert_template_ref[] = {
         0x30, 0x82, 0x01, 0xB2, 0x30, 0x82, 0x01, 0x57, 0xA0, 0x03, 0x02, 0x01, 0x02, 0x02, 0x03, 0x40,
         0x01, 0x02, 0x30, 0x0A, 0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x04, 0x03, 0x02, 0x30, 0x36,
@@ -728,7 +779,7 @@ TEST(atcacert_set_signature, x509_bigger)
         g_cert_def_cert_template,
         &cert_template_size,
         sizeof(g_cert_def_cert_template),
-        signature);
+        &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL(cert_template_size_ref, cert_template_size);
     TEST_ASSERT_EQUAL_MEMORY(cert_template_ref, g_cert_def_cert_template, cert_template_size);
@@ -743,6 +794,7 @@ TEST(atcacert_set_signature, x509_smaller)
         0x09, 0x12, 0x89, 0xb5, 0xae, 0x90, 0x02, 0x7c, 0xbc, 0xb1, 0xc7, 0x44, 0x3a, 0x8a, 0x00, 0xbd,
         0x15, 0xf2, 0xf5, 0x6f, 0x55, 0x01, 0xd1, 0x7a, 0xdf, 0xef, 0x48, 0x6b, 0x89, 0xf0, 0xc6, 0xaf
     };
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
     static const uint8_t cert_template_ref[] = {
         0x30, 0x82, 0x01, 0xB0, 0x30, 0x82, 0x01, 0x57, 0xA0, 0x03, 0x02, 0x01, 0x02, 0x02, 0x03, 0x40,
         0x01, 0x02, 0x30, 0x0A, 0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x04, 0x03, 0x02, 0x30, 0x36,
@@ -783,7 +835,7 @@ TEST(atcacert_set_signature, x509_smaller)
         g_cert_def_cert_template,
         &cert_template_size,
         sizeof(g_cert_def_cert_template),
-        signature);
+        &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL(cert_template_size_ref, cert_template_size);
     TEST_ASSERT_EQUAL_MEMORY(cert_template_ref, g_cert_def_cert_template, cert_template_size);
@@ -798,6 +850,7 @@ TEST(atcacert_set_signature, x509_smallest)
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
     };
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
     static const uint8_t cert_template_ref[] = {
         0x30, 0x82, 0x01, 0x72, 0x30, 0x82, 0x01, 0x57, 0xA0, 0x03, 0x02, 0x01, 0x02, 0x02, 0x03, 0x40,
         0x01, 0x02, 0x30, 0x0A, 0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x04, 0x03, 0x02, 0x30, 0x36,
@@ -832,7 +885,7 @@ TEST(atcacert_set_signature, x509_smallest)
         g_cert_def_cert_template,
         &cert_template_size,
         sizeof(g_cert_def_cert_template),
-        signature);
+        &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL(cert_template_size_ref, cert_template_size);
     TEST_ASSERT_EQUAL_MEMORY(cert_template_ref, g_cert_def_cert_template, cert_template_size);
@@ -847,6 +900,7 @@ TEST(atcacert_set_signature, x509_out_of_bounds)
         0xa9, 0x12, 0x89, 0xb5, 0xae, 0x90, 0x02, 0x7c, 0xbc, 0xb1, 0xc7, 0x44, 0x3a, 0x8a, 0x00, 0xbd,
         0x15, 0xf2, 0xf5, 0x6f, 0x55, 0x01, 0xd1, 0x7a, 0xdf, 0xef, 0x48, 0x6b, 0x89, 0xf0, 0xc6, 0xaf
     };
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
     size_t cert_template_size = g_cert_def.cert_template_size;
 
     g_cert_def.std_cert_elements[STDCERT_SIGNATURE].offset = g_cert_def.cert_template_size;
@@ -856,7 +910,7 @@ TEST(atcacert_set_signature, x509_out_of_bounds)
         g_cert_def_cert_template,
         &cert_template_size,
         sizeof(g_cert_def_cert_template),
-        signature);
+        &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_ELEM_OUT_OF_BOUNDS, ret);
 }
 
@@ -869,6 +923,7 @@ TEST(atcacert_set_signature, x509_small_buf)
         0xa9, 0x12, 0x89, 0xb5, 0xae, 0x90, 0x02, 0x7c, 0xbc, 0xb1, 0xc7, 0x44, 0x3a, 0x8a, 0x00, 0xbd,
         0x15, 0xf2, 0xf5, 0x6f, 0x55, 0x01, 0xd1, 0x7a, 0xdf, 0xef, 0x48, 0x6b, 0x89, 0xf0, 0xc6, 0xaf
     };
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
     size_t cert_template_size = g_cert_def.cert_template_size;
 
     ret = atcacert_set_signature(
@@ -876,7 +931,7 @@ TEST(atcacert_set_signature, x509_small_buf)
         g_cert_def_cert_template,
         &cert_template_size,
         cert_template_size,
-        signature);
+        &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_BUFFER_TOO_SMALL, ret);
     TEST_ASSERT_EQUAL(g_cert_def.cert_template_size + 1, cert_template_size);
 }
@@ -890,6 +945,7 @@ TEST(atcacert_set_signature, x509_bad_cert_length)
         0xa9, 0x12, 0x89, 0xb5, 0xae, 0x90, 0x02, 0x7c, 0xbc, 0xb1, 0xc7, 0x44, 0x3a, 0x8a, 0x00, 0xbd,
         0x15, 0xf2, 0xf5, 0x6f, 0x55, 0x01, 0xd1, 0x7a, 0xdf, 0xef, 0x48, 0x6b, 0x89, 0xf0, 0xc6, 0xaf
     };
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
     size_t cert_template_size = g_cert_def.cert_template_size;
 
     g_cert_def_cert_template[1] = 0x89;
@@ -899,7 +955,7 @@ TEST(atcacert_set_signature, x509_bad_cert_length)
         g_cert_def_cert_template,
         &cert_template_size,
         sizeof(g_cert_def_cert_template),
-        signature);
+        &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_DECODING_ERROR, ret);
 }
 
@@ -912,6 +968,7 @@ TEST(atcacert_set_signature, x509_cert_length_change)
         0xa9, 0x12, 0x89, 0xb5, 0xae, 0x90, 0x02, 0x7c, 0xbc, 0xb1, 0xc7, 0x44, 0x3a, 0x8a, 0x00, 0xbd,
         0x15, 0xf2, 0xf5, 0x6f, 0x55, 0x01, 0xd1, 0x7a, 0xdf, 0xef, 0x48, 0x6b, 0x89, 0xf0, 0xc6, 0xaf
     };
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
     size_t cert_template_size = g_cert_def.cert_template_size;
 
     g_cert_def_cert_template[1] = 0x01;
@@ -921,7 +978,7 @@ TEST(atcacert_set_signature, x509_cert_length_change)
         g_cert_def_cert_template,
         &cert_template_size,
         sizeof(g_cert_def_cert_template),
-        signature);
+        &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_CERT, ret);
 }
 
@@ -934,27 +991,28 @@ TEST(atcacert_set_signature, bad_params)
         0xa9, 0x12, 0x89, 0xb5, 0xae, 0x90, 0x02, 0x7c, 0xbc, 0xb1, 0xc7, 0x44, 0x3a, 0x8a, 0x00, 0xbd,
         0x15, 0xf2, 0xf5, 0x6f, 0x55, 0x01, 0xd1, 0x7a, 0xdf, 0xef, 0x48, 0x6b, 0x89, 0xf0, 0xc6, 0xaf
     };
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
     size_t cert_template_size = g_cert_def.cert_template_size;
 
-    ret = atcacert_set_signature(NULL, g_cert_def_cert_template, &cert_template_size, sizeof(g_cert_def_cert_template), signature);
+    ret = atcacert_set_signature(NULL, g_cert_def_cert_template, &cert_template_size, sizeof(g_cert_def_cert_template), &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_set_signature(&g_cert_def, NULL, &cert_template_size, sizeof(g_cert_def_cert_template), signature);
+    ret = atcacert_set_signature(&g_cert_def, NULL, &cert_template_size, sizeof(g_cert_def_cert_template), &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_set_signature(NULL, NULL, &cert_template_size, sizeof(g_cert_def_cert_template), signature);
+    ret = atcacert_set_signature(NULL, NULL, &cert_template_size, sizeof(g_cert_def_cert_template), &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_set_signature(&g_cert_def, g_cert_def_cert_template, NULL, sizeof(g_cert_def_cert_template), signature);
+    ret = atcacert_set_signature(&g_cert_def, g_cert_def_cert_template, NULL, sizeof(g_cert_def_cert_template), &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_set_signature(NULL, g_cert_def_cert_template, NULL, sizeof(g_cert_def_cert_template), signature);
+    ret = atcacert_set_signature(NULL, g_cert_def_cert_template, NULL, sizeof(g_cert_def_cert_template), &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_set_signature(&g_cert_def, NULL, NULL, sizeof(g_cert_def_cert_template), signature);
+    ret = atcacert_set_signature(&g_cert_def, NULL, NULL, sizeof(g_cert_def_cert_template), &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_set_signature(NULL, NULL, NULL, sizeof(g_cert_def_cert_template), signature);
+    ret = atcacert_set_signature(NULL, NULL, NULL, sizeof(g_cert_def_cert_template), &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
     ret = atcacert_set_signature(&g_cert_def, g_cert_def_cert_template, &cert_template_size, sizeof(g_cert_def_cert_template), NULL);
@@ -982,6 +1040,74 @@ TEST(atcacert_set_signature, bad_params)
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
 
+TEST(atcacert_set_signature, x509_p521_same_size)
+{
+    int ret = 0;
+    useCert(&g_test_p384_cert_def_14_device);
+    static const uint8_t signature[ATCA_ECCP521_SIG_SIZE] = {
+        0x00, 0x54, 0x43, 0x49, 0xCB, 0x7D, 0xDF, 0x43, 0x8F, 0x68, 0x2F, 0x3B, 0x74, 0x17, 0x49, 0x70,
+        0x98, 0x0A, 0xAD, 0xF2, 0xC5, 0x8E, 0xC0, 0x5B, 0x9D, 0x39, 0xBC, 0x08, 0xC8, 0x3B, 0x88, 0x55,
+        0xDF, 0xEF, 0x76, 0x96, 0x3E, 0x6C, 0x47, 0x7D, 0x7B, 0xA2, 0x16, 0xEE, 0xA5, 0x03, 0xB2, 0xBE,
+        0x2C, 0x1A, 0x2D, 0x70, 0x49, 0xBC, 0xC8, 0x50, 0x62, 0x0A, 0xC7, 0xF5, 0x71, 0xB3, 0x23, 0x11,
+        0xE8, 0xAC, 0x01, 0x4B, 0x85, 0xBA, 0xC6, 0xEA, 0x80, 0x2A, 0x6C, 0xCF, 0x3B, 0x15, 0x8B, 0xE5,
+        0x73, 0x4A, 0x39, 0xA9, 0xCD, 0x89, 0x2E, 0xD9, 0x3B, 0x2D, 0xF5, 0xEC, 0x4F, 0x34, 0xA5, 0xFB,
+        0xDC, 0xC3, 0x52, 0xB4, 0xD2, 0x4C, 0xE5, 0x4D, 0x23, 0x94, 0x50, 0xE9, 0x89, 0x2F, 0x4F, 0x45,
+        0x57, 0x3D, 0xED, 0xE2, 0x2F, 0x26, 0xEC, 0xEF, 0x2F, 0x45, 0x86, 0x0E, 0x20, 0x4B, 0x0A, 0x5E,
+        0xFA, 0xA1, 0xB7, 0xCE
+    };
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
+    static const uint8_t cert_template_ref[] = {
+        0x30, 0x82, 0x02, 0x0D, 0x30, 0x82, 0x01, 0x6F, 0xA0, 0x03, 0x02, 0x01, 0x02, 0x02, 0x09, 0x40,
+        0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x30, 0x0A, 0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE,
+        0x3D, 0x04, 0x03, 0x02, 0x30, 0x33, 0x31, 0x10, 0x30, 0x0E, 0x06, 0x03, 0x55, 0x04, 0x0A, 0x0C,
+        0x07, 0x45, 0x78, 0x61, 0x6D, 0x70, 0x6C, 0x65, 0x31, 0x1F, 0x30, 0x1D, 0x06, 0x03, 0x55, 0x04,
+        0x03, 0x0C, 0x16, 0x45, 0x78, 0x61, 0x6D, 0x70, 0x6C, 0x65, 0x20, 0x54, 0x41, 0x20, 0x53, 0x69,
+        0x67, 0x6E, 0x65, 0x72, 0x20, 0x58, 0x58, 0x58, 0x58, 0x30, 0x1E, 0x17, 0x0D, 0x32, 0x35, 0x30,
+        0x31, 0x32, 0x30, 0x30, 0x34, 0x32, 0x37, 0x34, 0x39, 0x5A, 0x17, 0x0D, 0x33, 0x35, 0x30, 0x31,
+        0x31, 0x38, 0x30, 0x34, 0x32, 0x37, 0x34, 0x39, 0x5A, 0x30, 0x35, 0x31, 0x10, 0x30, 0x0E, 0x06,
+        0x03, 0x55, 0x04, 0x0A, 0x0C, 0x07, 0x45, 0x78, 0x61, 0x6D, 0x70, 0x6C, 0x65, 0x31, 0x21, 0x30,
+        0x1F, 0x06, 0x03, 0x55, 0x04, 0x03, 0x0C, 0x18, 0x45, 0x78, 0x61, 0x6D, 0x70, 0x6C, 0x65, 0x20,
+        0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x20, 0x43, 0x65, 0x72, 0x74, 0x20, 0x58, 0x58, 0x58, 0x58,
+        0x30, 0x76, 0x30, 0x10, 0x06, 0x07, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x02, 0x01, 0x06, 0x05, 0x2B,
+        0x81, 0x04, 0x00, 0x22, 0x03, 0x62, 0x00, 0x04, 0xE7, 0x5E, 0x16, 0x3B, 0x6B, 0xEF, 0x6B, 0x87,
+        0x8B, 0x69, 0xAD, 0x67, 0x0B, 0x48, 0x8A, 0x40, 0x69, 0x48, 0x3D, 0x9A, 0xAD, 0x19, 0xAC, 0xD8,
+        0x12, 0xC9, 0x6A, 0xF8, 0x6A, 0x36, 0xD5, 0x48, 0x00, 0xE3, 0x72, 0xAE, 0xC7, 0x19, 0x6E, 0xD0,
+        0x31, 0x46, 0x35, 0xA5, 0xF7, 0x39, 0x98, 0x29, 0x32, 0x60, 0x91, 0x2E, 0x7D, 0x07, 0x16, 0xC5,
+        0xEC, 0x23, 0x01, 0x5C, 0xDC, 0x6B, 0x73, 0x45, 0x16, 0x11, 0x0C, 0x27, 0xD6, 0x56, 0xBC, 0x20,
+        0x73, 0x6D, 0x4C, 0x8D, 0x2A, 0xD8, 0x6A, 0xAF, 0x00, 0xEB, 0xF7, 0x7C, 0x84, 0xA5, 0x67, 0x15,
+        0xED, 0x34, 0x28, 0xCC, 0x48, 0x17, 0xBB, 0x2B, 0xA3, 0x4D, 0x30, 0x4B, 0x30, 0x09, 0x06, 0x03,
+        0x55, 0x1D, 0x13, 0x04, 0x02, 0x30, 0x00, 0x30, 0x1D, 0x06, 0x03, 0x55, 0x1D, 0x0E, 0x04, 0x16,
+        0x04, 0x14, 0x93, 0x09, 0x1C, 0xFD, 0x7C, 0x25, 0x9B, 0xE2, 0x16, 0xB2, 0x11, 0x70, 0xD1, 0xE3,
+        0xD0, 0x1C, 0xCB, 0xDB, 0x4E, 0x74, 0x30, 0x1F, 0x06, 0x03, 0x55, 0x1D, 0x23, 0x04, 0x18, 0x30,
+        0x16, 0x80, 0x14, 0xE0, 0x5E, 0x68, 0xEA, 0x7E, 0x96, 0x58, 0x3C, 0x43, 0xFA, 0x7D, 0x96, 0x32,
+        0x4A, 0x52, 0xEC, 0x52, 0x8A, 0xD1, 0x27, 0x30, 0x0A, 0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE, 0x3D,
+        0x04, 0x03, 0x02, 0x03, 0x81, 0x8B, 0x00, 0x30, 0x81, 0x87, 0x02, 0x41, 0x54, 0x43, 0x49, 0xCB,
+        0x7D, 0xDF, 0x43, 0x8F, 0x68, 0x2F, 0x3B, 0x74, 0x17, 0x49, 0x70, 0x98, 0x0A, 0xAD, 0xF2, 0xC5,
+        0x8E, 0xC0, 0x5B, 0x9D, 0x39, 0xBC, 0x08, 0xC8, 0x3B, 0x88, 0x55, 0xDF, 0xEF, 0x76, 0x96, 0x3E,
+        0x6C, 0x47, 0x7D, 0x7B, 0xA2, 0x16, 0xEE, 0xA5, 0x03, 0xB2, 0xBE, 0x2C, 0x1A, 0x2D, 0x70, 0x49,
+        0xBC, 0xC8, 0x50, 0x62, 0x0A, 0xC7, 0xF5, 0x71, 0xB3, 0x23, 0x11, 0xE8, 0xAC, 0x02, 0x42, 0x01,
+        0x4B, 0x85, 0xBA, 0xC6, 0xEA, 0x80, 0x2A, 0x6C, 0xCF, 0x3B, 0x15, 0x8B, 0xE5, 0x73, 0x4A, 0x39,
+        0xA9, 0xCD, 0x89, 0x2E, 0xD9, 0x3B, 0x2D, 0xF5, 0xEC, 0x4F, 0x34, 0xA5, 0xFB, 0xDC, 0xC3, 0x52,
+        0xB4, 0xD2, 0x4C, 0xE5, 0x4D, 0x23, 0x94, 0x50, 0xE9, 0x89, 0x2F, 0x4F, 0x45, 0x57, 0x3D, 0xED,
+        0xE2, 0x2F, 0x26, 0xEC, 0xEF, 0x2F, 0x45, 0x86, 0x0E, 0x20, 0x4B, 0x0A, 0x5E, 0xFA, 0xA1, 0xB7,
+        0xCE
+    };
+    static const size_t cert_template_size_ref = sizeof(cert_template_ref);
+    size_t cert_template_size = g_cert_def.cert_template_size;
+
+    TEST_ASSERT_EQUAL(g_cert_def.cert_template_size, sizeof(cert_template_ref));
+
+    ret = atcacert_set_signature(
+        &g_cert_def,
+        g_cert_def_cert_template,
+        &cert_template_size,
+        sizeof(g_cert_def_cert_template),
+        &sig);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT_EQUAL(cert_template_size_ref, cert_template_size);
+    TEST_ASSERT_EQUAL_MEMORY(cert_template_ref, g_cert_def_cert_template, cert_template_size);
+}
+
 
 TEST_GROUP(atcacert_get_signature);
 
@@ -998,6 +1124,7 @@ TEST(atcacert_get_signature, non_x509)
 {
     int ret = 0;
     uint8_t signature[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
     static const uint8_t signature_ref[64] = {
         0x03, 0x48, 0x00, 0x30, 0x45, 0x02, 0x20, 0x43, 0x90, 0xCD, 0x89, 0xE0, 0x75, 0xD0, 0x45, 0x93,
         0x7B, 0x37, 0x3F, 0x52, 0x6F, 0xF6, 0x5C, 0x4B, 0x4C, 0xCA, 0x7C, 0x61, 0x3C, 0x5F, 0x9C, 0xF2,
@@ -1012,7 +1139,7 @@ TEST(atcacert_get_signature, non_x509)
         &g_cert_def,
         g_cert_def_cert_template,
         g_cert_def.cert_template_size,
-        signature);
+        &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(signature_ref, signature, sizeof(signature));
 }
@@ -1021,6 +1148,7 @@ TEST(atcacert_get_signature, x509_no_padding)
 {
     int ret = 0;
     uint8_t signature[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
     static const uint8_t signature_ref[64] = {
         0x63, 0xe6, 0xfd, 0xcc, 0x7a, 0x99, 0xd5, 0x0d, 0x6a, 0x06, 0x70, 0x2d, 0xc0, 0x2f, 0x34, 0x25,
         0x19, 0x2a, 0x10, 0x51, 0x99, 0xae, 0x63, 0xfc, 0xeb, 0xd9, 0x33, 0xeb, 0x90, 0x25, 0x7d, 0x2e,
@@ -1062,7 +1190,7 @@ TEST(atcacert_get_signature, x509_no_padding)
         &g_cert_def,
         cert_template,
         sizeof(cert_template),
-        signature);
+        &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(signature_ref, signature, sizeof(signature));
 }
@@ -1071,6 +1199,7 @@ TEST(atcacert_get_signature, x509_r_padding)
 {
     int ret = 0;
     uint8_t signature[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
     static const uint8_t signature_ref[64] = {
         0x43, 0x90, 0xCD, 0x89, 0xE0, 0x75, 0xD0, 0x45, 0x93, 0x7B, 0x37, 0x3F, 0x52, 0x6F, 0xF6, 0x5C,
         0x4B, 0x4C, 0xCA, 0x7C, 0x61, 0x3C, 0x5F, 0x9C, 0xF2, 0xF4, 0xC9, 0xE7, 0xCE, 0xDF, 0x24, 0xAA,
@@ -1082,7 +1211,7 @@ TEST(atcacert_get_signature, x509_r_padding)
         &g_cert_def,
         g_cert_def_cert_template,
         g_cert_def.cert_template_size,
-        signature);
+        &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(signature_ref, signature, sizeof(signature));
 }
@@ -1091,6 +1220,7 @@ TEST(atcacert_get_signature, x509_rs_padding)
 {
     int ret = 0;
     uint8_t signature[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
     static const uint8_t signature_ref[64] = {
         0xF3, 0xe6, 0xfd, 0xcc, 0x7a, 0x99, 0xd5, 0x0d, 0x6a, 0x06, 0x70, 0x2d, 0xc0, 0x2f, 0x34, 0x25,
         0x19, 0x2a, 0x10, 0x51, 0x99, 0xae, 0x63, 0xfc, 0xeb, 0xd9, 0x33, 0xeb, 0x90, 0x25, 0x7d, 0x2e,
@@ -1132,7 +1262,7 @@ TEST(atcacert_get_signature, x509_rs_padding)
         &g_cert_def,
         cert_template,
         sizeof(cert_template),
-        signature);
+        &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(signature_ref, signature, sizeof(signature));
 }
@@ -1141,6 +1271,7 @@ TEST(atcacert_get_signature, x509_bad_sig)
 {
     int ret = 0;
     uint8_t signature[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
     static const uint8_t cert_template[] = {
         0x30, 0x82, 0x01, 0xB0, 0x30, 0x82, 0x01, 0x57, 0xA0, 0x03, 0x02, 0x01, 0x02, 0x02, 0x03, 0x40,
         0x01, 0x02, 0x30, 0x0A, 0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x04, 0x03, 0x02, 0x30, 0x36,
@@ -1176,7 +1307,7 @@ TEST(atcacert_get_signature, x509_bad_sig)
         &g_cert_def,
         cert_template,
         sizeof(cert_template) - 1,
-        signature);
+        &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_DECODING_ERROR, ret);
 }
 
@@ -1184,6 +1315,7 @@ TEST(atcacert_get_signature, x509_out_of_bounds)
 {
     int ret = 0;
     uint8_t signature[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
 
     g_cert_def.std_cert_elements[STDCERT_SIGNATURE].offset = g_cert_def.cert_template_size;
 
@@ -1191,7 +1323,7 @@ TEST(atcacert_get_signature, x509_out_of_bounds)
         &g_cert_def,
         g_cert_def_cert_template,
         g_cert_def.cert_template_size,
-        signature);
+        &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_ELEM_OUT_OF_BOUNDS, ret);
 }
 
@@ -1199,14 +1331,15 @@ TEST(atcacert_get_signature, x509_bad_params)
 {
     int ret = 0;
     uint8_t signature[64];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
 
-    ret = atcacert_get_signature(NULL, g_cert_def_cert_template, g_cert_def.cert_template_size, signature);
+    ret = atcacert_get_signature(NULL, g_cert_def_cert_template, g_cert_def.cert_template_size, &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_get_signature(&g_cert_def, NULL, g_cert_def.cert_template_size, signature);
+    ret = atcacert_get_signature(&g_cert_def, NULL, g_cert_def.cert_template_size, &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_get_signature(NULL, NULL, g_cert_def.cert_template_size, signature);
+    ret = atcacert_get_signature(NULL, NULL, g_cert_def.cert_template_size, &sig);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
     ret = atcacert_get_signature(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, NULL);
@@ -1220,6 +1353,69 @@ TEST(atcacert_get_signature, x509_bad_params)
 
     ret = atcacert_get_signature(NULL, NULL, g_cert_def.cert_template_size, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
+}
+
+TEST(atcacert_get_signature, x509_rs_multibyte_padding)
+{
+    int ret = 0;
+    useCert(&g_test_p384_cert_def_14_device);
+    uint8_t signature[ATCA_ECCP521_SIG_SIZE];
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
+    static const uint8_t signature_ref[ATCA_ECCP521_SIG_SIZE] = {
+        0x00, 0x54, 0x43, 0x49, 0xCB, 0x7D, 0xDF, 0x43, 0x8F, 0x68, 0x2F, 0x3B, 0x74, 0x17, 0x49, 0x70,
+        0x98, 0x0A, 0xAD, 0xF2, 0xC5, 0x8E, 0xC0, 0x5B, 0x9D, 0x39, 0xBC, 0x08, 0xC8, 0x3B, 0x88, 0x55,
+        0xDF, 0xEF, 0x76, 0x96, 0x3E, 0x6C, 0x47, 0x7D, 0x7B, 0xA2, 0x16, 0xEE, 0xA5, 0x03, 0xB2, 0xBE,
+        0x2C, 0x1A, 0x2D, 0x70, 0x49, 0xBC, 0xC8, 0x50, 0x62, 0x0A, 0xC7, 0xF5, 0x71, 0xB3, 0x23, 0x11,
+        0xE8, 0xAC, 0x01, 0x4B, 0x85, 0xBA, 0xC6, 0xEA, 0x80, 0x2A, 0x6C, 0xCF, 0x3B, 0x15, 0x8B, 0xE5,
+        0x73, 0x4A, 0x39, 0xA9, 0xCD, 0x89, 0x2E, 0xD9, 0x3B, 0x2D, 0xF5, 0xEC, 0x4F, 0x34, 0xA5, 0xFB,
+        0xDC, 0xC3, 0x52, 0xB4, 0xD2, 0x4C, 0xE5, 0x4D, 0x23, 0x94, 0x50, 0xE9, 0x89, 0x2F, 0x4F, 0x45,
+        0x57, 0x3D, 0xED, 0xE2, 0x2F, 0x26, 0xEC, 0xEF, 0x2F, 0x45, 0x86, 0x0E, 0x20, 0x4B, 0x0A, 0x5E,
+        0xFA, 0xA1, 0xB7, 0xCE
+    };
+    static const uint8_t cert_template[] = {
+        0x30, 0x82, 0x02, 0x0D, 0x30, 0x82, 0x01, 0x6F, 0xA0, 0x03, 0x02, 0x01, 0x02, 0x02, 0x09, 0x40,
+        0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x30, 0x0A, 0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE,
+        0x3D, 0x04, 0x03, 0x02, 0x30, 0x33, 0x31, 0x10, 0x30, 0x0E, 0x06, 0x03, 0x55, 0x04, 0x0A, 0x0C,
+        0x07, 0x45, 0x78, 0x61, 0x6D, 0x70, 0x6C, 0x65, 0x31, 0x1F, 0x30, 0x1D, 0x06, 0x03, 0x55, 0x04,
+        0x03, 0x0C, 0x16, 0x45, 0x78, 0x61, 0x6D, 0x70, 0x6C, 0x65, 0x20, 0x54, 0x41, 0x20, 0x53, 0x69,
+        0x67, 0x6E, 0x65, 0x72, 0x20, 0x58, 0x58, 0x58, 0x58, 0x30, 0x1E, 0x17, 0x0D, 0x32, 0x35, 0x30,
+        0x31, 0x32, 0x30, 0x30, 0x34, 0x32, 0x37, 0x34, 0x39, 0x5A, 0x17, 0x0D, 0x33, 0x35, 0x30, 0x31,
+        0x31, 0x38, 0x30, 0x34, 0x32, 0x37, 0x34, 0x39, 0x5A, 0x30, 0x35, 0x31, 0x10, 0x30, 0x0E, 0x06,
+        0x03, 0x55, 0x04, 0x0A, 0x0C, 0x07, 0x45, 0x78, 0x61, 0x6D, 0x70, 0x6C, 0x65, 0x31, 0x21, 0x30,
+        0x1F, 0x06, 0x03, 0x55, 0x04, 0x03, 0x0C, 0x18, 0x45, 0x78, 0x61, 0x6D, 0x70, 0x6C, 0x65, 0x20,
+        0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x20, 0x43, 0x65, 0x72, 0x74, 0x20, 0x58, 0x58, 0x58, 0x58,
+        0x30, 0x76, 0x30, 0x10, 0x06, 0x07, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x02, 0x01, 0x06, 0x05, 0x2B,
+        0x81, 0x04, 0x00, 0x22, 0x03, 0x62, 0x00, 0x04, 0xE7, 0x5E, 0x16, 0x3B, 0x6B, 0xEF, 0x6B, 0x87,
+        0x8B, 0x69, 0xAD, 0x67, 0x0B, 0x48, 0x8A, 0x40, 0x69, 0x48, 0x3D, 0x9A, 0xAD, 0x19, 0xAC, 0xD8,
+        0x12, 0xC9, 0x6A, 0xF8, 0x6A, 0x36, 0xD5, 0x48, 0x00, 0xE3, 0x72, 0xAE, 0xC7, 0x19, 0x6E, 0xD0,
+        0x31, 0x46, 0x35, 0xA5, 0xF7, 0x39, 0x98, 0x29, 0x32, 0x60, 0x91, 0x2E, 0x7D, 0x07, 0x16, 0xC5,
+        0xEC, 0x23, 0x01, 0x5C, 0xDC, 0x6B, 0x73, 0x45, 0x16, 0x11, 0x0C, 0x27, 0xD6, 0x56, 0xBC, 0x20,
+        0x73, 0x6D, 0x4C, 0x8D, 0x2A, 0xD8, 0x6A, 0xAF, 0x00, 0xEB, 0xF7, 0x7C, 0x84, 0xA5, 0x67, 0x15,
+        0xED, 0x34, 0x28, 0xCC, 0x48, 0x17, 0xBB, 0x2B, 0xA3, 0x4D, 0x30, 0x4B, 0x30, 0x09, 0x06, 0x03,
+        0x55, 0x1D, 0x13, 0x04, 0x02, 0x30, 0x00, 0x30, 0x1D, 0x06, 0x03, 0x55, 0x1D, 0x0E, 0x04, 0x16,
+        0x04, 0x14, 0x93, 0x09, 0x1C, 0xFD, 0x7C, 0x25, 0x9B, 0xE2, 0x16, 0xB2, 0x11, 0x70, 0xD1, 0xE3,
+        0xD0, 0x1C, 0xCB, 0xDB, 0x4E, 0x74, 0x30, 0x1F, 0x06, 0x03, 0x55, 0x1D, 0x23, 0x04, 0x18, 0x30,
+        0x16, 0x80, 0x14, 0xE0, 0x5E, 0x68, 0xEA, 0x7E, 0x96, 0x58, 0x3C, 0x43, 0xFA, 0x7D, 0x96, 0x32,
+        0x4A, 0x52, 0xEC, 0x52, 0x8A, 0xD1, 0x27, 0x30, 0x0A, 0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE, 0x3D,
+        0x04, 0x03, 0x02, 0x03, 0x81, 0x8B, 0x00, 0x30, 0x81, 0x87, 0x02, 0x41, 0x54, 0x43, 0x49, 0xCB,
+        0x7D, 0xDF, 0x43, 0x8F, 0x68, 0x2F, 0x3B, 0x74, 0x17, 0x49, 0x70, 0x98, 0x0A, 0xAD, 0xF2, 0xC5,
+        0x8E, 0xC0, 0x5B, 0x9D, 0x39, 0xBC, 0x08, 0xC8, 0x3B, 0x88, 0x55, 0xDF, 0xEF, 0x76, 0x96, 0x3E,
+        0x6C, 0x47, 0x7D, 0x7B, 0xA2, 0x16, 0xEE, 0xA5, 0x03, 0xB2, 0xBE, 0x2C, 0x1A, 0x2D, 0x70, 0x49,
+        0xBC, 0xC8, 0x50, 0x62, 0x0A, 0xC7, 0xF5, 0x71, 0xB3, 0x23, 0x11, 0xE8, 0xAC, 0x02, 0x42, 0x01,
+        0x4B, 0x85, 0xBA, 0xC6, 0xEA, 0x80, 0x2A, 0x6C, 0xCF, 0x3B, 0x15, 0x8B, 0xE5, 0x73, 0x4A, 0x39,
+        0xA9, 0xCD, 0x89, 0x2E, 0xD9, 0x3B, 0x2D, 0xF5, 0xEC, 0x4F, 0x34, 0xA5, 0xFB, 0xDC, 0xC3, 0x52,
+        0xB4, 0xD2, 0x4C, 0xE5, 0x4D, 0x23, 0x94, 0x50, 0xE9, 0x89, 0x2F, 0x4F, 0x45, 0x57, 0x3D, 0xED,
+        0xE2, 0x2F, 0x26, 0xEC, 0xEF, 0x2F, 0x45, 0x86, 0x0E, 0x20, 0x4B, 0x0A, 0x5E, 0xFA, 0xA1, 0xB7,
+        0xCE
+    };
+
+    ret = atcacert_get_signature(
+        &g_cert_def,
+        cert_template,
+        sizeof(cert_template),
+        &sig);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT_EQUAL_MEMORY(signature_ref, signature, sizeof(signature));
 }
 
 
@@ -2169,6 +2365,7 @@ TEST(atcacert_gen_cert_sn, pub_key_hash)
         0xBD, 0xD2, 0x93, 0x65, 0xF2, 0x65, 0x59, 0x22, 0xC6, 0x25, 0x90, 0x7A, 0xEC, 0x19
     };
     size_t cert_size;
+    cal_buffer hash_public_key = CAL_BUF_INIT(sizeof(g_hash_public_key), g_hash_public_key);
 
     useCert(&g_test_cert_def_0_device);
     cert_size = g_cert_def.cert_template_size;
@@ -2192,7 +2389,7 @@ TEST(atcacert_gen_cert_sn, pub_key_hash)
         &g_cert_def,
         g_cert_def_cert_template,
         g_cert_def.cert_template_size,
-        g_hash_public_key);
+        &hash_public_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     ret = atcacert_gen_cert_sn(
@@ -2237,6 +2434,7 @@ TEST(atcacert_gen_cert_sn, pub_key_hash_pos)
         0xBD, 0xD2, 0x93, 0x65, 0xF2, 0x65, 0x59, 0x22, 0xC6, 0x25, 0x90, 0x7A, 0xEC, 0x19
     };
     size_t cert_size;
+    cal_buffer hash_public_key = CAL_BUF_INIT(sizeof(g_hash_public_key), g_hash_public_key);
 
     useCert(&g_test_cert_def_0_device);
     cert_size = g_cert_def.cert_template_size;
@@ -2260,7 +2458,7 @@ TEST(atcacert_gen_cert_sn, pub_key_hash_pos)
         &g_cert_def,
         g_cert_def_cert_template,
         g_cert_def.cert_template_size,
-        g_hash_public_key);
+        &hash_public_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     ret = atcacert_gen_cert_sn(
@@ -2304,6 +2502,7 @@ TEST(atcacert_gen_cert_sn, pub_key_hash_raw)
         0xBD, 0xD2, 0x93, 0x65, 0xF2, 0x65, 0x59, 0x22, 0xC6, 0x25, 0x90, 0x7A, 0xEC, 0x19
     };
     size_t cert_size;
+    cal_buffer hash_public_key = CAL_BUF_INIT(sizeof(g_hash_public_key), g_hash_public_key);
 
     useCert(&g_test_cert_def_0_device);
     cert_size = g_cert_def.cert_template_size;
@@ -2327,7 +2526,7 @@ TEST(atcacert_gen_cert_sn, pub_key_hash_raw)
         &g_cert_def,
         g_cert_def_cert_template,
         g_cert_def.cert_template_size,
-        g_hash_public_key);
+        &hash_public_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     ret = atcacert_gen_cert_sn(
@@ -2377,6 +2576,7 @@ TEST(atcacert_gen_cert_sn, pub_key_hash_ext_issue)
         .tm_sec = 0
     };
     size_t cert_size;
+    cal_buffer hash_public_key = CAL_BUF_INIT(sizeof(g_hash_public_key), g_hash_public_key);
 
     useCert(&g_test_cert_def_6_device);
     cert_size = g_cert_def.cert_template_size;
@@ -2403,7 +2603,7 @@ TEST(atcacert_gen_cert_sn, pub_key_hash_ext_issue)
         &g_cert_def,
         g_cert_def_cert_template,
         g_cert_def.cert_template_size,
-        g_hash_public_key);
+        &hash_public_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     ret = atcacert_set_issue_date(
@@ -2468,6 +2668,7 @@ TEST(atcacert_gen_cert_sn, pub_key_hash_ext_expire)
         .tm_sec = 0
     };
     size_t cert_size;
+    cal_buffer hash_public_key = CAL_BUF_INIT(sizeof(g_hash_public_key), g_hash_public_key);
 
     useCert(&g_test_cert_def_6_device);
     cert_size = g_cert_def.cert_template_size;
@@ -2494,7 +2695,7 @@ TEST(atcacert_gen_cert_sn, pub_key_hash_ext_expire)
         &g_cert_def,
         g_cert_def_cert_template,
         g_cert_def.cert_template_size,
-        g_hash_public_key);
+        &hash_public_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     ret = atcacert_set_issue_date(
@@ -3045,7 +3246,7 @@ TEST(atcacert_generate_sn, device_sn_bad_params)
 TEST(atcacert_generate_sn, signer_id)
 {
     int ret = 0;
-    static const uint8_t comp_cert[72] = {
+    static const uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE] = {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -3071,7 +3272,7 @@ TEST(atcacert_generate_sn, signer_id)
 TEST(atcacert_generate_sn, signer_id_bad_params)
 {
     int ret = 0;
-    static const uint8_t comp_cert[72] = {
+    static const uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE] = {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -3097,7 +3298,7 @@ TEST(atcacert_generate_sn, pub_key_hash)
 {
     int ret = 0;
     // Only setting the encoded dates part of the compressed certificate
-    static const uint8_t comp_cert[72] = {
+    static const uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE] = {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -3108,11 +3309,12 @@ TEST(atcacert_generate_sn, pub_key_hash)
         0x72, 0x69, 0xB4, 0x59, 0x76, 0x63, 0xFD, 0xD5, 0xBD, 0x45
     };
     uint8_t sn[sizeof(sn_ref)] = { 0 };
+    cal_buffer hash_public_key = CAL_BUF_INIT(sizeof(g_hash_public_key), g_hash_public_key);
 
     ret = atcacert_generate_sn(
         SNSRC_PUB_KEY_HASH,
         NULL,
-        g_hash_public_key,
+        &hash_public_key,
         comp_cert,
         sizeof(sn),
         sn);
@@ -3124,7 +3326,7 @@ TEST(atcacert_generate_sn, pub_key_hash_pos)
 {
     int ret = 0;
     // Only setting the encoded dates part of the compressed certificate
-    static const uint8_t comp_cert[72] = {
+    static const uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE] = {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -3135,11 +3337,12 @@ TEST(atcacert_generate_sn, pub_key_hash_pos)
         0x32, 0x69, 0xB4, 0x59, 0x76, 0x63, 0xFD, 0xD5, 0xBD, 0x45
     };
     uint8_t sn[sizeof(sn_ref)] = { 0 };
+    cal_buffer hash_public_key = CAL_BUF_INIT(sizeof(g_hash_public_key), g_hash_public_key);
 
     ret = atcacert_generate_sn(
         SNSRC_PUB_KEY_HASH_POS,
         NULL,
-        g_hash_public_key,
+        &hash_public_key,
         comp_cert,
         sizeof(sn),
         sn);
@@ -3151,7 +3354,7 @@ TEST(atcacert_generate_sn, pub_key_hash_raw)
 {
     int ret = 0;
     // Only setting the encoded dates part of the compressed certificate
-    static const uint8_t comp_cert[72] = {
+    static const uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE] = {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -3162,11 +3365,12 @@ TEST(atcacert_generate_sn, pub_key_hash_raw)
         0xB2, 0x69, 0xB4, 0x59, 0x76, 0x63, 0xFD, 0xD5, 0xBD, 0x45
     };
     uint8_t sn[sizeof(sn_ref)] = { 0 };
+    cal_buffer hash_public_key = CAL_BUF_INIT(sizeof(g_hash_public_key), g_hash_public_key);
 
     ret = atcacert_generate_sn(
         SNSRC_PUB_KEY_HASH_RAW,
         NULL,
-        g_hash_public_key,
+        &hash_public_key,
         comp_cert,
         sizeof(sn),
         sn);
@@ -3181,7 +3385,7 @@ TEST(atcacert_generate_sn, pub_key_hash_ext_issue)
 
     int ret = 0;
     // Set issue date to 2032. Format version must be set to 1 to use extended dates.
-    static const uint8_t comp_cert[72] = {
+    static const uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE] = {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -3192,11 +3396,12 @@ TEST(atcacert_generate_sn, pub_key_hash_ext_issue)
         0x49, 0x7a, 0xd7, 0x75, 0x1e, 0xca, 0x0a, 0x17, 0x50, 0xac
     };
     uint8_t sn[sizeof(sn_ref)] = { 0 };
+    cal_buffer hash_public_key = CAL_BUF_INIT(sizeof(g_hash_public_key), g_hash_public_key);
 
     ret = atcacert_generate_sn(
         SNSRC_PUB_KEY_HASH,
         NULL,
-        g_hash_public_key,
+        &hash_public_key,
         comp_cert,
         sizeof(sn),
         sn);
@@ -3211,7 +3416,7 @@ TEST(atcacert_generate_sn, pub_key_hash_ext_expire)
 
     int ret = 0;
     // Set expire years to 32. Format version must be set to 1 to use extended dates.
-    static const uint8_t comp_cert[72] = {
+    static const uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE] = {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -3222,11 +3427,12 @@ TEST(atcacert_generate_sn, pub_key_hash_ext_expire)
         0x7a, 0x36, 0xd7, 0xda, 0x47, 0x08, 0x84, 0xcb, 0x2e, 0x21
     };
     uint8_t sn[sizeof(sn_ref)] = { 0 };
+    cal_buffer hash_public_key = CAL_BUF_INIT(sizeof(g_hash_public_key), g_hash_public_key);
 
     ret = atcacert_generate_sn(
         SNSRC_PUB_KEY_HASH,
         NULL,
-        g_hash_public_key,
+        &hash_public_key,
         comp_cert,
         sizeof(sn),
         sn);
@@ -3238,7 +3444,7 @@ TEST(atcacert_generate_sn, pub_key_hash_bad_params)
 {
     int ret = 0;
     // Only setting the encoded dates part of the compressed certificate
-    static const uint8_t comp_cert[72] = {
+    static const uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE] = {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -3246,17 +3452,18 @@ TEST(atcacert_generate_sn, pub_key_hash_bad_params)
         0x7B, 0xFC, 0x14, 0x00, 0x00, 0x00, 0x00, 0x00
     };
     uint8_t sn[10] = { 0 };
+    cal_buffer hash_public_key = CAL_BUF_INIT(sizeof(g_hash_public_key), g_hash_public_key);
 
     // Output buffer is null
-    ret = atcacert_generate_sn(SNSRC_PUB_KEY_HASH, NULL, g_hash_public_key, comp_cert, sizeof(sn), NULL);
+    ret = atcacert_generate_sn(SNSRC_PUB_KEY_HASH, NULL, &hash_public_key, comp_cert, sizeof(sn), NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
     // Size must be <= 32
-    ret = atcacert_generate_sn(SNSRC_PUB_KEY_HASH, NULL, g_hash_public_key, comp_cert, 33, sn);
+    ret = atcacert_generate_sn(SNSRC_PUB_KEY_HASH, NULL, &hash_public_key, comp_cert, 33, sn);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
     // Size must be != 0
-    ret = atcacert_generate_sn(SNSRC_PUB_KEY_HASH, NULL, g_hash_public_key, comp_cert, 0, sn);
+    ret = atcacert_generate_sn(SNSRC_PUB_KEY_HASH, NULL, &hash_public_key, comp_cert, 0, sn);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
     // public_key is null
@@ -3264,7 +3471,7 @@ TEST(atcacert_generate_sn, pub_key_hash_bad_params)
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
     // comp_cert is null
-    ret = atcacert_generate_sn(SNSRC_PUB_KEY_HASH, NULL, g_hash_public_key, NULL, sizeof(sn), sn);
+    ret = atcacert_generate_sn(SNSRC_PUB_KEY_HASH, NULL, &hash_public_key, NULL, sizeof(sn), sn);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
 
@@ -3273,7 +3480,7 @@ TEST(atcacert_generate_sn, device_sn_hash)
     int ret = 0;
     static const uint8_t device_sn[9] = { 0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC, 0xDE, 0xF0, 0x12 };
     // Only setting the encoded dates part of the compressed certificate
-    static const uint8_t comp_cert[72] = {
+    static const uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE] = {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -3301,7 +3508,7 @@ TEST(atcacert_generate_sn, device_sn_hash_pos)
     int ret = 0;
     static const uint8_t device_sn[9] = { 0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC, 0xDE, 0xF0, 0x12 };
     // Only setting the encoded dates part of the compressed certificate
-    static const uint8_t comp_cert[72] = {
+    static const uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE] = {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -3329,7 +3536,7 @@ TEST(atcacert_generate_sn, device_sn_hash_raw)
     int ret = 0;
     static const uint8_t device_sn[9] = { 0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC, 0xDE, 0xF0, 0x12 };
     // Only setting the encoded dates part of the compressed certificate
-    static const uint8_t comp_cert[72] = {
+    static const uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE] = {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -3360,7 +3567,7 @@ TEST(atcacert_generate_sn, device_sn_hash_ext_issue)
     int ret = 0;
     static const uint8_t device_sn[9] = { 0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC, 0xDE, 0xF0, 0x12 };
     // Set issue date to 2032. Format version must be set to 1 to use extended dates.
-    static const uint8_t comp_cert[72] = {
+    static const uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE] = {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -3391,7 +3598,7 @@ TEST(atcacert_generate_sn, device_sn_hash_ext_expire)
     int ret = 0;
     static const uint8_t device_sn[9] = { 0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC, 0xDE, 0xF0, 0x12 };
     // Set expire years to 32. Format version must be set to 1 to use extended dates.
-    static const uint8_t comp_cert[72] = {
+    static const uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE] = {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -3419,7 +3626,7 @@ TEST(atcacert_generate_sn, device_sn_hash_bad_params)
     int ret = 0;
     static const uint8_t device_sn[9] = { 0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC, 0xDE, 0xF0, 0x12 };
     // Only setting the encoded dates part of the compressed certificate
-    static const uint8_t comp_cert[72] = {
+    static const uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE] = {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -3585,6 +3792,7 @@ TEST(atcacert_set_auth_key_id, good)
         0xA9, 0x1B, 0xB3, 0xB1, 0xC7, 0x3E, 0xB2, 0x66, 0x74, 0x6C, 0x20, 0x53, 0x0A, 0x3B, 0x90, 0x77,
         0x6C, 0xA9, 0xC7, 0x79, 0x0D
     };
+    cal_buffer ca_pubkey = CAL_BUF_INIT(sizeof(g_ca_public_key), g_ca_public_key);
 
     TEST_ASSERT_EQUAL(g_cert_def.cert_template_size, sizeof(cert_template_ref));
 
@@ -3592,7 +3800,7 @@ TEST(atcacert_set_auth_key_id, good)
         &g_cert_def,
         g_cert_def_cert_template,
         g_cert_def.cert_template_size,
-        g_ca_public_key);
+        &ca_pubkey);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(cert_template_ref, g_cert_def_cert_template, sizeof(cert_template_ref));
 }
@@ -3600,14 +3808,15 @@ TEST(atcacert_set_auth_key_id, good)
 TEST(atcacert_set_auth_key_id, bad_params)
 {
     int ret = 0;
+    cal_buffer test_pubkey = CAL_BUF_INIT(sizeof(g_test_public_key), g_test_public_key);
 
-    ret = atcacert_set_auth_key_id(NULL, g_cert_def_cert_template, g_cert_def.cert_template_size, g_test_public_key);
+    ret = atcacert_set_auth_key_id(NULL, g_cert_def_cert_template, g_cert_def.cert_template_size, &test_pubkey);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_set_auth_key_id(&g_cert_def, NULL, g_cert_def.cert_template_size, g_test_public_key);
+    ret = atcacert_set_auth_key_id(&g_cert_def, NULL, g_cert_def.cert_template_size, &test_pubkey);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_set_auth_key_id(NULL, NULL, g_cert_def.cert_template_size, g_test_public_key);
+    ret = atcacert_set_auth_key_id(NULL, NULL, g_cert_def.cert_template_size, &test_pubkey);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
     ret = atcacert_set_auth_key_id(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, NULL);
@@ -3811,7 +4020,7 @@ TEST(atcacert_set_comp_cert, bad_format)
         0x19, 0x2a, 0x10, 0x51, 0x99, 0xae, 0x63, 0xfc, 0xeb, 0xd9, 0x33, 0xeb, 0x90, 0x25, 0x7d, 0x2e,
         0xa9, 0x12, 0x89, 0xb5, 0xae, 0x90, 0x02, 0x7c, 0xbc, 0xb1, 0xc7, 0x44, 0x3a, 0x8a, 0x00, 0xbd,
         0x15, 0xf2, 0xf5, 0x6f, 0x55, 0x01, 0xd1, 0x7a, 0xdf, 0xef, 0x48, 0x6b, 0x89, 0xf0, 0xc6, 0xaf,
-        0xA9, 0x9D, 0x5C, 0xC4, 0x8B, 0x10, 0x92, 0x00
+        0xA9, 0x9D, 0x5C, 0xC4, 0x8B, 0x10, 0x93, 0x00
     };
     size_t cert_template_size = g_cert_def.cert_template_size;
 
@@ -3959,6 +4168,73 @@ TEST(atcacert_set_comp_cert, bad_params)
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
 
+TEST(atcacert_set_comp_cert, same_size_p521)
+{
+    int ret = 0;
+    useCert(&g_test_p521_cert_def_13_signer);
+    static const uint8_t cert_template_ref[] = {
+        0x30, 0x82, 0x02, 0x25, 0x30, 0x82, 0x01, 0x86, 0xA0, 0x03, 0x02, 0x01, 0x02, 0x02, 0x03, 0x40,
+        0x01, 0x02, 0x30, 0x0A, 0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x04, 0x03, 0x02, 0x30, 0x2C,
+        0x31, 0x10, 0x30, 0x0E, 0x06, 0x03, 0x55, 0x04, 0x0A, 0x0C, 0x07, 0x45, 0x78, 0x61, 0x6D, 0x70,
+        0x6C, 0x65, 0x31, 0x18, 0x30, 0x16, 0x06, 0x03, 0x55, 0x04, 0x03, 0x0C, 0x0F, 0x45, 0x78, 0x61,
+        0x6D, 0x70, 0x6C, 0x65, 0x20, 0x52, 0x6F, 0x6F, 0x74, 0x20, 0x54, 0x41, 0x30, 0x1E, 0x17, 0x0D,
+        0x32, 0x35, 0x30, 0x31, 0x31, 0x38, 0x32, 0x30, 0x30, 0x30, 0x30, 0x30, 0x5A, 0x17, 0x0D, 0x33,
+        0x35, 0x30, 0x31, 0x31, 0x38, 0x32, 0x30, 0x30, 0x30, 0x30, 0x30, 0x5A, 0x30, 0x33, 0x31, 0x10,
+        0x30, 0x0E, 0x06, 0x03, 0x55, 0x04, 0x0A, 0x0C, 0x07, 0x45, 0x78, 0x61, 0x6D, 0x70, 0x6C, 0x65,
+        0x31, 0x1F, 0x30, 0x1D, 0x06, 0x03, 0x55, 0x04, 0x03, 0x0C, 0x16, 0x45, 0x78, 0x61, 0x6D, 0x70,
+        0x6C, 0x65, 0x20, 0x54, 0x41, 0x20, 0x53, 0x69, 0x67, 0x6E, 0x65, 0x72, 0x20, 0x30, 0x31, 0x30,
+        0x32, 0x30, 0x81, 0x9B, 0x30, 0x10, 0x06, 0x07, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x02, 0x01, 0x06,
+        0x05, 0x2B, 0x81, 0x04, 0x00, 0x23, 0x03, 0x81, 0x86, 0x00, 0x04, 0x00, 0x87, 0x21, 0xCE, 0xC2,
+        0x32, 0xEE, 0xEE, 0x06, 0x21, 0xA4, 0xEF, 0x7E, 0x0B, 0x10, 0xF8, 0x3B, 0x82, 0x7F, 0xBE, 0x05,
+        0x80, 0x1A, 0x6B, 0xBA, 0x5C, 0x49, 0xAC, 0xA7, 0x4C, 0x4A, 0x00, 0x8A, 0xD7, 0x22, 0xB4, 0x4C,
+        0x8E, 0x94, 0x27, 0x86, 0x4A, 0x55, 0xDA, 0x5D, 0x4F, 0x12, 0x71, 0x18, 0x5A, 0xFA, 0xDB, 0x1C,
+        0x85, 0xA6, 0x76, 0x5C, 0x34, 0x4A, 0xD7, 0xD0, 0x38, 0xBA, 0x41, 0x5E, 0x44, 0x00, 0x13, 0xE0,
+        0xD8, 0xC2, 0xC0, 0x42, 0x36, 0x04, 0xD8, 0x7B, 0x58, 0x6C, 0x31, 0x7C, 0x8E, 0x94, 0xAA, 0xE4,
+        0x4F, 0xF8, 0x06, 0x7A, 0xA5, 0xB6, 0x7D, 0x54, 0x05, 0x5B, 0x8B, 0xC8, 0xB5, 0xE4, 0x70, 0x9D,
+        0x03, 0xAB, 0x6D, 0x86, 0x15, 0x07, 0x91, 0x76, 0xE8, 0xE0, 0x1D, 0x1D, 0xF1, 0x46, 0x3F, 0xF2,
+        0x4F, 0xEF, 0x62, 0x9D, 0x47, 0xC1, 0xA1, 0xAD, 0x2B, 0x67, 0x0E, 0xD7, 0x12, 0xA5, 0x71, 0xA3,
+        0x4D, 0x30, 0x4B, 0x30, 0x09, 0x06, 0x03, 0x55, 0x1D, 0x13, 0x04, 0x02, 0x30, 0x00, 0x30, 0x1D,
+        0x06, 0x03, 0x55, 0x1D, 0x0E, 0x04, 0x16, 0x04, 0x14, 0xE0, 0x5E, 0x68, 0xEA, 0x7E, 0x96, 0x58,
+        0x3C, 0x43, 0xFA, 0x7D, 0x96, 0x32, 0x4A, 0x52, 0xEC, 0x52, 0x8A, 0xD1, 0x27, 0x30, 0x1F, 0x06,
+        0x03, 0x55, 0x1D, 0x23, 0x04, 0x18, 0x30, 0x16, 0x80, 0x14, 0xD1, 0xD0, 0x5A, 0x40, 0x25, 0x7A,
+        0x15, 0x1E, 0x0D, 0x99, 0x70, 0xFC, 0x01, 0xC2, 0xB0, 0xCB, 0xFA, 0xAE, 0x24, 0xC9, 0x30, 0x0A,
+        0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x04, 0x03, 0x02, 0x03, 0x81, 0x8C, 0x00, 0x30, 0x81,
+        0x88, 0x02, 0x42, 0x00, 0x95, 0x87, 0x94, 0x06, 0x1A, 0xB7, 0xDC, 0x40, 0xA0, 0x45, 0x4F, 0xB8,
+        0xCA, 0x73, 0x61, 0x17, 0xFE, 0x5D, 0x47, 0xA7, 0x9D, 0xBF, 0x81, 0x19, 0x5C, 0xAE, 0x44, 0x36,
+        0x62, 0x5B, 0x5D, 0xAA, 0xC0, 0x4F, 0xBD, 0xFE, 0x81, 0x09, 0xD8, 0xE6, 0x66, 0xA0, 0x7B, 0x8A,
+        0x6D, 0xE1, 0x6B, 0x9E, 0x32, 0x21, 0xF3, 0xE0, 0xED, 0xB5, 0xC4, 0x67, 0xFB, 0xFC, 0xD2, 0x66,
+        0xC6, 0x7A, 0x53, 0xF8, 0x21, 0x02, 0x42, 0x00, 0xCF, 0x80, 0xB7, 0xDE, 0x5E, 0xA6, 0x9C, 0xB0,
+        0x25, 0x4B, 0xF0, 0xFA, 0x3C, 0x04, 0x44, 0xEC, 0x98, 0x68, 0x74, 0x03, 0x20, 0x53, 0x71, 0xF6,
+        0x68, 0xBB, 0x01, 0x2A, 0x24, 0x8A, 0xF1, 0xE7, 0x98, 0xBC, 0xBF, 0xD3, 0x5F, 0x67, 0xDF, 0xD8,
+        0x2D, 0x6F, 0xC4, 0xDE, 0x98, 0x91, 0x65, 0x58, 0x05, 0xC5, 0x6A, 0x33, 0x69, 0x74, 0x59, 0xE2,
+        0x6A, 0x9E, 0xD9, 0x32, 0x84, 0x92, 0x2F, 0x05, 0x69
+    };
+    uint8_t comp_cert[] = {
+        0x00, 0x95, 0x87, 0x94, 0x06, 0x1A, 0xB7, 0xDC, 0x40, 0xA0, 0x45, 0x4F, 0xB8, 0xCA, 0x73, 0x61,
+        0x17, 0xFE, 0x5D, 0x47, 0xA7, 0x9D, 0xBF, 0x81, 0x19, 0x5C, 0xAE, 0x44, 0x36, 0x62, 0x5B, 0x5D,
+        0xAA, 0xC0, 0x4F, 0xBD, 0xFE, 0x81, 0x09, 0xD8, 0xE6, 0x66, 0xA0, 0x7B, 0x8A, 0x6D, 0xE1, 0x6B,
+        0x9E, 0x32, 0x21, 0xF3, 0xE0, 0xED, 0xB5, 0xC4, 0x67, 0xFB, 0xFC, 0xD2, 0x66, 0xC6, 0x7A, 0x53,
+        0xC8, 0xCA, 0x8A, 0x01, 0x02, 0x10, 0x92, 0x00, 0xF8, 0x21, 0x00, 0xCF, 0x80, 0xB7, 0xDE, 0x5E,
+        0xA6, 0x9C, 0xB0, 0x25, 0x4B, 0xF0, 0xFA, 0x3C, 0x04, 0x44, 0xEC, 0x98, 0x68, 0x74, 0x03, 0x20,
+        0x53, 0x71, 0xF6, 0x68, 0xBB, 0x01, 0x2A, 0x24, 0x8A, 0xF1, 0xE7, 0x98, 0xBC, 0xBF, 0xD3, 0x5F,
+        0x67, 0xDF, 0xD8, 0x2D, 0x6F, 0xC4, 0xDE, 0x98, 0x91, 0x65, 0x58, 0x05, 0xC5, 0x6A, 0x33, 0x69,
+        0x74, 0x59, 0xE2, 0x6A, 0x9E, 0xD9, 0x32, 0x84, 0x92, 0x2F, 0x05, 0x69
+    };
+    size_t cert_template_size = g_cert_def.cert_template_size;
+
+    TEST_ASSERT_EQUAL(cert_template_size, sizeof(cert_template_ref));
+
+    ret = atcacert_set_comp_cert(
+        &g_cert_def,
+        g_cert_def_cert_template,
+        &cert_template_size,
+        sizeof(g_cert_def_cert_template),
+        comp_cert);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT_EQUAL(cert_template_size, sizeof(cert_template_ref));
+    TEST_ASSERT_EQUAL_MEMORY(cert_template_ref, g_cert_def_cert_template, sizeof(cert_template_ref));
+}
+
 
 TEST_GROUP(atcacert_get_comp_cert);
 
@@ -3981,9 +4257,9 @@ TEST_TEAR_DOWN(atcacert_get_comp_cert)
 TEST(atcacert_get_comp_cert, good)
 {
     int ret = 0;
-    uint8_t comp_cert[72];
+    uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE];
     atcacert_tm_utc_t date;
-    static const uint8_t comp_cert_ref[72] = {
+    static const uint8_t comp_cert_ref[ATCACERT_COMP_CERT_MAX_SIZE] = {
         0x43, 0x90, 0xCD, 0x89, 0xE0, 0x75, 0xD0, 0x45, 0x93, 0x7B, 0x37, 0x3F, 0x52, 0x6F, 0xF6, 0x5C,
         0x4B, 0x4C, 0xCA, 0x7C, 0x61, 0x3C, 0x5F, 0x9C, 0xF2, 0xF4, 0xC9, 0xE7, 0xCE, 0xDF, 0x24, 0xAA,
         0x89, 0x52, 0x36, 0xF3, 0xC3, 0x7C, 0xD7, 0x9D, 0x5C, 0x43, 0xF4, 0xA9, 0x1B, 0xB3, 0xB1, 0xC7,
@@ -4006,6 +4282,7 @@ TEST(atcacert_get_comp_cert, good)
     ret = atcacert_set_expire_date(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, &date);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
+    (void)memset(comp_cert, 0, sizeof(comp_cert));
     ret = atcacert_get_comp_cert(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, comp_cert);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(comp_cert_ref, comp_cert, sizeof(comp_cert));
@@ -4014,8 +4291,8 @@ TEST(atcacert_get_comp_cert, good)
 TEST(atcacert_get_comp_cert, no_expire_loc)
 {
     int ret = 0;
-    uint8_t comp_cert[72];
-    static const uint8_t comp_cert_ref[72] = {
+    uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE];
+    static const uint8_t comp_cert_ref[ATCACERT_COMP_CERT_MAX_SIZE] = {
         0x43, 0x90, 0xCD, 0x89, 0xE0, 0x75, 0xD0, 0x45, 0x93, 0x7B, 0x37, 0x3F, 0x52, 0x6F, 0xF6, 0x5C,
         0x4B, 0x4C, 0xCA, 0x7C, 0x61, 0x3C, 0x5F, 0x9C, 0xF2, 0xF4, 0xC9, 0xE7, 0xCE, 0xDF, 0x24, 0xAA,
         0x89, 0x52, 0x36, 0xF3, 0xC3, 0x7C, 0xD7, 0x9D, 0x5C, 0x43, 0xF4, 0xA9, 0x1B, 0xB3, 0xB1, 0xC7,
@@ -4035,6 +4312,7 @@ TEST(atcacert_get_comp_cert, no_expire_loc)
     ret = atcacert_set_signer_id(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, signer_id);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
+    (void)memset(comp_cert, 0, sizeof(comp_cert));
     ret = atcacert_get_comp_cert(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, comp_cert);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(comp_cert_ref, comp_cert, sizeof(comp_cert));
@@ -4043,9 +4321,9 @@ TEST(atcacert_get_comp_cert, no_expire_loc)
 TEST(atcacert_get_comp_cert, max_expire)
 {
     int ret = 0;
-    uint8_t comp_cert[72];
+    uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE];
     atcacert_tm_utc_t date;
-    static const uint8_t comp_cert_ref[72] = {
+    static const uint8_t comp_cert_ref[ATCACERT_COMP_CERT_MAX_SIZE] = {
         0x43, 0x90, 0xCD, 0x89, 0xE0, 0x75, 0xD0, 0x45, 0x93, 0x7B, 0x37, 0x3F, 0x52, 0x6F, 0xF6, 0x5C,
         0x4B, 0x4C, 0xCA, 0x7C, 0x61, 0x3C, 0x5F, 0x9C, 0xF2, 0xF4, 0xC9, 0xE7, 0xCE, 0xDF, 0x24, 0xAA,
         0x89, 0x52, 0x36, 0xF3, 0xC3, 0x7C, 0xD7, 0x9D, 0x5C, 0x43, 0xF4, 0xA9, 0x1B, 0xB3, 0xB1, 0xC7,
@@ -4073,6 +4351,7 @@ TEST(atcacert_get_comp_cert, max_expire)
     ret = atcacert_set_expire_date(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, &date);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
+    (void)memset(comp_cert, 0, sizeof(comp_cert));
     ret = atcacert_get_comp_cert(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, comp_cert);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(comp_cert_ref, comp_cert, sizeof(comp_cert));
@@ -4085,8 +4364,8 @@ TEST(atcacert_get_comp_cert, max_expire)
 TEST(atcacert_get_comp_cert, no_dates)
 {
     int ret = 0;
-    uint8_t comp_cert[72];
-    static const uint8_t comp_cert_ref[72] = {
+    uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE];
+    static const uint8_t comp_cert_ref[ATCACERT_COMP_CERT_MAX_SIZE] = {
         0x43, 0x90, 0xCD, 0x89, 0xE0, 0x75, 0xD0, 0x45, 0x93, 0x7B, 0x37, 0x3F, 0x52, 0x6F, 0xF6, 0x5C,
         0x4B, 0x4C, 0xCA, 0x7C, 0x61, 0x3C, 0x5F, 0x9C, 0xF2, 0xF4, 0xC9, 0xE7, 0xCE, 0xDF, 0x24, 0xAA,
         0x89, 0x52, 0x36, 0xF3, 0xC3, 0x7C, 0xD7, 0x9D, 0x5C, 0x43, 0xF4, 0xA9, 0x1B, 0xB3, 0xB1, 0xC7,
@@ -4108,6 +4387,7 @@ TEST(atcacert_get_comp_cert, no_dates)
     ret = atcacert_set_signer_id(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, signer_id);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
+    (void)memset(comp_cert, 0, sizeof(comp_cert));
     ret = atcacert_get_comp_cert(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, comp_cert);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(comp_cert_ref, comp_cert, sizeof(comp_cert));
@@ -4116,9 +4396,9 @@ TEST(atcacert_get_comp_cert, no_dates)
 TEST(atcacert_get_comp_cert, not_even)
 {
     int ret = 0;
-    uint8_t comp_cert[72];
+    uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE];
     atcacert_tm_utc_t date;
-    static const uint8_t comp_cert_ref[72] = {
+    static const uint8_t comp_cert_ref[ATCACERT_COMP_CERT_MAX_SIZE] = {
         0x43, 0x90, 0xCD, 0x89, 0xE0, 0x75, 0xD0, 0x45, 0x93, 0x7B, 0x37, 0x3F, 0x52, 0x6F, 0xF6, 0x5C,
         0x4B, 0x4C, 0xCA, 0x7C, 0x61, 0x3C, 0x5F, 0x9C, 0xF2, 0xF4, 0xC9, 0xE7, 0xCE, 0xDF, 0x24, 0xAA,
         0x89, 0x52, 0x36, 0xF3, 0xC3, 0x7C, 0xD7, 0x9D, 0x5C, 0x43, 0xF4, 0xA9, 0x1B, 0xB3, 0xB1, 0xC7,
@@ -4145,6 +4425,7 @@ TEST(atcacert_get_comp_cert, not_even)
     ret = atcacert_set_expire_date(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, &date);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
+    (void)memset(comp_cert, 0, sizeof(comp_cert));
     ret = atcacert_get_comp_cert(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, comp_cert);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(comp_cert_ref, comp_cert, sizeof(comp_cert));
@@ -4153,7 +4434,7 @@ TEST(atcacert_get_comp_cert, not_even)
 TEST(atcacert_get_comp_cert, expire_before_issue)
 {
     int ret = 0;
-    uint8_t comp_cert[72];
+    uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE];
     atcacert_tm_utc_t date;
     static const uint8_t signer_id[2] = { 0xC4, 0x8B };
 
@@ -4169,6 +4450,7 @@ TEST(atcacert_get_comp_cert, expire_before_issue)
     ret = atcacert_set_expire_date(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, &date);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
+    (void)memset(comp_cert, 0, sizeof(comp_cert));
     ret = atcacert_get_comp_cert(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, comp_cert);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_CERT, ret);
 }
@@ -4176,30 +4458,25 @@ TEST(atcacert_get_comp_cert, expire_before_issue)
 TEST(atcacert_get_comp_cert, large_expire)
 {
     int ret = 0;
-    uint8_t comp_cert[72];
+    uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE];
     atcacert_tm_utc_t date;
-    static const uint8_t comp_cert_ref[72] = {
-        0x43, 0x90, 0xCD, 0x89, 0xE0, 0x75, 0xD0, 0x45, 0x93, 0x7B, 0x37, 0x3F, 0x52, 0x6F, 0xF6, 0x5C,
-        0x4B, 0x4C, 0xCA, 0x7C, 0x61, 0x3C, 0x5F, 0x9C, 0xF2, 0xF4, 0xC9, 0xE7, 0xCE, 0xDF, 0x24, 0xAA,
-        0x89, 0x52, 0x36, 0xF3, 0xC3, 0x7C, 0xD7, 0x9D, 0x5C, 0x43, 0xF4, 0xA9, 0x1B, 0xB3, 0xB1, 0xC7,
-        0x3E, 0xB2, 0x66, 0x74, 0x6C, 0x20, 0x53, 0x0A, 0x3B, 0x90, 0x77, 0x6C, 0xA9, 0xC7, 0x79, 0x0D,
-        0x7B, 0xFC, 0x1C, 0xC4, 0x8B, 0x14, 0x90, 0x00
-    };
-    static const uint8_t signer_id[2] = { 0xC4, 0x8B };
+    uint8_t comp_cert_ref[ATCACERT_COMP_CERT_MAX_SIZE] = {
+    0x16, 0x9B, 0x3D, 0xAA, 0x29, 0x83, 0xF3, 0x61, 0x09, 0xFA, 0xFD, 0x8C, 0xAD, 0xA5, 0x38, 0xEA,
+    0xF3, 0x70, 0x6C, 0xC7, 0x7E, 0x7B, 0x3C, 0x68, 0x8E, 0xE7, 0x26, 0xC4, 0x7C, 0x13, 0x3C, 0x8E,
+    0x95, 0x83, 0xCC, 0x91, 0xA1, 0x3B, 0x9C, 0x59, 0x41, 0x33, 0xB0, 0xAB, 0xD7, 0x89, 0x3F, 0xC4,
+    0xD3, 0x6B, 0x59, 0x6C, 0x0F, 0x3B, 0x2D, 0xC9, 0x08, 0x42, 0x0C, 0x3F, 0xDE, 0x6F, 0x35, 0xE3,
+    0xc9, 0x30, 0xcf, 0xff, 0xff, 0x10, 0xa0, 0x00};
 
-    g_cert_def.chain_id = 4;
-
-    // Template signer id is XXXX, so we need to set it to a real hex value so it can be parsed
-    ret = atcacert_set_signer_id(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, signer_id);
-    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    useCert(&g_test_cert_def_16_signer);
 
     // Set expire date beyond the expire_years range to make sure it falls back to the fixed expire_years value in the cert_def
     ret = atcacert_get_issue_date(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, &date);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
-    date.tm_year += 32; // Max is 31, so set it 1 past
+    date.tm_year += 128; // Max is 127, so set it 1 past
     ret = atcacert_set_expire_date(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, &date);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
+    (void)memset(comp_cert, 0, sizeof(comp_cert));
     ret = atcacert_get_comp_cert(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, comp_cert);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(comp_cert_ref, comp_cert, sizeof(comp_cert));
@@ -4208,9 +4485,9 @@ TEST(atcacert_get_comp_cert, large_expire)
 TEST(atcacert_get_comp_cert, diff_expire_years)
 {
     int ret = 0;
-    uint8_t comp_cert[72];
+    uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE];
     atcacert_tm_utc_t date;
-    static const uint8_t comp_cert_ref[72] = {
+    static const uint8_t comp_cert_ref[ATCACERT_COMP_CERT_MAX_SIZE] = {
         0x43, 0x90, 0xCD, 0x89, 0xE0, 0x75, 0xD0, 0x45, 0x93, 0x7B, 0x37, 0x3F, 0x52, 0x6F, 0xF6, 0x5C,
         0x4B, 0x4C, 0xCA, 0x7C, 0x61, 0x3C, 0x5F, 0x9C, 0xF2, 0xF4, 0xC9, 0xE7, 0xCE, 0xDF, 0x24, 0xAA,
         0x89, 0x52, 0x36, 0xF3, 0xC3, 0x7C, 0xD7, 0x9D, 0x5C, 0x43, 0xF4, 0xA9, 0x1B, 0xB3, 0xB1, 0xC7,
@@ -4233,6 +4510,7 @@ TEST(atcacert_get_comp_cert, diff_expire_years)
     ret = atcacert_set_expire_date(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, &date);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
+    (void)memset(comp_cert, 0, sizeof(comp_cert));
     // This should use the calculcate value from the certificate
     ret = atcacert_get_comp_cert(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, comp_cert);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
@@ -4250,8 +4528,8 @@ TEST(atcacert_get_comp_cert, public_key_only)
     // Issue date should be the minimum value and signer ID should be zero.
 
     int ret = 0;
-    uint8_t comp_cert[72];
-    static const uint8_t comp_cert_ref[72] = {
+    uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE];
+    static const uint8_t comp_cert_ref[ATCACERT_COMP_CERT_MAX_SIZE] = {
         0x43, 0x90, 0xCD, 0x89, 0xE0, 0x75, 0xD0, 0x45, 0x93, 0x7B, 0x37, 0x3F, 0x52, 0x6F, 0xF6, 0x5C,
         0x4B, 0x4C, 0xCA, 0x7C, 0x61, 0x3C, 0x5F, 0x9C, 0xF2, 0xF4, 0xC9, 0xE7, 0xCE, 0xDF, 0x24, 0xAA,
         0x89, 0x52, 0x36, 0xF3, 0xC3, 0x7C, 0xD7, 0x9D, 0x5C, 0x43, 0xF4, 0xA9, 0x1B, 0xB3, 0xB1, 0xC7,
@@ -4346,6 +4624,7 @@ TEST(atcacert_get_comp_cert, public_key_only)
         .cert_template_size = sizeof(cert_template)
     };
 
+    (void)memset(comp_cert, 0, sizeof(comp_cert));
     ret = atcacert_get_comp_cert(&cert_def, cert, sizeof(cert), comp_cert);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(comp_cert_ref, comp_cert, sizeof(comp_cert));
@@ -4357,8 +4636,8 @@ TEST(atcacert_get_comp_cert, ext_def_issue_date_signer_id)
     // work.
 
     int ret = 0;
-    uint8_t comp_cert[72];
-    static const uint8_t comp_cert_ref[72] = {
+    uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE];
+    static const uint8_t comp_cert_ref[ATCACERT_COMP_CERT_MAX_SIZE] = {
         0x43, 0x90, 0xCD, 0x89, 0xE0, 0x75, 0xD0, 0x45, 0x93, 0x7B, 0x37, 0x3F, 0x52, 0x6F, 0xF6, 0x5C,
         0x4B, 0x4C, 0xCA, 0x7C, 0x61, 0x3C, 0x5F, 0x9C, 0xF2, 0xF4, 0xC9, 0xE7, 0xCE, 0xDF, 0x24, 0xAA,
         0x89, 0x52, 0x36, 0xF3, 0xC3, 0x7C, 0xD7, 0x9D, 0x5C, 0x43, 0xF4, 0xA9, 0x1B, 0xB3, 0xB1, 0xC7,
@@ -4465,6 +4744,7 @@ TEST(atcacert_get_comp_cert, ext_def_issue_date_signer_id)
         .cert_template_size = sizeof(cert_template)
     };
 
+    (void)memset(comp_cert, 0, sizeof(comp_cert));
     ret = atcacert_get_comp_cert_ext(&cert_def, cert, sizeof(cert), &def_issue_date, def_signer_id, false, comp_cert);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(comp_cert_ref, comp_cert, sizeof(comp_cert));
@@ -4481,7 +4761,7 @@ TEST(atcacert_get_comp_cert, ext_def_issue_date_signer_id)
 TEST(atcacert_get_comp_cert, bad_params)
 {
     int ret = 0;
-    uint8_t comp_cert[72];
+    uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE];
 
     ret = atcacert_get_comp_cert(NULL, g_cert_def_cert_template, g_cert_def.cert_template_size, comp_cert);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
@@ -4505,15 +4785,15 @@ TEST(atcacert_get_comp_cert, bad_params)
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
 
-TEST(atcacert_get_comp_cert, gen_comp_with_expiry_date_beyond_2049)
+TEST(atcacert_get_comp_cert, gen_comp_expiry_date_beyond_2049_src_certdef)
 {
     int ret = 0;
-    uint8_t comp_cert[72] = {0};
-    uint8_t comp_cert_ref[72] = {0x8a ,0x76 ,0x8e ,0x21 ,0x4f ,0x85 ,0xb1 ,0x7c ,0x30 ,0x72 ,0x17 ,
-    0x04 ,0x10 ,0x84 ,0x80 ,0xb8 ,0xa2 ,0x77 ,0x7e ,0x88 ,0x7c, 0xbe ,0x21 ,0xc4 ,0xde ,0x92 ,0x37 ,
-    0x3f ,0x47 ,0x1f ,0xe4 ,0x3d ,0xd4 ,0x02 ,0x89 ,0xa0 ,0xb0 ,0xdc ,0x18 ,0x01 ,0x3e ,0x26 , 0x82 ,
-    0xa5 ,0x7e ,0x03 ,0x42 ,0xc0 ,0xae ,0x74 ,0x08 ,0x9d ,0x7a ,0x30 ,0x46 ,0x2d ,0x91 ,0x9d ,0xc3 ,
-    0xb1 ,0xcb ,0x64 ,0x27 , 0x62 ,0xc2 ,0x65 ,0x52 ,0xad ,0x04 ,0x01 ,0xa1 ,0x10};
+    uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE] = {0};
+    uint8_t comp_cert_ref[ATCACERT_COMP_CERT_MAX_SIZE] = {0x8a ,0x76 ,0x8e ,0x21 ,0x4f ,0x85 ,0xb1 ,0x7c ,0x30 ,0x72 ,0x17 ,
+        0x04 ,0x10 ,0x84 ,0x80 ,0xb8 ,0xa2 ,0x77 ,0x7e ,0x88 ,0x7c, 0xbe ,0x21 ,0xc4 ,0xde ,0x92 ,0x37 ,
+        0x3f ,0x47 ,0x1f ,0xe4 ,0x3d ,0xd4 ,0x02 ,0x89 ,0xa0 ,0xb0 ,0xdc ,0x18 ,0x01 ,0x3e ,0x26 , 0x82 ,
+        0xa5 ,0x7e ,0x03 ,0x42 ,0xc0 ,0xae ,0x74 ,0x08 ,0x9d ,0x7a ,0x30 ,0x46 ,0x2d ,0x91 ,0x9d ,0xc3 ,
+        0xb1 ,0xcb ,0x64 ,0x27 , 0x62 ,0xc2 ,0x65 ,0x52 ,0xad ,0x04 ,0x01 ,0xa1 ,0x10};
 
     //Use the openssl generated x.509 certificate
     useCert(&g_test_cert_def_7_signer);
@@ -4522,7 +4802,6 @@ TEST(atcacert_get_comp_cert, gen_comp_with_expiry_date_beyond_2049)
     ret = atcacert_get_comp_cert(&g_test_cert_def_7_signer, g_test_cert_def_7_signer.cert_template, g_test_cert_def_7_signer.cert_template_size, comp_cert);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(comp_cert_ref, comp_cert, sizeof(comp_cert));
-
 
     uint8_t cert[528];
     size_t cert_size = sizeof(cert);
@@ -4536,6 +4815,7 @@ TEST(atcacert_get_comp_cert, gen_comp_with_expiry_date_beyond_2049)
     0xc5 ,0x11 ,0x88 ,0xdf ,0x89 ,0x2c ,0x8d ,0x52 ,0xa8 ,0x08 ,0x01 ,0xe3 ,0x0e ,0xda ,0x71,
     0xb6 ,0x88 ,0x1f ,0x4e ,0xff
     };
+    cal_buffer ca_pub_key = CAL_BUF_INIT(sizeof(ca_public_key), ca_public_key);
 
     //Signer certificate public key
     static const uint8_t signer_public_key[64] = {
@@ -4592,7 +4872,7 @@ TEST(atcacert_get_comp_cert, gen_comp_with_expiry_date_beyond_2049)
         &g_test_cert_def_7_signer,
         cert,
         &cert_size,
-        ca_public_key);
+        &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     //Update the signer public key in full certificate buffer
@@ -4610,11 +4890,31 @@ TEST(atcacert_get_comp_cert, gen_comp_with_expiry_date_beyond_2049)
     TEST_ASSERT_EQUAL_MEMORY(cert_signer_ref, cert, cert_size);
 }
 
+TEST(atcacert_get_comp_cert, gen_comp_expiry_date_beyond_2049_src_cert)
+{
+    int ret = 0;
+    uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE] = {0};
+    uint8_t comp_cert_ref[ATCACERT_COMP_CERT_MAX_SIZE] = {
+        0x16, 0x9B, 0x3D, 0xAA, 0x29, 0x83, 0xF3, 0x61, 0x09, 0xFA, 0xFD, 0x8C, 0xAD, 0xA5, 0x38, 0xEA,
+        0xF3, 0x70, 0x6C, 0xC7, 0x7E, 0x7B, 0x3C, 0x68, 0x8E, 0xE7, 0x26, 0xC4, 0x7C, 0x13, 0x3C, 0x8E,
+        0x95, 0x83, 0xCC, 0x91, 0xA1, 0x3B, 0x9C, 0x59, 0x41, 0x33, 0xB0, 0xAB, 0xD7, 0x89, 0x3F, 0xC4,
+        0xD3, 0x6B, 0x59, 0x6C, 0x0F, 0x3B, 0x2D, 0xC9, 0x08, 0x42, 0x0C, 0x3F, 0xDE, 0x6F, 0x35, 0xE3,
+        0xc9, 0x30, 0xd2, 0xff, 0xff, 0x10, 0xa1, 0x10};
+
+    //Use the openssl generated x.509 certificate
+    useCert(&g_test_cert_def_16_signer);
+
+    //Generate the compressed certificate
+    ret = atcacert_get_comp_cert(&g_test_cert_def_16_signer, g_test_cert_def_16_signer.cert_template, g_test_cert_def_16_signer.cert_template_size, comp_cert);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT_EQUAL_MEMORY(comp_cert_ref, comp_cert, sizeof(comp_cert));
+}
+
 TEST(atcacert_get_comp_cert, gen_comp_with_issue_date_beyond_2031)
 {
     int ret = 0;
-    uint8_t comp_cert[72] = {0};
-    uint8_t comp_cert_ref[72] = {0x8a ,0x76 ,0x8e ,0x21 ,0x4f ,0x85 ,0xb1 ,0x7c ,0x30 ,0x72 ,0x17 ,
+    uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE] = {0};
+    uint8_t comp_cert_ref[ATCACERT_COMP_CERT_MAX_SIZE] = {0x8a ,0x76 ,0x8e ,0x21 ,0x4f ,0x85 ,0xb1 ,0x7c ,0x30 ,0x72 ,0x17 ,
     0x04 ,0x10 ,0x84 ,0x80 ,0xb8 ,0xa2 ,0x77 ,0x7e ,0x88 ,0x7c, 0xbe ,0x21 ,0xc4 ,0xde ,0x92 ,0x37 ,
     0x3f ,0x47 ,0x1f ,0xe4 ,0x3d ,0xd4 ,0x02 ,0x89 ,0xa0 ,0xb0 ,0xdc ,0x18 ,0x01 ,0x3e ,0x26 , 0x82 ,
     0xa5 ,0x7e ,0x03 ,0x42 ,0xc0 ,0xae ,0x74 ,0x08 ,0x9d ,0x7a ,0x30 ,0x46 ,0x2d ,0x91 ,0x9d ,0xc3 ,
@@ -4641,6 +4941,7 @@ TEST(atcacert_get_comp_cert, gen_comp_with_issue_date_beyond_2031)
     0xc5 ,0x11 ,0x88 ,0xdf ,0x89 ,0x2c ,0x8d ,0x52 ,0xa8 ,0x08 ,0x01 ,0xe3 ,0x0e ,0xda ,0x71,
     0xb6 ,0x88 ,0x1f ,0x4e ,0xff
     };
+    cal_buffer ca_pub_key = CAL_BUF_INIT(sizeof(ca_public_key), ca_public_key);
 
     //Signer certificate public key
     static const uint8_t signer_public_key[64] = {
@@ -4697,7 +4998,7 @@ TEST(atcacert_get_comp_cert, gen_comp_with_issue_date_beyond_2031)
         &g_test_cert_def_7_signer,
         cert,
         &cert_size,
-        ca_public_key);
+        &ca_pub_key);
 
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
@@ -4730,6 +5031,47 @@ TEST(atcacert_get_comp_cert, gen_comp_with_issue_date_beyond_2031)
     TEST_ASSERT_EQUAL(sizeof(cert_signer_ref), cert_size);
     TEST_ASSERT_EQUAL_MEMORY(cert_signer_ref, cert, cert_size);
 }
+
+#if ATCA_TA_SUPPORT
+TEST(atcacert_get_comp_cert, same_size_p521)
+{
+    useCert(&g_test_p521_cert_def_13_signer);
+    int ret = 0;
+    uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE];
+    atcacert_tm_utc_t date;
+    static const uint8_t comp_cert_ref[] = {
+        0x01, 0xF4, 0x4A, 0x5B, 0xA4, 0xD9, 0x29, 0xC7, 0x97, 0x90, 0x44, 0x17, 0x30, 0xDB, 0xF0, 0x0A,
+        0x48, 0xDE, 0xFA, 0x77, 0x3D, 0xDF, 0xC6, 0x03, 0x41, 0x65, 0xBE, 0x9D, 0x2F, 0xC2, 0xB6, 0x77,
+        0x2B, 0xC3, 0xEB, 0x04, 0xFA, 0x54, 0x29, 0x08, 0x4A, 0x44, 0x71, 0x9C, 0x88, 0x4B, 0x27, 0x44,
+        0xBB, 0x90, 0xAE, 0x43, 0x12, 0xA1, 0x05, 0xF3, 0x39, 0x1B, 0x40, 0x16, 0xB7, 0x15, 0x61, 0x91,
+        0xC8, 0xC9, 0x2A, 0xc4, 0x8b, 0x14, 0x92, 0x00, 0x53, 0xDB, 0x01, 0x6B, 0x1F, 0x31, 0x29, 0x03,
+        0xEA, 0x94, 0xEA, 0x8F, 0xDB, 0x46, 0x80, 0x6A, 0x6C, 0x19, 0x38, 0x94, 0x68, 0xF0, 0x08, 0xC6,
+        0x28, 0x9C, 0x53, 0x0D, 0x58, 0xEE, 0x03, 0x73, 0x1E, 0x0B, 0xDE, 0x36, 0x24, 0x88, 0x13, 0x94,
+        0xA7, 0x76, 0xCD, 0xAB, 0xE7, 0x26, 0x16, 0x2A, 0x8F, 0xB6, 0xD1, 0x41, 0x64, 0x85, 0xDA, 0x68,
+        0x90, 0x23, 0x05, 0xF7, 0xC9, 0xE6, 0xC0, 0x26, 0xF7, 0x5B, 0x06, 0x52
+    };
+    static const uint8_t signer_id[2] = { 0xC4, 0x8B };
+
+    g_cert_def.chain_id = 4;
+
+    // Template signer id is XXXX, so we need to set it to a real hex value so it can be parsed
+    ret = atcacert_set_signer_id(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, signer_id);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    // Make sure the expire_years in the cert matches the cert_def, so there's no mismatch
+    memset(&date, 0, sizeof(date));
+    ret = atcacert_get_issue_date(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, &date);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    date.tm_year += g_cert_def.expire_years;
+    ret = atcacert_set_expire_date(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, &date);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+
+    (void)memset(comp_cert, 0, sizeof(comp_cert));
+    ret = atcacert_get_comp_cert(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, comp_cert);
+    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
+    TEST_ASSERT_EQUAL_MEMORY(comp_cert_ref, comp_cert, sizeof(comp_cert));
+}
+#endif
 
 
 TEST_GROUP(atcacert_get_tbs);
@@ -4835,12 +5177,13 @@ TEST(atcacert_get_tbs_digest, good)
 {
     int ret = 0;
     uint8_t tbs_digest[32];
+    cal_buffer tbs_digest_buf = CAL_BUF_INIT(sizeof(tbs_digest), tbs_digest);
     static const uint8_t tbs_digest_ref[32] = {
         0x05, 0x5E, 0x43, 0x72, 0x93, 0xD4, 0xE1, 0x74, 0xF7, 0x14, 0x9D, 0x6A, 0xA6, 0x6E, 0xEA, 0xC5,
         0xB1, 0xD7, 0x8E, 0x24, 0x01, 0x29, 0x5C, 0xF8, 0x81, 0xC2, 0xAE, 0x85, 0x1F, 0xD1, 0xF6, 0x8B
     };
 
-    ret = atcacert_get_tbs_digest(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, tbs_digest);
+    ret = atcacert_get_tbs_digest(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, &tbs_digest_buf);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(tbs_digest_ref, tbs_digest, sizeof(tbs_digest_ref));
 }
@@ -4849,14 +5192,15 @@ TEST(atcacert_get_tbs_digest, bad_params)
 {
     int ret = 0;
     uint8_t tbs_digest[32];
+    cal_buffer tbs_digest_buf = CAL_BUF_INIT(sizeof(tbs_digest), tbs_digest);
 
-    ret = atcacert_get_tbs_digest(NULL, g_cert_def_cert_template, g_cert_def.cert_template_size, tbs_digest);
+    ret = atcacert_get_tbs_digest(NULL, g_cert_def_cert_template, g_cert_def.cert_template_size, &tbs_digest_buf);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_get_tbs_digest(&g_cert_def, NULL, g_cert_def.cert_template_size, tbs_digest);
+    ret = atcacert_get_tbs_digest(&g_cert_def, NULL, g_cert_def.cert_template_size, &tbs_digest_buf);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_get_tbs_digest(NULL, NULL, g_cert_def.cert_template_size, tbs_digest);
+    ret = atcacert_get_tbs_digest(NULL, NULL, g_cert_def.cert_template_size, &tbs_digest_buf);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
     ret = atcacert_get_tbs_digest(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, NULL);
@@ -4898,6 +5242,7 @@ TEST(atcacert_merge_device_loc, empty_list)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -4923,6 +5268,7 @@ TEST(atcacert_merge_device_loc, devzone_none)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -4947,6 +5293,7 @@ TEST(atcacert_merge_device_loc, count0)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -4997,6 +5344,7 @@ TEST(atcacert_merge_device_loc, align1)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5007,6 +5355,7 @@ TEST(atcacert_merge_device_loc, align1)
     TEST_ASSERT_EQUAL_MEMORY(&device_loc_cur, device_locs, sizeof(device_locs[0]) * device_locs_count);
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5051,6 +5400,7 @@ TEST(atcacert_merge_device_loc, align2)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5061,6 +5411,7 @@ TEST(atcacert_merge_device_loc, align2)
     TEST_ASSERT_EQUAL_MEMORY(&device_loc_cur, device_locs, sizeof(device_locs[0]) * device_locs_count);
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5105,6 +5456,7 @@ TEST(atcacert_merge_device_loc, align3)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5115,6 +5467,7 @@ TEST(atcacert_merge_device_loc, align3)
     TEST_ASSERT_EQUAL_MEMORY(&device_loc_cur, device_locs, sizeof(device_locs[0]) * device_locs_count);
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5159,6 +5512,7 @@ TEST(atcacert_merge_device_loc, align4)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5169,6 +5523,7 @@ TEST(atcacert_merge_device_loc, align4)
     TEST_ASSERT_EQUAL_MEMORY(&device_loc_cur, device_locs, sizeof(device_locs[0]) * device_locs_count);
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5213,6 +5568,7 @@ TEST(atcacert_merge_device_loc, align5)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5223,6 +5579,7 @@ TEST(atcacert_merge_device_loc, align5)
     TEST_ASSERT_EQUAL_MEMORY(&device_loc_cur, device_locs, sizeof(device_locs[0]) * device_locs_count);
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5267,6 +5624,7 @@ TEST(atcacert_merge_device_loc, align6)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5277,6 +5635,7 @@ TEST(atcacert_merge_device_loc, align6)
     TEST_ASSERT_EQUAL_MEMORY(&device_loc_cur, device_locs, sizeof(device_locs[0]) * device_locs_count);
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5321,6 +5680,7 @@ TEST(atcacert_merge_device_loc, align7)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5331,6 +5691,7 @@ TEST(atcacert_merge_device_loc, align7)
     TEST_ASSERT_EQUAL_MEMORY(&device_loc_cur, device_locs, sizeof(device_locs[0]) * device_locs_count);
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5375,6 +5736,7 @@ TEST(atcacert_merge_device_loc, align8)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5385,6 +5747,7 @@ TEST(atcacert_merge_device_loc, align8)
     TEST_ASSERT_EQUAL_MEMORY(&device_loc_cur, device_locs, sizeof(device_locs[0]) * device_locs_count);
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5429,6 +5792,7 @@ TEST(atcacert_merge_device_loc, align9)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5439,6 +5803,7 @@ TEST(atcacert_merge_device_loc, align9)
     TEST_ASSERT_EQUAL_MEMORY(&device_loc_cur, device_locs, sizeof(device_locs[0]) * device_locs_count);
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5483,6 +5848,7 @@ TEST(atcacert_merge_device_loc, align10)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5493,6 +5859,7 @@ TEST(atcacert_merge_device_loc, align10)
     TEST_ASSERT_EQUAL_MEMORY(&device_loc_cur, device_locs, sizeof(device_locs[0]) * device_locs_count);
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5544,6 +5911,7 @@ TEST(atcacert_merge_device_loc, align11)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5554,6 +5922,7 @@ TEST(atcacert_merge_device_loc, align11)
     TEST_ASSERT_EQUAL_MEMORY(&device_loc_cur, device_locs, sizeof(device_locs[0]) * device_locs_count);
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5586,6 +5955,7 @@ TEST(atcacert_merge_device_loc, 32block_no_change)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5618,6 +5988,7 @@ TEST(atcacert_merge_device_loc, 32block_round_down)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5650,6 +6021,7 @@ TEST(atcacert_merge_device_loc, 32block_round_up)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5682,6 +6054,7 @@ TEST(atcacert_merge_device_loc, 32block_round_both)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5722,6 +6095,7 @@ TEST(atcacert_merge_device_loc, 32block_round_down_merge)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5762,6 +6136,7 @@ TEST(atcacert_merge_device_loc, 32block_round_up_merge)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5810,6 +6185,7 @@ TEST(atcacert_merge_device_loc, data_diff_slot)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5820,6 +6196,7 @@ TEST(atcacert_merge_device_loc, data_diff_slot)
     TEST_ASSERT_EQUAL_MEMORY(&device_loc_cur, device_locs, sizeof(device_locs[0]) * device_locs_count);
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5868,6 +6245,7 @@ TEST(atcacert_merge_device_loc, data_diff_genkey)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5878,6 +6256,7 @@ TEST(atcacert_merge_device_loc, data_diff_genkey)
     TEST_ASSERT_EQUAL_MEMORY(&device_loc_cur, device_locs, sizeof(device_locs[0]) * device_locs_count);
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5919,6 +6298,7 @@ TEST(atcacert_merge_device_loc, config)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5929,6 +6309,7 @@ TEST(atcacert_merge_device_loc, config)
     TEST_ASSERT_EQUAL_MEMORY(&device_loc_cur, device_locs, sizeof(device_locs[0]) * device_locs_count);
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5971,6 +6352,7 @@ TEST(atcacert_merge_device_loc, otp)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -5981,6 +6363,7 @@ TEST(atcacert_merge_device_loc, otp)
     TEST_ASSERT_EQUAL_MEMORY(&device_loc_cur, device_locs, sizeof(device_locs[0]) * device_locs_count);
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -6065,6 +6448,7 @@ TEST(atcacert_merge_device_loc, first)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -6149,6 +6533,7 @@ TEST(atcacert_merge_device_loc, mid)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -6233,6 +6618,7 @@ TEST(atcacert_merge_device_loc, last)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -6324,6 +6710,7 @@ TEST(atcacert_merge_device_loc, add)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -6378,6 +6765,7 @@ TEST(atcacert_merge_device_loc, small_buf)
     };
 
     ret = atcacert_merge_device_loc(
+        atcab_get_device(),
         device_locs,
         &device_locs_count,
         device_locs_max_count,
@@ -6400,49 +6788,49 @@ TEST(atcacert_merge_device_loc, bad_params)
         .count      = 16
     };
 
-    ret = atcacert_merge_device_loc(NULL, &device_locs_count, device_locs_max_count, &new_device_loc, 1);
+    ret = atcacert_merge_device_loc(atcab_get_device(), NULL, &device_locs_count, device_locs_max_count, &new_device_loc, 1);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_merge_device_loc(device_locs, NULL, device_locs_max_count, &new_device_loc, 1);
+    ret = atcacert_merge_device_loc(atcab_get_device(), device_locs, NULL, device_locs_max_count, &new_device_loc, 1);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_merge_device_loc(NULL, NULL, device_locs_max_count, &new_device_loc, 1);
+    ret = atcacert_merge_device_loc(atcab_get_device(), NULL, NULL, device_locs_max_count, &new_device_loc, 1);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_merge_device_loc(device_locs, &device_locs_count, device_locs_max_count, NULL, 1);
+    ret = atcacert_merge_device_loc(atcab_get_device(), device_locs, &device_locs_count, device_locs_max_count, NULL, 1);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_merge_device_loc(NULL, &device_locs_count, device_locs_max_count, NULL, 1);
+    ret = atcacert_merge_device_loc(atcab_get_device(), NULL, &device_locs_count, device_locs_max_count, NULL, 1);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_merge_device_loc(device_locs, NULL, device_locs_max_count, NULL, 1);
+    ret = atcacert_merge_device_loc(atcab_get_device(), device_locs, NULL, device_locs_max_count, NULL, 1);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_merge_device_loc(NULL, NULL, device_locs_max_count, NULL, 1);
+    ret = atcacert_merge_device_loc(atcab_get_device(), NULL, NULL, device_locs_max_count, NULL, 1);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_merge_device_loc(device_locs, &device_locs_count, device_locs_max_count, &new_device_loc, 0);
+    ret = atcacert_merge_device_loc(atcab_get_device(), device_locs, &device_locs_count, device_locs_max_count, &new_device_loc, 0);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_merge_device_loc(NULL, &device_locs_count, device_locs_max_count, &new_device_loc, 0);
+    ret = atcacert_merge_device_loc(atcab_get_device(), NULL, &device_locs_count, device_locs_max_count, &new_device_loc, 0);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_merge_device_loc(device_locs, NULL, device_locs_max_count, &new_device_loc, 0);
+    ret = atcacert_merge_device_loc(atcab_get_device(), device_locs, NULL, device_locs_max_count, &new_device_loc, 0);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_merge_device_loc(NULL, NULL, device_locs_max_count, &new_device_loc, 0);
+    ret = atcacert_merge_device_loc(atcab_get_device(), NULL, NULL, device_locs_max_count, &new_device_loc, 0);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_merge_device_loc(device_locs, &device_locs_count, device_locs_max_count, NULL, 0);
+    ret = atcacert_merge_device_loc(atcab_get_device(), device_locs, &device_locs_count, device_locs_max_count, NULL, 0);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_merge_device_loc(NULL, &device_locs_count, device_locs_max_count, NULL, 0);
+    ret = atcacert_merge_device_loc(atcab_get_device(), NULL, &device_locs_count, device_locs_max_count, NULL, 0);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_merge_device_loc(device_locs, NULL, device_locs_max_count, NULL, 0);
+    ret = atcacert_merge_device_loc(atcab_get_device(), device_locs, NULL, device_locs_max_count, NULL, 0);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_merge_device_loc(NULL, NULL, device_locs_max_count, NULL, 0);
+    ret = atcacert_merge_device_loc(atcab_get_device(), NULL, NULL, device_locs_max_count, NULL, 0);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
 
@@ -6452,9 +6840,16 @@ TEST_GROUP(atcacert_get_device_locs);
 TEST_SETUP(atcacert_get_device_locs)
 {
     ATCA_STATUS status;
+    bool is_ca_device = false;
+
     status = atcab_init(gCfg);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
+    is_ca_device = atcab_is_ca_device(atcab_get_device_type());
+    if(false == is_ca_device)
+    {
+        TEST_IGNORE_MESSAGE("This Test group can be run on Ca devices only");
+    }
     useCert(&g_test_cert_def_1_signer);
 }
 
@@ -6463,6 +6858,13 @@ TEST_TEAR_DOWN(atcacert_get_device_locs)
     ATCA_STATUS status;
     status = atcab_release();
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+}
+
+TEST_CONDITION(atcacert_get_device_locs, get_device_locs_test_cond)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type);
 }
 
 TEST(atcacert_get_device_locs, device)
@@ -6936,9 +7338,18 @@ TEST_GROUP(atcacert_cert_build);
 TEST_SETUP(atcacert_cert_build)
 {
    ATCA_STATUS status;
+   bool is_ca_device = false;
+   bool is_ta_device = false;
 
     status = atcab_init(gCfg);
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+    is_ca_device = atcab_is_ca_device(atcab_get_device_type());
+    is_ta_device = atcab_is_ta_device(atcab_get_device_type());
+    if (false == is_ca_device && false == is_ta_device)
+    {
+        TEST_IGNORE_MESSAGE("This Test group can be run on Ca and TA devices only");
+    }
 
     useCert(&g_test_cert_def_1_signer);
 }
@@ -6994,15 +7405,9 @@ TEST(atcacert_cert_build, start_signer)
         .is_device_sn   = FALSE,
         .devtype        = atcab_get_device_type_ext(atcab_get_device()),
         .device_sn      = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
-        .comp_cert = {
-            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-        }
     };
     atcacert_build_state_t build_state;
+    cal_buffer ca_pub_key = CAL_BUF_INIT(sizeof(g_ca_public_key), g_ca_public_key);
 
     ret = atcacert_cert_build_start(
         atcab_get_device(),
@@ -7010,7 +7415,7 @@ TEST(atcacert_cert_build, start_signer)
         &g_cert_def,
         cert,
         &cert_size,
-        g_ca_public_key);
+        &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     TEST_ASSERT_EQUAL(build_state_ref.cert_def, build_state.cert_def);
@@ -7075,6 +7480,7 @@ TEST(atcacert_cert_build, process_signer_public_key)
     uint8_t cert[512];
     size_t cert_size = sizeof(cert);
     atcacert_build_state_t build_state;
+    cal_buffer ca_pub_key = CAL_BUF_INIT(sizeof(g_ca_public_key), g_ca_public_key);
 
     ret = atcacert_cert_build_start(
         atcab_get_device(),
@@ -7082,7 +7488,7 @@ TEST(atcacert_cert_build, process_signer_public_key)
         &g_cert_def,
         cert,
         &cert_size,
-        g_ca_public_key);
+        &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     ret = atcacert_cert_build_process(&build_state, &device_loc_public_key, g_padded_public_key);
@@ -7141,6 +7547,7 @@ TEST(atcacert_cert_build, process_signer_comp_cert)
     uint8_t cert[512];
     size_t cert_size = sizeof(cert);
     atcacert_build_state_t build_state;
+    cal_buffer ca_pub_key = CAL_BUF_INIT(sizeof(g_ca_public_key), g_ca_public_key);
 
     ret = atcacert_cert_build_start(
         atcab_get_device(),
@@ -7148,7 +7555,7 @@ TEST(atcacert_cert_build, process_signer_comp_cert)
         &g_cert_def,
         cert,
         &cert_size,
-        g_ca_public_key);
+        &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     ret = atcacert_cert_build_process(&build_state, &device_loc_public_key, g_padded_public_key);
@@ -7210,6 +7617,7 @@ TEST(atcacert_cert_build, finish_signer)
     uint8_t cert[512];
     size_t cert_size = sizeof(cert);
     atcacert_build_state_t build_state;
+    cal_buffer ca_pub_key = CAL_BUF_INIT(sizeof(g_ca_public_key), g_ca_public_key);
 
     ret = atcacert_cert_build_start(
         atcab_get_device(),
@@ -7217,7 +7625,7 @@ TEST(atcacert_cert_build, finish_signer)
         &g_cert_def,
         cert,
         &cert_size,
-        g_ca_public_key);
+        &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     ret = atcacert_cert_build_process(&build_state, &device_loc_public_key, g_padded_public_key);
@@ -7295,13 +7703,6 @@ TEST(atcacert_cert_build, start_signer_no_ca_key)
         .is_device_sn  = FALSE,
         .devtype = atcab_get_device_type_ext(atcab_get_device()),
         .device_sn     = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
-        .comp_cert = {
-            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-        }
     };
     atcacert_build_state_t build_state;
 
@@ -7435,6 +7836,7 @@ TEST(atcacert_cert_build, start_device)
         .devtype = atcab_get_device_type_ext(atcab_get_device())
     };
     atcacert_build_state_t build_state;
+    cal_buffer ca_pub_key = CAL_BUF_INIT(sizeof(g_ca_public_key), g_ca_public_key);
 
     useCert(&g_test_cert_def_0_device);
 
@@ -7444,7 +7846,7 @@ TEST(atcacert_cert_build, start_device)
         &g_cert_def,
         cert,
         &cert_size,
-        g_ca_public_key);
+        &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL_MEMORY(&build_state_ref, &build_state, sizeof(build_state));
     TEST_ASSERT_EQUAL(sizeof(cert_ref), cert_size);
@@ -7497,6 +7899,7 @@ TEST(atcacert_cert_build, process_device_public_key)
     uint8_t cert[512];
     size_t cert_size = sizeof(cert);
     atcacert_build_state_t build_state;
+    cal_buffer ca_pub_key = CAL_BUF_INIT(sizeof(g_ca_public_key), g_ca_public_key);
 
     useCert(&g_test_cert_def_0_device);
 
@@ -7506,7 +7909,7 @@ TEST(atcacert_cert_build, process_device_public_key)
         &g_cert_def,
         cert,
         &cert_size,
-        g_ca_public_key);
+        &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     ret = atcacert_cert_build_process(&build_state, &device_loc_public_key, public_key);
@@ -7575,6 +7978,7 @@ TEST(atcacert_cert_build, process_device_comp_cert)
     uint8_t cert[512];
     size_t cert_size = sizeof(cert);
     atcacert_build_state_t build_state;
+    cal_buffer ca_pub_key = CAL_BUF_INIT(sizeof(g_ca_public_key), g_ca_public_key);
 
     useCert(&g_test_cert_def_0_device);
 
@@ -7584,7 +7988,7 @@ TEST(atcacert_cert_build, process_device_comp_cert)
         &g_cert_def,
         cert,
         &cert_size,
-        g_ca_public_key);
+        &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     ret = atcacert_cert_build_process(&build_state, &device_loc_public_key, public_key);
@@ -7656,6 +8060,7 @@ TEST(atcacert_cert_build, process_device_comp_cert_new_expire)
     uint8_t cert[512];
     size_t cert_size = sizeof(cert);
     atcacert_build_state_t build_state;
+    cal_buffer ca_public_key = CAL_BUF_INIT(sizeof(g_ca_public_key), g_ca_public_key);
 
     useCert(&g_test_cert_def_0_device);
 
@@ -7665,7 +8070,7 @@ TEST(atcacert_cert_build, process_device_comp_cert_new_expire)
         &g_cert_def,
         cert,
         &cert_size,
-        g_ca_public_key);
+        &ca_public_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     ret = atcacert_cert_build_process(&build_state, &device_loc_public_key, public_key);
@@ -7675,6 +8080,13 @@ TEST(atcacert_cert_build, process_device_comp_cert_new_expire)
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
     TEST_ASSERT_EQUAL(sizeof(cert_ref), cert_size);
     TEST_ASSERT_EQUAL_MEMORY(cert_ref, cert, cert_size);
+}
+
+TEST_CONDITION(atcacert_cert_build, test_execute_cond)
+{
+    ATCADeviceType dev_type = atca_test_get_device_type();
+
+    return atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type);
 }
 
 TEST(atcacert_cert_build, finish_device)
@@ -7700,7 +8112,7 @@ TEST(atcacert_cert_build, finish_device)
         .offset     = 0,
         .count      = 72
     };
-    static const uint8_t comp_cert[72] = {
+    static const uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE] = {
         0x63, 0xe6, 0xfd, 0xcc, 0x7a, 0x99, 0xd5, 0x0d, 0x6a, 0x06, 0x70, 0x2d, 0xc0, 0x2f, 0x34, 0x25,
         0x19, 0x2a, 0x10, 0x51, 0x99, 0xae, 0x63, 0xfc, 0xeb, 0xd9, 0x33, 0xeb, 0x90, 0x25, 0x7d, 0x2e,
         0xa9, 0x12, 0x89, 0xb5, 0xae, 0x90, 0x02, 0x7c, 0xbc, 0xb1, 0xc7, 0x44, 0x3a, 0x8a, 0x00, 0xbd,
@@ -7752,6 +8164,7 @@ TEST(atcacert_cert_build, finish_device)
     uint8_t cert[512];
     size_t cert_size = sizeof(cert);
     atcacert_build_state_t build_state;
+    cal_buffer ca_public_key = CAL_BUF_INIT(sizeof(g_ca_public_key), g_ca_public_key);
 
     useCert(&g_test_cert_def_0_device);
 
@@ -7761,7 +8174,7 @@ TEST(atcacert_cert_build, finish_device)
         &g_cert_def,
         cert,
         &cert_size,
-        g_ca_public_key);
+        &ca_public_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     ret = atcacert_cert_build_process(&build_state, &device_loc_public_key, public_key);
@@ -7791,8 +8204,10 @@ TEST(atcacert_cert_build, transform)
 {
     int ret = 0;
     bool is_ca2_device;
+    bool is_ta_device;
 
-    if(true == (is_ca2_device = atcab_is_ca2_device(atcab_get_device_type())))
+    if((true == (is_ca2_device = atcab_is_ca2_device(atcab_get_device_type()))) ||
+       (true == (is_ta_device = atcab_is_ta_device(atcab_get_device_type()))))
     {
         TEST_IGNORE_MESSAGE("This Test can be run on ECC608 devices only");
     }
@@ -7871,7 +8286,6 @@ TEST(atcacert_cert_build, transform)
         0x33, 0x00, 0x1c, 0x00, 0x13, 0x00, 0x13, 0x00, 0x5c, 0x00, 0x1c, 0x00, 0x1c, 0x00, 0x1c, 0x00,
         0x3c, 0x00, 0x3c, 0x00, 0x3c, 0x00, 0x30, 0x00, 0x3c, 0x00, 0x3c, 0x00, 0x3c, 0x00, 0x10, 0x00
     };
-
 
     static const atcacert_device_loc_t config_cert_loc = {
         .zone      = DEVZONE_CONFIG,
@@ -7998,6 +8412,7 @@ TEST(atcacert_cert_build, start_small_buf)
 {
     int ret = 0;
     static const uint8_t ca_public_key[64];
+    cal_buffer ca_pub_key = CAL_BUF_INIT(sizeof(ca_public_key), ca_public_key);
     uint8_t cert[512];
     size_t cert_size = g_cert_def.cert_template_size - 1;
     atcacert_build_state_t build_state;
@@ -8009,7 +8424,7 @@ TEST(atcacert_cert_build, start_small_buf)
         &g_cert_def,
         cert,
         &cert_size,
-        ca_public_key);
+        &ca_pub_key);
     TEST_ASSERT_EQUAL(cert[cert_size], 0xA5);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
@@ -8019,53 +8434,54 @@ TEST(atcacert_cert_build, start_bad_params)
 {
     int ret = 0;
     static const uint8_t ca_public_key[64];
+    cal_buffer ca_pub_key = CAL_BUF_INIT(sizeof(ca_public_key), ca_public_key);
     uint8_t cert[512];
     size_t cert_size = sizeof(cert);
     atcacert_build_state_t build_state;
 
-    ret = atcacert_cert_build_start(atcab_get_device(), NULL, &g_cert_def, cert, &cert_size, ca_public_key);
+    ret = atcacert_cert_build_start(atcab_get_device(), NULL, &g_cert_def, cert, &cert_size, &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_cert_build_start(atcab_get_device(), &build_state, NULL, cert, &cert_size, ca_public_key);
+    ret = atcacert_cert_build_start(atcab_get_device(), &build_state, NULL, cert, &cert_size, &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_cert_build_start(atcab_get_device(), NULL, NULL, cert, &cert_size, ca_public_key);
+    ret = atcacert_cert_build_start(atcab_get_device(), NULL, NULL, cert, &cert_size, &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_cert_build_start(atcab_get_device(), &build_state, &g_cert_def, NULL, &cert_size, ca_public_key);
+    ret = atcacert_cert_build_start(atcab_get_device(), &build_state, &g_cert_def, NULL, &cert_size, &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_cert_build_start(atcab_get_device(), NULL, &g_cert_def, NULL, &cert_size, ca_public_key);
+    ret = atcacert_cert_build_start(atcab_get_device(), NULL, &g_cert_def, NULL, &cert_size, &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_cert_build_start(atcab_get_device(), &build_state, NULL, NULL, &cert_size, ca_public_key);
+    ret = atcacert_cert_build_start(atcab_get_device(), &build_state, NULL, NULL, &cert_size, &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_cert_build_start(atcab_get_device(), NULL, NULL, NULL, &cert_size, ca_public_key);
+    ret = atcacert_cert_build_start(atcab_get_device(), NULL, NULL, NULL, &cert_size, &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_cert_build_start(atcab_get_device(), &build_state, &g_cert_def, cert, NULL, ca_public_key);
+    ret = atcacert_cert_build_start(atcab_get_device(), &build_state, &g_cert_def, cert, NULL, &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_cert_build_start(atcab_get_device(), NULL, &g_cert_def, cert, NULL, ca_public_key);
+    ret = atcacert_cert_build_start(atcab_get_device(), NULL, &g_cert_def, cert, NULL, &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_cert_build_start(atcab_get_device(), &build_state, NULL, cert, NULL, ca_public_key);
+    ret = atcacert_cert_build_start(atcab_get_device(), &build_state, NULL, cert, NULL, &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_cert_build_start(atcab_get_device(), NULL, NULL, cert, NULL, ca_public_key);
+    ret = atcacert_cert_build_start(atcab_get_device(), NULL, NULL, cert, NULL, &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_cert_build_start(atcab_get_device(), &build_state, &g_cert_def, NULL, NULL, ca_public_key);
+    ret = atcacert_cert_build_start(atcab_get_device(), &build_state, &g_cert_def, NULL, NULL, &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_cert_build_start(atcab_get_device(), NULL, &g_cert_def, NULL, NULL, ca_public_key);
+    ret = atcacert_cert_build_start(atcab_get_device(), NULL, &g_cert_def, NULL, NULL, &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_cert_build_start(atcab_get_device(), &build_state, NULL, NULL, NULL, ca_public_key);
+    ret = atcacert_cert_build_start(atcab_get_device(), &build_state, NULL, NULL, NULL, &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
-    ret = atcacert_cert_build_start(atcab_get_device(), NULL, NULL, NULL, NULL, ca_public_key);
+    ret = atcacert_cert_build_start(atcab_get_device(), NULL, NULL, NULL, NULL, &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 
     ret = atcacert_cert_build_start(atcab_get_device(), NULL, &g_cert_def, cert, &cert_size, NULL);
@@ -8129,6 +8545,7 @@ TEST(atcacert_cert_build, process_bad_params)
     uint8_t cert[512];
     size_t cert_size = sizeof(cert);
     atcacert_build_state_t build_state;
+    cal_buffer ca_pub_key = CAL_BUF_INIT(sizeof(ca_public_key), ca_public_key);
 
     ret = atcacert_cert_build_start(
         atcab_get_device(),
@@ -8136,7 +8553,7 @@ TEST(atcacert_cert_build, process_bad_params)
         &g_cert_def,
         cert,
         &cert_size,
-        ca_public_key);
+        &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     ret = atcacert_cert_build_process(NULL, &device_loc, device_data);
@@ -8167,6 +8584,7 @@ TEST(atcacert_cert_build, finish_missing_device_sn)
     uint8_t cert[512];
     size_t cert_size = sizeof(cert);
     atcacert_build_state_t build_state;
+    cal_buffer ca_pub_key = CAL_BUF_INIT(sizeof(g_ca_public_key), g_ca_public_key);
 
     useCert(&g_test_cert_def_0_device);
 
@@ -8176,7 +8594,7 @@ TEST(atcacert_cert_build, finish_missing_device_sn)
         &g_cert_def,
         cert,
         &cert_size,
-        g_ca_public_key);
+        &ca_pub_key);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
     ret = atcacert_cert_build_finish(&build_state);
@@ -8706,5 +9124,404 @@ TEST(atcacert_cert_build, max_cert_size_bad_params)
     ret = atcacert_max_cert_size(NULL, NULL);
     TEST_ASSERT_EQUAL(ATCACERT_E_BAD_PARAMS, ret);
 }
+
+// *INDENT-OFF* - Preserve formatting
+t_test_case_info atcacert_get_key_id_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_get_key_id, good),        NULL },
+    { REGISTER_TEST_CASE(atcacert_get_key_id, bad_params),  NULL },
+    { REGISTER_TEST_CASE(atcacert_get_key_id, good_p384),   atca_test_cond_ta },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_set_cert_element_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_set_cert_element, good),             NULL },
+    { REGISTER_TEST_CASE(atcacert_set_cert_element, edge),             NULL },
+    { REGISTER_TEST_CASE(atcacert_set_cert_element, missing),          NULL },
+    { REGISTER_TEST_CASE(atcacert_set_cert_element, unexpected_size),  NULL },
+    { REGISTER_TEST_CASE(atcacert_set_cert_element, out_of_bounds),    NULL },
+    { REGISTER_TEST_CASE(atcacert_set_cert_element, bad_params),       NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_get_cert_element_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_get_cert_element, good),             NULL },
+    { REGISTER_TEST_CASE(atcacert_get_cert_element, missing),          NULL },
+    { REGISTER_TEST_CASE(atcacert_get_cert_element, unexpected_size),  NULL },
+    { REGISTER_TEST_CASE(atcacert_get_cert_element, out_of_bounds),    NULL },
+    { REGISTER_TEST_CASE(atcacert_get_cert_element, bad_params),       NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_public_key_add_padding_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_public_key_add_padding, separate),   NULL },
+    { REGISTER_TEST_CASE(atcacert_public_key_add_padding, in_place),   NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_public_key_remove_padding_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_public_key_remove_padding, separate), NULL },
+    { REGISTER_TEST_CASE(atcacert_public_key_remove_padding, in_place), NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_set_subj_public_key_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_set_subj_public_key, good),           NULL },
+    { REGISTER_TEST_CASE(atcacert_set_subj_public_key, bad_params),     NULL },
+
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_get_subj_public_key_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_get_subj_public_key, good),           NULL },
+    { REGISTER_TEST_CASE(atcacert_get_subj_public_key, bad_params),     NULL },
+    { REGISTER_TEST_CASE(atcacert_get_subj_public_key, good_p384),      NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_get_subj_key_id_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_get_subj_key_id, good),               NULL },
+    { REGISTER_TEST_CASE(atcacert_get_subj_key_id, bad_params),         NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_set_signature_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_set_signature, non_x509),                NULL },
+    { REGISTER_TEST_CASE(atcacert_set_signature, x509_same_size),          NULL },
+    { REGISTER_TEST_CASE(atcacert_set_signature, x509_bigger),             NULL },
+    { REGISTER_TEST_CASE(atcacert_set_signature, x509_smaller),            NULL },
+    { REGISTER_TEST_CASE(atcacert_set_signature, x509_smallest),           NULL },
+    { REGISTER_TEST_CASE(atcacert_set_signature, x509_out_of_bounds),      NULL },
+    { REGISTER_TEST_CASE(atcacert_set_signature, x509_small_buf),          NULL },
+    { REGISTER_TEST_CASE(atcacert_set_signature, x509_bad_cert_length),    NULL },
+    { REGISTER_TEST_CASE(atcacert_set_signature, x509_cert_length_change), NULL },
+    { REGISTER_TEST_CASE(atcacert_set_signature, bad_params),              NULL },
+    { REGISTER_TEST_CASE(atcacert_set_signature, x509_p521_same_size),     NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_get_signature_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_get_signature, non_x509),                  NULL },
+    { REGISTER_TEST_CASE(atcacert_get_signature, x509_no_padding),           NULL },
+    { REGISTER_TEST_CASE(atcacert_get_signature, x509_r_padding),            NULL },
+    { REGISTER_TEST_CASE(atcacert_get_signature, x509_rs_padding),           NULL },
+    { REGISTER_TEST_CASE(atcacert_get_signature, x509_bad_sig),              NULL },
+    { REGISTER_TEST_CASE(atcacert_get_signature, x509_out_of_bounds),        NULL },
+    { REGISTER_TEST_CASE(atcacert_get_signature, x509_bad_params),           NULL },
+    { REGISTER_TEST_CASE(atcacert_get_signature, x509_rs_multibyte_padding), atca_test_cond_ta },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_set_issue_date_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_set_issue_date, good),                   NULL },
+    { REGISTER_TEST_CASE(atcacert_set_issue_date, bad_params),             NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_get_issue_date_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_get_issue_date, good),                   NULL },
+    { REGISTER_TEST_CASE(atcacert_get_issue_date, bad_params),             NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_set_expire_date_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_set_expire_date, good),                  NULL },
+    { REGISTER_TEST_CASE(atcacert_set_expire_date, bad_params),            NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_get_expire_date_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_get_expire_date, good),                  NULL },
+    { REGISTER_TEST_CASE(atcacert_get_expire_date, bad_params),            NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_set_signer_id_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_set_signer_id, good),                    NULL },
+    { REGISTER_TEST_CASE(atcacert_set_signer_id, bad_params),              NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_get_signer_id_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_get_signer_id, uppercase),               NULL },
+    { REGISTER_TEST_CASE(atcacert_get_signer_id, lowercase),               NULL },
+    { REGISTER_TEST_CASE(atcacert_get_signer_id, invalid),                 NULL },
+    { REGISTER_TEST_CASE(atcacert_get_signer_id, bad_params),              NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_set_cert_sn_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_set_cert_sn, good),                      NULL },
+    { REGISTER_TEST_CASE(atcacert_set_cert_sn, unexpected_size),           NULL },
+    { REGISTER_TEST_CASE(atcacert_set_cert_sn, bad_params),                NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_gen_cert_sn_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, stored),                         NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, stored_bad_params),              NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, device_sn),                      NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, device_sn_unexpected_size),      NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, device_sn_bad_params),           NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, signer_id),                      NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, signer_id_unexpected_size),      NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, signer_id_bad_signer_id),        NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, signer_id_bad_params),           NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, pub_key_hash),                   NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, pub_key_hash_pos),               NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, pub_key_hash_raw),               NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, pub_key_hash_ext_issue),         NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, pub_key_hash_ext_expire),        NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, pub_key_hash_unexpected_size),   NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, pub_key_hash_bad_public_key),    NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, pub_key_hash_bad_issue_date),    NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, pub_key_hash_bad_params),        NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, device_sn_hash),                 NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, device_sn_hash_pos),             NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, device_sn_hash_raw),             NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, device_sn_hash_ext_issue),       NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, device_sn_hash_ext_expire),      NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, device_sn_hash_unexpected_size), NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, device_sn_hash_bad_issue_date),  NULL },
+    { REGISTER_TEST_CASE(atcacert_gen_cert_sn, device_sn_hash_bad_params),      NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_generate_sn_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_generate_sn, device_sn),                      NULL },
+    { REGISTER_TEST_CASE(atcacert_generate_sn, device_sn_bad_params),           NULL },
+    { REGISTER_TEST_CASE(atcacert_generate_sn, signer_id),                      NULL },
+    { REGISTER_TEST_CASE(atcacert_generate_sn, signer_id_bad_params),           NULL },
+    { REGISTER_TEST_CASE(atcacert_generate_sn, pub_key_hash),                   NULL },
+    { REGISTER_TEST_CASE(atcacert_generate_sn, pub_key_hash_pos),               NULL },
+    { REGISTER_TEST_CASE(atcacert_generate_sn, pub_key_hash_raw),               NULL },
+    { REGISTER_TEST_CASE(atcacert_generate_sn, pub_key_hash_ext_issue),         NULL },
+    { REGISTER_TEST_CASE(atcacert_generate_sn, pub_key_hash_ext_expire),        NULL },
+    { REGISTER_TEST_CASE(atcacert_generate_sn, pub_key_hash_bad_params),        NULL },
+    { REGISTER_TEST_CASE(atcacert_generate_sn, device_sn_hash),                 NULL },
+    { REGISTER_TEST_CASE(atcacert_generate_sn, device_sn_hash_pos),             NULL },
+    { REGISTER_TEST_CASE(atcacert_generate_sn, device_sn_hash_raw),             NULL },
+    { REGISTER_TEST_CASE(atcacert_generate_sn, device_sn_hash_ext_issue),       NULL },
+    { REGISTER_TEST_CASE(atcacert_generate_sn, device_sn_hash_ext_expire),      NULL },
+    { REGISTER_TEST_CASE(atcacert_generate_sn, device_sn_hash_bad_params),      NULL },
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_get_cert_sn_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_get_cert_sn, good),                           NULL },
+    { REGISTER_TEST_CASE(atcacert_get_cert_sn, bad_params),                     NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_set_auth_key_id_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_set_auth_key_id, good),                       NULL },
+    { REGISTER_TEST_CASE(atcacert_set_auth_key_id, bad_params),                 NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_get_auth_key_id_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_get_auth_key_id, good),                       NULL },
+    { REGISTER_TEST_CASE(atcacert_get_auth_key_id, bad_params),                 NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_set_comp_cert_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_set_comp_cert, same_size),                    NULL },
+    { REGISTER_TEST_CASE(atcacert_set_comp_cert, bigger),                       NULL },
+    { REGISTER_TEST_CASE(atcacert_set_comp_cert, bad_format),                   NULL },
+    { REGISTER_TEST_CASE(atcacert_set_comp_cert, bad_template_id),              NULL },
+    { REGISTER_TEST_CASE(atcacert_set_comp_cert, bad_chain_id),                 NULL },
+    { REGISTER_TEST_CASE(atcacert_set_comp_cert, bad_sn_source),                NULL },
+    { REGISTER_TEST_CASE(atcacert_set_comp_cert, bad_enc_dates),                NULL },
+    { REGISTER_TEST_CASE(atcacert_set_comp_cert, bad_params),                   NULL },
+    { REGISTER_TEST_CASE(atcacert_set_comp_cert, same_size_p521),               atca_test_cond_ta },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_get_comp_cert_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_get_comp_cert, good),                                                         NULL },
+    { REGISTER_TEST_CASE(atcacert_get_comp_cert, no_expire_loc),                                                NULL },
+    { REGISTER_TEST_CASE(atcacert_get_comp_cert, max_expire),                                                   NULL },
+    { REGISTER_TEST_CASE(atcacert_get_comp_cert, no_dates),                                                     NULL },
+    { REGISTER_TEST_CASE(atcacert_get_comp_cert, not_even),                                                     NULL },
+    { REGISTER_TEST_CASE(atcacert_get_comp_cert, expire_before_issue),                                          NULL },
+    { REGISTER_TEST_CASE(atcacert_get_comp_cert, large_expire),                                                 NULL },
+    { REGISTER_TEST_CASE(atcacert_get_comp_cert, diff_expire_years),                                            NULL },
+    { REGISTER_TEST_CASE(atcacert_get_comp_cert, public_key_only),                                              NULL },
+    { REGISTER_TEST_CASE(atcacert_get_comp_cert, ext_def_issue_date_signer_id),                                 NULL },
+    { REGISTER_TEST_CASE(atcacert_get_comp_cert, bad_params),                                                   NULL },
+    { REGISTER_TEST_CASE(atcacert_get_comp_cert, gen_comp_expiry_date_beyond_2049_src_certdef),                 NULL },
+    { REGISTER_TEST_CASE(atcacert_get_comp_cert, gen_comp_expiry_date_beyond_2049_src_cert),                    NULL },
+    { REGISTER_TEST_CASE(atcacert_get_comp_cert, gen_comp_with_issue_date_beyond_2031),                         NULL },
+#if ATCA_TA_SUPPORT
+    { REGISTER_TEST_CASE(atcacert_get_comp_cert, same_size_p521),                        atca_test_cond_ta },
+#endif
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_get_tbs_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_get_tbs, good),                               NULL },
+    { REGISTER_TEST_CASE(atcacert_get_tbs, bad_cert),                           NULL },
+    { REGISTER_TEST_CASE(atcacert_get_tbs, bad_params),                         NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_get_tbs_digest_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_get_tbs_digest, good),                        NULL },
+    { REGISTER_TEST_CASE(atcacert_get_tbs_digest, bad_params),                  NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_merge_device_loc_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, empty_list),                NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, devzone_none),              NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, count0),                    NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, align1),                    NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, align2),                    NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, align3),                    NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, align4),                    NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, align5),                    NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, align6),                    NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, align7),                    NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, align8),                    NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, align9),                    NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, align10),                   NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, align11),                   NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, 32block_no_change),         NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, 32block_round_down),        NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, 32block_round_up),          NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, 32block_round_both),        NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, 32block_round_down_merge),  NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, 32block_round_up_merge),    NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, data_diff_slot),            NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, data_diff_genkey),          NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, config),                    NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, otp),                       NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, first),                     NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, mid),                       NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, last),                      NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, add),                       NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, small_buf),                 NULL },
+    { REGISTER_TEST_CASE(atcacert_merge_device_loc, bad_params),                NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_get_device_locs_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_get_device_locs, device),                     REGISTER_TEST_CONDITION(atcacert_get_device_locs, get_device_locs_test_cond) },
+    { REGISTER_TEST_CASE(atcacert_get_device_locs, signer_device),              REGISTER_TEST_CONDITION(atcacert_get_device_locs, get_device_locs_test_cond) },
+    { REGISTER_TEST_CASE(atcacert_get_device_locs, 32block_signer_device),      REGISTER_TEST_CONDITION(atcacert_get_device_locs, get_device_locs_test_cond) },
+    { REGISTER_TEST_CASE(atcacert_get_device_locs, small_buf),                  REGISTER_TEST_CONDITION(atcacert_get_device_locs, get_device_locs_test_cond) },
+    { REGISTER_TEST_CASE(atcacert_get_device_locs, bad_params),                 REGISTER_TEST_CONDITION(atcacert_get_device_locs, get_device_locs_test_cond) },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_cert_build_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_cert_build, start_signer),                           NULL },
+    { REGISTER_TEST_CASE(atcacert_cert_build, process_signer_public_key),              NULL },
+    { REGISTER_TEST_CASE(atcacert_cert_build, process_signer_comp_cert),               NULL },
+    { REGISTER_TEST_CASE(atcacert_cert_build, finish_signer),                          NULL },
+
+    { REGISTER_TEST_CASE(atcacert_cert_build, start_signer_no_ca_key),                 NULL },
+    { REGISTER_TEST_CASE(atcacert_cert_build, process_signer_auth_key_id),             NULL },
+
+    { REGISTER_TEST_CASE(atcacert_cert_build, start_device),                           NULL },
+    { REGISTER_TEST_CASE(atcacert_cert_build, process_device_public_key),              NULL },
+    { REGISTER_TEST_CASE(atcacert_cert_build, process_device_comp_cert),               NULL },
+    { REGISTER_TEST_CASE(atcacert_cert_build, process_device_comp_cert_new_expire),    NULL },
+    { REGISTER_TEST_CASE(atcacert_cert_build, finish_device),                          REGISTER_TEST_CONDITION(atcacert_cert_build, test_execute_cond)},
+    { REGISTER_TEST_CASE(atcacert_cert_build, transform),                              NULL },
+
+    { REGISTER_TEST_CASE(atcacert_cert_build, start_small_buf),                        NULL },
+    { REGISTER_TEST_CASE(atcacert_cert_build, start_bad_params),                       NULL },
+    { REGISTER_TEST_CASE(atcacert_cert_build, process_bad_params),                     NULL },
+    { REGISTER_TEST_CASE(atcacert_cert_build, finish_missing_device_sn),               NULL },
+    { REGISTER_TEST_CASE(atcacert_cert_build, finish_bad_params),                      NULL },
+
+    { REGISTER_TEST_CASE(atcacert_cert_build, max_cert_size_x509),                     NULL },
+    { REGISTER_TEST_CASE(atcacert_cert_build, max_cert_size_x509_dynamic_sn),          NULL },
+    { REGISTER_TEST_CASE(atcacert_cert_build, max_cert_size_x509_dynamic_sn_bad_size), NULL },
+    { REGISTER_TEST_CASE(atcacert_cert_build, max_cert_size_custom),                   NULL },
+    { REGISTER_TEST_CASE(atcacert_cert_build, max_cert_size_bad_params),               NULL },
+
+    { REGISTER_TEST_CASE(atcacert_cert_build, no_expire_loc),                          NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_is_device_loc_overlap_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_is_device_loc_overlap, align1),               NULL },
+    { REGISTER_TEST_CASE(atcacert_is_device_loc_overlap, align2),               NULL },
+    { REGISTER_TEST_CASE(atcacert_is_device_loc_overlap, align3),               NULL },
+    { REGISTER_TEST_CASE(atcacert_is_device_loc_overlap, align4),               NULL },
+    { REGISTER_TEST_CASE(atcacert_is_device_loc_overlap, align5),               NULL },
+    { REGISTER_TEST_CASE(atcacert_is_device_loc_overlap, align6),               NULL },
+    { REGISTER_TEST_CASE(atcacert_is_device_loc_overlap, align7),               NULL },
+    { REGISTER_TEST_CASE(atcacert_is_device_loc_overlap, align8),               NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
+
+t_test_case_info atcacert_get_device_data_tests[] =
+{
+    { REGISTER_TEST_CASE(atcacert_get_device_data, flow),                       NULL },
+    /* Array Termination element*/
+    { (fp_test_case)NULL, NULL },
+};
 
 #endif

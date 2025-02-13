@@ -34,7 +34,7 @@
 #include "calib/calib_config_check.h"
 #endif
 
-#if ATCA_TA_SUPPORT && !defined(LIBRARY_USAGE_EN)
+#if ATCA_TA_SUPPORT && !LIBRARY_USAGE_EN_CHECK
 #include "api_talib/test_talib_vectors.h"
 #endif
 

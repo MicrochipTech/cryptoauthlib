@@ -148,8 +148,8 @@ typedef struct atca_mbedtls_eckey_s
 } atca_mbedtls_eckey_t;
 
 /* Integration Helper */
-int atca_mbedtls_ecdsa_sign(const mbedtls_mpi* d, mbedtls_mpi* r, mbedtls_mpi* s,
-                            const unsigned char* buf, size_t buf_len);
+int atca_mbedtls_ecdsa_sign(const mbedtls_mpi* data, mbedtls_mpi* r, mbedtls_mpi* s,
+                            const unsigned char* msg, size_t msg_len);
 
 /* Wrapper Functions */
 int atca_mbedtls_pk_init_ext(ATCADevice device, mbedtls_pk_context* pkey, const uint16_t slotid);

@@ -37,7 +37,7 @@
 
 /* if the number of these configurations grows large, we can #ifdef them based on required device support */
 
-#if defined(ATCA_ECC_SUPPORT) && defined(ATCA_HAL_I2C)
+#if ATCA_ECC_SUPPORT && defined(ATCA_HAL_I2C)
 /** \brief default configuration for an ECCx08A device */
 ATCAIfaceCfg cfg_ateccx08a_i2c_default = {
     .iface_type                 = ATCA_I2C_IFACE,
@@ -60,7 +60,7 @@ ATCAIfaceCfg cfg_ateccx08a_i2c_default = {
 };
 #endif
 
-#if defined(ATCA_ECC_SUPPORT) && defined(ATCA_HAL_SWI)
+#if ATCA_ECC_SUPPORT && defined(ATCA_HAL_SWI)
 /** \brief default configuration for an ECCx08A device on the logical SWI bus over UART*/
 ATCAIfaceCfg cfg_ateccx08a_swi_default = {
     .iface_type         = ATCA_SWI_IFACE,
@@ -73,7 +73,7 @@ ATCAIfaceCfg cfg_ateccx08a_swi_default = {
 };
 #endif
 
-#if defined(ATCA_ECC_SUPPORT) && defined(ATCA_HAL_KIT_UART)
+#if ATCA_ECC_SUPPORT && defined(ATCA_HAL_KIT_UART)
 /** \brief default configuration for Kit protocol over the device's async interface */
 ATCAIfaceCfg cfg_ateccx08_kituart_default = {
     .iface_type             = ATCA_UART_IFACE,
@@ -89,7 +89,7 @@ ATCAIfaceCfg cfg_ateccx08_kituart_default = {
 };
 #endif
 
-#if defined(ATCA_ECC_SUPPORT) && defined(ATCA_HAL_KIT_HID)
+#if ATCA_ECC_SUPPORT && defined(ATCA_HAL_KIT_HID)
 /** \brief default configuration for Kit protocol over the device's async interface */
 ATCAIfaceCfg cfg_ateccx08a_kithid_default = {
     .iface_type                  = ATCA_HID_IFACE,

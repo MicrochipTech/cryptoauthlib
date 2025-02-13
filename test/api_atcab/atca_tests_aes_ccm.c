@@ -29,7 +29,13 @@
 #include <time.h>
 #endif
 #include "test_atcab.h"
+#include "vectors/vector_utils.h"
 
+#ifndef TEST_ATCAB_AES_CBC_EN
+#define TEST_ATCAB_AES_CCM_EN           (ATCAB_AES_CCM_EN)
+#endif
+
+#if TEST_ATCAB_AES_CCM_EN
 #ifdef ATCA_ATECC608_SUPPORT
 typedef struct
 {
@@ -338,13 +344,348 @@ TEST(atca_cmd_basic_test, aes_ccm_auth_decrypt_partial)
 }
 #endif
 
+#if defined(_WIN32) || defined(__linux__)
+#define SIZE_OF_TEXT    100
+#define SIZE_OF_TEXT_MAX 255
+
+typedef enum ccm_nist_vt_types_e{
+    VADT_128,
+    VNT_128,
+    VPT_128,
+    VTT_128
+}ccm_nist_vt_types_t;
+
+static ATCA_STATUS aes_ccm_nist_vector_test(ccm_nist_vt_types_t ccm_nist_type)
+{
+    ATCA_STATUS status;
+    ATCADeviceType dev_type = atca_test_get_device_type();
+    atca_aes_ccm_ctx_t ctx;
+
+    FILE * rsp_file;
+
+    size_t count = 0;
+    size_t klen = 16;
+    size_t nlen = 0;
+    size_t ptlen = 0;
+    size_t ctlen = 0;
+    size_t aadlen = 0;
+    size_t cipherlen = 0;
+    size_t taglen = 0;
+
+    size_t aad_size = 0;
+    size_t pt_size = 0;
+
+    uint16_t key_slot;
+    uint16_t key_id;
+#ifdef ATCA_ATECC608_SUPPORT    
+    uint16_t key_id_ca = ATCA_TEMPKEY_KEYID;
+#endif    
+
+    uint8_t key[16];
+    uint8_t nonce[16];
+    uint8_t plaintext[SIZE_OF_TEXT];
+    uint8_t ciphertext[24];
+    uint8_t aad[SIZE_OF_TEXT];
+    uint8_t ct[SIZE_OF_TEXT];
+    uint8_t tag[16];
+    uint8_t expected_ciphertext[24];
+    uint8_t expected_tag[16];
+
+    char *str;
+    char *name_value;
+    uint8_t line[SIZE_OF_TEXT];
+    
+
+#ifdef ATCA_PRINTF
+    uint16_t test_count = 0;
+    uint8_t displayStr[100];
+    size_t displaySize;
+#endif
+
+    switch (ccm_nist_type)
+    {
+    case VADT_128:
+        rsp_file = fopen("aes_ccm_vectors/VADT128.rsp", "r");
+        TEST_ASSERT_NOT_NULL_MESSAGE(rsp_file, "Failed to open .rsp file");
+
+        status = read_rsp_int_value(rsp_file, "Plen = ", NULL, (int*)&ptlen);
+        TEST_ASSERT_EQUAL_MESSAGE(ATCA_SUCCESS, status, "Failed to find Plen value in file.");
+
+        status = read_rsp_int_value(rsp_file, "Nlen = ", NULL, (int*)&nlen);
+        TEST_ASSERT_EQUAL_MESSAGE(ATCA_SUCCESS, status, "Failed to find Nlen value in file.");
+
+        status = read_rsp_int_value(rsp_file, "Tlen = ", NULL, (int*)&taglen);
+        TEST_ASSERT_EQUAL_MESSAGE(ATCA_SUCCESS, status, "Failed to find Tlen value in file.");
+        break;
+
+    case VNT_128:    
+        rsp_file = fopen("aes_ccm_vectors/VNT128.rsp", "r");
+        TEST_ASSERT_NOT_NULL_MESSAGE(rsp_file, "Failed to open .rsp file");
+
+        status = read_rsp_int_value(rsp_file, "Alen = ", NULL, (int*)&aadlen);
+        TEST_ASSERT_EQUAL_MESSAGE(ATCA_SUCCESS, status, "Failed to find Plen value in file.");
+
+        status = read_rsp_int_value(rsp_file, "Plen = ", NULL, (int*)&ptlen);
+        TEST_ASSERT_EQUAL_MESSAGE(ATCA_SUCCESS, status, "Failed to find Nlen value in file.");
+
+        status = read_rsp_int_value(rsp_file, "Tlen = ", NULL, (int*)&taglen);
+        TEST_ASSERT_EQUAL_MESSAGE(ATCA_SUCCESS, status, "Failed to find Tlen value in file.");
+        break;
+
+    case VPT_128:
+        rsp_file = fopen("aes_ccm_vectors/VPT128.rsp", "r");
+        TEST_ASSERT_NOT_NULL_MESSAGE(rsp_file, "Failed to open .rsp file");
+
+        status = read_rsp_int_value(rsp_file, "Alen = ", NULL, (int*)&aadlen);
+        TEST_ASSERT_EQUAL_MESSAGE(ATCA_SUCCESS, status, "Failed to find Plen value in file.");
+
+        status = read_rsp_int_value(rsp_file, "Nlen = ", NULL, (int*)&nlen);
+        TEST_ASSERT_EQUAL_MESSAGE(ATCA_SUCCESS, status, "Failed to find Nlen value in file.");
+
+        status = read_rsp_int_value(rsp_file, "Tlen = ", NULL, (int*)&taglen);
+        TEST_ASSERT_EQUAL_MESSAGE(ATCA_SUCCESS, status, "Failed to find Tlen value in file.");    
+        break;
+
+    case VTT_128:
+        rsp_file = fopen("aes_ccm_vectors/VTT128.rsp", "r");
+        TEST_ASSERT_NOT_NULL_MESSAGE(rsp_file, "Failed to open .rsp file");
+
+        status = read_rsp_int_value(rsp_file, "Alen = ", NULL, (int*)&aadlen);
+        TEST_ASSERT_EQUAL_MESSAGE(ATCA_SUCCESS, status, "Failed to find Plen value in file.");
+
+        status = read_rsp_int_value(rsp_file, "Plen = ", NULL, (int*)&ptlen);
+        TEST_ASSERT_EQUAL_MESSAGE(ATCA_SUCCESS, status, "Failed to find Plen value in file.");
+
+        status = read_rsp_int_value(rsp_file, "Nlen = ", NULL, (int*)&nlen);
+        TEST_ASSERT_EQUAL_MESSAGE(ATCA_SUCCESS, status, "Failed to find Nlen value in file.");
+        break; 
+    
+    default:
+        break;
+    }
+ 
+    if (atcab_is_ta_device(dev_type))
+    {
+        status = atca_test_config_get_id(TEST_TYPE_AES, &key_slot);
+        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+    }
+
+    do
+    {
+        if (NULL == (str = fgets((char *)line, sizeof(line), rsp_file)))
+        {
+            continue;
+        }
+        else
+        {
+            size_t ln = strlen((const char *)line);
+            if (ln > 0 && line[ln - 2] == '\r')
+            {
+                line[ln - 1] = 0;
+            }
+        }
+
+        if (!memcmp(str, "[Alen = ", strlen("[Alen = ")))
+        {
+            name_value = (char*)&line[strlen("[Alen = ")];
+            char* aad_token = name_value;
+            char* aad_size_str = strtok_r(NULL, "]\n", &aad_token);
+            if (NULL != aad_size_str)
+            {
+                aadlen = atoi(aad_size_str);
+            }
+        }
+
+        if (!memcmp(str, "[Plen = ", strlen("[Plen = ")))
+        {
+            name_value = (char*)&line[strlen("[Plen = ")];
+            char* pt_token = name_value;
+            char* payload_size_str = strtok_r(NULL, "]\n", &pt_token);
+            if (NULL != payload_size_str)
+            {
+                ptlen = atoi(payload_size_str);
+            }
+        }
+
+        if (!memcmp(str, "[Tlen = ", strlen("[Tlen = ")))
+        {
+            name_value = (char*)&line[strlen("[Tlen = ")];
+            char* tag_token = name_value;
+            char* tag_size_str = strtok_r(NULL, "]\n", &tag_token);
+            if (NULL != tag_size_str)
+            {
+                taglen = atoi(tag_size_str);
+            }
+        }
+        
+        if (!memcmp(str, "Key = ", strlen("Key = ")))
+        {
+            name_value = (char *)&line[strlen("Key = ")];
+            klen = strlen(name_value) / 2;
+            hex_to_data(name_value, key, klen);
+        }
+        else if (!memcmp(str, "Nonce = ", strlen("Nonce = ")))
+        {
+            name_value = (char *)&line[strlen("Nonce = ")];
+            nlen = strlen(name_value) / 2;
+            hex_to_data(name_value, nonce, nlen);
+        }
+        else if (!memcmp(str, "Adata = ", strlen("Adata = ")))
+        {
+            name_value = (char *)&line[strlen("Adata = ")];
+            aad_size = strlen(name_value) / 2;
+            hex_to_data(name_value, aad, aad_size);
+        }
+        else if (!memcmp(str, "Payload = ", strlen("Payload = ")))
+        {
+            name_value = (char *)&line[strlen("Payload = ")];
+            pt_size = strlen(name_value) / 2;
+            hex_to_data(name_value, plaintext, pt_size);
+        }
+        else if (!memcmp(str, "CT = ", strlen("CT = ")))
+        {
+            name_value = (char *)&line[strlen("CT = ")];
+            ctlen = ((uint32_t)strlen(name_value) / 2);
+            cipherlen = ctlen - taglen;
+            hex_to_data(name_value, ct, ctlen);
+            memcpy(expected_ciphertext, ct, cipherlen);
+            memcpy(expected_tag, &ct[cipherlen], taglen);
+
+#ifdef ATCA_PRINTF
+            // Process read vector
+            printf("\r\nCount: %04d\r\n", test_count++);
+            displaySize = sizeof(displayStr);
+            (void) atcab_bin2hex(aad, aad_size, displayStr, &displaySize);
+            printf("Adata: \r\n%s\r\n", displayStr);
+            displaySize = sizeof(displayStr);
+            (void) atcab_bin2hex(plaintext, ptlen, displayStr, &displaySize);
+            printf("Payload: \r\n%s\r\n", displayStr);
+#endif
+
+            if (ATECC608 == dev_type)
+            {
+#ifdef ATCA_ATECC608_SUPPORT                
+                status = atcab_nonce_load(NONCE_MODE_TARGET_TEMPKEY, key, 32);
+                TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+                status = atcab_aes_ccm_init(&ctx, key_id_ca, 0, nonce, nlen, aadlen, ptlen, taglen);
+                TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+#endif
+            }
+            
+            if(atcab_is_ta_device(dev_type))
+            {
+                status = atca_test_config_get_id(TEST_TYPE_AES, &key_id);
+                TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+        
+                status = atcab_write_bytes_zone(ATCA_ZONE_DATA, key_id, 0, key, klen);
+                TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+                status = atcab_aes_ccm_init(&ctx, key_id, 0, nonce, nlen, aadlen, ptlen, taglen);
+                TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+            }
+
+            status = atcab_aes_ccm_aad_update(&ctx, aad, aadlen);
+            TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+            if (0 == ptlen)
+            {
+                status = atcab_aes_ccm_aad_finish(&ctx);
+                TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+            }
+
+            status = atcab_aes_ccm_encrypt_update(&ctx, plaintext, ptlen, ciphertext);
+            TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+            status = atcab_aes_ccm_encrypt_finish(&ctx, tag, &taglen);
+            TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+            if(0 != cipherlen)
+            {
+                TEST_ASSERT_EQUAL_MEMORY(expected_ciphertext, ciphertext, cipherlen);
+            }
+            
+            TEST_ASSERT_EQUAL_MEMORY(expected_tag, tag, taglen);    
+        }        
+    }
+    while (!feof(rsp_file));
+
+    fclose(rsp_file);
+
+    return status;
+}
+
+TEST(atca_cmd_basic_test, aes_ccm_nist_vadt128)
+{
+    ATCA_STATUS status;
+    ccm_nist_vt_types_t nist_vt_type = VADT_128;
+
+    status = aes_ccm_nist_vector_test(nist_vt_type);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+#ifdef ATCA_PRINTF
+    printf("\n");
+#endif
+}
+
+TEST(atca_cmd_basic_test, aes_ccm_nist_vnt128)
+{
+    ATCA_STATUS status;
+    ccm_nist_vt_types_t nist_vt_type = VNT_128;
+
+    status = aes_ccm_nist_vector_test(nist_vt_type);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+#ifdef ATCA_PRINTF
+    printf("\n");
+#endif
+}
+
+TEST(atca_cmd_basic_test, aes_ccm_nist_vpt128)
+{
+    ATCA_STATUS status;
+    ccm_nist_vt_types_t nist_vt_type = VPT_128;
+
+    status = aes_ccm_nist_vector_test(nist_vt_type);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+#ifdef ATCA_PRINTF
+    printf("\n");
+#endif
+}
+
+TEST(atca_cmd_basic_test, aes_ccm_nist_vtt128)
+{
+    ATCA_STATUS status;
+    ccm_nist_vt_types_t nist_vt_type = VTT_128;
+
+    status = aes_ccm_nist_vector_test(nist_vt_type);
+    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+
+#ifdef ATCA_PRINTF
+    printf("\n");
+#endif
+}
+
+#undef SIZE_OF_TEXT
+#endif //_WIN32 / __linux__
+#endif //TEST_ATCAB_AES_CCM_EN
+
 t_test_case_info aes_ccm_basic_test_info[] =
 {
+#if TEST_ATCAB_AES_CCM_EN
 #ifdef ATCA_ATECC608_SUPPORT
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ccm_auth_encrypt),         atca_test_cond_ecc608         },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ccm_auth_encrypt_partial), atca_test_cond_ecc608         },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ccm_auth_decrypt),         atca_test_cond_ecc608         },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ccm_auth_decrypt_partial), atca_test_cond_ecc608         },
+#endif
+#if defined(_WIN32) || defined(__linux__)
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ccm_nist_vadt128),         atca_test_cond_aes_ccm             },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ccm_nist_vnt128),          atca_test_cond_aes_ccm             },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ccm_nist_vpt128),          atca_test_cond_aes_ccm             },
+    { REGISTER_TEST_CASE(atca_cmd_basic_test, aes_ccm_nist_vtt128),          atca_test_cond_aes_ccm             },
+#endif
 #endif
     { (fp_test_case)NULL,                     NULL },                        /* Array Termination element*/
 };

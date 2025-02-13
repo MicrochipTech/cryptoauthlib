@@ -101,7 +101,7 @@ ATCA_STATUS atcab_aes_ccm_init_ext(ATCADevice device, atca_aes_ccm_ctx_t* ctx, u
        -----------------------*/
     (void)memset(B, 0, ATCA_AES128_BLOCK_SIZE);
     // Formatting flag field
-    B[0] = (uint8_t)(L | (M << 3u) | ((aad_size > 0u ? 1u : 0u) << 6u));
+    B[0] = (uint8_t)(L | (M << 3u) | (uint8_t)((aad_size > 0u ? 1u : 0u) << 6u));
 
     /*----------------------
        Octet Number   Contents
@@ -379,11 +379,11 @@ ATCA_STATUS atcab_aes_ccm_aad_finish(atca_aes_ccm_ctx_t* ctx)
     // Pad and process any incomplete aad data blocks
     if (ctx->partial_aad_size > 0u)
     {
-        uint8_t buffer[ATCA_AES128_BLOCK_SIZE];
-        (void)memset(buffer, 0, ATCA_AES128_BLOCK_SIZE);
-        (void)memcpy(buffer, ctx->partial_aad, ctx->partial_aad_size);
+        uint8_t buf[ATCA_AES128_BLOCK_SIZE];
+        (void)memset(buf, 0, ATCA_AES128_BLOCK_SIZE);
+        (void)memcpy(buf, ctx->partial_aad, ctx->partial_aad_size);
 
-        status = atcab_aes_cbcmac_update(&ctx->cbc_mac_ctx, buffer, ATCA_AES128_BLOCK_SIZE);
+        status = atcab_aes_cbcmac_update(&ctx->cbc_mac_ctx, buf, ATCA_AES128_BLOCK_SIZE);
         if (status != ATCA_SUCCESS)
         {
             return status;
@@ -518,18 +518,18 @@ static ATCA_STATUS atcab_aes_ccm_finish(atca_aes_ccm_ctx_t* ctx, uint8_t* tag)
 
     uint8_t t[ATCA_AES128_BLOCK_SIZE];
     uint8_t u[ATCA_AES128_BLOCK_SIZE];
-    uint8_t buffer[ATCA_AES128_BLOCK_SIZE];
+    uint8_t buf[ATCA_AES128_BLOCK_SIZE];
 
     (void)memset(t, 0, ATCA_AES128_BLOCK_SIZE);
     (void)memset(u, 0, ATCA_AES128_BLOCK_SIZE);
-    (void)memset(buffer, 0, ATCA_AES128_BLOCK_SIZE);
+    (void)memset(buf, 0, ATCA_AES128_BLOCK_SIZE);
 
     if (ctx->data_size % ATCA_AES128_BLOCK_SIZE != 0u)
     {
-        (void)memcpy(buffer, ctx->ciphertext_block, ((size_t)ctx->data_size % ATCA_AES128_BLOCK_SIZE));
+        (void)memcpy(buf, ctx->ciphertext_block, ((size_t)ctx->data_size % ATCA_AES128_BLOCK_SIZE));
 
         // Adding data to CBC-MAC to calculate tag
-        status = atcab_aes_cbcmac_update(&ctx->cbc_mac_ctx, buffer, ATCA_AES128_BLOCK_SIZE);
+        status = atcab_aes_cbcmac_update(&ctx->cbc_mac_ctx, buf, ATCA_AES128_BLOCK_SIZE);
         if (status != ATCA_SUCCESS)
         {
             return status;

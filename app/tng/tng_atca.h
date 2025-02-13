@@ -37,6 +37,11 @@ extern "C" {
 
 #define ATCA_OTP_CODE_SIZE              (8u)
 
+#if ((defined(ATCA_TNG_LEGACY_SUPPORT) || defined(ATCA_TFLEX_SUPPORT) ||                          \
+          defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT)) && !ATCACERT_COMPCERT_EN)
+#error "Enable ATCACERT_COMPCERT_EN to handle TNG"
+#endif
+
 /** \defgroup tng_ TNG API (tng_)
  *
  * \brief These methods provide some convenience functions (mostly around

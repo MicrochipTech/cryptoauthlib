@@ -44,59 +44,68 @@ extern "C" {
  *
    @{ */
 
+#if ATCACERT_HW_VERIFY_EN && ATCACERT_COMPCERT_EN
 /**
- * \brief Verify a certificate against its certificate authority's public key using the host's ATECC
+ * \brief Verify a certificate against its certificate authority's public key using the host's ATECC/TA
  *        device for crypto functions.
  *
+ * \param[in] device         Device context pointer
  * \param[in] cert_def       Certificate definition describing how to extract the TBS and signature
  *                           components from the certificate specified.
  * \param[in] cert           Certificate to verify.
  * \param[in] cert_size      Size of the certificate (cert) in bytes.
- * \param[in] ca_public_key  The ECC P256 public key of the certificate authority that signed this
- *                           certificate. Formatted as the 32 byte X and Y integers concatenated
- *                           together (64 bytes total).
+ * \param[in] ca_public_key  The ECC P256/P384/P521 public key of the certificate authority that signed this
+ *                           certificate. Formatted as the X and Y integers concatenated together.
  *
  * \return ATCACERT_E_SUCCESS if the verify succeeds, ATCACERT_VERIFY_FAILED or ATCA_EXECUTION_ERROR if it fails to
  *         verify. ATCA_EXECUTION_ERROR may occur when the public key is invalid and doesn't fall
  *         on the P256 curve.
  */
-ATCA_STATUS atcacert_verify_cert_hw(const atcacert_def_t* cert_def,
+ATCA_STATUS atcacert_verify_cert_hw(ATCADevice            device,
+                                    const atcacert_def_t* cert_def,
                                     const uint8_t*        cert,
                                     size_t                cert_size,
-                                    const uint8_t         ca_public_key[64]);
+                                    cal_buffer*           ca_public_key);
+#endif
 
-
+#if ATCACERT_HW_CHALLENGE_EN
 /**
- * \brief Generate a random challenge to be sent to the client using the RNG on the host's ATECC
+ * \brief Generate a random challenge to be sent to the client using the RNG on the host's ATECC/TA
  *        device.
  *
- * \param[out] challenge  Random challenge is return here. 32 bytes.
+ * \param[in]  device     Device context pointer
+ * \param[out] challenge  Random challenge is return here.
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS atcacert_gen_challenge_hw(uint8_t challenge[32]);
+ATCA_STATUS atcacert_gen_challenge_hw(ATCADevice device, cal_buffer* challenge);
+#endif
 
 
+#if ATCACERT_HW_VERIFY_EN && ATCACERT_COMPCERT_EN
 /**
- * \brief Verify a client's response to a challenge using the host's ATECC device for crypto
+ * \brief Verify a client's response to a challenge using the host's ATECC/TA device for crypto
  *        functions.
  *
  * The challenge-response protocol is an ECDSA Sign and Verify. This performs an ECDSA verify on the
  * response returned by the client, verifying the client has the private key counter-part to the
  * public key returned in its certificate.
  *
+ * \param[in] device             Device context pointer
  * \param[in] device_public_key  Device public key as read from its certificate. Formatted as the X
- *                               and Y integers concatenated together. 64 bytes.
- * \param[in] challenge          Challenge that was sent to the client. 32 bytes.
- * \param[in] response           Response returned from the client to be verified. 64 bytes.
+ *                               and Y integers concatenated together.
+ * \param[in] challenge          Challenge that was sent to the client.
+ * \param[in] response           Response returned from the client to be verified.
  *
  * \return ATCACERT_E_SUCCESS if the verify succeeds, ATCACERT_VERIFY_FAILED or ATCA_EXECUTION_ERROR if it fails to
  *         verify. ATCA_EXECUTION_ERROR may occur when the public key is invalid and doesn't fall
- *         on the P256 curve.
+ *         on the P256/P384/P521 curve.
  */
-ATCA_STATUS atcacert_verify_response_hw(const uint8_t device_public_key[64],
-                                        const uint8_t challenge[32],
-                                        const uint8_t response[64]);
+ATCA_STATUS atcacert_verify_response_hw(ATCADevice        device,
+                                        cal_buffer* device_public_key,
+                                        cal_buffer* challenge,
+                                        cal_buffer* response);
+#endif
 
 /** @} */
 #ifdef __cplusplus

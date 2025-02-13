@@ -32,6 +32,8 @@
 #include "tng_root_cert.h"
 #include <limits.h>
 
+#if ATCACERT_COMPCERT_EN
+
 int tng_atcacert_max_device_cert_size(size_t* max_cert_size)
 {
     int ret = ATCACERT_E_WRONG_CERT_DEF;
@@ -48,9 +50,13 @@ int tng_atcacert_max_device_cert_size(size_t* max_cert_size)
             if (NULL != cert_def)
             {
                 ret = atcacert_max_cert_size(cert_def, &cert_size);
-                if (cert_size > *max_cert_size)
+                if (ATCACERT_E_SUCCESS == ret)
                 {
                     *max_cert_size = cert_size;
+                }
+                else
+                {
+                    break;
                 }
 
                 if (index < INT_MAX)
@@ -110,7 +116,7 @@ int tng_atcacert_read_device_cert(uint8_t* cert, size_t* cert_size, const uint8_
         }
     }
 
-    return atcacert_read_cert(cert_def, ca_public_key, cert, cert_size);
+    return atcacert_read_cert(cert_def, &ca_pubkey, cert, cert_size);
 }
 
 int tng_atcacert_device_public_key(uint8_t* public_key, uint8_t* cert)
@@ -159,7 +165,8 @@ int tng_atcacert_read_signer_cert(uint8_t* cert, size_t* cert_size)
 {
     int ret;
     const atcacert_def_t* cert_def = NULL;
-    const uint8_t* ca_public_key = NULL;
+    uint8_t* ca_public_key = NULL;
+    cal_buffer ca_pubkey = CAL_BUF_INIT(ATCA_ECCP256_PUBKEY_SIZE, NULL);
 
     ret = tng_get_device_cert_def(&cert_def);
     if (ATCA_SUCCESS == ret)
@@ -169,7 +176,8 @@ int tng_atcacert_read_signer_cert(uint8_t* cert, size_t* cert_size)
         // Get the CA (root) public key
         ca_public_key = &g_cryptoauth_root_ca_002_cert[CRYPTOAUTH_ROOT_CA_002_PUBLIC_KEY_OFFSET];
 
-        ret = atcacert_read_cert(cert_def, ca_public_key, cert, cert_size);
+        ca_pubkey.buf = ca_public_key;
+        ret = atcacert_read_cert(cert_def, &ca_pubkey, cert, cert_size);
     }
 
     return ret;
@@ -263,3 +271,5 @@ int tng_atcacert_root_public_key(uint8_t* public_key)
 
     return ATCACERT_E_SUCCESS;
 }
+
+#endif

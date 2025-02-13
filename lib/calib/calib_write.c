@@ -60,9 +60,15 @@
  */
 ATCA_STATUS calib_write(ATCADevice device, uint8_t zone, uint16_t address, const uint8_t *value, const uint8_t *mac)
 {
-    ATCAPacket packet;
+    ATCAPacket * packet = calib_packet_alloc();
     ATCA_STATUS status;
     bool require_mac = false;
+
+    if(NULL == packet)
+    {
+        (void)ATCA_TRACE(ATCA_ALLOC_FAILURE, "calib_packet_alloc - failed");
+        return ATCA_ALLOC_FAILURE;
+    }
 
     if ((device == NULL) || (value == NULL))
     {
@@ -81,25 +87,25 @@ ATCA_STATUS calib_write(ATCADevice device, uint8_t zone, uint16_t address, const
 
     do
     {
-        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
+        (void)memset(packet, 0x00, sizeof(ATCAPacket));
 
         // Build the write command
-        packet.param1 = zone;
-        packet.param2 = address;
+        packet->param1 = zone;
+        packet->param2 = address;
         if ((zone & ATCA_ZONE_READWRITE_32) == ATCA_ZONE_READWRITE_32)
         {
             // 32-byte write
-            (void)memcpy(packet.data, value, 32);
+            (void)memcpy(packet->data, value, 32);
             // Only 32-byte writes can have a MAC
             if (NULL != mac)
             {
-                (void)memcpy(&packet.data[32], mac, 32);
+                (void)memcpy(&packet->data[32], mac, 32);
             }
         }
         else
         {
             // 4-byte write
-            (void)memcpy(packet.data, value, 4);
+            (void)memcpy(packet->data, value, 4);
         }
 
         if ((NULL != mac) && ((zone & ATCA_ZONE_READWRITE_32) == ATCA_ZONE_READWRITE_32))
@@ -107,13 +113,13 @@ ATCA_STATUS calib_write(ATCADevice device, uint8_t zone, uint16_t address, const
             require_mac = true;
         }
 
-        if ((status = atWrite(atcab_get_device_type_ext(device), &packet, require_mac)) != ATCA_SUCCESS)
+        if ((status = atWrite(atcab_get_device_type_ext(device), packet, require_mac)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "atWrite - failed");
             break;
         }
 
-        if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(packet, device)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "calib_write - execution failed");
             break;
@@ -121,6 +127,7 @@ ATCA_STATUS calib_write(ATCADevice device, uint8_t zone, uint16_t address, const
 
     } while (false);
 
+    calib_packet_free(packet);
     return status;
 }
 
@@ -551,7 +558,7 @@ ATCA_STATUS calib_ca2_write(ATCADevice device, uint8_t zone, uint16_t address, c
                             const uint8_t *mac)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
-    ATCAPacket packet;
+    ATCAPacket * packet = NULL;
     uint8_t write_zone = (zone == ATCA_ZONE_CONFIG) ? ATCA_ZONE_CA2_CONFIG : ATCA_ZONE_CA2_DATA;
     bool require_mac = false;
 
@@ -584,25 +591,32 @@ ATCA_STATUS calib_ca2_write(ATCADevice device, uint8_t zone, uint16_t address, c
     }
     #endif
 
-    (void)memset(&packet, 0x00, sizeof(ATCAPacket));
+    packet = calib_packet_alloc();
+    if(NULL == packet)
+    {
+        (void)ATCA_TRACE(ATCA_ALLOC_FAILURE, "calib_packet_alloc - failed");
+        return ATCA_ALLOC_FAILURE;
+    }
+
+    (void)memset(packet, 0x00, sizeof(ATCAPacket));
 
     if (ATCA_SUCCESS == status)
     {
-        packet.param1 = write_zone;
-        packet.param2 = address;
+        packet->param1 = write_zone;
+        packet->param2 = address;
 
         if (ATCA_ZONE_CA2_CONFIG == write_zone)
         {
-            (void)memcpy(packet.data, value, 16);
+            (void)memcpy(packet->data, value, 16);
         }
         if (ATCA_ZONE_CA2_DATA == write_zone)
         {
-            (void)memcpy(packet.data, value, ATCA_BLOCK_SIZE);
+            (void)memcpy(packet->data, value, ATCA_BLOCK_SIZE);
         }
 
         if ((NULL != mac) && (ATCA_ZONE_CA2_DATA == write_zone))
         {
-            (void)memcpy(&packet.data[ATCA_BLOCK_SIZE], mac, MAC_SIZE);
+            (void)memcpy(&packet->data[ATCA_BLOCK_SIZE], mac, MAC_SIZE);
         }
 
         if ((NULL != mac) && (ATCA_ZONE_CA2_DATA == write_zone))
@@ -610,17 +624,18 @@ ATCA_STATUS calib_ca2_write(ATCADevice device, uint8_t zone, uint16_t address, c
             require_mac = true;
         }
 
-        (void)atWrite(atcab_get_device_type_ext(device), &packet, require_mac);
+        (void)atWrite(atcab_get_device_type_ext(device), packet, require_mac);
     }
 
     if (ATCA_SUCCESS == status)
     {
-        if (ATCA_SUCCESS != (status = atca_execute_command(&packet, device)))
+        if (ATCA_SUCCESS != (status = atca_execute_command(packet, device)))
         {
             (void)ATCA_TRACE(status, "calib_ca2_write - execution failed");
         }
     }
 
+    calib_packet_free(packet);
     return status;
 
 }

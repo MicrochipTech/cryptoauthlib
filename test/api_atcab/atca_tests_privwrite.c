@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #include "test_atcab.h"
 
-#ifdef ATCA_ECC_SUPPORT
+#if ATCA_ECC_SUPPORT
 
 TEST_CONDITION(atca_cmd_basic_test, priv_write)
 {
@@ -109,7 +109,7 @@ TEST(atca_cmd_basic_test, priv_write_encrypted)
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info privwrite_basic_test_info[] =
 {
-#ifdef ATCA_ECC_SUPPORT
+#if ATCA_ECC_SUPPORT 
     { REGISTER_TEST_CASE(atca_cmd_basic_test, priv_write_unencrypted), REGISTER_TEST_CONDITION(atca_cmd_basic_test, priv_write) },
     { REGISTER_TEST_CASE(atca_cmd_basic_test, priv_write_encrypted),   REGISTER_TEST_CONDITION(atca_cmd_basic_test, priv_write) },
 #endif

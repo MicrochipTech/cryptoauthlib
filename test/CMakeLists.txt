@@ -1,8 +1,9 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.10.0)
 project (cryptoauth_test C)
 
 option (ATCA_TEST_LOCK_ENABLE "Enable device locking functions and tests" OFF)
 option (ATCA_TEST_DELETE_ENABLE "Enable device wiping functions and tests" OFF)
+option (DO_NOT_TEST_CERT "Disable certificate tests" OFF)
 
 file(GLOB TEST_ATCACERT_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "atcacert/*.c")
 file(GLOB TEST_JWT_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "jwt/*.c")
@@ -99,6 +100,10 @@ if(ATCA_TEST_DELETE_ENABLE)
 target_compile_definitions(cryptoauth_test PUBLIC -DATCA_TEST_DELETE_ENABLE)
 endif(ATCA_TEST_DELETE_ENABLE)
 
+if(DO_NOT_TEST_CERT)
+target_compile_definitions(cryptoauth_test PUBLIC -DDO_NOT_TEST_CERT)
+endif(DO_NOT_TEST_CERT)
+
 set_property(TARGET cryptoauth_test PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "$(OutputPath)")
 
 add_custom_command(TARGET cryptoauth_test POST_BUILD
@@ -125,3 +130,8 @@ add_custom_command(TARGET cryptoauth_test POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
                 ${CMAKE_CURRENT_SOURCE_DIR}/vectors/aesmmt_cbc_cavp_vectors
                 $<TARGET_FILE_DIR:${PROJECT_NAME}>/aesmmt_cbc_cavp_vectors )
+				
+add_custom_command(TARGET cryptoauth_test POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+                ${CMAKE_CURRENT_SOURCE_DIR}/vectors/aes_ccm_vectors
+                $<TARGET_FILE_DIR:${PROJECT_NAME}>/aes_ccm_vectors )

@@ -60,15 +60,9 @@
  */
 ATCA_STATUS calib_read_zone(ATCADevice device, uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint8_t *data, uint8_t len)
 {
-    ATCAPacket * packet = calib_packet_alloc();
+    ATCAPacket * packet = NULL;
     ATCA_STATUS status;
     uint16_t addr;
-
-    if(NULL == packet)
-    {
-        (void)ATCA_TRACE(ATCA_ALLOC_FAILURE, "calib_packet_alloc - failed");
-        return ATCA_ALLOC_FAILURE;
-    }
 
     do
     {
@@ -76,6 +70,14 @@ ATCA_STATUS calib_read_zone(ATCADevice device, uint8_t zone, uint16_t slot, uint
         ATCA_CHECK_INVALID_MSG(((NULL == device) || (NULL == data)), ATCA_BAD_PARAM, "NULL pointer received");
         ATCA_CHECK_INVALID_MSG((len != 4u && len != 32u), ATCA_BAD_PARAM, "NULL pointer received");
         ATCA_CHECK_INVALID_MSG((CA_MAX_PACKET_SIZE < (ATCA_PACKET_OVERHEAD + len)), ATCA_INVALID_SIZE, "Invalid size received");
+
+        packet = calib_packet_alloc();
+        if(NULL == packet)
+        {
+            (void)ATCA_TRACE(ATCA_ALLOC_FAILURE, "calib_packet_alloc - failed");
+            status = ATCA_ALLOC_FAILURE;
+            break;
+        }
 
         // The get address function checks the remaining variables
         if ((status = calib_get_addr(zone, slot, block, offset, &addr)) != ATCA_SUCCESS)
@@ -538,7 +540,7 @@ ATCA_STATUS calib_ca2_read_zone(ATCADevice device, uint8_t zone, uint16_t slot, 
                                 uint8_t* data, uint8_t len)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
-    ATCAPacket packet;
+    ATCAPacket * packet = calib_packet_alloc();
     uint16_t addr;
     uint8_t read_zone;
 
@@ -574,6 +576,12 @@ ATCA_STATUS calib_ca2_read_zone(ATCADevice device, uint8_t zone, uint16_t slot, 
         status = ATCA_TRACE(ATCA_INVALID_SIZE, "Invalid packet size received");
     }
 
+    if(NULL == packet)
+    {
+        (void)ATCA_TRACE(ATCA_ALLOC_FAILURE, "calib_packet_alloc - failed");
+        return ATCA_ALLOC_FAILURE;
+    }
+
     if (ATCA_SUCCESS == status)
     {
         if (ATCA_SUCCESS != (status = calib_ca2_get_addr(read_zone, slot, block, 0, &addr)))
@@ -581,29 +589,30 @@ ATCA_STATUS calib_ca2_read_zone(ATCADevice device, uint8_t zone, uint16_t slot, 
             (void)ATCA_TRACE(status, "Address Encoding failed");
         }
 
-        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
+        (void)memset(packet, 0x00, sizeof(ATCAPacket));
 
         if (ATCA_SUCCESS == status)
         {
             // Build packets
-            packet.param1 = read_zone;
-            packet.param2 = addr;
+            packet->param1 = read_zone;
+            packet->param2 = addr;
 
-            (void)atRead(atcab_get_device_type_ext(device), &packet);
+            (void)atRead(atcab_get_device_type_ext(device), packet);
 
             // Execute read command
-            if (ATCA_SUCCESS != (status = atca_execute_command(&packet, device)))
+            if (ATCA_SUCCESS != (status = atca_execute_command(packet, device)))
             {
                 (void)ATCA_TRACE(status, "Read command failed");
             }
             else
             {
-                (void)memcpy(data, &packet.data[ATCA_RSP_DATA_IDX], len);
+                (void)memcpy(data, &packet->data[ATCA_RSP_DATA_IDX], len);
             }
 
         }
     }
 
+    calib_packet_free(packet);
     return status;
 }
 

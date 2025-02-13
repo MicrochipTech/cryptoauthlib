@@ -307,8 +307,8 @@ ATCA_STATUS atcac_sha256_hmac_init(
 
             for (i = 0; i < ATCA_SHA2_256_BLOCK_SIZE; i++)
             {
-                ctx->opad[i] = ctx->ipad[i] ^ 0x5C;
-                ctx->ipad[i] ^= 0x36;
+                ctx->opad[i] = (uint8_t)((ctx->ipad[i] ^ 0x5Cu) & UINT8_MAX);
+                ctx->ipad[i] ^= 0x36u;
             }
 
             (void)atcac_sw_sha2_256_init(ctx->sha256_ctx);

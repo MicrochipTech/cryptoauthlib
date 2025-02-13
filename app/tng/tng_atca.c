@@ -35,6 +35,7 @@
 #include "tflxtls_cert_def_4_device.h"
 #include "atcacert/atcacert_def.h"
 
+#if ATCACERT_COMPCERT_EN
 
 typedef struct
 {
@@ -129,3 +130,5 @@ ATCA_STATUS tng_get_device_pubkey(uint8_t *public_key)
 
     return status;
 }
+
+#endif

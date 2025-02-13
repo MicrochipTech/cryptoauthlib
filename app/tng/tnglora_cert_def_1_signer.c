@@ -29,6 +29,8 @@
 #include "tngtls_cert_def_1_signer.h"
 #include "tnglora_cert_def_1_signer.h"
 
+#if ATCACERT_COMPCERT_EN
+
 SHARED_LIB_EXPORT const atcacert_def_t g_tnglora_cert_def_1_signer = {
     .type                = CERTTYPE_X509,
     .template_id         = 1,
@@ -103,3 +105,5 @@ SHARED_LIB_EXPORT const atcacert_def_t g_tnglora_cert_def_1_signer = {
     .cert_template_size  = TNGTLS_CERT_TEMPLATE_1_SIGNER_SIZE,
     .ca_cert_def         = NULL
 };
+
+#endif

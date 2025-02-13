@@ -509,6 +509,8 @@ static const CK_MECHANISM_TYPE pkcs11_key_508_public_mech[] = {
 static const CK_MECHANISM_TYPE pkcs11_key_ta_public_mech[] = {
     CKM_ECDSA,
     CKM_ECDSA_SHA256,
+    CKM_ECDSA_SHA384,
+    CKM_ECDSA_SHA512,
     CKM_RSA_PKCS,
     CKM_RSA_PKCS_PSS,
     CKM_RSA_PKCS_OAEP
@@ -528,6 +530,8 @@ static const CK_MECHANISM_TYPE pkcs11_key_ta_private_mech[] = {
     CKM_EC_KEY_PAIR_GEN,
     CKM_ECDSA,
     CKM_ECDSA_SHA256,
+    CKM_ECDSA_SHA384,
+    CKM_ECDSA_SHA512,
     CKM_RSA_PKCS_KEY_PAIR_GEN,
     CKM_RSA_PKCS,
     CKM_RSA_PKCS_PSS,
@@ -1171,7 +1175,7 @@ static CK_RV pkcs11_key_calc_key_id(const pkcs11_session_ctx_ptr pSession, const
 #if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
             CK_UTF8CHAR pubkey_buffer[PKCS11_MAX_ECC_RSA_PB_KEY_SIZE] = { 0 };
 #else
-            CK_UTF8CHAR pubkey_buffer[PKCS11_MAX_ECC_PB_KEY_SIZE] = { 0 };
+            CK_UTF8CHAR pubkey_buffer[ATCA_ECC_UNCOMPRESSED_TYPE_OFFSET + PKCS11_MAX_ECC_PB_KEY_SIZE] = { 0 };
 #endif
             CK_ULONG pubkey_size = sizeof(pubkey_buffer);
             ATCADeviceType dev_type = atcab_get_device_type_ext(pSession->slot->device_ctx);

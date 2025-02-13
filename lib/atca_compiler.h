@@ -41,12 +41,12 @@
 #define ATCA_UINT16_HOST_TO_LE(x)  (x)
 #define ATCA_UINT16_LE_TO_HOST(x)  (x)
 #define ATCA_UINT32_HOST_TO_LE(x)  (x)
-#define ATCA_UINT16_HOST_TO_BE(x)  ((((x) & 0x00FF) << 8) | (((x) & 0xFF00) >> 8))
-#define ATCA_UINT16_BE_TO_HOST(x)  ((((x) & 0x00FF) << 8) | (((x) & 0xFF00) >> 8))
-#define ATCA_UINT32_HOST_TO_BE(x)  ((((x) & 0x000000FFUL) << 24U) | (((x) & 0x0000FF00UL) << 8U) | (((x) & 0x00FF0000UL) >> 8U) | (((x) & 0xFF000000UL) >> 24U))
-#define ATCA_UINT32_BE_TO_HOST(x)  ((((x) & 0x000000FFUL) << 24U) | (((x) & 0x0000FF00UL) << 8U) | (((x) & 0x00FF0000UL) >> 8U) | (((x) & 0xFF000000UL) >> 24U))
-#define ATCA_UINT64_HOST_TO_BE(x)  ((uint64_t)ATCA_UINT32_HOST_TO_BE((uint32_t)(x)) << 32 + (uint64_t)ATCA_UINT32_HOST_TO_BE((uint32_t)((x) >> 32)))
-#define ATCA_UINT64_BE_TO_HOST(x)  ((uint64_t)ATCA_UINT32_BE_TO_HOST((uint32_t)(x)) << 32 + (uint64_t)ATCA_UINT32_BE_TO_HOST((uint32_t)((x) >> 32)))
+#define ATCA_UINT16_HOST_TO_BE(x)  ((((uint16_t)(x) & 0x00FF) << 8) | (((uint16_t)(x) & 0xFF00) >> 8))
+#define ATCA_UINT16_BE_TO_HOST(x)  ((((uint16_t)(x) & 0x00FF) << 8) | (((uint16_t)(x) & 0xFF00) >> 8))
+#define ATCA_UINT32_HOST_TO_BE(x)  ((((uint32_t)(x) & 0x000000FFUL) << 24U) | (((uint32_t)(x) & 0x0000FF00UL) << 8U) | (((uint32_t)(x) & 0x00FF0000UL) >> 8U) | (((uint32_t)(x) & 0xFF000000UL) >> 24U))
+#define ATCA_UINT32_BE_TO_HOST(x)  ((((uint32_t)(x) & 0x000000FFUL) << 24U) | (((uint32_t)(x) & 0x0000FF00UL) << 8U) | (((uint32_t)(x) & 0x00FF0000UL) >> 8U) | (((uint32_t)(x) & 0xFF000000UL) >> 24U))
+#define ATCA_UINT64_HOST_TO_BE(x)  (((uint64_t)ATCA_UINT32_HOST_TO_BE((uint32_t)(x)) << 32) + (uint64_t)ATCA_UINT32_HOST_TO_BE((uint32_t)((x) >> 32)))
+#define ATCA_UINT64_BE_TO_HOST(x)  (((uint64_t)ATCA_UINT32_BE_TO_HOST((uint32_t)(x)) << 32) + (uint64_t)ATCA_UINT32_BE_TO_HOST((uint32_t)((x) >> 32)))
 #define ATCA_UINT64_HOST_TO_LE(x)  (x)
 #define SHARED_LIB_EXPORT
 #define SHARED_LIB_IMPORT       extern

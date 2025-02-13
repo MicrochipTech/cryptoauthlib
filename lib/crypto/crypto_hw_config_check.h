@@ -34,7 +34,7 @@
 #include "calib/calib_config_check.h"
 #endif
 
-#if ATCA_TA_SUPPORT && !defined(LIBRARY_USAGE_EN)
+#if ATCA_TA_SUPPORT && !LIBRARY_USAGE_EN_CHECK
 #include "talib/talib_config_check.h"
 #endif
 
@@ -44,7 +44,7 @@
  * CBC, CBCMAC, CTR, & CCM modes at once rather than individually
  */
 #ifndef ATCAB_AES_EXTRAS_EN
-#define ATCAB_AES_EXTRAS_EN         (CALIB_AES_EN || TALIB_AES_EN)
+#define ATCAB_AES_EXTRAS_EN         (CALIB_AES_EN || TALIB_AES_EN || LIBRARY_USAGE_EN_CHECK)
 #endif
 
 #ifndef ATCAB_AES_RANDOM_IV_EN

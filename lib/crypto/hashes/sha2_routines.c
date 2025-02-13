@@ -353,7 +353,7 @@ ATCA_STATUS sw_sha256_update(sw_sha256_ctx* ctx, const uint8_t* msg, uint32_t ms
     }
 
     // Copy data into current block
-    (void)memcpy(&ctx->block[ctx->block_size], msg, copy_size);
+    (void)memcpy(&ctx->block[ctx->block_size], msg, (size_t)copy_size);
 
     if (ctx->block_size + msg_size < SHA256_BLOCK_SIZE)
     {

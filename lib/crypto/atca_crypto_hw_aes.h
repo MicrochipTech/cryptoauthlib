@@ -139,8 +139,8 @@ ATCA_STATUS atcab_aes_ccm_decrypt_finish(atca_aes_ccm_ctx_t* ctx, const uint8_t*
 #endif
 
 #if ATCAC_PKCS7_PAD_EN
-ATCA_STATUS atcac_pkcs7_pad(uint8_t * buffer, size_t * buflen, const size_t datalen, const uint8_t blocksize);
-ATCA_STATUS atcac_pkcs7_unpad(uint8_t * buffer, size_t * buflen, const uint8_t blocksize);
+ATCA_STATUS atcac_pkcs7_pad(uint8_t * buf, size_t * buflen, const size_t datalen, const uint8_t blocksize);
+ATCA_STATUS atcac_pkcs7_unpad(uint8_t * buf, size_t * buflen, const uint8_t blocksize);
 #endif
 
 #ifdef __cplusplus

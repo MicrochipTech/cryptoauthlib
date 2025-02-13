@@ -19,9 +19,10 @@
      WPC_CHAIN_ROOT_DIGEST_<slot_id>
      WPC_CHAIN_MFG_CERT_<slot_id>
 
-   Configuring a chain for trust anchor parts:
+   Configuring a chain for Trust anchor parts:
      WPC_CHAIN_DIGEST_HANDLE_<slot_id>
-     WPC_CHAIN_ROOT_DIGEST_<slot_id>
+     WPC_CHAIN_CERT_DEF_<slot_id>
+     WPC_CHAIN_ROOT_DIGEST_HANDLE_<slot_id>
 
  */
 
@@ -55,12 +56,18 @@
       #define WPC_CHAIN_CERT_DEF_0            g_cert_def_2_device
       #define WPC_CHAIN_ROOT_DIGEST_0         g_root_ca_digest
     #endif
-  #else if ATCA_CA2_SUPPORT
+  #elif ATCA_CA2_SUPPORT
     #if !(defined(WPC_CHAIN_DIGEST_HANDLE_0) || defined(WPC_CHAIN_CERT_DEF_0) || defined(WPC_CHAIN_ROOT_DIGEST_0) || defined(WPC_CHAIN_MFG_CERT_0))
       #define WPC_CHAIN_DIGEST_HANDLE_0       0x02
       #define WPC_CHAIN_CERT_DEF_0            g_cert_def_3_device
       #define WPC_CHAIN_ROOT_DIGEST_0         g_cert_def_3_root_digest
       #define WPC_CHAIN_MFG_CERT_0            g_cert_def_3_signer
+    #endif
+  #elif ATCA_TA_SUPPORT
+    #if !(defined(WPC_CHAIN_DIGEST_HANDLE_0) || defined(WPC_CHAIN_CERT_DEF_0) || defined(WPC_CHAIN_ROOT_DIGEST_HANDLE_0))
+      #define WPC_CHAIN_DIGEST_HANDLE_0         0x8602
+      #define WPC_CHAIN_CERT_DEF_0              g_cert_def_5_device
+      #define WPC_CHAIN_ROOT_DIGEST_HANDLE_0    0x8050
     #endif
   #endif
 #endif /* ATCA_TESTS_ENABLED */
@@ -77,16 +84,16 @@
 #endif
 
 /* Check that the definitions are complete for a given chain */
-#if (defined(WPC_CHAIN_CERT_DEF_0)) != (defined(WPC_CHAIN_DIGEST_HANDLE_0) && defined(WPC_CHAIN_ROOT_DIGEST_0))
+#if (defined(WPC_CHAIN_CERT_DEF_0)) != (defined(WPC_CHAIN_DIGEST_HANDLE_0) && (defined(WPC_CHAIN_ROOT_DIGEST_0) || defined(WPC_CHAIN_ROOT_DIGEST_HANDLE_0)))
 #error "WPC Slot 0 definition is incomplete"
 #endif
-#if (defined(WPC_CHAIN_CERT_DEF_1)) != (defined(WPC_CHAIN_DIGEST_HANDLE_1) && defined(WPC_CHAIN_ROOT_DIGEST_1))
+#if (defined(WPC_CHAIN_CERT_DEF_1)) != (defined(WPC_CHAIN_DIGEST_HANDLE_1) && (defined(WPC_CHAIN_ROOT_DIGEST_1) || defined(WPC_CHAIN_ROOT_DIGEST_HANDLE_1)))
 #error "WPC Slot 1 definition is incomplete"
 #endif
-#if (defined(WPC_CHAIN_CERT_DEF_2)) != (defined(WPC_CHAIN_DIGEST_HANDLE_2) && defined(WPC_CHAIN_ROOT_DIGEST_2))
+#if (defined(WPC_CHAIN_CERT_DEF_2)) != (defined(WPC_CHAIN_DIGEST_HANDLE_2) && (defined(WPC_CHAIN_ROOT_DIGEST_2) || defined(WPC_CHAIN_ROOT_DIGEST_HANDLE_2)))
 #error "WPC Slot 2 definition is incomplete"
 #endif
-#if (defined(WPC_CHAIN_CERT_DEF_3)) != (defined(WPC_CHAIN_DIGEST_HANDLE_3) && defined(WPC_CHAIN_ROOT_DIGEST_3))
+#if (defined(WPC_CHAIN_CERT_DEF_3)) != (defined(WPC_CHAIN_DIGEST_HANDLE_3) && (defined(WPC_CHAIN_ROOT_DIGEST_3) || defined(WPC_CHAIN_ROOT_DIGEST_HANDLE_3)))
 #error "WPC Slot 3 definition is incomplete"
 #endif
 

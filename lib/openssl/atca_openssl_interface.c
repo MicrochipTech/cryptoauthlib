@@ -713,25 +713,54 @@ ATCA_STATUS atcac_pk_init(
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    ((void)key_type);
-
     if ((NULL != ctx) && (NULL != buf) && ((size_t)INT_MAX > buflen))
     {
         ctx->ptr = EVP_PKEY_new();
 
         if (NULL != ctx->ptr)
         {
-            int ret = EVP_PKEY_set_type((EVP_PKEY*)ctx->ptr, EVP_PKEY_EC);
+            int curve_nid = 0;
+            int ret = 0;
+
+            switch (key_type)
+            {
+                case ATCA_KEY_TYPE_ECCP256:
+                    curve_nid = NID_X9_62_prime256v1;
+                    break;
+        #if ATCA_TA_SUPPORT
+                case TA_KEY_TYPE_ECCP224:
+                    curve_nid = NID_secp224r1;
+                    break;
+                case TA_KEY_TYPE_ECCP384:
+                    curve_nid = NID_secp384r1;
+                    break;
+                case TA_KEY_TYPE_ECCP521:
+                    curve_nid = NID_secp521r1;
+                    break;
+        #endif
+                default:
+                    EVP_PKEY_free((EVP_PKEY*)ctx->ptr);
+                    ret = ATCA_BAD_PARAM;
+                    break;
+            }
+            if (0 != ret)
+            {
+                return ret;
+            }
+
+            ret = EVP_PKEY_set_type((EVP_PKEY*)ctx->ptr, EVP_PKEY_EC);
             if (0 < ret)
             {
-                EC_KEY* ec_key = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1);
+                EC_KEY* ec_key = EC_KEY_new_by_curve_name(curve_nid);
                 const EC_GROUP * ec_group = EC_KEY_get0_group(ec_key);
                 EC_POINT* ec_point = EC_POINT_new(ec_group);
 
                 if (pubkey)
                 {
-                    BIGNUM * x = BN_bin2bn(buf, 32, NULL);
-                    BIGNUM * y = BN_bin2bn(&buf[32], 32, NULL);
+                    size_t temp_len = buflen / 2u;
+                    int xy_len = (int)temp_len;
+                    BIGNUM * x = BN_bin2bn(buf, xy_len, NULL);
+                    BIGNUM * y = BN_bin2bn(&buf[xy_len], xy_len, NULL);
                     ret = EC_POINT_set_affine_coordinates(ec_group, ec_point, x, y, NULL);
                     BN_free(y);
                     BN_free(x);
@@ -920,7 +949,7 @@ ATCA_STATUS atcac_pk_sign(
     ATCA_STATUS status = ATCA_BAD_PARAM;
     int ret = 0;
 
-    if ((NULL != ctx) && (NULL != ctx->ptr) && (ATCA_SHA2_256_DIGEST_SIZE == dig_len))
+    if ((NULL != ctx) && (NULL != ctx->ptr))
     {
         if (EVP_PKEY_EC == EVP_PKEY_id((EVP_PKEY*)ctx->ptr))
         {
@@ -996,14 +1025,20 @@ ATCA_STATUS atcac_pk_verify(
     ATCA_STATUS status = ATCA_BAD_PARAM;
     int ret = 0;
 
-    if ((NULL != ctx) && (NULL != ctx->ptr) && (ATCA_SHA2_256_DIGEST_SIZE == dig_len))
+    if ((NULL != ctx) && (NULL != ctx->ptr))
     {
         ret = -1;
         if (EVP_PKEY_EC == EVP_PKEY_id((EVP_PKEY*)ctx->ptr))
         {
             ECDSA_SIG* ec_sig = ECDSA_SIG_new();
-            BIGNUM* r = BN_bin2bn(signature, 32, NULL);
-            BIGNUM* s = BN_bin2bn(&signature[32], 32, NULL);
+            int rs_len = 0;
+            if (sig_len <= (size_t)INT32_MAX)
+            {
+                size_t temp_len = sig_len / 2u;
+                rs_len = (int)temp_len;
+            }
+            BIGNUM* r = BN_bin2bn(signature, rs_len, NULL);
+            BIGNUM* s = BN_bin2bn(&signature[rs_len], rs_len, NULL);
 
             (void)ECDSA_SIG_set0(ec_sig, r, s);
 

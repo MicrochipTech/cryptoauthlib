@@ -109,7 +109,7 @@ TEST(atcac_sha, sha1_nist3)
         0x65, 0x34, 0x01, 0x6f
     };
     uint8_t digest[ATCA_SHA1_DIGEST_SIZE];
-    int ret;
+    ATCA_STATUS ret;
     struct atcac_sha1_ctx * ctx;
     uint32_t i;
 
@@ -184,6 +184,9 @@ static void test_atcac_sw_sha1_nist_simple(const char* filename)
         count++;
     }
     while (ret == ATCA_SUCCESS);
+
+    (void)fclose(rsp_file);
+
     TEST_ASSERT_MESSAGE(count > 0, "No long tests found in file.");
 #endif
 }
@@ -235,6 +238,8 @@ TEST(atcac_sha, sha1_nist_monte)
         TEST_ASSERT_EQUAL_MEMORY(md_ref, &md[2], sizeof(md_ref));
         memcpy(seed, &md[2], sizeof(seed));
     }
+
+    (void)fclose(rsp_file);
 #endif
 }
 #endif /* TEST_ATCAC_SHA1_EN */
@@ -352,6 +357,8 @@ static void test_atcac_sw_sha2_256_nist_simple(const char* filename)
         count++;
     }
     while (ret == ATCA_SUCCESS);
+
+    (void)fclose(rsp_file);
     TEST_ASSERT_MESSAGE(count > 0, "No long tests found in file.");
 #endif
 }
@@ -403,6 +410,8 @@ TEST(atcac_sha, sha256_nist_monte)
         TEST_ASSERT_EQUAL_MEMORY(md_ref, &md[2], sizeof(md_ref));
         memcpy(seed, &md[2], sizeof(seed));
     }
+
+    (void)fclose(rsp_file);
 #endif
 }
 
@@ -537,6 +546,8 @@ TEST(atcac_sha, sha256_hmac_nist)
     }
     while (ret == ATCA_SUCCESS);
 
+    (void)fclose(rsp_file);
+
 #if defined(ATCA_BUILD_SHARED_LIBS) || defined(ATCA_HEAP)
     atcac_hmac_ctx_free(hmac_ctx);
     atcac_sha256_ctx_free(sha256_ctx);
@@ -659,6 +670,8 @@ static void test_atcac_sw_sha2_384_nist_simple(const char* filename)
         msg = NULL;
         count++;
     } while (ret == ATCA_SUCCESS);
+
+    (void)fclose(rsp_file);
     TEST_ASSERT_MESSAGE(count > 0, "No long tests found in file.");
 #endif
 }
@@ -710,6 +723,8 @@ TEST(atcac_sha, sha384_nist_monte)
         TEST_ASSERT_EQUAL_MEMORY(md_ref, &md[2], sizeof(md_ref));
         memcpy(seed, &md[2], sizeof(seed));
     }
+
+    (void)fclose(rsp_file);
 #endif
 }
 #endif /* TEST_ATCAC_SHA384_EN */
@@ -830,6 +845,8 @@ static void test_atcac_sw_sha2_512_nist_simple(const char* filename)
         msg = NULL;
         count++;
     } while (ret == ATCA_SUCCESS);
+
+    (void)fclose(rsp_file);
     TEST_ASSERT_MESSAGE(count > 0, "No long tests found in file.");
 #endif
 }
@@ -881,6 +898,8 @@ TEST(atcac_sha, sha512_nist_monte)
         TEST_ASSERT_EQUAL_MEMORY(md_ref, &md[2], sizeof(md_ref));
         memcpy(seed, &md[2], sizeof(seed));
     }
+
+    (void)fclose(rsp_file);
 #endif
 }
 #endif /* TEST_ATCAC_SHA512_EN*/

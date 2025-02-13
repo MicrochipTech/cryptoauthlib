@@ -67,7 +67,7 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
                              const uint8_t num_in[NONCE_NUMIN_SIZE])
 {
 #endif
-    ATCAPacket packet;
+    ATCAPacket * packet = NULL;
     ATCA_STATUS status;
     atca_nonce_in_out_t nonce_params;
     atca_gen_dig_in_out_t gen_dig_param;
@@ -79,25 +79,15 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
     uint8_t host_mac[MAC_SIZE] = { 0 };
     uint8_t other_data[4] = { 0 };
 
-    if ((device == NULL) || (priv_key == NULL) || (key_id > 15u))
+    do 
     {
-        return ATCA_TRACE(ATCA_BAD_PARAM, "Either NULL pointer or invalid slot received");
-    }
-
-    do
-    {
-        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
-
-        if (write_key == NULL)
+        if ((device == NULL) || (priv_key == NULL) || (key_id > 15u))
         {
-            // Caller requested an unencrypted PrivWrite, which is only allowed when the data zone is unlocked
-            // build an PrivWrite command
-            packet.param1 = 0x00;                           // Mode is unencrypted write
-            packet.param2 = key_id;                         // Key ID
-            (void)memcpy(&packet.data[0], priv_key, 36);    // Private key
-            (void)memset(&packet.data[36], 0, 32);          // MAC (ignored for unencrypted write)
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "Either NULL pointer or invalid slot received");
+            break;
         }
-        else
+
+        if (NULL != write_key)
         {
             // Read the device SN
             if ((status = calib_read_zone(device, ATCA_ZONE_CONFIG, 0, 0, 0, serial_num, 32)) != ATCA_SUCCESS)
@@ -173,28 +163,50 @@ ATCA_STATUS calib_priv_write(ATCADevice device, uint16_t key_id, const uint8_t p
                 (void)ATCA_TRACE(status, "atcah_privwrite_auth_mac - failed");
                 break;
             }
-
-            // build a write command for encrypted writes
-            packet.param1 = PRIVWRITE_MODE_ENCRYPT; // Mode is encrypted write
-            packet.param2 = key_id;                 // Key ID
-            (void)memcpy(&packet.data[0], cipher_text, sizeof(cipher_text));
-            (void)memcpy(&packet.data[sizeof(cipher_text)], host_mac, sizeof(host_mac));
+        }
+        
+        packet = calib_packet_alloc();
+        if(NULL == packet)
+        {
+            (void)ATCA_TRACE(ATCA_ALLOC_FAILURE, "calib_packet_alloc - failed");
+            status = ATCA_ALLOC_FAILURE;
+            break;
         }
 
-        if ((status = atPrivWrite(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
+        (void)memset(packet, 0x00, sizeof(ATCAPacket));
+        
+        if (NULL == write_key)
+        {
+            // Caller requested an unencrypted PrivWrite, which is only allowed when the data zone is unlocked
+            // build an PrivWrite command
+            packet->param1 = 0x00;                           // Mode is unencrypted write
+            packet->param2 = key_id;                         // Key ID
+            (void)memcpy(&packet->data[0], priv_key, 36);    // Private key
+            (void)memset(&packet->data[36], 0, 32);          // MAC (ignored for unencrypted write)
+        }
+        else
+        {
+             // build a write command for encrypted writes
+            packet->param1 = PRIVWRITE_MODE_ENCRYPT; // Mode is encrypted write
+            packet->param2 = key_id;                 // Key ID
+            (void)memcpy(&packet->data[0], cipher_text, sizeof(cipher_text));
+            (void)memcpy(&packet->data[sizeof(cipher_text)], host_mac, sizeof(host_mac));
+        }
+        
+        if ((status = atPrivWrite(atcab_get_device_type_ext(device), packet)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "atPrivWrite - failed");
             break;
         }
 
-        if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(packet, device)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "calib_priv_write - execution failed");
             break;
         }
-
     } while (false);
 
+    calib_packet_free(packet);
     return status;
 }
 #endif  /* CALIB_PRIVWRITE_EN */

@@ -59,7 +59,7 @@
  */
 ATCA_STATUS calib_nonce_base(ATCADevice device, uint8_t mode, uint16_t param2, const uint8_t *num_in, uint8_t* rand_out)
 {
-    ATCAPacket packet;
+    ATCAPacket * packet = NULL;
     ATCA_STATUS status;
     uint8_t length;
 
@@ -71,11 +71,19 @@ ATCA_STATUS calib_nonce_base(ATCADevice device, uint8_t mode, uint16_t param2, c
             break;
         }
 
-        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
+        packet = calib_packet_alloc();
+        if(NULL == packet)
+        {
+            (void)ATCA_TRACE(ATCA_ALLOC_FAILURE, "calib_packet_alloc - failed");
+            status = ATCA_ALLOC_FAILURE;
+            break;
+        }
+
+        (void)memset(packet, 0x00, sizeof(ATCAPacket));
 
         // build a nonce command
-        packet.param1 = mode;
-        packet.param2 = param2;
+        packet->param1 = mode;
+        packet->param2 = param2;
 
         (void)calib_get_numin_size(mode, &length);
 
@@ -86,27 +94,28 @@ ATCA_STATUS calib_nonce_base(ATCADevice device, uint8_t mode, uint16_t param2, c
         }
 
         // Copy the right amount of NumIn data
-        (void)memcpy(packet.data, num_in, length);
+        (void)memcpy(packet->data, num_in, length);
 
-        if ((status = atNonce(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
+        if ((status = atNonce(atcab_get_device_type_ext(device), packet)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "atNonce - failed");
             break;
         }
 
-        if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(packet, device)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "calib_nonce_base - execution failed");
             break;
         }
 
-        if ((rand_out != NULL) && (packet.data[ATCA_COUNT_IDX] >= 35u))
+        if ((rand_out != NULL) && (packet->data[ATCA_COUNT_IDX] >= 35u))
         {
-            (void)memcpy(&rand_out[0], &packet.data[ATCA_RSP_DATA_IDX], 32);
+            (void)memcpy(&rand_out[0], &packet->data[ATCA_RSP_DATA_IDX], 32);
         }
 
     } while (false);
 
+    calib_packet_free(packet);
     return status;
 }
 

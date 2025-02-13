@@ -49,46 +49,56 @@
  */
 ATCA_STATUS calib_gendig(ATCADevice device, uint8_t zone, uint16_t key_id, const uint8_t *other_data, uint8_t other_data_size)
 {
-    ATCAPacket packet;
+    ATCAPacket * packet = NULL;
     ATCA_STATUS status;
     bool is_no_mac_key = false;
 
-    if ((device == NULL) || (other_data_size > 0u && other_data == NULL))
-    {
-        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
-    }
-
-    if (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + other_data_size))
-    {
-        status = ATCA_TRACE(ATCA_INVALID_SIZE, "Invalid packet size received");
-    }
-
     do
     {
-        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
-
-        // build gendig command
-        packet.param1 = zone;
-        packet.param2 = key_id;
-
-        if (packet.param1 == GENDIG_ZONE_SHARED_NONCE && other_data_size >= ATCA_BLOCK_SIZE)
+        if ((device == NULL) || (other_data_size > 0u && other_data == NULL))
         {
-            (void)memcpy(&packet.data[0], &other_data[0], ATCA_BLOCK_SIZE);
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
         }
 
-        if (packet.param1 == GENDIG_ZONE_DATA && other_data_size >= ATCA_WORD_SIZE)
+        if (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + other_data_size))
         {
-            (void)memcpy(&packet.data[0], &other_data[0], ATCA_WORD_SIZE);
+            status = ATCA_TRACE(ATCA_INVALID_SIZE, "Invalid packet size received");
+            break;
+        }
+
+        packet = calib_packet_alloc();
+        if(NULL == packet)
+        {
+            (void)ATCA_TRACE(ATCA_ALLOC_FAILURE, "calib_packet_alloc - failed");
+            status = ATCA_ALLOC_FAILURE;
+            break;
+        }
+
+        (void)memset(packet, 0x00, sizeof(ATCAPacket));
+
+        // build gendig command
+        packet->param1 = zone;
+        packet->param2 = key_id;
+
+        if (packet->param1 == GENDIG_ZONE_SHARED_NONCE && other_data_size >= ATCA_BLOCK_SIZE)
+        {
+            (void)memcpy(&packet->data[0], &other_data[0], ATCA_BLOCK_SIZE);
+        }
+
+        if (packet->param1 == GENDIG_ZONE_DATA && other_data_size >= ATCA_WORD_SIZE)
+        {
+            (void)memcpy(&packet->data[0], &other_data[0], ATCA_WORD_SIZE);
             is_no_mac_key = true;
         }
 
-        if ((status = atGenDig(atcab_get_device_type_ext(device), &packet, is_no_mac_key)) != ATCA_SUCCESS)
+        if ((status = atGenDig(atcab_get_device_type_ext(device), packet, is_no_mac_key)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "atGenDig - failed");
             break;
         }
 
-        if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(packet, device)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "calib_gendig - execution failed");
             break;
@@ -96,6 +106,7 @@ ATCA_STATUS calib_gendig(ATCADevice device, uint8_t zone, uint16_t key_id, const
 
     } while (false);
 
+    calib_packet_free(packet);
     return status;
 }
 #endif /* CALIB_GENDIG_EN */

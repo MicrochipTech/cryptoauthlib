@@ -59,6 +59,8 @@
 #define ATCA_SHA512_BLOCK_SIZE              (128u)
 #define ATCA_SHA512_DIGEST_SIZE             (64u)
 
+#define ATCA_SHA224_DIGEST_SIZE             (28u)
+
 #define ATCA_AES128_BLOCK_SIZE              (16u)
 #define ATCA_AES128_KEY_SIZE                (16)
 
@@ -68,16 +70,55 @@
 #define ATCA_ECCP256_MSG_SIZE               (32u)
 #define ATCA_KEY_TYPE_ECCP256               (0u)
 #define ATCA_ECCP256_KEY_SIZE               (32u)
+#define ATCA_ECCP224_PUBKEY_SIZE            (56u)
 #define ATCA_ECCP256_PUBKEY_SIZE            (64u)
+#define ATCA_ECCP384_PUBKEY_SIZE            (96u)
+#define ATCA_ECCP521_PUBKEY_SIZE            (132u)
 #define ATCA_ECCP256_PVTKEY_SIZE            (32u)
 #define ATCA_ECCP256_SIG_SIZE               (64u)
+#define ATCA_ECCP384_SIG_SIZE               (96u)
+#define ATCA_ECCP521_SIG_SIZE               (132u)
 #define ATCA_ECCP256_OID_SIZE               (10u)
 #define ATCA_ECCP256_ASN1_HDR_SIZE          (27u)
 #define ATCA_MAX_ECC_RSA_PB_KEY_SIZE        (512u)
 #define ATCA_RSA4K_ASN1_HDR_SIZE            (33u)
+#define ATCA_ECC_SIG_OVERHEAD_SIZE          (8u)
+#define ATCA_MAX_SLOT_NUM                   (16)
 
+#if ATCA_TA_SUPPORT
+#define ATCA_MAX_ECC_PB_KEY_SIZE            (132u)
+#define ATCA_MAX_ECC_SIG_SIZE               (132u)
+#define ATCA_MAX_DATA_SIZE                  (512u)
+#define ATCA_KEY_TYPE_ECC_COUNT             (4u)
+#define ATCA_SERNUM_OFFSET                  (0u)
+#define ATCACERT_COMP_CERT_MAX_SIZE         (140u) //64 bytes signature, 3 bytes encoded dates, 2 bytes signer id, 1 byte template id and chain id, 1 byte sn source and format version, 1 byte encoded years, remaining signature for ecc higher curves
+#define ATCACERT_MAX_SIG_OVERHEAD           (19u)  //30 82 xx xx 00 30 82 xx xx 02 82 xx xx 00 02 82 xx xx 00
+#define ATCACERT_MAX_R_SIG_OFFSET           (14u)  //30 82 xx xx 00 30 82 xx xx 02 82 xx xx 00
+#define ATCACERT_COMPCERT_OVERHEAD          (9u)
+#else
+#define ATCA_MAX_ECC_PB_KEY_SIZE            (72u)
+#define ATCA_MAX_ECC_SIG_SIZE               (64u)
+#define ATCA_MAX_DATA_SIZE                  (416)
+#define ATCA_KEY_TYPE_ECC_COUNT             (1u)
+#define ATCACERT_COMP_CERT_MAX_SIZE         (72u)  //64 bytes signature, 3 bytes encoded dates, 2 bytes signer id, 1 byte template id and chain id, 1 byte sn source and format version, 1 byte encoded years
+#define ATCACERT_MAX_SIG_OVERHEAD           (11u)  //30 xx 00 30 xx 02 rlen 00 02 slen 00  
+#define ATCACERT_MAX_R_SIG_OFFSET           (8u)   //30 xx 00 30 xx 02 rlen 00
+#define ATCACERT_COMPCERT_OVERHEAD          (0u)
+#endif
+
+#ifndef ATCA_BLOCK_SIZE
+#define ATCA_BLOCK_SIZE                     (32u)
+#endif
+
+#define R_S_LEN                             (ATCA_MAX_ECC_SIG_SIZE / 2u)
 #define ATCA_ECC_UNCOMPRESSED_TYPE          ((uint8_t)0x04)
 #define ATCA_ECC_UNCOMPRESSED_TYPE_OFFSET   (1u)
+#define ATCA_DEDICATED_DATA_SIZE            (16u)
+#define ATCA_CA_SERNUM_SIZE                 (9u)
+#define ATCA_TA_SERNUM_SIZE                 (8u)
+#define ATCA_MAX_SERNUM_SIZE                (9u)
+#define ATCA_CA_MAX_SIG_OVERHEAD            (11u)
+#define ATCA_TA_MAX_SIG_OVERHEAD            (19u)
 
 #define ATCA_ZONE_CONFIG                    ((uint8_t)0x00)
 #define ATCA_ZONE_OTP                       ((uint8_t)0x01)

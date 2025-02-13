@@ -37,7 +37,7 @@
 #if ATCA_CA_SUPPORT
 #include "api_calib/test_calib.h"
 #endif
-#if ATCA_TA_SUPPORT && !defined(LIBRARY_USAGE_EN)
+#if ATCA_TA_SUPPORT && !LIBRARY_USAGE_EN_CHECK
 #include "api_talib/test_talib.h"
 #endif
 
@@ -143,9 +143,7 @@ t_test_case_info* wpc_tests[] =
 {
 #ifdef ATCA_TEST_WPC
     wpc_apis_unit_test_info,
-#ifndef DO_NOT_TEST_CERT
     wpccert_client_unit_test_info,
-#endif
 #endif
     (t_test_case_info*)NULL, /* Array Termination element*/
 };
@@ -369,7 +367,7 @@ void atca_test_assert_aes_enabled(UNITY_LINE_TYPE from_line)
     }
 }
 
-#if ATCA_TA_SUPPORT && !defined(LIBRARY_USAGE_EN)
+#if ATCA_TA_SUPPORT && !LIBRARY_USAGE_EN_CHECK
 //The Function checks the Secureboot mode byte in configuration zone , if it is not set, it skips the test
 void atca_test_assert_ta_sboot_enabled(UNITY_LINE_TYPE from_line, uint8_t mode)
 {
@@ -523,15 +521,38 @@ ATCA_STATUS atca_test_config_get_id(uint8_t test_type, uint16_t* handle)
 /* Helper function to execute genkey and retry if there are failures since there is
    a chance that the genkey will fail to produce a valid keypair and a retry is nearly
    always successful */
-#if (defined(ATCA_ECC_SUPPORT) || defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT) || ATCA_TA_SUPPORT) && !defined(LIBRARY_USAGE_EN)
-ATCA_STATUS atca_test_genkey(uint16_t key_id, uint8_t *public_key)
+#if (ATCA_ECC_SUPPORT || defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT) || ATCA_TA_SUPPORT) && !LIBRARY_USAGE_EN_CHECK
+ATCA_STATUS atca_test_genkey(ATCADevice device, uint16_t key_id, cal_buffer *public_key)
 {
     int attempts = 2;
-    ATCA_STATUS status;
+    ATCA_STATUS status = ATCA_BAD_PARAM;
+    ATCADeviceType devtype = atcab_get_device_type_ext(device);
 
     do
     {
-        status = atcab_genkey(key_id, public_key);
+#if ATCA_CA_SUPPORT
+        if (atcab_is_ca_device(devtype) || atcab_is_ca2_device(devtype))
+        {
+            status = atcab_genkey(key_id, public_key->buf);
+        }
+#endif
+#if ATCA_TA_SUPPORT
+        if (atcab_is_ta_device(devtype))
+        {
+            ta_handle_info handle_info;
+            if (ATCA_SUCCESS == (status = talib_info_get_handle_info(device, key_id, &handle_info)))
+            {
+                if ((handle_info.status & 3) == 0x00)
+                {
+                    status = talib_genkey(device, key_id, public_key);
+                }
+                else
+                {
+                    status = talib_get_pubkey(device, key_id, public_key);
+                }
+            }
+        }
+#endif
     }
     while (status && --attempts);
     return status;

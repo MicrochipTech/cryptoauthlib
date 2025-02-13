@@ -2210,7 +2210,7 @@ class atcab_mock(object):
         if not isinstance(device_private_key_slot, int):
             raise TypeError
 
-        if not isinstance(challenge, bytes):
+        if not isinstance(challenge, c_ptr):
             raise TypeError
 
         if not isinstance(response, c_ptr):
@@ -2233,7 +2233,7 @@ class atcab_mock(object):
 
     def atcacert_read_cert(self, cert_def, ca_public_key, cert, cert_size):
 
-        if not isinstance(ca_public_key, bytes):
+        if not isinstance(ca_public_key, c_ptr):
             raise TypeError
 
         if not isinstance(cert, c_ptr):

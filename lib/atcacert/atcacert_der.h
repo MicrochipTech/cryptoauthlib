@@ -130,37 +130,37 @@ ATCA_STATUS atcacert_der_dec_integer(const uint8_t* der_int,
  * (RFC 5280). This include the tag, length, and value.  The value of the signatureValue is the DER
  * encoding of the ECDSA-Sig-Value as specified by RFC 5480 and SECG SEC1.
  *
- * \param[in]  raw_sig          P256 ECDSA signature to be formatted. Input format is R and S
- *                              integers concatenated together. 64 bytes.
+ * \param[in]  raw_sig          Buffer pointing to the P256/P384/P521 ECDSA signature to be formatted. 
+ *                              Input format is R and S integers concatenated together.                            
  * \param[out] der_sig          X.509 format signature (TLV of signatureValue) will be returned in
  *                              this buffer.
- * \param[in,out] der_sig_size   As input, the size of the x509_sig buffer in bytes.
+ * \param[in,out] der_sig_size  As input, the size of the x509_sig buffer in bytes.
  *                              As output, the size of the returned X.509 signature in bytes.
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS atcacert_der_enc_ecdsa_sig_value(const uint8_t raw_sig[64],
+ATCA_STATUS atcacert_der_enc_ecdsa_sig_value(const cal_buffer* raw_sig,
                                              uint8_t*      der_sig,
                                              size_t*       der_sig_size);
 
 /**
- * \brief Parses an ECDSA P256 signature in the DER encoding as found in X.509 certificates.
+ * \brief Parses an ECDSA P256/P384/P521 signature in the DER encoding as found in X.509 certificates.
  *
  * This will parse the DER encoding of the signatureValue field as found in an X.509 certificate
  * (RFC 5280). x509_sig should include the tag, length, and value.  The value of the signatureValue
  * is the DER encoding of the ECDSA-Sig-Value as specified by RFC 5480 and SECG SEC1.
  *
  * \param[in]    der_sig        X.509 format signature (TLV of signatureValue) to be parsed.
- * \param[in,out] der_sig_size   As input, size of the der_sig buffer in bytes.
+ * \param[in,out] der_sig_size  As input, size of the der_sig buffer in bytes.
  *                              As output, size of the DER x.509 signature parsed from the buffer.
- * \param[out]   raw_sig        Parsed P256 ECDSA signature will be returned in this buffer.
- *                              Formatted as R and S integers concatenated together. 64 bytes.
+ * \param[out]   raw_sig        Buffer pointing to the parsed P256/P384/P521 ECDSA signature will be 
+ *                              returned. Formatted as R and S integers concatenated together.                   
  *
  * \return ATCACERT_E_SUCCESS on success, otherwise an error code.
  */
 ATCA_STATUS atcacert_der_dec_ecdsa_sig_value(const uint8_t * der_sig,
                                              size_t *        der_sig_size,
-                                             uint8_t         raw_sig[64]);
+                                             cal_buffer*     raw_sig);
 
 /** @} */
 #ifdef __cplusplus

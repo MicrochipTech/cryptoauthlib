@@ -327,6 +327,9 @@ static void test_basic_hw_sha2_256_nist_simple(const char* filename)
         count++;
     }
     while (status == ATCA_SUCCESS);
+
+    (void)fclose(rsp_file);
+
     TEST_ASSERT_MESSAGE(count > 0, "No long tests found in file.");
 }
 
@@ -374,6 +377,8 @@ TEST(atca_cmd_basic_test, sha2_256_nist_monte)
         TEST_ASSERT_EQUAL_MEMORY(md_ref, &md[2], sizeof(md_ref));
         memcpy(seed, &md[2], sizeof(seed));
     }
+
+     (void)fclose(rsp_file);
 }
 #endif
 

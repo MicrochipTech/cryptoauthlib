@@ -55,37 +55,46 @@
  */
 ATCA_STATUS calib_sign_base(ATCADevice device, uint8_t mode, uint16_t key_id, uint8_t *signature)
 {
-    ATCAPacket packet;
+    ATCAPacket * packet = NULL;
     ATCA_STATUS status;
-
-    if ((device == NULL) || (signature == NULL))
-    {
-        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
-    }
 
     do
     {
-        (void)memset(&packet, 0x00, sizeof(ATCAPacket));
+        if ((device == NULL) || (signature == NULL))
+        {
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
+        }
+
+        packet = calib_packet_alloc();
+        if(NULL == packet)
+        {
+            (void)ATCA_TRACE(ATCA_ALLOC_FAILURE, "calib_packet_alloc - failed");
+            status = ATCA_ALLOC_FAILURE;
+            break;
+        }
+
+        (void)memset(packet, 0x00, sizeof(ATCAPacket));
 
         // Build sign command
-        packet.param1 = mode;
-        packet.param2 = key_id;
-        if ((status = atSign(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
+        packet->param1 = mode;
+        packet->param2 = key_id;
+        if ((status = atSign(atcab_get_device_type_ext(device), packet)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "atSign - failed");
             break;
         }
 
-        if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(packet, device)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "calib_sign_base - execution failed");
             break;
         }
 
 
-        if (packet.data[ATCA_COUNT_IDX] == (ATCA_SIG_SIZE + ATCA_PACKET_OVERHEAD))
+        if (packet->data[ATCA_COUNT_IDX] == (ATCA_SIG_SIZE + ATCA_PACKET_OVERHEAD))
         {
-            (void)memcpy(signature, &packet.data[ATCA_RSP_DATA_IDX], ATCA_SIG_SIZE);
+            (void)memcpy(signature, &packet->data[ATCA_RSP_DATA_IDX], ATCA_SIG_SIZE);
         }
         else
         {
@@ -94,6 +103,7 @@ ATCA_STATUS calib_sign_base(ATCADevice device, uint8_t mode, uint16_t key_id, ui
 
     } while (false);
 
+    calib_packet_free(packet);
     return status;
 }
 
@@ -252,26 +262,33 @@ ATCA_STATUS calib_sign_internal(ATCADevice device, uint16_t key_id, bool is_inva
 ATCA_STATUS calib_ca2_sign(ATCADevice device, uint16_t key_id, const uint8_t* msg, uint8_t* signature)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
-    ATCAPacket packet;
-
-    (void)memset(&packet, 0x00, sizeof(ATCAPacket));
-
-    packet.param1 = 0x00;
-    packet.param2 = key_id;
+    ATCAPacket * packet = NULL;
 
     if ((NULL == device) || (NULL == msg))
     {
         status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
     }
 
+    packet = calib_packet_alloc();
+    if(NULL == packet)
+    {
+        (void)ATCA_TRACE(ATCA_ALLOC_FAILURE, "calib_packet_alloc - failed");
+        return ATCA_ALLOC_FAILURE;
+    }
+
+    (void)memset(packet, 0x00, sizeof(ATCAPacket));
+
+    packet->param1 = 0x00;
+    packet->param2 = key_id;
+
     if (ATCA_SUCCESS == status)
     {
         // copy message digest into i/o buffer
-        (void)memcpy(packet.data, msg, ATCA_SHA256_DIGEST_SIZE);
+        (void)memcpy(packet->data, msg, ATCA_SHA256_DIGEST_SIZE);
 
-        (void)atSign(atcab_get_device_type_ext(device), &packet);
+        (void)atSign(atcab_get_device_type_ext(device), packet);
 
-        if (ATCA_SUCCESS != (status = atca_execute_command(&packet, device)))
+        if (ATCA_SUCCESS != (status = atca_execute_command(packet, device)))
         {
             (void)ATCA_TRACE(status, "calib_ca2_sign - execution failed");
         }
@@ -281,9 +298,9 @@ ATCA_STATUS calib_ca2_sign(ATCADevice device, uint16_t key_id, const uint8_t* ms
     {
         if (signature != NULL)
         {
-            if (packet.data[ATCA_COUNT_IDX] == (ATCA_SIG_SIZE + ATCA_PACKET_OVERHEAD))
+            if (packet->data[ATCA_COUNT_IDX] == (ATCA_SIG_SIZE + ATCA_PACKET_OVERHEAD))
             {
-                (void)memcpy(signature, &packet.data[ATCA_RSP_DATA_IDX], ATCA_SIG_SIZE);
+                (void)memcpy(signature, &packet->data[ATCA_RSP_DATA_IDX], ATCA_SIG_SIZE);
             }
             else
             {
@@ -293,6 +310,7 @@ ATCA_STATUS calib_ca2_sign(ATCADevice device, uint16_t key_id, const uint8_t* ms
         }
     }
 
+    calib_packet_free(packet);    
     return status;
 }
 #endif

@@ -28,6 +28,9 @@
 #include "app/wpc/wpc_apis.h"
 #include "app/wpc/zcust_def_1_signer.h"
 #include "app/wpc/zcust_def_2_device.h"
+#include "app/wpc/zcust_def_3_device.h"
+#include "app/wpc/zcust_def_4_signer.h"
+#include "app/wpc/zcust_def_5_device.h"
 #include "atcacert/atcacert_def.h"
 
 TEST_GROUP(wpc_apis);
@@ -134,7 +137,8 @@ TEST(wpc_apis, wpc_challenge_request_response)
 
 bool test_wpc_api_cond(void)
 {
-    return (ATECC608 == atca_test_get_device_type() || atcab_is_ca2_device(atca_test_get_device_type()));
+    return (ATECC608 == atca_test_get_device_type() || atcab_is_ca2_device(atca_test_get_device_type()) \
+                                || atcab_is_ta_device(atca_test_get_device_type()));
 }
 
 // *INDENT-OFF* - Preserve formatting

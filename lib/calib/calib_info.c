@@ -54,29 +54,38 @@
  */
 ATCA_STATUS calib_info_base(ATCADevice device, uint8_t mode, uint16_t param2, uint8_t* out_data)
 {
-    ATCAPacket packet;
+    ATCAPacket * packet = NULL;
     ATCA_STATUS status;
-
-    if (device == NULL)
-    {
-        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
-    }
-
-    (void)memset(&packet, 0x00, sizeof(ATCAPacket));
-
-    // build an info command
-    packet.param1 = mode;
-    packet.param2 = param2;
 
     do
     {
-        if ((status = atInfo(atcab_get_device_type_ext(device), &packet)) != ATCA_SUCCESS)
+        if (device == NULL)
+        {
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
+        }
+
+        packet = calib_packet_alloc();
+        if(NULL == packet)
+        {
+            (void)ATCA_TRACE(ATCA_ALLOC_FAILURE, "calib_packet_alloc - failed");
+            status = ATCA_ALLOC_FAILURE;
+            break;
+        }
+
+        (void)memset(packet, 0x00, sizeof(ATCAPacket));
+
+        // build an info command
+        packet->param1 = mode;
+        packet->param2 = param2;
+
+        if ((status = atInfo(atcab_get_device_type_ext(device), packet)) != ATCA_SUCCESS)
         {
             (void)ATCA_TRACE(status, "atInfo - failed");
             break;
         }
 
-        if ((status = atca_execute_command(&packet, device)) != ATCA_SUCCESS)
+        if ((status = atca_execute_command(packet, device)) != ATCA_SUCCESS)
         {
             // For ECC204,TA010,SHA10x Lock status and Key valid modes return their status in first byte.
             // So, need to consider 01 as valid response as it presents lock/keyvalid status.
@@ -95,18 +104,18 @@ ATCA_STATUS calib_info_base(ATCADevice device, uint8_t mode, uint16_t param2, ui
             }
         }
 
-        uint8_t response = packet.data[ATCA_COUNT_IDX];
+        uint8_t response = packet->data[ATCA_COUNT_IDX];
 
         if ((response != 0u) && (NULL != out_data))
         {
             if (((INFO_MODE_LOCK_STATUS == mode) || (INFO_MODE_KEY_VALID == mode))
                 && (atcab_is_ca2_device(device->mIface.mIfaceCFG->devtype)))
             {
-                (void)memcpy(out_data, &packet.data[ATCA_RSP_DATA_IDX], 1);
+                (void)memcpy(out_data, &packet->data[ATCA_RSP_DATA_IDX], 1);
             }
             else if (response >= 7u)
             {
-                (void)memcpy(out_data, &packet.data[ATCA_RSP_DATA_IDX], 4);
+                (void)memcpy(out_data, &packet->data[ATCA_RSP_DATA_IDX], 4);
             }
             else
             {
@@ -116,6 +125,7 @@ ATCA_STATUS calib_info_base(ATCADevice device, uint8_t mode, uint16_t param2, ui
         }
     } while (false);
 
+    calib_packet_free(packet);
     return status;
 }
 
