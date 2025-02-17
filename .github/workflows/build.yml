@@ -107,6 +107,7 @@ jobs:
         if: env.skip_build != 'true'
         with:
           path: python/dist/*.tar.gz
+          name: sdist
           overwrite: true
 
   upload_pypi:
@@ -118,11 +119,18 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
-      - uses: actions/download-artifact@v4.1.7
+      - name: Download wheel artifacts
+        uses: actions/download-artifact@v4.1.7
         with:
           name: wheelhouse-${{ matrix.os }}
           path: dist
 
+      - name: Download sdist artifact
+        uses: actions/download-artifact@v4.1.7
+        with:
+          name: sdist
+          path: dist
+  
       - name: Production Release
         if: startsWith(github.repository, 'MicrochipTech')
         uses: pypa/gh-action-pypi-publish@release/v1.10
