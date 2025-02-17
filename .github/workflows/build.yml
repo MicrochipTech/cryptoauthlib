@@ -54,6 +54,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           path: wheelhouse/*.whl
+          name: wheelhouse-${{ matrix.os }}
           overwrite: true
 
   build_sdist:
@@ -106,6 +107,7 @@ jobs:
         if: env.skip_build != 'true'
         with:
           path: python/dist/*.tar.gz
+          name: sdist-${{ matrix.os }}
           overwrite: true
 
   upload_pypi:
@@ -116,7 +118,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4.1.7
         with:
-          name: artifact
+          name: wheelhouse-${{ matrix.os }}
           path: dist
 
       - name: Production Release
