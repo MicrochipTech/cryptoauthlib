@@ -107,13 +107,15 @@ jobs:
         if: env.skip_build != 'true'
         with:
           path: python/dist/*.tar.gz
-          name: sdist-${{ matrix.os }}
           overwrite: true
 
   upload_pypi:
     if:  github.event_name == 'push' && startsWith(github.ref, 'refs/tags/20')
     needs: [build_wheels, build_sdist]
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
       - uses: actions/download-artifact@v4.1.7
