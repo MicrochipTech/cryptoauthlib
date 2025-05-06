@@ -13,7 +13,7 @@ var dir_26647cdac0a1f8c717d44b4eb3b4ec89 =
     [ "atcacert_host_hw.c", "a00335.html", null ],
     [ "atcacert_host_hw.h", "a00338.html", null ],
     [ "atcacert_host_sw.c", "a00341.html", null ],
-    [ "atcacert_host_sw.h", "a00344.html", "a00344" ],
+    [ "atcacert_host_sw.h", "a00344.html", null ],
     [ "atcacert_pem.c", "a00347.html", null ],
     [ "atcacert_pem.h", "a00350.html", "a00350" ]
 ];

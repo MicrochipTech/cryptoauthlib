@@ -1,6 +1,6 @@
 var a00356 =
 [
-    [ "cal_buffer_s", "a01664.html", "a01664" ],
+    [ "cal_buffer_s", "a01673.html", "a01673" ],
     [ "cal_buf_init_const_ptr", "a00356.html#a923fdd71f9a98e47040d26acb74a0202", null ],
     [ "cal_buf_read_bytes", "a00356.html#acc0d724d5fc815cc98dea12aa5bb15d0", null ],
     [ "cal_buf_read_number", "a00356.html#a546b07423022359a8b27fcbeadfdd93d", null ],

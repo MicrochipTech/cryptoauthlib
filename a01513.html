@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: cryptoauthlib.atcacert Namespace Reference</title>
+<title>CryptoAuthLib: Basic Crypto API methods for CryptoAuth Devices (calib_)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.8</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,189 +99,479 @@ $(document).ready(function(){initNavTree('a01513.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">cryptoauthlib.atcacert Namespace Reference</div></div>
+  <div class="headertitle"><div class="title">Basic Crypto API methods for CryptoAuth Devices (calib_)</div></div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
+
+<p>These methods provide a simple API to CryptoAuth chips.  
+<a href="#details">More...</a></p>
+
+
+<h3><a id="md_lib_calib_README" name="md_lib_calib_README"></a>calib directory - Purpose</h3><div class="textblock">The purpose of this directory is to contain the files implementing the APIs for a basic interface to the core CryptoAuthLib library.High-level functions like these make it very convenient to use the library when standard configurations and defaults are in play. They are the easiest to use when developing examples or trying to understand the "flow" of an authentication operation without getting overwhelmed by the details.This makes simple jobs easy and if you need more sophistication and power, you can employ the full power of the CryptoAuthLib object model.See the Doxygen documentation in cryptoauthlib/docs for details on the API of the calib commands. </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02284.html">atcacert_cert_element_t</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01677.html">atca_sha256_ctx</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02280.html">atcacert_cert_loc_t</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01685.html">atsha204a_config_s</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02248.html">atcacert_cert_sn_src_t</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01689.html">atecc508a_config_s</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02244.html">atcacert_cert_type_t</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01693.html">atecc608_config_s</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02272.html">atcacert_comp_data_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02260.html">atcacert_date_format_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02288.html">atcacert_def_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02276.html">atcacert_device_loc_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02252.html">atcacert_device_zone_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02264.html">atcacert_std_cert_element_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02292.html">atcacert_tm_utc_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02256.html">atcacert_transform_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02268.html">CertStatus</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga6a66d397e0b4e8c8ff089f252cf1332a"><td class="memItemLeft" align="right" valign="top"><a id="ga6a66d397e0b4e8c8ff089f252cf1332a" name="ga6a66d397e0b4e8c8ff089f252cf1332a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_AES_ENABLE_EN_SHIFT</b>&#160;&#160;&#160;(0)</td></tr>
+<tr class="separator:ga6a66d397e0b4e8c8ff089f252cf1332a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaf352f7f804cefed07606d4b0acd2377"><td class="memItemLeft" align="right" valign="top"><a id="gaaf352f7f804cefed07606d4b0acd2377" name="gaaf352f7f804cefed07606d4b0acd2377"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_AES_ENABLE_EN_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_AES_ENABLE_EN_SHIFT)</td></tr>
+<tr class="separator:gaaf352f7f804cefed07606d4b0acd2377"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf4f8afaa94b694a450ae376f73179142"><td class="memItemLeft" align="right" valign="top"><a id="gaf4f8afaa94b694a450ae376f73179142" name="gaf4f8afaa94b694a450ae376f73179142"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_I2C_ENABLE_EN_SHIFT</b>&#160;&#160;&#160;(0)</td></tr>
+<tr class="separator:gaf4f8afaa94b694a450ae376f73179142"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad2a3b528d5e9d6ce323573d6e733f558"><td class="memItemLeft" align="right" valign="top"><a id="gad2a3b528d5e9d6ce323573d6e733f558" name="gad2a3b528d5e9d6ce323573d6e733f558"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_I2C_ENABLE_EN_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_I2C_ENABLE_EN_SHIFT)</td></tr>
+<tr class="separator:gad2a3b528d5e9d6ce323573d6e733f558"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5449a99dea2b9205435b901999d5c567"><td class="memItemLeft" align="right" valign="top"><a id="ga5449a99dea2b9205435b901999d5c567" name="ga5449a99dea2b9205435b901999d5c567"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_COUNTER_MATCH_EN_SHIFT</b>&#160;&#160;&#160;(0)</td></tr>
+<tr class="separator:ga5449a99dea2b9205435b901999d5c567"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga77998724064dcb37f85efa0766276387"><td class="memItemLeft" align="right" valign="top"><a id="ga77998724064dcb37f85efa0766276387" name="ga77998724064dcb37f85efa0766276387"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_COUNTER_MATCH_EN_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_COUNTER_MATCH_EN_SHIFT)</td></tr>
+<tr class="separator:ga77998724064dcb37f85efa0766276387"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaada85a3f27552ba108b061e1da093a7a"><td class="memItemLeft" align="right" valign="top"><a id="gaada85a3f27552ba108b061e1da093a7a" name="gaada85a3f27552ba108b061e1da093a7a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_COUNTER_MATCH_KEY_SHIFT</b>&#160;&#160;&#160;(4)</td></tr>
+<tr class="separator:gaada85a3f27552ba108b061e1da093a7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5b3ba4ddf5c536deb710e523e47eb8a5"><td class="memItemLeft" align="right" valign="top"><a id="ga5b3ba4ddf5c536deb710e523e47eb8a5" name="ga5b3ba4ddf5c536deb710e523e47eb8a5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_COUNTER_MATCH_KEY_MASK</b>&#160;&#160;&#160;(0x0Fu &lt;&lt; ATCA_COUNTER_MATCH_KEY_SHIFT)</td></tr>
+<tr class="separator:ga5b3ba4ddf5c536deb710e523e47eb8a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4ad0667bb5b1fb734479cfa222cfccf0"><td class="memItemLeft" align="right" valign="top"><a id="ga4ad0667bb5b1fb734479cfa222cfccf0" name="ga4ad0667bb5b1fb734479cfa222cfccf0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_COUNTER_MATCH_KEY</b>(v)&#160;&#160;&#160;(ATCA_COUNTER_MATCH_KEY_MASK &amp; (v &lt;&lt; ATCA_COUNTER_MATCH_KEY_SHIFT))</td></tr>
+<tr class="separator:ga4ad0667bb5b1fb734479cfa222cfccf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeebe505df4c5456fd970e4d4f2954ba5"><td class="memItemLeft" align="right" valign="top"><a id="gaeebe505df4c5456fd970e4d4f2954ba5" name="gaeebe505df4c5456fd970e4d4f2954ba5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_MODE_I2C_EXTRA_SHIFT</b>&#160;&#160;&#160;(0)</td></tr>
+<tr class="separator:gaeebe505df4c5456fd970e4d4f2954ba5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c9b4bf34034eb087fd59c9d61001de1"><td class="memItemLeft" align="right" valign="top"><a id="ga7c9b4bf34034eb087fd59c9d61001de1" name="ga7c9b4bf34034eb087fd59c9d61001de1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_MODE_I2C_EXTRA_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_CHIP_MODE_I2C_EXTRA_SHIFT)</td></tr>
+<tr class="separator:ga7c9b4bf34034eb087fd59c9d61001de1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0bbebd66468ae4305057b92bd222a1e5"><td class="memItemLeft" align="right" valign="top"><a id="ga0bbebd66468ae4305057b92bd222a1e5" name="ga0bbebd66468ae4305057b92bd222a1e5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_MODE_TTL_EN_SHIFT</b>&#160;&#160;&#160;(1)</td></tr>
+<tr class="separator:ga0bbebd66468ae4305057b92bd222a1e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4cc5466fa93ebbd2c532ac02a394b3c5"><td class="memItemLeft" align="right" valign="top"><a id="ga4cc5466fa93ebbd2c532ac02a394b3c5" name="ga4cc5466fa93ebbd2c532ac02a394b3c5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_MODE_TTL_EN_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_CHIP_MODE_TTL_EN_SHIFT)</td></tr>
+<tr class="separator:ga4cc5466fa93ebbd2c532ac02a394b3c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga593e8ea3f7dab06a364563ae680c896a"><td class="memItemLeft" align="right" valign="top"><a id="ga593e8ea3f7dab06a364563ae680c896a" name="ga593e8ea3f7dab06a364563ae680c896a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_MODE_WDG_LONG_SHIFT</b>&#160;&#160;&#160;(2)</td></tr>
+<tr class="separator:ga593e8ea3f7dab06a364563ae680c896a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacd3182785479e448ea5192050c5e14a3"><td class="memItemLeft" align="right" valign="top"><a id="gacd3182785479e448ea5192050c5e14a3" name="gacd3182785479e448ea5192050c5e14a3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_MODE_WDG_LONG_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_CHIP_MODE_WDG_LONG_SHIFT)</td></tr>
+<tr class="separator:gacd3182785479e448ea5192050c5e14a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaf87fd24438b353507e0c8088b41fb23"><td class="memItemLeft" align="right" valign="top"><a id="gaaf87fd24438b353507e0c8088b41fb23" name="gaaf87fd24438b353507e0c8088b41fb23"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_MODE_CLK_DIV_SHIFT</b>&#160;&#160;&#160;(3)</td></tr>
+<tr class="separator:gaaf87fd24438b353507e0c8088b41fb23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9494cdf1e2f28d501d2dc49fe6e88d7c"><td class="memItemLeft" align="right" valign="top"><a id="ga9494cdf1e2f28d501d2dc49fe6e88d7c" name="ga9494cdf1e2f28d501d2dc49fe6e88d7c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_MODE_CLK_DIV_MASK</b>&#160;&#160;&#160;(0x1Fu &lt;&lt; ATCA_CHIP_MODE_CLK_DIV_SHIFT)</td></tr>
+<tr class="separator:ga9494cdf1e2f28d501d2dc49fe6e88d7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6a4f23a403fadbcf5d61810d2a626da1"><td class="memItemLeft" align="right" valign="top"><a id="ga6a4f23a403fadbcf5d61810d2a626da1" name="ga6a4f23a403fadbcf5d61810d2a626da1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_MODE_CLK_DIV</b>(v)&#160;&#160;&#160;(ATCA_CHIP_MODE_CLK_DIV_MASK &amp; (v &lt;&lt; ATCA_CHIP_MODE_CLK_DIV_SHIFT))</td></tr>
+<tr class="separator:ga6a4f23a403fadbcf5d61810d2a626da1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga63eb08b098edcad508d09d51a42b1ccd"><td class="memItemLeft" align="right" valign="top"><a id="ga63eb08b098edcad508d09d51a42b1ccd" name="ga63eb08b098edcad508d09d51a42b1ccd"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_READKEY_SHIFT</b>&#160;&#160;&#160;(0)</td></tr>
+<tr class="separator:ga63eb08b098edcad508d09d51a42b1ccd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6e3ce97d8fa7ba3b9f88a6f63f80639e"><td class="memItemLeft" align="right" valign="top"><a id="ga6e3ce97d8fa7ba3b9f88a6f63f80639e" name="ga6e3ce97d8fa7ba3b9f88a6f63f80639e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_READKEY_MASK</b>&#160;&#160;&#160;(0x0Fu &lt;&lt; ATCA_SLOT_CONFIG_READKEY_SHIFT)</td></tr>
+<tr class="separator:ga6e3ce97d8fa7ba3b9f88a6f63f80639e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga057fe1c75beb5acaa41a358377b5ca38"><td class="memItemLeft" align="right" valign="top"><a id="ga057fe1c75beb5acaa41a358377b5ca38" name="ga057fe1c75beb5acaa41a358377b5ca38"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_READKEY</b>(v)&#160;&#160;&#160;(ATCA_SLOT_CONFIG_READKEY_MASK &amp; (v &lt;&lt; ATCA_SLOT_CONFIG_READKEY_SHIFT))</td></tr>
+<tr class="separator:ga057fe1c75beb5acaa41a358377b5ca38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2a887c52723d5d0ac39ee8f9f5b6c1c6"><td class="memItemLeft" align="right" valign="top"><a id="ga2a887c52723d5d0ac39ee8f9f5b6c1c6" name="ga2a887c52723d5d0ac39ee8f9f5b6c1c6"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_NOMAC_SHIFT</b>&#160;&#160;&#160;(4)</td></tr>
+<tr class="separator:ga2a887c52723d5d0ac39ee8f9f5b6c1c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5403afa69d2b937625cd8656e0dd2dac"><td class="memItemLeft" align="right" valign="top"><a id="ga5403afa69d2b937625cd8656e0dd2dac" name="ga5403afa69d2b937625cd8656e0dd2dac"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_NOMAC_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_SLOT_CONFIG_NOMAC_SHIFT)</td></tr>
+<tr class="separator:ga5403afa69d2b937625cd8656e0dd2dac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad3185c4b36c1b414ef0539a75298633"><td class="memItemLeft" align="right" valign="top"><a id="gaad3185c4b36c1b414ef0539a75298633" name="gaad3185c4b36c1b414ef0539a75298633"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_LIMITED_USE_SHIFT</b>&#160;&#160;&#160;(5)</td></tr>
+<tr class="separator:gaad3185c4b36c1b414ef0539a75298633"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga34810634dafb33eb905324315ab7f9cf"><td class="memItemLeft" align="right" valign="top"><a id="ga34810634dafb33eb905324315ab7f9cf" name="ga34810634dafb33eb905324315ab7f9cf"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_LIMITED_USE_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_SLOT_CONFIG_LIMITED_USE_SHIFT)</td></tr>
+<tr class="separator:ga34810634dafb33eb905324315ab7f9cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae5d428a4c93c9d16e4ac3ae2b398380e"><td class="memItemLeft" align="right" valign="top"><a id="gae5d428a4c93c9d16e4ac3ae2b398380e" name="gae5d428a4c93c9d16e4ac3ae2b398380e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_ENC_READ_SHIFT</b>&#160;&#160;&#160;(6)</td></tr>
+<tr class="separator:gae5d428a4c93c9d16e4ac3ae2b398380e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga09fec7dfe5053d2c2d1a28e60a8cb744"><td class="memItemLeft" align="right" valign="top"><a id="ga09fec7dfe5053d2c2d1a28e60a8cb744" name="ga09fec7dfe5053d2c2d1a28e60a8cb744"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_ENC_READ_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_SLOT_CONFIG_ENC_READ_SHIFT)</td></tr>
+<tr class="separator:ga09fec7dfe5053d2c2d1a28e60a8cb744"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafdde7d0e789df51ab9dbd625ba760dc7"><td class="memItemLeft" align="right" valign="top"><a id="gafdde7d0e789df51ab9dbd625ba760dc7" name="gafdde7d0e789df51ab9dbd625ba760dc7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_IS_SECRET_SHIFT</b>&#160;&#160;&#160;(7)</td></tr>
+<tr class="separator:gafdde7d0e789df51ab9dbd625ba760dc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga736bf89e0ff1c8da62a7a935d72ea13b"><td class="memItemLeft" align="right" valign="top"><a id="ga736bf89e0ff1c8da62a7a935d72ea13b" name="ga736bf89e0ff1c8da62a7a935d72ea13b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_IS_SECRET_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_SLOT_CONFIG_IS_SECRET_SHIFT)</td></tr>
+<tr class="separator:ga736bf89e0ff1c8da62a7a935d72ea13b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga26271d114bd3bc8e91a6ebe5706c24cf"><td class="memItemLeft" align="right" valign="top"><a id="ga26271d114bd3bc8e91a6ebe5706c24cf" name="ga26271d114bd3bc8e91a6ebe5706c24cf"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_WRITE_KEY_SHIFT</b>&#160;&#160;&#160;(8)</td></tr>
+<tr class="separator:ga26271d114bd3bc8e91a6ebe5706c24cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0c43c204f5b80620bc3f3320c2ab770e"><td class="memItemLeft" align="right" valign="top"><a id="ga0c43c204f5b80620bc3f3320c2ab770e" name="ga0c43c204f5b80620bc3f3320c2ab770e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_WRITE_KEY_MASK</b>&#160;&#160;&#160;((uint32_t)0x0Fu &lt;&lt; ATCA_SLOT_CONFIG_WRITE_KEY_SHIFT)</td></tr>
+<tr class="separator:ga0c43c204f5b80620bc3f3320c2ab770e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8b97601b2dfd14dc31e52cad1a1932b0"><td class="memItemLeft" align="right" valign="top"><a id="ga8b97601b2dfd14dc31e52cad1a1932b0" name="ga8b97601b2dfd14dc31e52cad1a1932b0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_WRITE_KEY</b>(v)&#160;&#160;&#160;(ATCA_SLOT_CONFIG_WRITE_KEY_MASK &amp; (v &lt;&lt; ATCA_SLOT_CONFIG_WRITE_KEY_SHIFT))</td></tr>
+<tr class="separator:ga8b97601b2dfd14dc31e52cad1a1932b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga09e263b522beb4e8609eca49556b5bd8"><td class="memItemLeft" align="right" valign="top"><a id="ga09e263b522beb4e8609eca49556b5bd8" name="ga09e263b522beb4e8609eca49556b5bd8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_WRITE_CONFIG_SHIFT</b>&#160;&#160;&#160;(12)</td></tr>
+<tr class="separator:ga09e263b522beb4e8609eca49556b5bd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad417a8b8a70ef2936f6e1f4db26c0682"><td class="memItemLeft" align="right" valign="top"><a id="gad417a8b8a70ef2936f6e1f4db26c0682" name="gad417a8b8a70ef2936f6e1f4db26c0682"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_WRITE_CONFIG_MASK</b>&#160;&#160;&#160;(((uint32_t)0x0Fu &lt;&lt; ATCA_SLOT_CONFIG_WRITE_CONFIG_SHIFT))</td></tr>
+<tr class="separator:gad417a8b8a70ef2936f6e1f4db26c0682"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7232c314df67e9865ef14488590d4266"><td class="memItemLeft" align="right" valign="top"><a id="ga7232c314df67e9865ef14488590d4266" name="ga7232c314df67e9865ef14488590d4266"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_WRITE_CONFIG</b>(v)&#160;&#160;&#160;((ATCA_SLOT_CONFIG_WRITE_CONFIG_MASK &amp; ((uint32_t)(v) &lt;&lt; ATCA_SLOT_CONFIG_WRITE_CONFIG_SHIFT)))</td></tr>
+<tr class="separator:ga7232c314df67e9865ef14488590d4266"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6c297f5d7d6c484d0aef64ab6f8d80e5"><td class="memItemLeft" align="right" valign="top"><a id="ga6c297f5d7d6c484d0aef64ab6f8d80e5" name="ga6c297f5d7d6c484d0aef64ab6f8d80e5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_EXT_SIG_SHIFT</b>&#160;&#160;&#160;(0)</td></tr>
+<tr class="separator:ga6c297f5d7d6c484d0aef64ab6f8d80e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf8ec26f2e18795a196663588436586bc"><td class="memItemLeft" align="right" valign="top"><a id="gaf8ec26f2e18795a196663588436586bc" name="gaf8ec26f2e18795a196663588436586bc"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_EXT_SIG_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_SLOT_CONFIG_EXT_SIG_SHIFT)</td></tr>
+<tr class="separator:gaf8ec26f2e18795a196663588436586bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2511b55f617499a7b94780aa6d83283e"><td class="memItemLeft" align="right" valign="top"><a id="ga2511b55f617499a7b94780aa6d83283e" name="ga2511b55f617499a7b94780aa6d83283e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_INT_SIG_SHIFT</b>&#160;&#160;&#160;(1)</td></tr>
+<tr class="separator:ga2511b55f617499a7b94780aa6d83283e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga53b96970d88a1b078e0ef5397edc7c0a"><td class="memItemLeft" align="right" valign="top"><a id="ga53b96970d88a1b078e0ef5397edc7c0a" name="ga53b96970d88a1b078e0ef5397edc7c0a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_INT_SIG_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_SLOT_CONFIG_INT_SIG_SHIFT)</td></tr>
+<tr class="separator:ga53b96970d88a1b078e0ef5397edc7c0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga954a51b6d035de6920800a7adcbc462b"><td class="memItemLeft" align="right" valign="top"><a id="ga954a51b6d035de6920800a7adcbc462b" name="ga954a51b6d035de6920800a7adcbc462b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_ECDH_SHIFT</b>&#160;&#160;&#160;(2)</td></tr>
+<tr class="separator:ga954a51b6d035de6920800a7adcbc462b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga98938abecd836a071f79095b5d059176"><td class="memItemLeft" align="right" valign="top"><a id="ga98938abecd836a071f79095b5d059176" name="ga98938abecd836a071f79095b5d059176"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_ECDH_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_SLOT_CONFIG_ECDH_SHIFT)</td></tr>
+<tr class="separator:ga98938abecd836a071f79095b5d059176"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac4129920b9b9b985289cd0d5860ab621"><td class="memItemLeft" align="right" valign="top"><a id="gac4129920b9b9b985289cd0d5860ab621" name="gac4129920b9b9b985289cd0d5860ab621"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_WRITE_ECDH_SHIFT</b>&#160;&#160;&#160;(3)</td></tr>
+<tr class="separator:gac4129920b9b9b985289cd0d5860ab621"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaacb707bd4ec4d810c5faf4749aa07d6f"><td class="memItemLeft" align="right" valign="top"><a id="gaacb707bd4ec4d810c5faf4749aa07d6f" name="gaacb707bd4ec4d810c5faf4749aa07d6f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_WRITE_ECDH_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_SLOT_CONFIG_WRITE_ECDH_SHIFT)</td></tr>
+<tr class="separator:gaacb707bd4ec4d810c5faf4749aa07d6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b817e88954f9d195af4d0836bd6e0fd"><td class="memItemLeft" align="right" valign="top"><a id="ga7b817e88954f9d195af4d0836bd6e0fd" name="ga7b817e88954f9d195af4d0836bd6e0fd"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_GEN_KEY_SHIFT</b>&#160;&#160;&#160;(8)</td></tr>
+<tr class="separator:ga7b817e88954f9d195af4d0836bd6e0fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga52b75ddfe96678b27116f7296c76188a"><td class="memItemLeft" align="right" valign="top"><a id="ga52b75ddfe96678b27116f7296c76188a" name="ga52b75ddfe96678b27116f7296c76188a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_GEN_KEY_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_SLOT_CONFIG_GEN_KEY_SHIFT)</td></tr>
+<tr class="separator:ga52b75ddfe96678b27116f7296c76188a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga317b17bd97e6db7c1144bd40750baa76"><td class="memItemLeft" align="right" valign="top"><a id="ga317b17bd97e6db7c1144bd40750baa76" name="ga317b17bd97e6db7c1144bd40750baa76"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_PRIV_WRITE_SHIFT</b>&#160;&#160;&#160;(9)</td></tr>
+<tr class="separator:ga317b17bd97e6db7c1144bd40750baa76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3ac7b6f5c2b1fb54ebae99688fa3bf70"><td class="memItemLeft" align="right" valign="top"><a id="ga3ac7b6f5c2b1fb54ebae99688fa3bf70" name="ga3ac7b6f5c2b1fb54ebae99688fa3bf70"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_CONFIG_PRIV_WRITE_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_SLOT_CONFIG_PRIV_WRITE_SHIFT)</td></tr>
+<tr class="separator:ga3ac7b6f5c2b1fb54ebae99688fa3bf70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga75fa72594c66cb5c42fd8f99a2656f67"><td class="memItemLeft" align="right" valign="top"><a id="ga75fa72594c66cb5c42fd8f99a2656f67" name="ga75fa72594c66cb5c42fd8f99a2656f67"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_USE_LOCK_ENABLE_SHIFT</b>&#160;&#160;&#160;(0)</td></tr>
+<tr class="separator:ga75fa72594c66cb5c42fd8f99a2656f67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga35a702ca660fd0acbc308fdaf100c938"><td class="memItemLeft" align="right" valign="top"><a id="ga35a702ca660fd0acbc308fdaf100c938" name="ga35a702ca660fd0acbc308fdaf100c938"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_USE_LOCK_ENABLE_MASK</b>&#160;&#160;&#160;(0x0Fu &lt;&lt; ATCA_USE_LOCK_ENABLE_SHIFT)</td></tr>
+<tr class="separator:ga35a702ca660fd0acbc308fdaf100c938"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1ecfe299a27bceb02c0f5e82e6785a34"><td class="memItemLeft" align="right" valign="top"><a id="ga1ecfe299a27bceb02c0f5e82e6785a34" name="ga1ecfe299a27bceb02c0f5e82e6785a34"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_USE_LOCK_KEY_SHIFT</b>&#160;&#160;&#160;(4)</td></tr>
+<tr class="separator:ga1ecfe299a27bceb02c0f5e82e6785a34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga469bc73b6509066ac35960b3c059eba4"><td class="memItemLeft" align="right" valign="top"><a id="ga469bc73b6509066ac35960b3c059eba4" name="ga469bc73b6509066ac35960b3c059eba4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_USE_LOCK_KEY_MASK</b>&#160;&#160;&#160;(0x0Fu &lt;&lt; ATCA_USE_LOCK_KEY_SHIFT)</td></tr>
+<tr class="separator:ga469bc73b6509066ac35960b3c059eba4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b63bed61bff098f623e72d58b0990ff"><td class="memItemLeft" align="right" valign="top"><a id="ga4b63bed61bff098f623e72d58b0990ff" name="ga4b63bed61bff098f623e72d58b0990ff"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_VOL_KEY_PERM_SLOT_SHIFT</b>&#160;&#160;&#160;(0)</td></tr>
+<tr class="separator:ga4b63bed61bff098f623e72d58b0990ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga494e390028c57397390ca0abf17a3410"><td class="memItemLeft" align="right" valign="top"><a id="ga494e390028c57397390ca0abf17a3410" name="ga494e390028c57397390ca0abf17a3410"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_VOL_KEY_PERM_SLOT_MASK</b>&#160;&#160;&#160;(0x0Fu &lt;&lt; ATCA_VOL_KEY_PERM_SLOT_SHIFT)</td></tr>
+<tr class="separator:ga494e390028c57397390ca0abf17a3410"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5458a24ab74394eedb500fde6fd01ce6"><td class="memItemLeft" align="right" valign="top"><a id="ga5458a24ab74394eedb500fde6fd01ce6" name="ga5458a24ab74394eedb500fde6fd01ce6"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_VOL_KEY_PERM_SLOT</b>(v)&#160;&#160;&#160;(ATCA_VOL_KEY_PERM_SLOT_MASK &amp; (v &lt;&lt; ATCA_VOL_KEY_PERM_SLOT_SHIFT))</td></tr>
+<tr class="separator:ga5458a24ab74394eedb500fde6fd01ce6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga72b97a330267d7f5952bab726c6f8feb"><td class="memItemLeft" align="right" valign="top"><a id="ga72b97a330267d7f5952bab726c6f8feb" name="ga72b97a330267d7f5952bab726c6f8feb"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_VOL_KEY_PERM_EN_SHIFT</b>&#160;&#160;&#160;(7)</td></tr>
+<tr class="separator:ga72b97a330267d7f5952bab726c6f8feb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa14f010fd93b6e32984f973b013019c"><td class="memItemLeft" align="right" valign="top"><a id="gafa14f010fd93b6e32984f973b013019c" name="gafa14f010fd93b6e32984f973b013019c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_VOL_KEY_PERM_EN_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_VOL_KEY_PERM_EN_SHIFT)</td></tr>
+<tr class="separator:gafa14f010fd93b6e32984f973b013019c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5c90a309e4d9c61aef4fb56cb6a8c18d"><td class="memItemLeft" align="right" valign="top"><a id="ga5c90a309e4d9c61aef4fb56cb6a8c18d" name="ga5c90a309e4d9c61aef4fb56cb6a8c18d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SECURE_BOOT_MODE_SHIFT</b>&#160;&#160;&#160;(0)</td></tr>
+<tr class="separator:ga5c90a309e4d9c61aef4fb56cb6a8c18d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8447469d9b89b8ab56918d3752c9227e"><td class="memItemLeft" align="right" valign="top"><a id="ga8447469d9b89b8ab56918d3752c9227e" name="ga8447469d9b89b8ab56918d3752c9227e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SECURE_BOOT_MODE_MASK</b>&#160;&#160;&#160;(0x03u &lt;&lt; ATCA_SECURE_BOOT_MODE_SHIFT)</td></tr>
+<tr class="separator:ga8447469d9b89b8ab56918d3752c9227e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga51272740e5edfcf1660029b796e4a962"><td class="memItemLeft" align="right" valign="top"><a id="ga51272740e5edfcf1660029b796e4a962" name="ga51272740e5edfcf1660029b796e4a962"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SECURE_BOOT_MODE</b>(v)&#160;&#160;&#160;(ATCA_SECURE_BOOT_MODE_MASK &amp; (v &lt;&lt; ATCA_SECURE_BOOT_MODE_SHIFT))</td></tr>
+<tr class="separator:ga51272740e5edfcf1660029b796e4a962"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae42387d57052faac40a28786930ad50f"><td class="memItemLeft" align="right" valign="top"><a id="gae42387d57052faac40a28786930ad50f" name="gae42387d57052faac40a28786930ad50f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SECURE_BOOT_PERSIST_EN_SHIFT</b>&#160;&#160;&#160;(3)</td></tr>
+<tr class="separator:gae42387d57052faac40a28786930ad50f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1b3fc7dfd03be91b272e2e50789b99c5"><td class="memItemLeft" align="right" valign="top"><a id="ga1b3fc7dfd03be91b272e2e50789b99c5" name="ga1b3fc7dfd03be91b272e2e50789b99c5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SECURE_BOOT_PERSIST_EN_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_SECURE_BOOT_PERSIST_EN_SHIFT)</td></tr>
+<tr class="separator:ga1b3fc7dfd03be91b272e2e50789b99c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga37b28c2ad75b960126ce4e4c0bbc7a56"><td class="memItemLeft" align="right" valign="top"><a id="ga37b28c2ad75b960126ce4e4c0bbc7a56" name="ga37b28c2ad75b960126ce4e4c0bbc7a56"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SECURE_BOOT_RAND_NONCE_SHIFT</b>&#160;&#160;&#160;(4)</td></tr>
+<tr class="separator:ga37b28c2ad75b960126ce4e4c0bbc7a56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd5ebaced4fc854b973ef7f7d9fe0bff"><td class="memItemLeft" align="right" valign="top"><a id="gafd5ebaced4fc854b973ef7f7d9fe0bff" name="gafd5ebaced4fc854b973ef7f7d9fe0bff"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SECURE_BOOT_RAND_NONCE_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_SECURE_BOOT_RAND_NONCE_SHIFT)</td></tr>
+<tr class="separator:gafd5ebaced4fc854b973ef7f7d9fe0bff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4e273d24b7496b2713b2bb39e998eec6"><td class="memItemLeft" align="right" valign="top"><a id="ga4e273d24b7496b2713b2bb39e998eec6" name="ga4e273d24b7496b2713b2bb39e998eec6"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SECURE_BOOT_DIGEST_SHIFT</b>&#160;&#160;&#160;(8)</td></tr>
+<tr class="separator:ga4e273d24b7496b2713b2bb39e998eec6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8a6a2eeb662d80243e6d7347fc9f1417"><td class="memItemLeft" align="right" valign="top"><a id="ga8a6a2eeb662d80243e6d7347fc9f1417" name="ga8a6a2eeb662d80243e6d7347fc9f1417"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SECURE_BOOT_DIGEST_MASK</b>&#160;&#160;&#160;(0x0Fu &lt;&lt; ATCA_SECURE_BOOT_DIGEST_SHIFT)</td></tr>
+<tr class="separator:ga8a6a2eeb662d80243e6d7347fc9f1417"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac34d5e008ae3175f494fbdea15f2baa4"><td class="memItemLeft" align="right" valign="top"><a id="gac34d5e008ae3175f494fbdea15f2baa4" name="gac34d5e008ae3175f494fbdea15f2baa4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SECURE_BOOT_DIGEST</b>(v)&#160;&#160;&#160;(ATCA_SECURE_BOOT_DIGEST_MASK &amp; (v &lt;&lt; ATCA_SECURE_BOOT_DIGEST_SHIFT))</td></tr>
+<tr class="separator:gac34d5e008ae3175f494fbdea15f2baa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga782b2598a672916700022b111df66762"><td class="memItemLeft" align="right" valign="top"><a id="ga782b2598a672916700022b111df66762" name="ga782b2598a672916700022b111df66762"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SECURE_BOOT_PUB_KEY_SHIFT</b>&#160;&#160;&#160;(12)</td></tr>
+<tr class="separator:ga782b2598a672916700022b111df66762"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4f283d8965b207a3b570d989ce558ff2"><td class="memItemLeft" align="right" valign="top"><a id="ga4f283d8965b207a3b570d989ce558ff2" name="ga4f283d8965b207a3b570d989ce558ff2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SECURE_BOOT_PUB_KEY_MASK</b>&#160;&#160;&#160;(0x0Fu &lt;&lt; ATCA_SECURE_BOOT_PUB_KEY_SHIFT)</td></tr>
+<tr class="separator:ga4f283d8965b207a3b570d989ce558ff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad7d433d50bb3ab8be8f4c298f9f55bdb"><td class="memItemLeft" align="right" valign="top"><a id="gad7d433d50bb3ab8be8f4c298f9f55bdb" name="gad7d433d50bb3ab8be8f4c298f9f55bdb"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SECURE_BOOT_PUB_KEY</b>(v)&#160;&#160;&#160;(ATCA_SECURE_BOOT_PUB_KEY_MASK &amp; (v &lt;&lt; ATCA_SECURE_BOOT_PUB_KEY_SHIFT))</td></tr>
+<tr class="separator:gad7d433d50bb3ab8be8f4c298f9f55bdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeb9e077ccd1a2c177a06e6ce4c5ecca8"><td class="memItemLeft" align="right" valign="top"><a id="gaeb9e077ccd1a2c177a06e6ce4c5ecca8" name="gaeb9e077ccd1a2c177a06e6ce4c5ecca8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_SLOT_LOCKED</b>(v)&#160;&#160;&#160;((0x01 &lt;&lt; v) &amp; 0xFFFFu)</td></tr>
+<tr class="separator:gaeb9e077ccd1a2c177a06e6ce4c5ecca8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1931d41847c2e9087638fc74f3a3b5f8"><td class="memItemLeft" align="right" valign="top"><a id="ga1931d41847c2e9087638fc74f3a3b5f8" name="ga1931d41847c2e9087638fc74f3a3b5f8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_OPT_POST_EN_SHIFT</b>&#160;&#160;&#160;(0)</td></tr>
+<tr class="separator:ga1931d41847c2e9087638fc74f3a3b5f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1e5e8fe0945931c3d36db063ca2a951e"><td class="memItemLeft" align="right" valign="top"><a id="ga1e5e8fe0945931c3d36db063ca2a951e" name="ga1e5e8fe0945931c3d36db063ca2a951e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_OPT_POST_EN_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_CHIP_OPT_POST_EN_SHIFT)</td></tr>
+<tr class="separator:ga1e5e8fe0945931c3d36db063ca2a951e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf8d603463a6b7ef76dd838774b680a96"><td class="memItemLeft" align="right" valign="top"><a id="gaf8d603463a6b7ef76dd838774b680a96" name="gaf8d603463a6b7ef76dd838774b680a96"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_OPT_IO_PROT_EN_SHIFT</b>&#160;&#160;&#160;(1)</td></tr>
+<tr class="separator:gaf8d603463a6b7ef76dd838774b680a96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac2d0def7ede457d392f7e88181793c9a"><td class="memItemLeft" align="right" valign="top"><a id="gac2d0def7ede457d392f7e88181793c9a" name="gac2d0def7ede457d392f7e88181793c9a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_OPT_IO_PROT_EN_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_CHIP_OPT_IO_PROT_EN_SHIFT)</td></tr>
+<tr class="separator:gac2d0def7ede457d392f7e88181793c9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2c12394438876d0b40206edabf0ad474"><td class="memItemLeft" align="right" valign="top"><a id="ga2c12394438876d0b40206edabf0ad474" name="ga2c12394438876d0b40206edabf0ad474"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_OPT_KDF_AES_EN_SHIFT</b>&#160;&#160;&#160;(2)</td></tr>
+<tr class="separator:ga2c12394438876d0b40206edabf0ad474"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad4deaf23bd8229184a278773d7ec23c4"><td class="memItemLeft" align="right" valign="top"><a id="gad4deaf23bd8229184a278773d7ec23c4" name="gad4deaf23bd8229184a278773d7ec23c4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_OPT_KDF_AES_EN_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_CHIP_OPT_KDF_AES_EN_SHIFT)</td></tr>
+<tr class="separator:gad4deaf23bd8229184a278773d7ec23c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaee59edf5a3aec038528abad910b2c75c"><td class="memItemLeft" align="right" valign="top"><a id="gaee59edf5a3aec038528abad910b2c75c" name="gaee59edf5a3aec038528abad910b2c75c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_OPT_ECDH_PROT_SHIFT</b>&#160;&#160;&#160;(8)</td></tr>
+<tr class="separator:gaee59edf5a3aec038528abad910b2c75c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2ced94e9b9d82ed884fa40772ebf978b"><td class="memItemLeft" align="right" valign="top"><a id="ga2ced94e9b9d82ed884fa40772ebf978b" name="ga2ced94e9b9d82ed884fa40772ebf978b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_OPT_ECDH_PROT_MASK</b>&#160;&#160;&#160;(0x03u &lt;&lt; ATCA_CHIP_OPT_ECDH_PROT_SHIFT)</td></tr>
+<tr class="separator:ga2ced94e9b9d82ed884fa40772ebf978b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga12e79ece7b7725de39764cf8d42c9855"><td class="memItemLeft" align="right" valign="top"><a id="ga12e79ece7b7725de39764cf8d42c9855" name="ga12e79ece7b7725de39764cf8d42c9855"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_OPT_ECDH_PROT</b>(v)&#160;&#160;&#160;(ATCA_CHIP_OPT_ECDH_PROT_MASK &amp; (v &lt;&lt; ATCA_CHIP_OPT_ECDH_PROT_SHIFT))</td></tr>
+<tr class="separator:ga12e79ece7b7725de39764cf8d42c9855"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6142d09e053e279a359a0295feb1ed24"><td class="memItemLeft" align="right" valign="top"><a id="ga6142d09e053e279a359a0295feb1ed24" name="ga6142d09e053e279a359a0295feb1ed24"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_OPT_KDF_PROT_SHIFT</b>&#160;&#160;&#160;(10)</td></tr>
+<tr class="separator:ga6142d09e053e279a359a0295feb1ed24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0c7b0fcd0d67ad67c556a1e0dcdac279"><td class="memItemLeft" align="right" valign="top"><a id="ga0c7b0fcd0d67ad67c556a1e0dcdac279" name="ga0c7b0fcd0d67ad67c556a1e0dcdac279"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_OPT_KDF_PROT_MASK</b>&#160;&#160;&#160;(0x03u &lt;&lt; ATCA_CHIP_OPT_KDF_PROT_SHIFT)</td></tr>
+<tr class="separator:ga0c7b0fcd0d67ad67c556a1e0dcdac279"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabe0d41de3dca6d41405f0cd00df95966"><td class="memItemLeft" align="right" valign="top"><a id="gabe0d41de3dca6d41405f0cd00df95966" name="gabe0d41de3dca6d41405f0cd00df95966"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_OPT_KDF_PROT</b>(v)&#160;&#160;&#160;(ATCA_CHIP_OPT_KDF_PROT_MASK &amp; (v &lt;&lt; ATCA_CHIP_OPT_KDF_PROT_SHIFT))</td></tr>
+<tr class="separator:gabe0d41de3dca6d41405f0cd00df95966"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga988f077881b8952efdde28de1a724e8a"><td class="memItemLeft" align="right" valign="top"><a id="ga988f077881b8952efdde28de1a724e8a" name="ga988f077881b8952efdde28de1a724e8a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_OPT_IO_PROT_KEY_SHIFT</b>&#160;&#160;&#160;(12)</td></tr>
+<tr class="separator:ga988f077881b8952efdde28de1a724e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2614b8a2b70a853d689a08308490e865"><td class="memItemLeft" align="right" valign="top"><a id="ga2614b8a2b70a853d689a08308490e865" name="ga2614b8a2b70a853d689a08308490e865"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_OPT_IO_PROT_KEY_MASK</b>&#160;&#160;&#160;((uint16_t)0x0Fu &lt;&lt; ATCA_CHIP_OPT_IO_PROT_KEY_SHIFT)</td></tr>
+<tr class="separator:ga2614b8a2b70a853d689a08308490e865"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a5050e95c9d17c2af8311f6514428be"><td class="memItemLeft" align="right" valign="top"><a id="ga7a5050e95c9d17c2af8311f6514428be" name="ga7a5050e95c9d17c2af8311f6514428be"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_CHIP_OPT_IO_PROT_KEY</b>(v)&#160;&#160;&#160;(ATCA_CHIP_OPT_IO_PROT_KEY_MASK &amp; (v &lt;&lt; ATCA_CHIP_OPT_IO_PROT_KEY_SHIFT))</td></tr>
+<tr class="separator:ga7a5050e95c9d17c2af8311f6514428be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga768d74dcd8ac420a92da6a5554c25ada"><td class="memItemLeft" align="right" valign="top"><a id="ga768d74dcd8ac420a92da6a5554c25ada" name="ga768d74dcd8ac420a92da6a5554c25ada"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_OFFSET</b>(x)&#160;&#160;&#160;(96UL + (x) * 2u)</td></tr>
+<tr class="separator:ga768d74dcd8ac420a92da6a5554c25ada"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab6e242074e10c6cf080d29325e9bca65"><td class="memItemLeft" align="right" valign="top"><a id="gab6e242074e10c6cf080d29325e9bca65" name="gab6e242074e10c6cf080d29325e9bca65"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_PRIVATE_SHIFT</b>&#160;&#160;&#160;(0)</td></tr>
+<tr class="separator:gab6e242074e10c6cf080d29325e9bca65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9a707b6ebe784cd7fc3d56ed39a7c129"><td class="memItemLeft" align="right" valign="top"><a id="ga9a707b6ebe784cd7fc3d56ed39a7c129" name="ga9a707b6ebe784cd7fc3d56ed39a7c129"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_PRIVATE_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_KEY_CONFIG_PRIVATE_SHIFT)</td></tr>
+<tr class="separator:ga9a707b6ebe784cd7fc3d56ed39a7c129"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga02f7a20603a1ed76348e9e7d6292ebcc"><td class="memItemLeft" align="right" valign="top"><a id="ga02f7a20603a1ed76348e9e7d6292ebcc" name="ga02f7a20603a1ed76348e9e7d6292ebcc"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_PUB_INFO_SHIFT</b>&#160;&#160;&#160;(1)</td></tr>
+<tr class="separator:ga02f7a20603a1ed76348e9e7d6292ebcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8ea1091991167634115392e82d7970fa"><td class="memItemLeft" align="right" valign="top"><a id="ga8ea1091991167634115392e82d7970fa" name="ga8ea1091991167634115392e82d7970fa"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_PUB_INFO_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_KEY_CONFIG_PUB_INFO_SHIFT)</td></tr>
+<tr class="separator:ga8ea1091991167634115392e82d7970fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga08ad8ab3a2fd98e81496eebb24ed70f7"><td class="memItemLeft" align="right" valign="top"><a id="ga08ad8ab3a2fd98e81496eebb24ed70f7" name="ga08ad8ab3a2fd98e81496eebb24ed70f7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_KEY_TYPE_SHIFT</b>&#160;&#160;&#160;(2)</td></tr>
+<tr class="separator:ga08ad8ab3a2fd98e81496eebb24ed70f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga791218b8f59ceb6a3340eeeafdacdaa7"><td class="memItemLeft" align="right" valign="top"><a id="ga791218b8f59ceb6a3340eeeafdacdaa7" name="ga791218b8f59ceb6a3340eeeafdacdaa7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_KEY_TYPE_MASK</b>&#160;&#160;&#160;((0x07u &lt;&lt; ATCA_KEY_CONFIG_KEY_TYPE_SHIFT))</td></tr>
+<tr class="separator:ga791218b8f59ceb6a3340eeeafdacdaa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga58771cfdfafa3aedc32366da4ec9a91d"><td class="memItemLeft" align="right" valign="top"><a id="ga58771cfdfafa3aedc32366da4ec9a91d" name="ga58771cfdfafa3aedc32366da4ec9a91d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_KEY_TYPE</b>(v)&#160;&#160;&#160;((ATCA_KEY_CONFIG_KEY_TYPE_MASK &amp; ((v) &lt;&lt; ATCA_KEY_CONFIG_KEY_TYPE_SHIFT)))</td></tr>
+<tr class="separator:ga58771cfdfafa3aedc32366da4ec9a91d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0d7ae07eb6ec5455fe440ad0f231a53f"><td class="memItemLeft" align="right" valign="top"><a id="ga0d7ae07eb6ec5455fe440ad0f231a53f" name="ga0d7ae07eb6ec5455fe440ad0f231a53f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_LOCKABLE_SHIFT</b>&#160;&#160;&#160;(5)</td></tr>
+<tr class="separator:ga0d7ae07eb6ec5455fe440ad0f231a53f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga72804cb302dbdfd589ee558cf6efc1c5"><td class="memItemLeft" align="right" valign="top"><a id="ga72804cb302dbdfd589ee558cf6efc1c5" name="ga72804cb302dbdfd589ee558cf6efc1c5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_LOCKABLE_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_KEY_CONFIG_LOCKABLE_SHIFT)</td></tr>
+<tr class="separator:ga72804cb302dbdfd589ee558cf6efc1c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga110b226699a9fca6d6ff262b726369fe"><td class="memItemLeft" align="right" valign="top"><a id="ga110b226699a9fca6d6ff262b726369fe" name="ga110b226699a9fca6d6ff262b726369fe"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_REQ_RANDOM_SHIFT</b>&#160;&#160;&#160;(6)</td></tr>
+<tr class="separator:ga110b226699a9fca6d6ff262b726369fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadf1439bdd718df2e3c80f3ed28a514a4"><td class="memItemLeft" align="right" valign="top"><a id="gadf1439bdd718df2e3c80f3ed28a514a4" name="gadf1439bdd718df2e3c80f3ed28a514a4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_REQ_RANDOM_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_KEY_CONFIG_REQ_RANDOM_SHIFT)</td></tr>
+<tr class="separator:gadf1439bdd718df2e3c80f3ed28a514a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaef49b712716bcf998587e49a54f5da57"><td class="memItemLeft" align="right" valign="top"><a id="gaef49b712716bcf998587e49a54f5da57" name="gaef49b712716bcf998587e49a54f5da57"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_REQ_AUTH_SHIFT</b>&#160;&#160;&#160;(7)</td></tr>
+<tr class="separator:gaef49b712716bcf998587e49a54f5da57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab72f34114b861e6f33a6fbcc8d67e2d8"><td class="memItemLeft" align="right" valign="top"><a id="gab72f34114b861e6f33a6fbcc8d67e2d8" name="gab72f34114b861e6f33a6fbcc8d67e2d8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_REQ_AUTH_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_KEY_CONFIG_REQ_AUTH_SHIFT)</td></tr>
+<tr class="separator:gab72f34114b861e6f33a6fbcc8d67e2d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga57d8b6a85e5fc5a49682858f3bbc7aac"><td class="memItemLeft" align="right" valign="top"><a id="ga57d8b6a85e5fc5a49682858f3bbc7aac" name="ga57d8b6a85e5fc5a49682858f3bbc7aac"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_AUTH_KEY_SHIFT</b>&#160;&#160;&#160;(8)</td></tr>
+<tr class="separator:ga57d8b6a85e5fc5a49682858f3bbc7aac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7bdcaa7bad5f472dff412a75c752f338"><td class="memItemLeft" align="right" valign="top"><a id="ga7bdcaa7bad5f472dff412a75c752f338" name="ga7bdcaa7bad5f472dff412a75c752f338"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_AUTH_KEY_MASK</b>&#160;&#160;&#160;(0x0Fu &lt;&lt; ATCA_KEY_CONFIG_AUTH_KEY_SHIFT)</td></tr>
+<tr class="separator:ga7bdcaa7bad5f472dff412a75c752f338"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac9f5a7d5a09d8596d192666d6a0f7eea"><td class="memItemLeft" align="right" valign="top"><a id="gac9f5a7d5a09d8596d192666d6a0f7eea" name="gac9f5a7d5a09d8596d192666d6a0f7eea"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_AUTH_KEY</b>(v)&#160;&#160;&#160;(ATCA_KEY_CONFIG_AUTH_KEY_MASK &amp; (v &lt;&lt; ATCA_KEY_CONFIG_AUTH_KEY_SHIFT))</td></tr>
+<tr class="separator:gac9f5a7d5a09d8596d192666d6a0f7eea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf4d8251ae8b84fc885d40bbe53fd82d4"><td class="memItemLeft" align="right" valign="top"><a id="gaf4d8251ae8b84fc885d40bbe53fd82d4" name="gaf4d8251ae8b84fc885d40bbe53fd82d4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_PERSIST_DIS_SHIFT</b>&#160;&#160;&#160;(12)</td></tr>
+<tr class="separator:gaf4d8251ae8b84fc885d40bbe53fd82d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9e22e1d16f8e069e728e064d996849b0"><td class="memItemLeft" align="right" valign="top"><a id="ga9e22e1d16f8e069e728e064d996849b0" name="ga9e22e1d16f8e069e728e064d996849b0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_PERSIST_DIS_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_KEY_CONFIG_PERSIST_DIS_SHIFT)</td></tr>
+<tr class="separator:ga9e22e1d16f8e069e728e064d996849b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad7e32c010d24118b2f8e09ec71d34ae6"><td class="memItemLeft" align="right" valign="top"><a id="gad7e32c010d24118b2f8e09ec71d34ae6" name="gad7e32c010d24118b2f8e09ec71d34ae6"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_RFU_SHIFT</b>&#160;&#160;&#160;(13)</td></tr>
+<tr class="separator:gad7e32c010d24118b2f8e09ec71d34ae6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga214e2932ee0ef02d0f4f4486434b5856"><td class="memItemLeft" align="right" valign="top"><a id="ga214e2932ee0ef02d0f4f4486434b5856" name="ga214e2932ee0ef02d0f4f4486434b5856"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_RFU_MASK</b>&#160;&#160;&#160;(0x01u &lt;&lt; ATCA_KEY_CONFIG_RFU_SHIFT)</td></tr>
+<tr class="separator:ga214e2932ee0ef02d0f4f4486434b5856"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1f7be00746c8b6679c860a68418eb638"><td class="memItemLeft" align="right" valign="top"><a id="ga1f7be00746c8b6679c860a68418eb638" name="ga1f7be00746c8b6679c860a68418eb638"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_X509_ID_SHIFT</b>&#160;&#160;&#160;(14)</td></tr>
+<tr class="separator:ga1f7be00746c8b6679c860a68418eb638"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0d5a5a59003ab766e8d266f336922582"><td class="memItemLeft" align="right" valign="top"><a id="ga0d5a5a59003ab766e8d266f336922582" name="ga0d5a5a59003ab766e8d266f336922582"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_X509_ID_MASK</b>&#160;&#160;&#160;(0x03u &lt;&lt; ATCA_KEY_CONFIG_X509_ID_SHIFT)</td></tr>
+<tr class="separator:ga0d5a5a59003ab766e8d266f336922582"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga904dd51134dc1a0d746be45c42806dc7"><td class="memItemLeft" align="right" valign="top"><a id="ga904dd51134dc1a0d746be45c42806dc7" name="ga904dd51134dc1a0d746be45c42806dc7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_KEY_CONFIG_X509_ID</b>(v)&#160;&#160;&#160;(ATCA_KEY_CONFIG_X509_ID_MASK &amp; (v &lt;&lt; ATCA_KEY_CONFIG_X509_ID_SHIFT))</td></tr>
+<tr class="separator:ga904dd51134dc1a0d746be45c42806dc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga7dc326cdf6fbade0eee6081225a379de"><td class="memItemLeft" align="right" valign="top"><a id="ga7dc326cdf6fbade0eee6081225a379de" name="ga7dc326cdf6fbade0eee6081225a379de"></a>
+typedef struct <a class="el" href="a01677.html">atca_sha256_ctx</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atca_sha256_ctx_t</b></td></tr>
+<tr class="separator:ga7dc326cdf6fbade0eee6081225a379de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4c1f62e502c168be9261d2af921e78ba"><td class="memItemLeft" align="right" valign="top"><a id="ga4c1f62e502c168be9261d2af921e78ba" name="ga4c1f62e502c168be9261d2af921e78ba"></a>
+typedef <a class="el" href="a01677.html">atca_sha256_ctx_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atca_hmac_sha256_ctx_t</b></td></tr>
+<tr class="separator:ga4c1f62e502c168be9261d2af921e78ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad55151c65d1a80a0acffd9d550301fc6"><td class="memItemLeft" align="right" valign="top"><a id="gad55151c65d1a80a0acffd9d550301fc6" name="gad55151c65d1a80a0acffd9d550301fc6"></a>
+typedef struct ATCA_PACKED <a class="el" href="a01685.html">atsha204a_config_s</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atsha204a_config_t</b></td></tr>
+<tr class="separator:gad55151c65d1a80a0acffd9d550301fc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga516ecc2c50027accaa2e767469140d58"><td class="memItemLeft" align="right" valign="top"><a id="ga516ecc2c50027accaa2e767469140d58" name="ga516ecc2c50027accaa2e767469140d58"></a>
+typedef struct ATCA_PACKED <a class="el" href="a01689.html">atecc508a_config_s</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atecc508a_config_t</b></td></tr>
+<tr class="separator:ga516ecc2c50027accaa2e767469140d58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga72c5199a4900fe70d667e3666727f33d"><td class="memItemLeft" align="right" valign="top"><a id="ga72c5199a4900fe70d667e3666727f33d" name="ga72c5199a4900fe70d667e3666727f33d"></a>
+typedef struct ATCA_PACKED <a class="el" href="a01693.html">atecc608_config_s</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atecc608_config_t</b></td></tr>
+<tr class="separator:ga72c5199a4900fe70d667e3666727f33d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aa9c8b1588cae90a37ef827d71e4ae909"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#aa9c8b1588cae90a37ef827d71e4ae909">_atcacert_convert_bytes</a> (kwargs, name, pointer)</td></tr>
-<tr class="separator:aa9c8b1588cae90a37ef827d71e4ae909"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf013c955f2fd024a8669085dadbd3ba"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#acf013c955f2fd024a8669085dadbd3ba">_atcacert_convert_enum</a> (kwargs, name, enum)</td></tr>
-<tr class="separator:acf013c955f2fd024a8669085dadbd3ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b6192388c29b0efb1968d6b44efd712"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#a3b6192388c29b0efb1968d6b44efd712">atcacert_max_cert_size</a> (cert_def, max_cert_size)</td></tr>
-<tr class="separator:a3b6192388c29b0efb1968d6b44efd712"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c3717acbb392ceed968c1172400e6dd"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#a9c3717acbb392ceed968c1172400e6dd">atcacert_get_response</a> (device_private_key_slot, challenge, response)</td></tr>
-<tr class="separator:a9c3717acbb392ceed968c1172400e6dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4fe33f1da468796b39c80a34e12411fb"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#a4fe33f1da468796b39c80a34e12411fb">atcacert_read_cert</a> (cert_def, ca_public_key, cert, cert_size)</td></tr>
-<tr class="separator:a4fe33f1da468796b39c80a34e12411fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c4d1755dfd9a2b378cd45f14de1f1ee"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#a5c4d1755dfd9a2b378cd45f14de1f1ee">atcacert_write_cert</a> (cert_def, cert, cert_size)</td></tr>
-<tr class="separator:a5c4d1755dfd9a2b378cd45f14de1f1ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a453696e86822c980d8e5b9e6a27eb861"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#a453696e86822c980d8e5b9e6a27eb861">atcacert_create_csr</a> (csr_def, csr, csr_size)</td></tr>
-<tr class="separator:a453696e86822c980d8e5b9e6a27eb861"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c23b4916b8fa6dc8aa56b45f558d870"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#a6c23b4916b8fa6dc8aa56b45f558d870">atcacert_create_csr_pem</a> (csr_def, csr, csr_size)</td></tr>
-<tr class="separator:a6c23b4916b8fa6dc8aa56b45f558d870"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23ff0ccfc75d564fc9f6200ef8cff5fb"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#a23ff0ccfc75d564fc9f6200ef8cff5fb">atcacert_date_enc</a> (date_format, timestamp, formatted_date, formatted_date_size)</td></tr>
-<tr class="separator:a23ff0ccfc75d564fc9f6200ef8cff5fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e05b319688a07bbfeee23895341303e"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#a7e05b319688a07bbfeee23895341303e">atcacert_date_dec</a> (date_format, formatted_date, formatted_date_size, timestamp)</td></tr>
-<tr class="separator:a7e05b319688a07bbfeee23895341303e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82bd7bbea46866cb644016ea7faff329"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#a82bd7bbea46866cb644016ea7faff329">atcacert_date_enc_compcert</a> (issue_date, expire_years, enc_dates)</td></tr>
-<tr class="separator:a82bd7bbea46866cb644016ea7faff329"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7910146d6e2097e9fb075a2bf60d1b25"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#a7910146d6e2097e9fb075a2bf60d1b25">atcacert_date_dec_compcert</a> (enc_dates, expire_date_format, issue_date, expire_date)</td></tr>
-<tr class="separator:a7910146d6e2097e9fb075a2bf60d1b25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ffefee23107bcbbadef2508ccaaba4f"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#a0ffefee23107bcbbadef2508ccaaba4f">atcacert_date_get_max_date</a> (date_format, timestamp)</td></tr>
-<tr class="separator:a0ffefee23107bcbbadef2508ccaaba4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga884790e08be94431e1fbe92bf6106e06"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#ga884790e08be94431e1fbe92bf6106e06">calib_wakeup_i2c</a> (<a class="el" href="a01569.html">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:ga884790e08be94431e1fbe92bf6106e06"><td class="mdescLeft">&#160;</td><td class="mdescRight">basic API methods are all prefixed with atcab_ (CryptoAuthLib Basic) the fundamental premise of the basic API is it is based on a single interface instance and that instance is global, so all basic API commands assume that one global device is the one to operate on.  <br /></td></tr>
+<tr class="separator:ga884790e08be94431e1fbe92bf6106e06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafbc037d57a4cc4fec6a2f291736170cb"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#gafbc037d57a4cc4fec6a2f291736170cb">calib_wakeup</a> (<a class="el" href="a01569.html">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:gafbc037d57a4cc4fec6a2f291736170cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">wakeup the CryptoAuth device  <br /></td></tr>
+<tr class="separator:gafbc037d57a4cc4fec6a2f291736170cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga59750d83d93368b2944f57bb38bf4d1f"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#ga59750d83d93368b2944f57bb38bf4d1f">calib_idle</a> (<a class="el" href="a01569.html">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:ga59750d83d93368b2944f57bb38bf4d1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">idle the CryptoAuth device  <br /></td></tr>
+<tr class="separator:ga59750d83d93368b2944f57bb38bf4d1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad26b70951a0da6d80fb98027faae7a1f"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#gad26b70951a0da6d80fb98027faae7a1f">calib_sleep</a> (<a class="el" href="a01569.html">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:gad26b70951a0da6d80fb98027faae7a1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">invoke sleep on the CryptoAuth device  <br /></td></tr>
+<tr class="separator:gad26b70951a0da6d80fb98027faae7a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab6791f8eef4fb94c44d84f69fa8d7927"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#gab6791f8eef4fb94c44d84f69fa8d7927">calib_exit</a> (<a class="el" href="a01569.html">ATCADevice</a> device)</td></tr>
+<tr class="memdesc:gab6791f8eef4fb94c44d84f69fa8d7927"><td class="mdescLeft">&#160;</td><td class="mdescRight">common cleanup code which idles the device after any operation  <br /></td></tr>
+<tr class="separator:gab6791f8eef4fb94c44d84f69fa8d7927"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae51a67781e9e4618e669db1c999e6ec2"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#gae51a67781e9e4618e669db1c999e6ec2">calib_get_addr</a> (uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint16_t *addr)</td></tr>
+<tr class="memdesc:gae51a67781e9e4618e669db1c999e6ec2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the address given the zone, slot, block, and offset.  <br /></td></tr>
+<tr class="separator:gae51a67781e9e4618e669db1c999e6ec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga023735b1c0b10e70832d9a957bc99ae3"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#ga023735b1c0b10e70832d9a957bc99ae3">calib_get_zone_size</a> (<a class="el" href="a01569.html">ATCADevice</a> device, uint8_t zone, uint16_t slot, size_t *size)</td></tr>
+<tr class="memdesc:ga023735b1c0b10e70832d9a957bc99ae3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the specified zone in bytes.  <br /></td></tr>
+<tr class="separator:ga023735b1c0b10e70832d9a957bc99ae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga53d3cce5a7f1edfb8386c92d63d3cb5c"><td class="memItemLeft" align="right" valign="top"><a id="ga53d3cce5a7f1edfb8386c92d63d3cb5c" name="ga53d3cce5a7f1edfb8386c92d63d3cb5c"></a>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>calib_is_locked</b> (<a class="el" href="a01569.html">ATCADevice</a> device, uint8_t zone, bool *is_locked)</td></tr>
+<tr class="separator:ga53d3cce5a7f1edfb8386c92d63d3cb5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadfd40a59b7398ab8a963aa5869a00eab"><td class="memItemLeft" align="right" valign="top"><a id="gadfd40a59b7398ab8a963aa5869a00eab" name="gadfd40a59b7398ab8a963aa5869a00eab"></a>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>calib_is_slot_locked</b> (<a class="el" href="a01569.html">ATCADevice</a> device, uint16_t slot, bool *is_locked)</td></tr>
+<tr class="separator:gadfd40a59b7398ab8a963aa5869a00eab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c140a1696f5585d61426cdd4ed9c8dd"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#ga7c140a1696f5585d61426cdd4ed9c8dd">calib_ca2_get_addr</a> (uint8_t zone, uint16_t slot, uint8_t block, uint8_t offset, uint16_t *addr)</td></tr>
+<tr class="memdesc:ga7c140a1696f5585d61426cdd4ed9c8dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the address given the zone, slot, block, and offset for the device.  <br /></td></tr>
+<tr class="separator:ga7c140a1696f5585d61426cdd4ed9c8dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga55738f97714ea089a988e1853d8d6224"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#ga55738f97714ea089a988e1853d8d6224">calib_ca2_is_locked</a> (<a class="el" href="a01569.html">ATCADevice</a> device, uint8_t zone, bool *is_locked)</td></tr>
+<tr class="memdesc:ga55738f97714ea089a988e1853d8d6224"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use Info command to check config/data is locked or not.  <br /></td></tr>
+<tr class="separator:ga55738f97714ea089a988e1853d8d6224"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga801b481ac3ff13401fc2a45817d05db4"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#ga801b481ac3ff13401fc2a45817d05db4">calib_ca2_is_data_locked</a> (<a class="el" href="a01569.html">ATCADevice</a> device, bool *is_locked)</td></tr>
+<tr class="memdesc:ga801b481ac3ff13401fc2a45817d05db4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use Info command to check ECC204 Data zone lock status.  <br /></td></tr>
+<tr class="separator:ga801b481ac3ff13401fc2a45817d05db4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad7d44a63b0871068bc30abb0faed78f9"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#gad7d44a63b0871068bc30abb0faed78f9">calib_ca2_is_config_locked</a> (<a class="el" href="a01569.html">ATCADevice</a> device, bool *is_locked)</td></tr>
+<tr class="memdesc:gad7d44a63b0871068bc30abb0faed78f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Read command, which reads the configuration zone to see if the specified slot is locked.  <br /></td></tr>
+<tr class="separator:gad7d44a63b0871068bc30abb0faed78f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacbd92fefe3ca3419d1719eca826ab82e"><td class="memItemLeft" align="right" valign="top"><a id="gacbd92fefe3ca3419d1719eca826ab82e" name="gacbd92fefe3ca3419d1719eca826ab82e"></a>
+ATCADeviceType&#160;</td><td class="memItemRight" valign="bottom"><b>calib_get_devicetype_with_device_id</b> (uint8_t device_id, uint8_t device_revision)</td></tr>
+<tr class="separator:gacbd92fefe3ca3419d1719eca826ab82e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga00e2fc1d5b517b275066c31be0be2304"><td class="memItemLeft" align="right" valign="top"><a id="ga00e2fc1d5b517b275066c31be0be2304" name="ga00e2fc1d5b517b275066c31be0be2304"></a>
+ATCADeviceType&#160;</td><td class="memItemRight" valign="bottom"><b>calib_get_devicetype</b> (uint8_t revision[4])</td></tr>
+<tr class="memdesc:ga00e2fc1d5b517b275066c31be0be2304"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse the revision field to get the device type. <br /></td></tr>
+<tr class="separator:ga00e2fc1d5b517b275066c31be0be2304"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc7aff4f1707fbe0a05cf416955f43b0"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#gabc7aff4f1707fbe0a05cf416955f43b0">calib_info_base</a> (<a class="el" href="a01569.html">ATCADevice</a> device, uint8_t mode, uint16_t param2, uint8_t *out_data)</td></tr>
+<tr class="memdesc:gabc7aff4f1707fbe0a05cf416955f43b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Issues an Info command, which return internal device information and can control GPIO and the persistent latch.  <br /></td></tr>
+<tr class="separator:gabc7aff4f1707fbe0a05cf416955f43b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga132cfbb5c581c5cc5adf5350d4161966"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#ga132cfbb5c581c5cc5adf5350d4161966">calib_info</a> (<a class="el" href="a01569.html">ATCADevice</a> device, uint8_t *revision)</td></tr>
+<tr class="memdesc:ga132cfbb5c581c5cc5adf5350d4161966"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the Info command to get the device revision (DevRev).  <br /></td></tr>
+<tr class="separator:ga132cfbb5c581c5cc5adf5350d4161966"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga39e3e31e7573d3d73f4b757db7704cce"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#ga39e3e31e7573d3d73f4b757db7704cce">calib_info_privkey_valid</a> (<a class="el" href="a01569.html">ATCADevice</a> device, uint16_t key_id, uint8_t *is_valid)</td></tr>
+<tr class="memdesc:ga39e3e31e7573d3d73f4b757db7704cce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use Info command to check ECC Private key stored in key slot is valid or not.  <br /></td></tr>
+<tr class="separator:ga39e3e31e7573d3d73f4b757db7704cce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacd82ed053319a63bbe06755632e377bc"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#gacd82ed053319a63bbe06755632e377bc">calib_info_lock_status</a> (<a class="el" href="a01569.html">ATCADevice</a> device, uint16_t param2, uint8_t *is_locked)</td></tr>
+<tr class="memdesc:gacd82ed053319a63bbe06755632e377bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use Info command to ECC204,TA010 config/data zone lock status.  <br /></td></tr>
+<tr class="separator:gacd82ed053319a63bbe06755632e377bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac33e6d38d506b4e71618063d1b4a7499"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01513.html#gac33e6d38d506b4e71618063d1b4a7499">calib_info_chip_status</a> (<a class="el" href="a01569.html">ATCADevice</a> device, uint8_t *chip_status)</td></tr>
+<tr class="memdesc:gac33e6d38d506b4e71618063d1b4a7499"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use Info command to get ECC204,TA010,SHA10x chip status.  <br /></td></tr>
+<tr class="separator:gac33e6d38d506b4e71618063d1b4a7499"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><pre class="fragment">ATCACERT: classes and functions for interacting with compressed certificates
-</pre> </div><h2 class="groupheader">Function Documentation</h2>
-<a id="aa9c8b1588cae90a37ef827d71e4ae909" name="aa9c8b1588cae90a37ef827d71e4ae909"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa9c8b1588cae90a37ef827d71e4ae909">&#9670;&#160;</a></span>_atcacert_convert_bytes()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">def cryptoauthlib.atcacert._atcacert_convert_bytes </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>kwargs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>pointer</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<pre class="fragment">Internal Helper Function: Convert python 'bytes' into memory pointer for ctypes structure
-:param kwargs: kwargs dictionary
-:param name: _field_ name that will be converted
-:param pointer: Conversion Class (resulting type - pointer of type x)
-:return:
-</pre> 
-</div>
-</div>
-<a id="acf013c955f2fd024a8669085dadbd3ba" name="acf013c955f2fd024a8669085dadbd3ba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acf013c955f2fd024a8669085dadbd3ba">&#9670;&#160;</a></span>_atcacert_convert_enum()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">def cryptoauthlib.atcacert._atcacert_convert_enum </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>kwargs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>enum</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<pre class="fragment">Internal Helper Function: Convert python enum into ctypes integer
-:param kwargs: kwargs dictionary
-:param name: _field_ name that will be converted
-:param enum: Conversion Class (resulting type)
-:return:
-</pre> 
-</div>
-</div>
-<a id="a453696e86822c980d8e5b9e6a27eb861" name="a453696e86822c980d8e5b9e6a27eb861"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a453696e86822c980d8e5b9e6a27eb861">&#9670;&#160;</a></span>atcacert_create_csr()</h2>
+<p>These methods provide a simple API to CryptoAuth chips. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga7c140a1696f5585d61426cdd4ed9c8dd" name="ga7c140a1696f5585d61426cdd4ed9c8dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7c140a1696f5585d61426cdd4ed9c8dd">&#9670;&#160;</a></span>calib_ca2_get_addr()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def cryptoauthlib.atcacert.atcacert_create_csr </td>
+          <td class="memname">ATCA_STATUS calib_ca2_get_addr </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>csr_def</em>, </td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>zone</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>csr</em>, </td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>slot</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>csr_size</em>&#160;</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>block</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t *&#160;</td>
+          <td class="paramname"><em>addr</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -290,47 +580,39 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Creates a CSR specified by the CSR definition from the ATECC508A device.
-This process involves reading the dynamic CSR data from the device and combining it
-with the template found in the CSR definition, then signing it. Return the CSR int der format
 
-Args:
-    csr_def                 CSR definition describing where to find the dynamic CSR information
-                            on the device and how to incorporate it into the template.
-                            Expects atcacert_def_t.
-    csr                     Buffer to receive the CSR. Expects bytearray.
-    csr_size                As input, the size of the CSR buffer in bytes.
-                            As output, the size of the CSR as PEM returned in cert in bytes.
-                            Expects AtcaReference.
+<p>Compute the address given the zone, slot, block, and offset for the device. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">zone</td><td>Zone to get address from. Config(1) or Data(0) which requires a slot. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">slot</td><td>Slot Id number for data zone and zero for other zones. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">block</td><td>Block number within the data zone . </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Aalways zero. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">addr</td><td>Pointer to the address of data or configuration zone.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
 
-Returns:
-    ATCACERT_E_SUCCESS on success, otherwise an error code.
-</pre> 
 </div>
 </div>
-<a id="a6c23b4916b8fa6dc8aa56b45f558d870" name="a6c23b4916b8fa6dc8aa56b45f558d870"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c23b4916b8fa6dc8aa56b45f558d870">&#9670;&#160;</a></span>atcacert_create_csr_pem()</h2>
+<a id="gad7d44a63b0871068bc30abb0faed78f9" name="gad7d44a63b0871068bc30abb0faed78f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad7d44a63b0871068bc30abb0faed78f9">&#9670;&#160;</a></span>calib_ca2_is_config_locked()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def cryptoauthlib.atcacert.atcacert_create_csr_pem </td>
+          <td class="memname">ATCA_STATUS calib_ca2_is_config_locked </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>csr_def</em>, </td>
+          <td class="paramtype"><a class="el" href="a01569.html">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>csr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>csr_size</em>&#160;</td>
+          <td class="paramtype">bool *&#160;</td>
+          <td class="paramname"><em>is_locked</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -339,53 +621,46 @@ Returns:
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Creates a CSR specified by the CSR definition from the ATECC508A device.
-This process involves reading the dynamic CSR data from the device and combining it
-with the template found in the CSR definition, then signing it. Return the CSR int der format
 
-Args:
-    csr_def                 CSR definition describing where to find the dynamic CSR information
-                            on the device and how to incorporate it into the template.
-                            Expects atcacert_def_t.
-    csr                     Buffer to receive the CSR. Expects bytearray.
-    csr_size                As input, the size of the CSR buffer in bytes.
-                            As output, the size of the CSR as PEM returned in cert in bytes.
-                            Expects AtcaReference.
+<p>Executes Read command, which reads the configuration zone to see if the specified slot is locked. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device context pointer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">slot</td><td>Slot to query for locked (slot 0-15) </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">is_locked</td><td>Lock state returned here. True if locked.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code.</dd></dl>
+<p>Use Info command to check ECC204 Config zone lock status</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device context pointer </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">is_locked</td><td>return lock status</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code </dd></dl>
 
-Returns:
-    ATCACERT_E_SUCCESS on success, otherwise an error code.
-</pre> 
 </div>
 </div>
-<a id="a7e05b319688a07bbfeee23895341303e" name="a7e05b319688a07bbfeee23895341303e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7e05b319688a07bbfeee23895341303e">&#9670;&#160;</a></span>atcacert_date_dec()</h2>
+<a id="ga801b481ac3ff13401fc2a45817d05db4" name="ga801b481ac3ff13401fc2a45817d05db4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga801b481ac3ff13401fc2a45817d05db4">&#9670;&#160;</a></span>calib_ca2_is_data_locked()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def cryptoauthlib.atcacert.atcacert_date_dec </td>
+          <td class="memname">ATCA_STATUS calib_ca2_is_data_locked </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>date_format</em>, </td>
+          <td class="paramtype"><a class="el" href="a01569.html">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>formatted_date</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>formatted_date_size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>timestamp</em>&#160;</td>
+          <td class="paramtype">bool *&#160;</td>
+          <td class="paramname"><em>is_locked</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -394,48 +669,42 @@ Returns:
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Parse a formatted timestamp according to the specified format.
 
-Args:
-    date_format             Format to parse the formatted date as.
-    formatted_date          Formatted date to be parsed.
-    formatted_date_size     Size of the formatted date in bytes.
-    timestamp               Parsed timestamp is returned here. Expects atcacert_tm_utc_t.
+<p>Use Info command to check ECC204 Data zone lock status. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device context pointer </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">is_locked</td><td>return lock status</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code </dd></dl>
 
-Returns:
-    ATCACERT_E_SUCCESS on success, otherwise an error code.
-</pre> 
 </div>
 </div>
-<a id="a7910146d6e2097e9fb075a2bf60d1b25" name="a7910146d6e2097e9fb075a2bf60d1b25"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7910146d6e2097e9fb075a2bf60d1b25">&#9670;&#160;</a></span>atcacert_date_dec_compcert()</h2>
+<a id="ga55738f97714ea089a988e1853d8d6224" name="ga55738f97714ea089a988e1853d8d6224"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga55738f97714ea089a988e1853d8d6224">&#9670;&#160;</a></span>calib_ca2_is_locked()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def cryptoauthlib.atcacert.atcacert_date_dec_compcert </td>
+          <td class="memname">ATCA_STATUS calib_ca2_is_locked </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>enc_dates</em>, </td>
+          <td class="paramtype"><a class="el" href="a01569.html">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>expire_date_format</em>, </td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>zone</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>issue_date</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>expire_date</em>&#160;</td>
+          <td class="paramtype">bool *&#160;</td>
+          <td class="paramname"><em>is_locked</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -444,50 +713,82 @@ Returns:
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Decode the issue and expire dates from the format used by the compressed certificate.
 
-Args:
-    enc_dates               Encoded date from the compressed certificate. 3 bytes.
-    expire_date_format      Expire date format. Only used to determine max date when no
-                            expiration date is specified by the encoded date.
-    issue_date              Decoded issue date is returned here. Expects atcacert_tm_utc_t.
-    expire_date             Decoded expire date is returned here. If there is no
-                            expiration date, the expire date will be set to a maximum
-                            value for the given expire_date_format. Expects atcacert_tm_utc_t.
-Returns:
-    ATCACERT_E_SUCCESS on success
-</pre> 
+<p>Use Info command to check config/data is locked or not. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device contect pointer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">zone</td><td>Config/Data zone </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">is_locked</td><td>return lock status here</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code </dd></dl>
+
 </div>
 </div>
-<a id="a23ff0ccfc75d564fc9f6200ef8cff5fb" name="a23ff0ccfc75d564fc9f6200ef8cff5fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a23ff0ccfc75d564fc9f6200ef8cff5fb">&#9670;&#160;</a></span>atcacert_date_enc()</h2>
+<a id="gab6791f8eef4fb94c44d84f69fa8d7927" name="gab6791f8eef4fb94c44d84f69fa8d7927"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab6791f8eef4fb94c44d84f69fa8d7927">&#9670;&#160;</a></span>calib_exit()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def cryptoauthlib.atcacert.atcacert_date_enc </td>
+          <td class="memname">ATCA_STATUS calib_exit </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>date_format</em>, </td>
+          <td class="paramtype"><a class="el" href="a01569.html">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>common cleanup code which idles the device after any operation </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device context pointer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="gae51a67781e9e4618e669db1c999e6ec2" name="gae51a67781e9e4618e669db1c999e6ec2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae51a67781e9e4618e669db1c999e6ec2">&#9670;&#160;</a></span>calib_get_addr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS calib_get_addr </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>zone</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>timestamp</em>, </td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>slot</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>formatted_date</em>, </td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>block</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>formatted_date_size</em>&#160;</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t *&#160;</td>
+          <td class="paramname"><em>addr</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -496,45 +797,51 @@ Returns:
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Format a timestamp according to the format type.
 
-Args:
-    date_format             Format to use.
-    timestamp               Timestamp to format. Expects atcacert_tm_utc_t.
-    formatted_date          Formatted date will be returned in this buffer.
-                            Expects bytearray.
-    formatted_date_size     As input, the size of the formatted_date buffer.
-                            As output, the size of the returned formatted_date.
-                            Expects AtcaReference.
+<p>Compute the address given the zone, slot, block, and offset. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">zone</td><td>Zone to get address from. Config(0), OTP(1), or Data(2) which requires a slot. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">slot</td><td>Slot Id number for data zone and zero for other zones. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">block</td><td>Block number within the data or configuration or OTP zone . </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Offset Number within the block of data or configuration or OTP zone. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">addr</td><td>Pointer to the address of data or configuration or OTP zone. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
 
-Returns:
-    ATCACERT_E_SUCCESS on success, otherwise an error code.
-</pre> 
 </div>
 </div>
-<a id="a82bd7bbea46866cb644016ea7faff329" name="a82bd7bbea46866cb644016ea7faff329"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a82bd7bbea46866cb644016ea7faff329">&#9670;&#160;</a></span>atcacert_date_enc_compcert()</h2>
+<a id="ga023735b1c0b10e70832d9a957bc99ae3" name="ga023735b1c0b10e70832d9a957bc99ae3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga023735b1c0b10e70832d9a957bc99ae3">&#9670;&#160;</a></span>calib_get_zone_size()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def cryptoauthlib.atcacert.atcacert_date_enc_compcert </td>
+          <td class="memname">ATCA_STATUS calib_get_zone_size </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>issue_date</em>, </td>
+          <td class="paramtype"><a class="el" href="a01569.html">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>expire_years</em>, </td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>zone</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>enc_dates</em>&#160;</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>slot</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -543,38 +850,65 @@ Returns:
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Encode the issue and expire dates in the format used by the compressed certificate.
 
-Args:
-    issue_date              Issue date to encode. Note that minutes and seconds will be ignored.
-                            Expects atcacert_tm_utc_t.
-    expire_years            Expire date is expressed as a number of years past the issue date.
-                            0 should be used if there is no expire date.
-    enc_dates               Encoded dates for use in the compressed certificate is returned here.
-                            3 bytes. Expects bytearray.
+<p>Gets the size of the specified zone in bytes. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device context pointer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">zone</td><td>Zone to get size information from. Config(0), OTP(1), or Data(2) which requires a slot. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">slot</td><td>If zone is Data(2), the slot to query for size. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">size</td><td>Zone size is returned here.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
 
-Returns:
-    ATCACERT_E_SUCCESS on success
-</pre> 
 </div>
 </div>
-<a id="a0ffefee23107bcbbadef2508ccaaba4f" name="a0ffefee23107bcbbadef2508ccaaba4f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ffefee23107bcbbadef2508ccaaba4f">&#9670;&#160;</a></span>atcacert_date_get_max_date()</h2>
+<a id="ga59750d83d93368b2944f57bb38bf4d1f" name="ga59750d83d93368b2944f57bb38bf4d1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga59750d83d93368b2944f57bb38bf4d1f">&#9670;&#160;</a></span>calib_idle()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def cryptoauthlib.atcacert.atcacert_date_get_max_date </td>
+          <td class="memname">ATCA_STATUS calib_idle </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>date_format</em>, </td>
+          <td class="paramtype"><a class="el" href="a01569.html">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>idle the CryptoAuth device </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device context pointer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="ga132cfbb5c581c5cc5adf5350d4161966" name="ga132cfbb5c581c5cc5adf5350d4161966"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga132cfbb5c581c5cc5adf5350d4161966">&#9670;&#160;</a></span>calib_info()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS calib_info </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01569.html">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>timestamp</em>&#160;</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>revision</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -583,40 +917,48 @@ Returns:
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Return the maximum date available for the given format.
 
-Args:
-    format                  Format to get the max date for.
-    timestamp               Max date is returned here. Expects atcacert_tm_utc_t.
+<p>Use the Info command to get the device revision (DevRev). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device context pointer </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">revision</td><td>Device revision is returned here (4 bytes). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
 
-Returns:
-    ATCACERT_E_SUCCESS on success, otherwise an error code.
-</pre> 
 </div>
 </div>
-<a id="a9c3717acbb392ceed968c1172400e6dd" name="a9c3717acbb392ceed968c1172400e6dd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9c3717acbb392ceed968c1172400e6dd">&#9670;&#160;</a></span>atcacert_get_response()</h2>
+<a id="gabc7aff4f1707fbe0a05cf416955f43b0" name="gabc7aff4f1707fbe0a05cf416955f43b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabc7aff4f1707fbe0a05cf416955f43b0">&#9670;&#160;</a></span>calib_info_base()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def cryptoauthlib.atcacert.atcacert_get_response </td>
+          <td class="memname">ATCA_STATUS calib_info_base </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>device_private_key_slot</em>, </td>
+          <td class="paramtype"><a class="el" href="a01569.html">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>challenge</em>, </td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>mode</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>response</em>&#160;</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>param2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>out_data</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -625,39 +967,38 @@ Returns:
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Calculates the response to a challenge sent from the host.
-The challenge-response protocol is an ECDSA Sign and Verify. This performs the ECDSA Sign on the
-challenge and returns the signature as the response.
 
-Args:
-    device_private_key_slot         Slot number for the device's private key. This must be the
-                                    same slot used to generate the public key included in the
-                                    device's certificate.
-    challenge                       Challenge to generate the response for. Must be 32 bytes.
-    response                        Response will be returned in this buffer. 64 bytes.
+<p>Issues an Info command, which return internal device information and can control GPIO and the persistent latch. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device context pointer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mode</td><td>Selects which mode to be used for info command. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">param2</td><td>Selects the particular fields for the mode. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">out_data</td><td>Response from info command (4 bytes). Can be set to NULL if not required. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
 
-Returns:
-    ATCACERT_E_SUCCESS on success, otherwise an error code.
-</pre> 
 </div>
 </div>
-<a id="a3b6192388c29b0efb1968d6b44efd712" name="a3b6192388c29b0efb1968d6b44efd712"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3b6192388c29b0efb1968d6b44efd712">&#9670;&#160;</a></span>atcacert_max_cert_size()</h2>
+<a id="gac33e6d38d506b4e71618063d1b4a7499" name="gac33e6d38d506b4e71618063d1b4a7499"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac33e6d38d506b4e71618063d1b4a7499">&#9670;&#160;</a></span>calib_info_chip_status()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def cryptoauthlib.atcacert.atcacert_max_cert_size </td>
+          <td class="memname">ATCA_STATUS calib_info_chip_status </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>cert_def</em>, </td>
+          <td class="paramtype"><a class="el" href="a01569.html">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>max_cert_size</em>&#160;</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>chip_status</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -666,50 +1007,42 @@ Returns:
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Return the maximum possible certificate size in bytes for a given
-cert def. Certificate can be variable size, so this gives an
-appropriate buffer size when reading the certificates.
 
-Args:
-    cert_def       Certificate definition to find a max size for.
-                   Expects atcacert_def_t.
-    max_cert_size  Maximum certificate size will be returned here in bytes.
-                   Expects AtcaReference.
+<p>Use Info command to get ECC204,TA010,SHA10x chip status. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device context pointer </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">chip_status</td><td>return chip status here</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
 
-Returns:
-    ATCACERT_E_SUCCESS on success, otherwise an error code.
-</pre> 
 </div>
 </div>
-<a id="a4fe33f1da468796b39c80a34e12411fb" name="a4fe33f1da468796b39c80a34e12411fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4fe33f1da468796b39c80a34e12411fb">&#9670;&#160;</a></span>atcacert_read_cert()</h2>
+<a id="gacd82ed053319a63bbe06755632e377bc" name="gacd82ed053319a63bbe06755632e377bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacd82ed053319a63bbe06755632e377bc">&#9670;&#160;</a></span>calib_info_lock_status()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def cryptoauthlib.atcacert.atcacert_read_cert </td>
+          <td class="memname">ATCA_STATUS calib_info_lock_status </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>cert_def</em>, </td>
+          <td class="paramtype"><a class="el" href="a01569.html">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>ca_public_key</em>, </td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>param2</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>cert</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>cert_size</em>&#160;</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>is_locked</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -718,54 +1051,43 @@ Returns:
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Reads the certificate specified by the certificate definition from the
-ATECC508A device.
-This process involves reading the dynamic cert data from the device and combining it
-with the template found in the certificate definition.
 
-Args:
-    cert_def                Certificate definition describing where to find the dynamic
-                            certificate information on the device and how to incorporate it
-                            into the template. Expects atcacert_def_t.
-    ca_public_key           The ECC P256 public key of the certificate authority that signed
-                            this certificate. Formatted as the 32 byte X and Y integers
-                            concatenated together (64 bytes total). Set to NULL if the
-                            authority key id is not needed, set properly in the cert_def
-                            template, or stored on the device as specifed in the
-                            cert_def cert_elements.
-    cert                    Buffer to received the certificate. Expects bytearray.
-    cert_size               As input, the size of the cert buffer in bytes.
-                            As output, the size of the certificate returned in cert in bytes.
-                            Expects AtcaReference.
+<p>Use Info command to ECC204,TA010 config/data zone lock status. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device context pointer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">param2</td><td>selects the zone and slot </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">is_locked</td><td>return lock status here</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
 
-Returns:
-    ATCACERT_E_SUCCESS on success, otherwise an error code.
-</pre> 
 </div>
 </div>
-<a id="a5c4d1755dfd9a2b378cd45f14de1f1ee" name="a5c4d1755dfd9a2b378cd45f14de1f1ee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c4d1755dfd9a2b378cd45f14de1f1ee">&#9670;&#160;</a></span>atcacert_write_cert()</h2>
+<a id="ga39e3e31e7573d3d73f4b757db7704cce" name="ga39e3e31e7573d3d73f4b757db7704cce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga39e3e31e7573d3d73f4b757db7704cce">&#9670;&#160;</a></span>calib_info_privkey_valid()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def cryptoauthlib.atcacert.atcacert_write_cert </td>
+          <td class="memname">ATCA_STATUS calib_info_privkey_valid </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>cert_def</em>, </td>
+          <td class="paramtype"><a class="el" href="a01569.html">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>cert</em>, </td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>key_id</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>cert_size</em>&#160;</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>is_valid</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -774,19 +1096,95 @@ Returns:
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Take a full certificate and write it to the ATECC508A device according to the
-certificate definition.
 
-Args:
-    cert_def                Certificate definition describing where the dynamic certificate
-                            information is and how to store it on the device.
-                            Expects atcacert_def_t.
-    cert                    Full certificate to be stored.
-    cert_size               Size of the full certificate in bytes.
+<p>Use Info command to check ECC Private key stored in key slot is valid or not. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device context pointer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key_id</td><td>ECC private key slot id For ECC204,TA010 key_id is 0x00 </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">is_valid</td><td>return private key is valid or invalid</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
 
-Returns:
-    ATCACERT_E_SUCCESS on success, otherwise an error code.
-</pre> 
+</div>
+</div>
+<a id="gad26b70951a0da6d80fb98027faae7a1f" name="gad26b70951a0da6d80fb98027faae7a1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad26b70951a0da6d80fb98027faae7a1f">&#9670;&#160;</a></span>calib_sleep()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS calib_sleep </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01569.html">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>invoke sleep on the CryptoAuth device </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device context pointer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="gafbc037d57a4cc4fec6a2f291736170cb" name="gafbc037d57a4cc4fec6a2f291736170cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafbc037d57a4cc4fec6a2f291736170cb">&#9670;&#160;</a></span>calib_wakeup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS calib_wakeup </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01569.html">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>wakeup the CryptoAuth device </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">device</td><td>Device context pointer </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a id="ga884790e08be94431e1fbe92bf6106e06" name="ga884790e08be94431e1fbe92bf6106e06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga884790e08be94431e1fbe92bf6106e06">&#9670;&#160;</a></span>calib_wakeup_i2c()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ATCA_STATUS calib_wakeup_i2c </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01569.html">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>basic API methods are all prefixed with atcab_ (CryptoAuthLib Basic) the fundamental premise of the basic API is it is based on a single interface instance and that instance is global, so all basic API commands assume that one global device is the one to operate on. </p>
+<p>Drive the SDA pin low for wake up Set i2c device addr as 0U to drive SDA low</p>
+<p>I2C general call should not interpreted as an addr write</p>
+<p>Set the i2c device address</p>
+
 </div>
 </div>
 </div><!-- contents -->
@@ -794,7 +1192,6 @@ Returns:
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01511.html">cryptoauthlib</a></li><li class="navelem"><a class="el" href="a01513.html">atcacert</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

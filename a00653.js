@@ -1,6 +1,6 @@
 var a00653 =
 [
-    [ "atca_uart_host_s", "a01728.html", null ],
+    [ "atca_uart_host_s", "a01737.html", null ],
     [ "hal_uart_control", "a00653.html#a41ed83bbc8e0fd3abea7beb513fbdb96", null ],
     [ "hal_uart_init", "a00653.html#afb6d836af248aed1afe715ae2f2f7c2b", null ],
     [ "hal_uart_post_init", "a00653.html#a1c5f894db539ea5cb0d5ae0fa38449d7", null ],

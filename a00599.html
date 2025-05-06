@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.8</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -124,33 +124,33 @@ $(document).ready(function(){initNavTree('a00599.html',''); initResizable(); });
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01720.html">atca_i2c_host_s</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01729.html">atca_i2c_host_s</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:ga66c5ee62a634720fc2ae3070689c9ccb"><td class="memItemLeft" align="right" valign="top">
-typedef struct <a class="el" href="a01720.html">atca_i2c_host_s</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atca_i2c_host_t</b></td></tr>
+typedef struct <a class="el" href="a01729.html">atca_i2c_host_s</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atca_i2c_host_t</b></td></tr>
 <tr class="separator:ga66c5ee62a634720fc2ae3070689c9ccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga17df8d983df73e2e8f62f1236f157909"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#ga17df8d983df73e2e8f62f1236f157909">hal_i2c_init</a> (<a class="el" href="a01636.html">ATCAIface</a> iface, <a class="el" href="a01568.html">ATCAIfaceCfg</a> *cfg)</td></tr>
+<tr class="memitem:ga17df8d983df73e2e8f62f1236f157909"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01515.html#ga17df8d983df73e2e8f62f1236f157909">hal_i2c_init</a> (<a class="el" href="a01645.html">ATCAIface</a> iface, <a class="el" href="a01577.html">ATCAIfaceCfg</a> *cfg)</td></tr>
 <tr class="memdesc:ga17df8d983df73e2e8f62f1236f157909"><td class="mdescLeft">&#160;</td><td class="mdescRight">hal_i2c_init manages requests to initialize a physical interface. it manages use counts so when an interface has released the physical layer, it will disable the interface for some other use. You can have multiple ATCAIFace instances using the same bus, and you can have multiple ATCAIFace instances on multiple i2c buses, so hal_i2c_init manages these things and ATCAIFace is abstracted from the physical details.  <br /></td></tr>
 <tr class="separator:ga17df8d983df73e2e8f62f1236f157909"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafbe53519362f18c2688d10da6f7c618f"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#gafbe53519362f18c2688d10da6f7c618f">hal_i2c_post_init</a> (<a class="el" href="a01636.html">ATCAIface</a> iface)</td></tr>
+<tr class="memitem:gafbe53519362f18c2688d10da6f7c618f"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01515.html#gafbe53519362f18c2688d10da6f7c618f">hal_i2c_post_init</a> (<a class="el" href="a01645.html">ATCAIface</a> iface)</td></tr>
 <tr class="memdesc:gafbe53519362f18c2688d10da6f7c618f"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of I2C post init.  <br /></td></tr>
 <tr class="separator:gafbe53519362f18c2688d10da6f7c618f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacc9a889e19d2f1a475a39391565b66dd"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#gacc9a889e19d2f1a475a39391565b66dd">hal_i2c_send</a> (<a class="el" href="a01636.html">ATCAIface</a> iface, uint8_t word_address, uint8_t *txdata, int txlength)</td></tr>
+<tr class="memitem:gacc9a889e19d2f1a475a39391565b66dd"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01515.html#gacc9a889e19d2f1a475a39391565b66dd">hal_i2c_send</a> (<a class="el" href="a01645.html">ATCAIface</a> iface, uint8_t word_address, uint8_t *txdata, int txlength)</td></tr>
 <tr class="memdesc:gacc9a889e19d2f1a475a39391565b66dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of I2C send over START.  <br /></td></tr>
 <tr class="separator:gacc9a889e19d2f1a475a39391565b66dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac1baf65047dc3efe1f14f1b79b62c04f"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#gac1baf65047dc3efe1f14f1b79b62c04f">hal_i2c_receive</a> (<a class="el" href="a01636.html">ATCAIface</a> iface, uint8_t <a class="el" href="a00287.html#af3f726014b044194def151079f1f2d89">address</a>, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
+<tr class="memitem:gac1baf65047dc3efe1f14f1b79b62c04f"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01515.html#gac1baf65047dc3efe1f14f1b79b62c04f">hal_i2c_receive</a> (<a class="el" href="a01645.html">ATCAIface</a> iface, uint8_t <a class="el" href="a00287.html#af3f726014b044194def151079f1f2d89">address</a>, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
 <tr class="memdesc:gac1baf65047dc3efe1f14f1b79b62c04f"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of I2C receive function for START I2C.  <br /></td></tr>
 <tr class="separator:gac1baf65047dc3efe1f14f1b79b62c04f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4f82572f05b8587d98bc38601453863e"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#ga4f82572f05b8587d98bc38601453863e">hal_i2c_control</a> (<a class="el" href="a01636.html">ATCAIface</a> iface, uint8_t option, void *param, size_t paramlen)</td></tr>
+<tr class="memitem:ga4f82572f05b8587d98bc38601453863e"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01515.html#ga4f82572f05b8587d98bc38601453863e">hal_i2c_control</a> (<a class="el" href="a01645.html">ATCAIface</a> iface, uint8_t option, void *param, size_t paramlen)</td></tr>
 <tr class="memdesc:ga4f82572f05b8587d98bc38601453863e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform control operations for the kit protocol.  <br /></td></tr>
 <tr class="separator:ga4f82572f05b8587d98bc38601453863e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac382cc4431d2d1c721c21a453ba36c22"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#gac382cc4431d2d1c721c21a453ba36c22">hal_i2c_release</a> (void *hal_data)</td></tr>
+<tr class="memitem:gac382cc4431d2d1c721c21a453ba36c22"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01515.html#gac382cc4431d2d1c721c21a453ba36c22">hal_i2c_release</a> (void *hal_data)</td></tr>
 <tr class="memdesc:gac382cc4431d2d1c721c21a453ba36c22"><td class="mdescLeft">&#160;</td><td class="mdescRight">manages reference count on given bus and releases resource if no more refences exist  <br /></td></tr>
 <tr class="separator:gac382cc4431d2d1c721c21a453ba36c22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>

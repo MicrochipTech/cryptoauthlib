@@ -1,4 +1,4 @@
 var a00761 =
 [
-    [ "pkcs11_get_lib_info", "a01510.html#gaae56826104269ca730066136fb3eb995", null ]
+    [ "pkcs11_get_lib_info", "a01519.html#gaae56826104269ca730066136fb3eb995", null ]
 ];

@@ -1,39 +1,47 @@
 var a01511 =
 [
-    [ "atcab", "a01512.html", "a01512" ],
-    [ "atcacert", "a01513.html", "a01513" ],
-    [ "atcaenum", "a01514.html", "a01514" ],
-    [ "atjwt", "a01515.html", "a01515" ],
-    [ "device", "a01516.html", "a01516" ],
-    [ "exceptions", "a01517.html", "a01517" ],
-    [ "iface", "a01518.html", "a01518" ],
-    [ "library", "a01519.html", "a01519" ],
-    [ "sha206_api", "a01520.html", [
-      [ "sha206a_authenticate", "a01520.html#aca369f80d942aad6a827c2817c998df5", null ],
-      [ "sha206a_check_dk_useflag_validity", "a01520.html#ae4da1b83a8d9d37483a4b179edfeceff", null ],
-      [ "sha206a_check_pk_useflag_validity", "a01520.html#a1e60ef1b7888afae74b4e390a358d263", null ],
-      [ "sha206a_diversify_parent_key", "a01520.html#abe0624bf06c710473082bfbef52273f3", null ],
-      [ "sha206a_generate_challenge_response_pair", "a01520.html#a3c5cc4df72fb0dea8534dc7726430063", null ],
-      [ "sha206a_generate_derive_key", "a01520.html#a607ffbecea0980b58be2b31a8b87b983", null ],
-      [ "sha206a_get_data_store_lock_status", "a01520.html#a4bc534fea446c5d50d4d3cde1cf4a4dc", null ],
-      [ "sha206a_get_dk_update_count", "a01520.html#ac96ca57f02ed212f0eb5ae95875d952c", null ],
-      [ "sha206a_get_dk_useflag_count", "a01520.html#ae27b4776f24b612e4ea9e712c086d22b", null ],
-      [ "sha206a_get_pk_useflag_count", "a01520.html#a710e3e25bc12a3ecd3051ebbb763c5b0", null ],
-      [ "sha206a_read_data_store", "a01520.html#aeed0ec7ac85e0588bc05822d6d63eaa3", null ],
-      [ "sha206a_verify_device_consumption", "a01520.html#a0d2a1e79937863b4a48218de3567d996", null ],
-      [ "sha206a_write_data_store", "a01520.html#a1e883095c960da9d48db489a25774042", null ]
+    [ "devtype_names_t", "a01573.html", null ],
+    [ "ATCAIfaceCfg", "a01577.html", [
+      [ "address", "a01577.html#a553439e2acc31fe3587a4c883e134b66", null ]
     ] ],
-    [ "status", "a01521.html", "a01521" ],
-    [ "tng", "a01522.html", [
-      [ "tng_atcacert_device_public_key", "a01522.html#a7382f6d9830ea03bcbb59f7fae2745e1", null ],
-      [ "tng_atcacert_max_device_cert_size", "a01522.html#a6878e2f1c9330534f8c7950f26e327b0", null ],
-      [ "tng_atcacert_max_signer_cert_size", "a01522.html#afc28b6798b670200ecf08645ccaf0e44", null ],
-      [ "tng_atcacert_read_device_cert", "a01522.html#a76d8460082efdbc28d2a68f5648ce8dd", null ],
-      [ "tng_atcacert_read_signer_cert", "a01522.html#a6d3eab271cac5959402b283c5a6046a4", null ],
-      [ "tng_atcacert_root_cert", "a01522.html#a08385a0e8b5e7e8dc5de6570b06555a6", null ],
-      [ "tng_atcacert_root_cert_size", "a01522.html#a3c1b718b02781b6dbc87f7d6c109d3a6", null ],
-      [ "tng_atcacert_root_public_key", "a01522.html#a375f83b01899d081623192f9d4a7e6fe", null ],
-      [ "tng_atcacert_signer_public_key", "a01522.html#a0c580da1c1d3e54a60be0f05d5d5c1f1", null ],
-      [ "tng_get_device_pubkey", "a01522.html#a2eb63fc0cf6c9ce8744fd5ab3524a9e7", null ]
-    ] ]
+    [ "ATCAHAL_t", "a01641.html", null ],
+    [ "atca_iface", "a01645.html", [
+      [ "hal", "a01645.html#a7cee716c7c8c20d0d8aac6243baff819", null ],
+      [ "hal_data", "a01645.html#ab316c2d139b46380bc97be4d23428caa", null ],
+      [ "mIfaceCFG", "a01645.html#a093b94b5d693f4e7a8facfc40f1443b0", null ],
+      [ "phy", "a01645.html#a3ac7e576da4958d6c0488ec606d9cbff", null ]
+    ] ],
+    [ "atca_iface_t", "a01511.html#gaa9323be08c4d757019e9863d9a7fb6b1", null ],
+    [ "ATCAIfaceType", "a01511.html#gac7f674d4a0afb12d2f3c9c5e98cb1089", [
+      [ "ATCA_I2C_IFACE", "a01511.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a872efba3aa5b7890acfe0f1e0e453bcb", null ],
+      [ "ATCA_SWI_IFACE", "a01511.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a2ce2e46b7f4245ab3d750ea2805fdc26", null ],
+      [ "ATCA_UART_IFACE", "a01511.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a80ec8c070f1c711f2b16ad39d2a0486d", null ],
+      [ "ATCA_SPI_IFACE", "a01511.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a8d50943acfc67f797b9c8fbf565deeb7", null ],
+      [ "ATCA_HID_IFACE", "a01511.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a7da282c54282a02f5650c38a85d0dfb1", null ],
+      [ "ATCA_KIT_IFACE", "a01511.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a0c22b107512100a364378a0bbf6bdfb9", null ],
+      [ "ATCA_CUSTOM_IFACE", "a01511.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a1da1522f46e7dbd1a928ff130594561d", null ],
+      [ "ATCA_I2C_GPIO_IFACE", "a01511.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a1b4b0b9522bab920782f2d781c9e489e", null ],
+      [ "ATCA_SWI_GPIO_IFACE", "a01511.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089ab38797147196617d79ba041c899fdee2", null ],
+      [ "ATCA_SPI_GPIO_IFACE", "a01511.html#ggac7f674d4a0afb12d2f3c9c5e98cb1089a28c752d380cea80d9d35735979e623eb", null ]
+    ] ],
+    [ "atca_iface_get_retries", "a01511.html#ga349718dea5d5b558766a31b7dcd7e811", null ],
+    [ "atca_iface_get_wake_delay", "a01511.html#ga128f54833b5ed2105dae417333e1d651", null ],
+    [ "atca_iface_is_kit", "a01511.html#gacb09a6fa845efade7d47796bead14d2c", null ],
+    [ "atca_iface_is_swi", "a01511.html#gad2276d5ebd02613fbeda8ae15b679d1e", null ],
+    [ "atcontrol", "a01511.html#ga324cef45a35e02b387001afdc9092778", null ],
+    [ "atgetifacecfg", "a01511.html#gac88ba81abfd42df65c6c0c64414dfc6e", null ],
+    [ "atgetifacehaldat", "a01511.html#ga5e4163b8882d4eb42d4d5191c8731da0", null ],
+    [ "atidle", "a01511.html#gac794fffe040e6d47a34c756720f3cbea", null ],
+    [ "atinit", "a01511.html#ga386353e8700eec35e4548dfa29f13b8d", null ],
+    [ "atreceive", "a01511.html#ga01badea388343bdf5929c5c2be9f426b", null ],
+    [ "atsend", "a01511.html#gabd4f20b06efedede6bc4a836cfad8f38", null ],
+    [ "atsleep", "a01511.html#gac06336335e5f3191e3b1fc06d2830d96", null ],
+    [ "atwake", "a01511.html#ga32693c852341e1b946bab3cca5f71761", null ],
+    [ "deleteATCAIface", "a01511.html#gaf8074d759241d3edd6d8ead1d7322a98", null ],
+    [ "iface_get_device_type_by_name", "a01511.html#ga8e50f9bf69be0910880411e9a0d5bc24", null ],
+    [ "ifacecfg_get_address", "a01511.html#ga9efe98ee7fe9be95593c7177800efd8d", null ],
+    [ "ifacecfg_set_address", "a01511.html#ga4e975805352164dc3a8ff553b42c509f", null ],
+    [ "ifacetype_is_kit", "a01511.html#gaaff5268b9acbf16db03b425e6c54f97c", null ],
+    [ "initATCAIface", "a01511.html#ga3a31087729a7a2e9a624572f234809fc", null ],
+    [ "releaseATCAIface", "a01511.html#gab9ee16357a8e397a72eda7e9c8553fb3", null ]
 ];

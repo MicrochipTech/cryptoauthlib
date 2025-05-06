@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: Python CryptoAuthLib Module Testing</title>
+<title>CryptoAuthLib: Contribution Guidelines</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.8</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -97,30 +97,17 @@ $(document).ready(function(){initNavTree('a02912.html',''); initResizable(); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Python CryptoAuthLib Module Testing </div></div>
+  <div class="headertitle"><div class="title">Contribution Guidelines </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md53"></a>
-Introduction</h1>
-<p>These tests are designed to only test the python interface to the library and are not designed to test the library itself which is covered by the main cryptoauthlib tests</p>
-<h2><a class="anchor" id="autotoc_md54"></a>
-Running</h2>
-<p>The best way to run the test suite is to use <a href="https://tox.readthedocs.io/en/latest/">tox</a> which can be easily installed with pip:</p>
-<div class="fragment"><div class="line">$ pip install tox</div>
-</div><!-- fragment --><p>From the python folder:</p>
-<div class="fragment"><div class="line">:~/cryptoauthlib/python $ tox</div>
-</div><!-- fragment --><p>It is possible to directly run tests but requires more setup</p>
-<p>1) Install pytest</p>
-<div class="fragment"><div class="line">$ pip install pytest</div>
-</div><!-- fragment --><p>2) Modify the PYTHONPATH environment variable</p>
-<p>Windows: </p><div class="fragment"><div class="line">cryptoauthlib/python&gt; set PYTHONPATH=&lt;path_to&gt;/cryptoauthlib/python</div>
-</div><!-- fragment --><p>Linux: </p><div class="fragment"><div class="line">$ export PYTHONPATH=${PYTHONPATH}:&lt;path_to&gt;/cryptoauthlib/python</div>
-</div><!-- fragment --><p>3) Run the tests </p><div class="fragment"><div class="line">$ pytest -vv</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md55"></a>
-Test options</h2>
-<p>There are additional options that can be invoked with the tests that define what tests will be run</p>
-<p>1) &ndash;with-lib will attempt to run tests against the compiled c library. These tests are good for detecting possible platform incompabilities between the C compiler and the expectations of python</p>
-<p>2) &ndash;with-device will attempt to invoke some tests with a real attached device These tests are restricted to only the minimum required to verify the python to library connectivity and are only meant to detect situations can can not be determined from the library tests alone. </p>
+<div class="textblock"><p>While this is an open source project there are a few considerations that make it somewhat unique in how it is managed. The first issue is that the development workflow is a hybrid between internal development and CI/CD systems and external develop and associated CI/CD systems.</p>
+<ul>
+<li>This project contains a mixture of licenses depending on the section. The vast majority is under a Microchip proprietary license that is restrictive.</li>
+<li>Contributors must be aware of the specific license they are working under and must be aware that by submitting the patch that they agree to the terms of the license covering the target file.</li>
+<li>Sources contained in the third_party path are covered by true open source licenses and as such are not bound by Microchip's license restrictions.</li>
+<li>Third party contributions for HALs must be licensed under MIT, BSD (3 clause), or Apache 2.0 license and are placed in third_party/hal/&lt;platform&gt;</li>
+<li>Pull requests (PR) must attest to reviewing of these rules, that licensing terms have been reviewed, the submitter has approval to submit the changes under the target license terms. </li>
+</ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

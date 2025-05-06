@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.8</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -112,8 +112,8 @@ $(document).ready(function(){initNavTree('a00272.html',''); initResizable(); });
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01560.html">atca_device</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a01560.html" title="atca_device is the C object backing ATCADevice. See the atca_device.h file for details on the ATCADev...">atca_device</a> is the C object backing ATCADevice. See the <a class="el" href="a00272.html" title="Microchip Crypto Auth device object.">atca_device.h</a> file for details on the ATCADevice methods  <a href="a01560.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01569.html">atca_device</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a01569.html" title="atca_device is the C object backing ATCADevice. See the atca_device.h file for details on the ATCADev...">atca_device</a> is the C object backing ATCADevice. See the <a class="el" href="a00272.html" title="Microchip Crypto Auth device object.">atca_device.h</a> file for details on the ATCADevice methods  <a href="a01569.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
@@ -123,12 +123,12 @@ typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><b>ctx_cb</b>)
 <tr class="memdesc:gada27ffa70c78964d3b38abd11c5f4f22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function to clean up the session context. <br /></td></tr>
 <tr class="separator:gada27ffa70c78964d3b38abd11c5f4f22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa94f7bb4af0a3d6735225cc85d92cb50"><td class="memItemLeft" align="right" valign="top">
-typedef struct <a class="el" href="a01560.html">atca_device</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>ATCADevice</b></td></tr>
+typedef struct <a class="el" href="a01569.html">atca_device</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>ATCADevice</b></td></tr>
 <tr class="separator:gaa94f7bb4af0a3d6735225cc85d92cb50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga765308123cf522f5ec8b528bf4ea1243"><td class="memItemLeft" align="right" valign="top"><a id="ga765308123cf522f5ec8b528bf4ea1243" name="ga765308123cf522f5ec8b528bf4ea1243"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01501.html#ga765308123cf522f5ec8b528bf4ea1243">ATCADeviceState</a> { <b>ATCA_DEVICE_STATE_UNKNOWN</b> = 0
+<tr class="memitem:ga765308123cf522f5ec8b528bf4ea1243"><td class="memItemLeft" align="right" valign="top"><a id="ga765308123cf522f5ec8b528bf4ea1243" name="ga765308123cf522f5ec8b528bf4ea1243"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01510.html#ga765308123cf522f5ec8b528bf4ea1243">ATCADeviceState</a> { <b>ATCA_DEVICE_STATE_UNKNOWN</b> = 0
 , <b>ATCA_DEVICE_STATE_SLEEP</b>
 , <b>ATCA_DEVICE_STATE_IDLE</b>
 , <b>ATCA_DEVICE_STATE_ACTIVE</b>
@@ -138,19 +138,13 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga8eec7f2190d1f9bda6684f5d2177db15"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01501.html#ga8eec7f2190d1f9bda6684f5d2177db15">initATCADevice</a> (<a class="el" href="a01568.html">ATCAIfaceCfg</a> *cfg, <a class="el" href="a01560.html">ATCADevice</a> ca_dev)</td></tr>
+<tr class="memitem:ga8eec7f2190d1f9bda6684f5d2177db15"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01510.html#ga8eec7f2190d1f9bda6684f5d2177db15">initATCADevice</a> (<a class="el" href="a01577.html">ATCAIfaceCfg</a> *cfg, <a class="el" href="a01569.html">ATCADevice</a> ca_dev)</td></tr>
 <tr class="memdesc:ga8eec7f2190d1f9bda6684f5d2177db15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializer for an Microchip CryptoAuth device.  <br /></td></tr>
 <tr class="separator:ga8eec7f2190d1f9bda6684f5d2177db15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad5e12e12d3030e28d75164286df9e5e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01560.html">ATCADevice</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01501.html#gad5e12e12d3030e28d75164286df9e5e9">newATCADevice</a> (<a class="el" href="a01568.html">ATCAIfaceCfg</a> *cfg)</td></tr>
-<tr class="memdesc:gad5e12e12d3030e28d75164286df9e5e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor for a Microchip CryptoAuth device  <br /></td></tr>
-<tr class="separator:gad5e12e12d3030e28d75164286df9e5e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab729e6c838c0a247d4f226fb92492d96"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01501.html#gab729e6c838c0a247d4f226fb92492d96">releaseATCADevice</a> (<a class="el" href="a01560.html">ATCADevice</a> ca_dev)</td></tr>
+<tr class="memitem:gab729e6c838c0a247d4f226fb92492d96"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01510.html#gab729e6c838c0a247d4f226fb92492d96">releaseATCADevice</a> (<a class="el" href="a01569.html">ATCADevice</a> ca_dev)</td></tr>
 <tr class="memdesc:gab729e6c838c0a247d4f226fb92492d96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release any resources associated with the device.  <br /></td></tr>
 <tr class="separator:gab729e6c838c0a247d4f226fb92492d96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac087cf04cd5bd6ff2e026d89bfbf5e12"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01501.html#gac087cf04cd5bd6ff2e026d89bfbf5e12">deleteATCADevice</a> (<a class="el" href="a01560.html">ATCADevice</a> *ca_dev)</td></tr>
-<tr class="memdesc:gac087cf04cd5bd6ff2e026d89bfbf5e12"><td class="mdescLeft">&#160;</td><td class="mdescRight">destructor for a device NULLs reference after object is freed  <br /></td></tr>
-<tr class="separator:gac087cf04cd5bd6ff2e026d89bfbf5e12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3f98e29cffa06446fc91b329703606af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01636.html">ATCAIface</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01501.html#ga3f98e29cffa06446fc91b329703606af">atGetIFace</a> (<a class="el" href="a01560.html">ATCADevice</a> dev)</td></tr>
+<tr class="memitem:ga3f98e29cffa06446fc91b329703606af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01645.html">ATCAIface</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01510.html#ga3f98e29cffa06446fc91b329703606af">atGetIFace</a> (<a class="el" href="a01569.html">ATCADevice</a> dev)</td></tr>
 <tr class="memdesc:ga3f98e29cffa06446fc91b329703606af"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns a reference to the ATCAIface interface object for the device  <br /></td></tr>
 <tr class="separator:ga3f98e29cffa06446fc91b329703606af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>

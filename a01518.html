@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: cryptoauthlib.iface Namespace Reference</title>
+<title>CryptoAuthLib: mbedTLS Wrapper methods (atca_mbedtls_)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.8</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,186 +99,205 @@ $(document).ready(function(){initNavTree('a01518.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">cryptoauthlib.iface Namespace Reference</div></div>
+  <div class="headertitle"><div class="title">mbedTLS Wrapper methods (atca_mbedtls_)</div></div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
+
+<p>These methods are for interfacing cryptoauthlib to mbedtls.  
+<a href="#details">More...</a></p>
+
+
+<h3><a id="md_lib_mbedtls_README" name="md_lib_mbedtls_README"></a>mbedtls directory - Purpose</h3><div class="textblock">This directory contains the interfacing and wrapper functions to integrate mbedtls as the software crypto library as well as provide eliptic curve cryptography (ECC) hardware acceleration. </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02560.html">_ATCACUSTOM</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01865.html">atca_mbedtls_eckey_s</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02552.html">_ATCAHID</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02536.html">_ATCAI2C</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02564.html">_ATCAIfaceParams</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02556.html">_ATCAKIT</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02544.html">_ATCASPI</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02540.html">_ATCASWI</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02548.html">_ATCAUART</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02532.html">_U_Address</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02528.html">ATCADeviceType</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02568.html">ATCAIfaceCfg</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02520.html">ATCAIfaceType</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02524.html">ATCAKitType</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga36d21431afe595eab1b7f7a2330ad727"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a01865.html">atca_mbedtls_eckey_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01518.html#ga36d21431afe595eab1b7f7a2330ad727">atca_mbedtls_eckey_t</a></td></tr>
+<tr class="separator:ga36d21431afe595eab1b7f7a2330ad727"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a3f0aeae05c5278420c02156257845b1d"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01518.html#a3f0aeae05c5278420c02156257845b1d">_iface_load_default_config</a> (name)</td></tr>
-<tr class="separator:a3f0aeae05c5278420c02156257845b1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe3491a94655b07c2608d3451e59d606"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01518.html#afe3491a94655b07c2608d3451e59d606">cfg_ateccx08a_i2c_default</a> ()</td></tr>
-<tr class="separator:afe3491a94655b07c2608d3451e59d606"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64fa8e408c7c7abc0999d5b74825e69d"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01518.html#a64fa8e408c7c7abc0999d5b74825e69d">cfg_ateccx08a_swi_default</a> ()</td></tr>
-<tr class="separator:a64fa8e408c7c7abc0999d5b74825e69d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88737f422c86c2246a698fd64d59db1a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01518.html#a88737f422c86c2246a698fd64d59db1a">cfg_ateccx08a_kithid_default</a> ()</td></tr>
-<tr class="separator:a88737f422c86c2246a698fd64d59db1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc3d4402aa912d4f90e3298a7e8de20c"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01518.html#acc3d4402aa912d4f90e3298a7e8de20c">cfg_atsha20xa_i2c_default</a> ()</td></tr>
-<tr class="separator:acc3d4402aa912d4f90e3298a7e8de20c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4638d28e57304b76ce9f50077e6b3b47"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01518.html#a4638d28e57304b76ce9f50077e6b3b47">cfg_atsha20xa_swi_default</a> ()</td></tr>
-<tr class="separator:a4638d28e57304b76ce9f50077e6b3b47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b929d7e15620e9c352c3cf1e75e2a22"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01518.html#a1b929d7e15620e9c352c3cf1e75e2a22">cfg_atsha20xa_kithid_default</a> ()</td></tr>
-<tr class="separator:a1b929d7e15620e9c352c3cf1e75e2a22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f78be1df79791c6278fd1c76551b8ec"><td class="memItemLeft" align="right" valign="top"><a id="ga9f78be1df79791c6278fd1c76551b8ec" name="ga9f78be1df79791c6278fd1c76551b8ec"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>atca_mbedtls_ecdsa_sign</b> (const mbedtls_mpi *data, mbedtls_mpi *r, mbedtls_mpi *s, const unsigned char *msg, size_t msg_len)</td></tr>
+<tr class="separator:ga9f78be1df79791c6278fd1c76551b8ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad0e60f7088f93556c4a0ac7aff174fe6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01518.html#gad0e60f7088f93556c4a0ac7aff174fe6">atca_mbedtls_pk_init_ext</a> (<a class="el" href="a01569.html">ATCADevice</a> device, mbedtls_pk_context *pkey, const uint16_t slotid)</td></tr>
+<tr class="memdesc:gad0e60f7088f93556c4a0ac7aff174fe6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an mbedtls pk context for use with EC operations.  <br /></td></tr>
+<tr class="separator:gad0e60f7088f93556c4a0ac7aff174fe6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa55a112d0b087adc242cc9b0978b5d15"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01518.html#gaa55a112d0b087adc242cc9b0978b5d15">atca_mbedtls_pk_init</a> (mbedtls_pk_context *pkey, const uint16_t slotid)</td></tr>
+<tr class="memdesc:gaa55a112d0b087adc242cc9b0978b5d15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an mbedtls pk context for use with EC operations.  <br /></td></tr>
+<tr class="separator:gaa55a112d0b087adc242cc9b0978b5d15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1180b0ded84f7edb4b36d14730366a64"><td class="memItemLeft" align="right" valign="top"><a id="ga1180b0ded84f7edb4b36d14730366a64" name="ga1180b0ded84f7edb4b36d14730366a64"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>atca_mbedtls_cert_add</b> (struct mbedtls_x509_crt *cert, const struct <a class="el" href="a01665.html">atcacert_def_s</a> *cert_def)</td></tr>
+<tr class="separator:ga1180b0ded84f7edb4b36d14730366a64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga98d684683ccecd3d56bdf5dc27ae999c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01518.html#ga98d684683ccecd3d56bdf5dc27ae999c">atca_mbedtls_ecdh_slot_cb</a> (void)</td></tr>
+<tr class="memdesc:ga98d684683ccecd3d56bdf5dc27ae999c"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH Callback to obtain the "slot" used in ECDH operations from the application.  <br /></td></tr>
+<tr class="separator:ga98d684683ccecd3d56bdf5dc27ae999c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa35682dc98e33ce3d6fad1fc902cdff0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01518.html#gaa35682dc98e33ce3d6fad1fc902cdff0">atca_mbedtls_ecdh_ioprot_cb</a> (uint8_t secret[32])</td></tr>
+<tr class="memdesc:gaa35682dc98e33ce3d6fad1fc902cdff0"><td class="mdescLeft">&#160;</td><td class="mdescRight">ECDH Callback to obtain the IO Protection secret from the application.  <br /></td></tr>
+<tr class="separator:gaa35682dc98e33ce3d6fad1fc902cdff0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6f7d27cd8f4283bfa50491362a37b315"><td class="memItemLeft" align="right" valign="top"><a id="ga6f7d27cd8f4283bfa50491362a37b315" name="ga6f7d27cd8f4283bfa50491362a37b315"></a>
+struct mbedtls_x509_crt *&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_mbedtls_new</b> (void)</td></tr>
+<tr class="separator:ga6f7d27cd8f4283bfa50491362a37b315"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaac9bdfd4f9e7c32333bbc60e726f41cb"><td class="memItemLeft" align="right" valign="top"><a id="gaac9bdfd4f9e7c32333bbc60e726f41cb" name="gaac9bdfd4f9e7c32333bbc60e726f41cb"></a>
+struct <a class="el" href="a01841.html">atcac_x509_ctx</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_ctx_new</b> (void)</td></tr>
+<tr class="separator:gaac9bdfd4f9e7c32333bbc60e726f41cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga188443f1d21554b2fadd4270600a4bf2"><td class="memItemLeft" align="right" valign="top"><a id="ga188443f1d21554b2fadd4270600a4bf2" name="ga188443f1d21554b2fadd4270600a4bf2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_ctx_free</b> (struct <a class="el" href="a01841.html">atcac_x509_ctx</a> *ctx)</td></tr>
+<tr class="separator:ga188443f1d21554b2fadd4270600a4bf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><pre class="fragment">Interface Configuration
-</pre> </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a3f0aeae05c5278420c02156257845b1d" name="a3f0aeae05c5278420c02156257845b1d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3f0aeae05c5278420c02156257845b1d">&#9670;&#160;</a></span>_iface_load_default_config()</h2>
+<p>These methods are for interfacing cryptoauthlib to mbedtls. </p>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="ga36d21431afe595eab1b7f7a2330ad727" name="ga36d21431afe595eab1b7f7a2330ad727"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga36d21431afe595eab1b7f7a2330ad727">&#9670;&#160;</a></span>atca_mbedtls_eckey_t</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">def cryptoauthlib.iface._iface_load_default_config </td>
+          <td class="memname">typedef struct <a class="el" href="a01865.html">atca_mbedtls_eckey_s</a> <a class="el" href="a01518.html#ga36d21431afe595eab1b7f7a2330ad727">atca_mbedtls_eckey_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Structure to hold metadata - is written into the mbedtls pk structure as the private key bignum value 'd' which otherwise would be unused. Bignums can be any arbitrary length of bytes <br  />
+ </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="gaa35682dc98e33ce3d6fad1fc902cdff0" name="gaa35682dc98e33ce3d6fad1fc902cdff0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa35682dc98e33ce3d6fad1fc902cdff0">&#9670;&#160;</a></span>atca_mbedtls_ecdh_ioprot_cb()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int atca_mbedtls_ecdh_ioprot_cb </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>name</em></td><td>)</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>secret</em>[32]</td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<pre class="fragment">"Attempt to load the default configuration structure from the library by name</pre> 
+
+<p>ECDH Callback to obtain the IO Protection secret from the application. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">secret</td><td>32 byte array used to store the secret </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
+
 </div>
 </div>
-<a id="afe3491a94655b07c2608d3451e59d606" name="afe3491a94655b07c2608d3451e59d606"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe3491a94655b07c2608d3451e59d606">&#9670;&#160;</a></span>cfg_ateccx08a_i2c_default()</h2>
+<a id="ga98d684683ccecd3d56bdf5dc27ae999c" name="ga98d684683ccecd3d56bdf5dc27ae999c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga98d684683ccecd3d56bdf5dc27ae999c">&#9670;&#160;</a></span>atca_mbedtls_ecdh_slot_cb()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def cryptoauthlib.iface.cfg_ateccx08a_i2c_default </td>
+          <td class="memname">int atca_mbedtls_ecdh_slot_cb </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Default configuration for an ECCx08A device on the first logical I2C bus</pre> 
+
+<p>ECDH Callback to obtain the "slot" used in ECDH operations from the application. </p>
+<dl class="section return"><dt>Returns</dt><dd>Slot Number </dd></dl>
+
 </div>
 </div>
-<a id="a88737f422c86c2246a698fd64d59db1a" name="a88737f422c86c2246a698fd64d59db1a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a88737f422c86c2246a698fd64d59db1a">&#9670;&#160;</a></span>cfg_ateccx08a_kithid_default()</h2>
+<a id="gaa55a112d0b087adc242cc9b0978b5d15" name="gaa55a112d0b087adc242cc9b0978b5d15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa55a112d0b087adc242cc9b0978b5d15">&#9670;&#160;</a></span>atca_mbedtls_pk_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def cryptoauthlib.iface.cfg_ateccx08a_kithid_default </td>
+          <td class="memname">int atca_mbedtls_pk_init </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">mbedtls_pk_context *&#160;</td>
+          <td class="paramname"><em>pkey</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>slotid</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Default configuration for Kit protocol over a HID interface</pre> 
+
+<p>Initializes an mbedtls pk context for use with EC operations. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">pkey</td><td>ptr to space to receive version string </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">slotid</td><td>Associated with this key </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success, otherwise an error code. </dd></dl>
+
 </div>
 </div>
-<a id="a64fa8e408c7c7abc0999d5b74825e69d" name="a64fa8e408c7c7abc0999d5b74825e69d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a64fa8e408c7c7abc0999d5b74825e69d">&#9670;&#160;</a></span>cfg_ateccx08a_swi_default()</h2>
+<a id="gad0e60f7088f93556c4a0ac7aff174fe6" name="gad0e60f7088f93556c4a0ac7aff174fe6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad0e60f7088f93556c4a0ac7aff174fe6">&#9670;&#160;</a></span>atca_mbedtls_pk_init_ext()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def cryptoauthlib.iface.cfg_ateccx08a_swi_default </td>
+          <td class="memname">int atca_mbedtls_pk_init_ext </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td class="paramtype"><a class="el" href="a01569.html">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>device</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-<pre class="fragment">Default configuration for an ECCx08A device on the logical SWI bus over UART</pre> 
-</div>
-</div>
-<a id="acc3d4402aa912d4f90e3298a7e8de20c" name="acc3d4402aa912d4f90e3298a7e8de20c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acc3d4402aa912d4f90e3298a7e8de20c">&#9670;&#160;</a></span>cfg_atsha20xa_i2c_default()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">def cryptoauthlib.iface.cfg_atsha20xa_i2c_default </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">mbedtls_pk_context *&#160;</td>
+          <td class="paramname"><em>pkey</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-<pre class="fragment">Default configuration for a SHA204A device on the first logical I2C bus</pre> 
-</div>
-</div>
-<a id="a1b929d7e15620e9c352c3cf1e75e2a22" name="a1b929d7e15620e9c352c3cf1e75e2a22"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1b929d7e15620e9c352c3cf1e75e2a22">&#9670;&#160;</a></span>cfg_atsha20xa_kithid_default()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">def cryptoauthlib.iface.cfg_atsha20xa_kithid_default </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>slotid</em>&#160;</td>
         </tr>
-      </table>
-</div><div class="memdoc">
-<pre class="fragment">Default configuration for Kit protocol over a HID interface for SHA204</pre> 
-</div>
-</div>
-<a id="a4638d28e57304b76ce9f50077e6b3b47" name="a4638d28e57304b76ce9f50077e6b3b47"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4638d28e57304b76ce9f50077e6b3b47">&#9670;&#160;</a></span>cfg_atsha20xa_swi_default()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">def cryptoauthlib.iface.cfg_atsha20xa_swi_default </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
           <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Default configuration for an SHA204A device on the logical SWI bus over UART</pre> 
+
+<p>Initializes an mbedtls pk context for use with EC operations. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">pkey</td><td>ptr to space to receive version string </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">slotid</td><td>Associated with this key </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success, otherwise an error code. </dd></dl>
+
 </div>
 </div>
 </div><!-- contents -->
@@ -286,7 +305,6 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01511.html">cryptoauthlib</a></li><li class="navelem"><a class="el" href="a01518.html">iface</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

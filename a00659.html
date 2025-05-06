@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.8</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -120,49 +120,49 @@ Macros</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:gabcd34c3420940261f5740d665a57899b"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_init</b> (<a class="el" href="a01636.html">ATCAIface</a> iface, <a class="el" href="a01568.html">ATCAIfaceCfg</a> *cfg)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_init</b> (<a class="el" href="a01645.html">ATCAIface</a> iface, <a class="el" href="a01577.html">ATCAIfaceCfg</a> *cfg)</td></tr>
 <tr class="separator:gabcd34c3420940261f5740d665a57899b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga705fcfdff5248c2aa97205f08615074c"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_post_init</b> (<a class="el" href="a01636.html">ATCAIface</a> iface)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_post_init</b> (<a class="el" href="a01645.html">ATCAIface</a> iface)</td></tr>
 <tr class="separator:ga705fcfdff5248c2aa97205f08615074c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacd6849349e1ba6ccbb4587a1d80562c8"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_send</b> (<a class="el" href="a01636.html">ATCAIface</a> iface, uint8_t word_address, uint8_t *txdata, int txlength)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_send</b> (<a class="el" href="a01645.html">ATCAIface</a> iface, uint8_t word_address, uint8_t *txdata, int txlength)</td></tr>
 <tr class="separator:gacd6849349e1ba6ccbb4587a1d80562c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac31292c951353a25a81c7fe1308589c0"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_receive</b> (<a class="el" href="a01636.html">ATCAIface</a> iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxsize)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_receive</b> (<a class="el" href="a01645.html">ATCAIface</a> iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxsize)</td></tr>
 <tr class="separator:gac31292c951353a25a81c7fe1308589c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga579466eb74d580602904477ec8fde7e5"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_control</b> (<a class="el" href="a01636.html">ATCAIface</a> iface, uint8_t option, void *param, size_t paramlen)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_control</b> (<a class="el" href="a01645.html">ATCAIface</a> iface, uint8_t option, void *param, size_t paramlen)</td></tr>
 <tr class="separator:ga579466eb74d580602904477ec8fde7e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga686968b014491551d2e348ca6be05fd3"><td class="memItemLeft" align="right" valign="top">
 ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_release</b> (void *hal_data)</td></tr>
 <tr class="separator:ga686968b014491551d2e348ca6be05fd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6a795850f64c7a77f6d9b75739c9d761"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_wrap_cmd</b> (<a class="el" href="a01636.html">ATCAIface</a> iface, uint8_t word_address, const uint8_t *txdata, int txlen, char *pkitcmd, int *nkitcmd)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_wrap_cmd</b> (<a class="el" href="a01645.html">ATCAIface</a> iface, uint8_t word_address, const uint8_t *txdata, int txlen, char *pkitcmd, int *nkitcmd)</td></tr>
 <tr class="separator:ga6a795850f64c7a77f6d9b75739c9d761"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8bf59f4218d312568b769b8b8e5c563e"><td class="memItemLeft" align="right" valign="top">
 ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_parse_rsp</b> (const char *pkitbuf, int nkitbuf, uint8_t *kitstatus, uint8_t *rxdata, int *datasize)</td></tr>
 <tr class="separator:ga8bf59f4218d312568b769b8b8e5c563e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf7ce58d02b067b956abd32127f5519e9"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_wake</b> (<a class="el" href="a01636.html">ATCAIface</a> iface)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_wake</b> (<a class="el" href="a01645.html">ATCAIface</a> iface)</td></tr>
 <tr class="separator:gaf7ce58d02b067b956abd32127f5519e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaeaee19ff7623f0eab9839e68dae583af"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_idle</b> (<a class="el" href="a01636.html">ATCAIface</a> iface)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_idle</b> (<a class="el" href="a01645.html">ATCAIface</a> iface)</td></tr>
 <tr class="separator:gaeaee19ff7623f0eab9839e68dae583af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf6054a0c971830411d5008b94923bdd8"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_sleep</b> (<a class="el" href="a01636.html">ATCAIface</a> iface)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_sleep</b> (<a class="el" href="a01645.html">ATCAIface</a> iface)</td></tr>
 <tr class="separator:gaf6054a0c971830411d5008b94923bdd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabd452e3edb32ea0d22653c182b4e1198"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_phy_send</b> (<a class="el" href="a01636.html">ATCAIface</a> iface, uint8_t *txdata, int txlength)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_phy_send</b> (<a class="el" href="a01645.html">ATCAIface</a> iface, uint8_t *txdata, int txlength)</td></tr>
 <tr class="separator:gabd452e3edb32ea0d22653c182b4e1198"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabb507252b1011037d6d2cce7d91b01d0"><td class="memItemLeft" align="right" valign="top">
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_phy_receive</b> (<a class="el" href="a01636.html">ATCAIface</a> iface, uint8_t *rxdata, int *rxsize)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>kit_phy_receive</b> (<a class="el" href="a01645.html">ATCAIface</a> iface, uint8_t *rxdata, int *rxsize)</td></tr>
 <tr class="separator:gabb507252b1011037d6d2cce7d91b01d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga554072f32204a0eb8d7b8c7931e43343"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#ga554072f32204a0eb8d7b8c7931e43343">kit_id_from_devtype</a> (ATCADeviceType devtype)</td></tr>
+<tr class="memitem:ga554072f32204a0eb8d7b8c7931e43343"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01515.html#ga554072f32204a0eb8d7b8c7931e43343">kit_id_from_devtype</a> (ATCADeviceType devtype)</td></tr>
 <tr class="separator:ga554072f32204a0eb8d7b8c7931e43343"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga31075898964b61f4877ba882477b71c3"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#ga31075898964b61f4877ba882477b71c3">kit_interface_from_kittype</a> (ATCAKitType kittype)</td></tr>
+<tr class="memitem:ga31075898964b61f4877ba882477b71c3"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01515.html#ga31075898964b61f4877ba882477b71c3">kit_interface_from_kittype</a> (ATCAKitType kittype)</td></tr>
 <tr class="separator:ga31075898964b61f4877ba882477b71c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga33fe33933fb59dde6e6fb8975da6c12d"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#ga33fe33933fb59dde6e6fb8975da6c12d">kit_interface</a> (ATCAKitType kittype)</td></tr>
+<tr class="memitem:ga33fe33933fb59dde6e6fb8975da6c12d"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01515.html#ga33fe33933fb59dde6e6fb8975da6c12d">kit_interface</a> (ATCAKitType kittype)</td></tr>
 <tr class="separator:ga33fe33933fb59dde6e6fb8975da6c12d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>

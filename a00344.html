@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.8</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -97,8 +97,6 @@ $(document).ready(function(){initNavTree('a00344.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">atcacert_host_sw.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -108,17 +106,7 @@ $(document).ready(function(){initNavTree('a00344.html',''); initResizable(); });
 <div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
 <code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="a00326.html">atcacert_def.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga8471ea23474833069c04e0b9841175a1"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01503.html#ga8471ea23474833069c04e0b9841175a1">atcacert_gen_challenge_sw</a> (<a class="el" href="a01664.html">cal_buffer</a> *challenge)</td></tr>
-<tr class="memdesc:ga8471ea23474833069c04e0b9841175a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a random challenge to be sent to the client using a software PRNG.The function is currently not implemented.  <br /></td></tr>
-<tr class="separator:ga8471ea23474833069c04e0b9841175a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaae8b11224a0080b3a1a4e3dda09aa14f"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01503.html#gaae8b11224a0080b3a1a4e3dda09aa14f">atcacert_verify_response_sw</a> (const <a class="el" href="a01664.html">cal_buffer</a> *device_public_key, const <a class="el" href="a01664.html">cal_buffer</a> *challenge, const <a class="el" href="a01664.html">cal_buffer</a> *response)</td></tr>
-<tr class="memdesc:gaae8b11224a0080b3a1a4e3dda09aa14f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify a client's response to a challenge using software crypto functions.The function is currently not implemented.  <br /></td></tr>
-<tr class="separator:gaae8b11224a0080b3a1a4e3dda09aa14f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Host side methods using software implementations. host-side, the one authenticating a client, of the authentication process. Crypto functions are performed using a software library. </p>
 <dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
 </div></div><!-- contents -->

@@ -1,6 +1,6 @@
 var a00383 =
 [
-    [ "ATCAPacket", "a01672.html", null ],
+    [ "ATCAPacket", "a01681.html", null ],
     [ "AES_COUNT", "a00383.html#a72cc5ecbdfa169d282776461ce48fda6", null ],
     [ "AES_DATA_SIZE", "a00383.html#a8cbce00b91b0ddfb3264c9c367a3699a", null ],
     [ "AES_INPUT_IDX", "a00383.html#afabb67121c9c58fac9829287b55a2389", null ],

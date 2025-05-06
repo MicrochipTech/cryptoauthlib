@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: Microchip Cryptoauthlib Release Notes</title>
+<title>CryptoAuthLib: Migrating to v3.7.6 to v3.7.7</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.8</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -97,661 +97,67 @@ $(document).ready(function(){initNavTree('a02913.html',''); initResizable(); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Microchip Cryptoauthlib Release Notes </div></div>
+  <div class="headertitle"><div class="title">Migrating to v3.7.6 to v3.7.7 </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md67"></a>
-Release v3.7.7 (02/07/2025)</h1>
-<h2><a class="anchor" id="autotoc_md68"></a>
-New Features</h2>
-<ul>
-<li>Extended atcacert module to support compressed certificate usage for TA devices</li>
-<li>Enhanced WPC application to support TA devices</li>
-<li>Updated PKCS#11 and Openssl wiki documentation to include steps for using Openssl 3.0+ versions</li>
-<li>Updated PKCS#11 module to add compatibility for higher SHA-2 (SHA384 and SHA512) functions</li>
-<li>Added NIST vector tests to cover AES CCM module validation</li>
-<li>Modified calib packet allocation to use memory from either heap or data segment based on user configuration instead of always using data segment.</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md69"></a>
-Fixes</h2>
-<ul>
-<li>Resolved SWI 1-wire communication failure occuring in hal_swi_gpio while using MPLABx Harmony projects<ul>
-<li>delay routines in hal_cortex_m_delay are optimized to generate accurate delays for SAM cortex-m device family</li>
-<li>removed call stack overhead in hal_swi_gpio to meet required SWI bit timing</li>
-</ul>
-</li>
-<li>Minimum required version for CMake is changed from 3.0.1 to 3.10.0</li>
-<li>Fixed compilation issues with atcac_get_subj_public_key when WolfSSL configuration is enabled</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md70"></a>
-API CHANGES</h2>
-<ul>
-<li>Replaced I/O buffers in atcacert with cal_buffer at few instances to support resource-constrained PIC18 devices<ul>
-<li>Refer [lib/atcacert/MIGRATION.md] for details on atcacert API changes</li>
-</ul>
-</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md71"></a>
-Release v3.7.6 (09/26/2024)</h1>
-<h2><a class="anchor" id="autotoc_md72"></a>
-New Features</h2>
-<ul>
-<li>In PKCS11 module, added support for RSA key types, certificates and algorithms</li>
-<li>Added SHA384 and SHA512 support for host side software crypto (lib/crypto/) operations</li>
-<li>Modified WPC application to support ECC204 and TA010 devices</li>
-<li>See [talib/CHANGES.md] for details on talib module changes</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md73"></a>
-Fixes</h2>
-<ul>
-<li>Shared library build (libcryptoauth.so) sets ABI version number (libcryptoauth.so.x)</li>
-<li>Fixed <a class="el" href="a00314.html#a422bb59ccbef4cd8c646d07ac274015b" title="Reads the certificate specified by the certificate definition from the ATECC508A device.">atcacert_read_cert()</a> API failure when certificate elements read from config zone for ECC204 and TA010 devices</li>
-<li>Resolved kit protocol compilation failure for PIC18 device (XC8) builds</li>
-<li>PKCS11 layer fixes/updates<ul>
-<li>Fixed C_DestroyObject failure when deleting a key pair</li>
-<li>Fixed C_DeriveKey API usage sequence</li>
-</ul>
-</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md74"></a>
-Release v3.7.5 (06/26/2024)</h1>
-<h2><a class="anchor" id="autotoc_md75"></a>
-New Features</h2>
-<ul>
-<li>In PKCS11 module, added ECCP384,ECCP521,ECCP224 elliptic curves support for ECC key operations, in addition to the existing ECCP256 support</li>
-<li>Enhanced certificate related tests to include coverage for ECC204 and TA010 devices</li>
-<li>Added a new ATCA_HEAP internal macro check in place of ATCA_NO_HEAP for dynamic memory usages</li>
-<li>Added an additional test to validate AES-CBC encrypt/decrypt APIs using CAVP's AES multiblock message test (MMT) sample vectors</li>
-<li>See [talib/CHANGES.md] for details on talib module changes</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md76"></a>
-Fixes</h2>
-<ul>
-<li>Fixed atcacert_get_comp_cert() API to support certificates with expiry dates beyond year 2031</li>
-<li>Fixed <a class="el" href="a00314.html#a422bb59ccbef4cd8c646d07ac274015b" title="Reads the certificate specified by the certificate definition from the ATECC508A device.">atcacert_read_cert()</a> API to consider serial number as source while processing extracted certificates</li>
-<li>Fixed <a class="el" href="a00314.html#afa00725d50c68cfd2e0072bf563491a0" title="Take a full certificate and write it to the ATECC508A device according to the certificate definition.">atcacert_write_cert()</a> API to support X509 certificates with an odd byte length, without any additional padding</li>
-<li>Fixed calib_execute_send() to consider correct data buffer when ATCA_HAL_LEGACY_API is used</li>
-<li>PKCS11 layer fixes/updates<ul>
-<li>Fixed certificate chain/key export failures in ECC608 Trust devices</li>
-<li>Fixed memory leak during C_Finalize API call usage in a multi-slot configuration</li>
-</ul>
-</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md77"></a>
-API Changes</h2>
-<ul>
-<li>Added atcacert_generate_sn() API in atcacert module to generate certificate serial number from a valid serial number source</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md78"></a>
-Release v3.7.4 (03/08/2024)</h1>
-<h2><a class="anchor" id="autotoc_md79"></a>
-New Features</h2>
-<ul>
-<li>Updated wolfSSL interface <code>atcac</code> wrapper APIs usage for AES GCM encrypt/decrypt similar to MbedTLS and openSSL library wrapper APIs</li>
-<li>Added package.yml file to support MPLAB Harmony metadata package format</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md80"></a>
-Fixes</h2>
-<ul>
-<li>Fixed calib_wakeup_i2c API to follow specified i2c wakeup sequence for ECC608 devices</li>
-<li>PKCS11 layer fixes/updates<ul>
-<li>Lock usage optimization in pkcs11_find_continue API</li>
-<li>pkcs11_digest API updates for SHA context memory allocation</li>
-<li>pkcs11_token_set_pin API updates to write data based on generated GCM key size</li>
-</ul>
-</li>
-<li>Fixed atcacert_get_comp_cert API to remove a redundant atcacert_date_enc_compcert call</li>
-<li>Resolved build warnings/issues in Windows, Linux and 8-bit (XC8) platforms</li>
-<li>wolfSSL's atcac_pk_init_pem wrapper API updates to use wc_ PEM to DER functions</li>
-<li>Fixed broken links in README.md files</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md81"></a>
-Release v3.7.3 (01/31/2024)</h1>
-<h2><a class="anchor" id="autotoc_md82"></a>
-New Features</h2>
-<ul>
-<li>In PKCS11 module, added cache support to store <code>Key id</code> attribute of key type objects into stack memory and use it for subsequent accesses</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md83"></a>
-Fixes</h2>
-<ul>
-<li>Fixed calib_sha_hmac_finish api to set mode value correctly for ECC204, TA010 and ECC608 devices</li>
-<li>Fixed memory leak in MbedTLS configuration</li>
-<li>Fixed build errors when a project is generated with PKCS11 Component enabled in MPLAB Harmony Configurator (MHC)</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md84"></a>
-Release v3.7.2 (01/19/2024)</h1>
-<h2><a class="anchor" id="autotoc_md85"></a>
-New Features</h2>
-<ul>
-<li>See [talib/CHANGES.md] for details on talib module changes</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md86"></a>
-Fixes</h2>
-<ul>
-<li>Updated PKCS11 token info to list TA101 device details</li>
-<li>Fixed compilation errors when ECC508 device is enabled</li>
-<li>See [talib/CHANGES.md] for details on talib module fixes</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md87"></a>
-API Changes</h2>
-<ul>
-<li>Added sign and verfy API in talib module to support <code>1024 bytes ED25519 mode</code></li>
-</ul>
-<h1><a class="anchor" id="autotoc_md88"></a>
-Release v3.7.1 (12/15/2023)</h1>
-<h2><a class="anchor" id="autotoc_md89"></a>
-New Features</h2>
-<ul>
-<li>PKCS11 module enhancements for x509 public key certificates<ul>
-<li>Added more certificate attributes to x509 public key certificates. These attributes include certificate start date, certificate end date, subject, subject key, DER encoded certificate issuer name, DER encoded certificate serial number and hash of the issuer public key.</li>
-<li>Added cache support to store these certificates into stack memory and utilize it for parsing the above specified certificate attributes.</li>
-</ul>
-</li>
-<li>See [talib/CHANGES.md] for details on talib module changes</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md90"></a>
-Fixes</h2>
-<ul>
-<li>Updated atcab_read_config_zone to support SHA106</li>
-<li>For Linux platforms, i2c baud rate is always set to 100 khz as the default configuration</li>
-<li>Resolved build errors when ATCA_USE_SHARED_MUTEX is disabled</li>
-<li>Resolved build error with ATCA_JWT_EN</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md91"></a>
-API Changes</h2>
-<ul>
-<li>Added atcacert_get_subject api to get the subject name from public x509 certificates</li>
-<li>Added atcacert_get_issuer api to get the issuer name from public x509 certificates</li>
-<li>Updated the <a class="el" href="a01656.html">atcacert_def_s</a> structure to include x509 full certificates support</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md92"></a>
-Release v3.7.0 (09/08/2023)</h1>
-<h2><a class="anchor" id="autotoc_md93"></a>
-New Features</h2>
-<ul>
-<li>Added unified buffer implementation to enable multipart buffer use with APIs that support them.</li>
-<li>See [talib/CHANGES.md] for details on talib module changes</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md94"></a>
-Fixes</h2>
-<ul>
-<li>Made <code>atcac</code> structures referencing third party libraries opaque to the user so installed header files are usable by applications without also including the third party headers.</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md95"></a>
-API Changes</h2>
-<ul>
-<li>The software crypto structures are generally no longer typedef'd so they must be declared with the <code>struct</code> keyword. New typedefs were added by appending the suffix <code>_t</code> which allows for the same mechanism for declaring these structure in code if building a standalone application (such as in embedded projects). If dynamically linking with the library and using a third party crypto library one will need to use the <code>_new</code> &amp; <code>_free</code> APIs to allocate these structures for use with the <code>atcac</code> interfaces.</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md96"></a>
-Release v3.6.1 (07/14/2023)</h1>
-<h2><a class="anchor" id="autotoc_md97"></a>
-New Features</h2>
-<ul>
-<li>Added support for PIC18 memory model with a MAX_PACKET_SIZE setting.</li>
-<li>PKCS11 Improvement to support context reservation automatically for operations that span multiple pkcs11 calls such as login/logout, encrypt/decrypt, etc. This prevents concurrent processes from interupting init-update-finish operations in PKCS11</li>
-<li>Added support for data element transfers between trust anchor devices</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md98"></a>
-Fixes</h2>
-<ul>
-<li>PKCS11: resolved issues with configuration directory parsing to ensure configurations parse in the correct order and any extraneous files get properly rejected.</li>
-<li>PKCS11: improved public key loading logic for trust anchor handles to use the most appropriate mechanism based on handle configuration.</li>
-<li>Fixed minimal kit host implementation in support bridging to SPI by using select and deselect control commands</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md99"></a>
-Release v3.6.0 (04/04/2023)</h1>
-<h2><a class="anchor" id="autotoc_md100"></a>
-New Features</h2>
-<ul>
-<li>Compliance certified to CERT-C Level 2 &amp; MISRA 2012. Compliance reports can be requested from your FAE or account manager</li>
-<li>Added talib_handle helper functions to determine if a handle access type is allowed in the given auth session</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md101"></a>
-Fixes</h2>
-<ul>
-<li>pkcs11 public key for private keys requiring the token to be logged in will make a best effort to return a value by detecting various storage methods.</li>
-<li>pkcs11 encrypt/decrypt update calls return the maximum possible bytes per the selected algorithm.</li>
-<li>pkcs7 would return the wrong padding for <code>length % 16 == 0</code></li>
-<li>hmac counter kdf method will default to digest length specified in bits</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md102"></a>
-API Changes</h2>
-<ul>
-<li>ATCA_STATUS enum is now an integer and all APIs return type ATCA_STATUS</li>
-<li>atcacert API return type is now <code>ATCA_STATUS</code> rather than <code>int</code></li>
-<li>atcac_sw_sha... API return type is now <code>ATCA_STATUS</code> rather than <code>int</code></li>
-<li>_atcab_exit has been removed (includes _calib_exit and _talib_exit)</li>
-<li>_gDevice has been renamed to g_atcab_device_ptr (one should be using <code><a class="el" href="a01499.html#ga4af82005556c549c30e1c4bd35d4f4e4" title="Get the global device object.">atcab_get_device()</a></code>)</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md103"></a>
-Release v3.5.1 (03/26/2023)</h1>
-<h2><a class="anchor" id="autotoc_md104"></a>
-New Features</h2>
-<ul>
-<li>Add support for SHA104, SHA105, &amp; SHA106</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md105"></a>
-Release v3.5.0 (03/14/2023)</h1>
-<h2><a class="anchor" id="autotoc_md106"></a>
-New Features</h2>
-<ul>
-<li>Add support for ECC204, TA010 and framework for future devices</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md107"></a>
-Release v3.4.3 (12/23/2022)</h1>
-<h2><a class="anchor" id="autotoc_md108"></a>
-New Features</h2>
-<ul>
-<li>Add key load mode flags for FCE config command</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md109"></a>
-Fixes</h2>
-<ul>
-<li>WPC certificate reconstruction buffer length was too short</li>
-<li>ECC204 block Read/Write did not write remaining bytes if the provided buffer was not padded to a 32 byte bounary</li>
-<li>TA100 lock CRC was being passed with the native endianness.</li>
-<li>ECC204 nonce command was missing the mode bit to emit a random number when called with the intention of producing random bytes</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md110"></a>
-Release v3.4.2 (12/04/2022)</h1>
-<h2><a class="anchor" id="autotoc_md111"></a>
-Fixes</h2>
-<ul>
-<li>PKCS11: Correct init/deinit failures from initialization mutex options. These would manifest as a segmentation fault on deinit, unterminated authorization sessions, or library already initialized return codes based on the configuration and inititialization data.</li>
-<li>PKCS11: Added configuration option to always terminate authorization sessions on library initialization to work around applications that may fail to call C_CloseSession or C_Finalize before exiting.</li>
-<li>PKCS11: Fix failures in C_DigestInit resulting from failing to check the session state before checking the requested digest mechanism type.</li>
-<li>PKCS11: Modify how the library returns public key information based on access levels of the private key (generate from the private key if allowed, read from a linked public key, and finally return data unavailable). For the vast majority of situtations this prevents openssl &amp; libp11 from crashing with segmentation faults if the user fails to provide a pkcs11 URI with pin value specified. These segmentation faults were confirmed to also exist with other PKCS11 libraries - the fundamental problem should be taken up with the maintainers of openssl, libp11, and pkcs11-provider (experimental OpenSSL 3.0 PKCS11 support).</li>
-<li>Modified CBC update/finish APIs (added as an experimental API in v3.4.0) to match standard expectations of how the APIs would function. Updated algorithm tests to reflect this usage.</li>
-<li>PKCS11: Updated encrypt/decrypt in cbc/cbcpad modes to use the updated algorithm implementations</li>
-<li>talib full element read &amp; write functions now account for the maximum packet size based on session state.</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md112"></a>
-Release v3.4.1 (11/11/2022)</h1>
-<h2><a class="anchor" id="autotoc_md113"></a>
-Fixes</h2>
-<ul>
-<li>test_atcacert_build_start_signer modified to verify the structure fields since the structure is no longer packed</li>
-<li>Python ctypes_to_bytes routine to work for all python versions</li>
-<li>Pkcs11 signature rules to match section 5.2 of the specification</li>
-<li>Compilation error when PKCS11 monotonic counter is enabled</li>
-<li>Compiletion error when no HALs are specified during configuration</li>
-<li>Align ECC204 and cryptoauth counter APIs</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md114"></a>
-Release v3.4.0 (10/27/2022)</h1>
-<h2><a class="anchor" id="autotoc_md115"></a>
-New Features</h2>
-<ul>
-<li>Added framework for fine grain library configuration including configuration check header files <code>&lt;api&gt;_config_check.h</code> see <a class="el" href="a00260.html" title="Consistency checks for configuration options.">lib/atca_config_check.h</a> for the top level header</li>
-<li>Added WPC application files with reference message generation/parsing and library configuration file to optimize to the smallest footprint</li>
-<li>TA100 read/write apis updated to segment incoming buffer into partial read/write operations if it exceeds the maximum supported packet size</li>
-<li>Added PKCS7 padding algorithm for use with AES-CBC</li>
-<li>Expose PKCS11 configuration options to CMake configuration</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md116"></a>
-Fixes</h2>
-<ul>
-<li>Improve ECC204 apis to match cryptoauthlib apis and abstract the device differences</li>
-<li>Support for strict C99 compliance and clean up warnings from -Wall and pedantic levels</li>
-<li>Add rsa2048 key size support to talib_rsaenc command</li>
-<li>Fix for ta100 devupdate to set the proper auth session exit flags so the library will properly reconnect when the ta100 reboots</li>
-<li>Fix ECC608 verify failure when ReqRandom bit is set for a stored public key by using tempkey in this situation rather than the message digest buffer. See the ECC608 datasheet for more details of this special condition</li>
-<li>Improve ta100 auth session handling of long messages by reporting the message size exceeds the wrapped message limit earlier in the packet creation process</li>
-<li>Fixes and Improvements for PKCS11 interface based on compliance testing</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md117"></a>
-Release v3.3.3 (10/06/2021)</h1>
-<h2><a class="anchor" id="autotoc_md118"></a>
-New features</h2>
-<ul>
-<li>Added Zephyr support and zephyr driver api HALs for I2C &amp; SPI. Adding cryptoauthlib to a zephyr project CMakeLists.txt is now possible - use subdirectory(cryptoauthlib/lib). One can also include the repo in the west manifest</li>
-<li>Added SWI device support for linux platforms using hardware uarts</li>
-<li>Added contributing guidelines and PR process documentation</li>
-<li>SWI bitbang driver for harmony - supports Atmel SWI and ECC204 protocols</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md119"></a>
-Fixes</h2>
-<ul>
-<li>Wolfssl build errors when generating MHC projects containing wolfssl</li>
-<li>Removed zero length aad limitation in CCM implementation</li>
-<li>Changed ECC204 zone identifiers and slot types to align with cryptoauthlib standard forms</li>
-<li>XC8/XC16 build warnings</li>
-<li>Several pkcs11 fixes - token_init deadlock, null num_in for private key writes, fsecret key length parsing, object_create failing, etc</li>
-<li>Null pointer access violation in atcab_release when using a native hal and double free in openssl implementation of atcac_pk_verify</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md120"></a>
-Release v3.3.2 (06/20/2021)</h1>
-<h2><a class="anchor" id="autotoc_md121"></a>
-New features</h2>
-<ul>
-<li>All memory allocations now go through the hal_ platform definitions. In harmony these are the OSAL_ fuctions which work with any of the supported RTOS'.</li>
-<li>Enable multiple intefaces in the Harmony 3 test project through the user interface.</li>
-<li>Kit protocol over UART has been added. This can be paired with the included hosting application</li>
-<li>Simple kit protocol hosting application has been added. It is available in app/kit_host and through Harmony 3. This is a preview release of the application.</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md122"></a>
-Fixes</h2>
-<ul>
-<li>Enable ATSHA206A api in the python extension</li>
-<li>Made the linux i2c configuration default to 100khz so they should work again without having to make modifications to the baud rate field.</li>
-<li>Fix pkcs11 static configuration option when used with the trust platform configuration file</li>
-<li>Fix PKCS11 ec_point return value when pValue is null (libp11 checks the size in this manner before requesting it for real).</li>
-<li>Fix warnings generated by missing end of file newlines.</li>
-<li>Removed legacy (empty) START header references.</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md123"></a>
-Release v3.3.1 (04/23/2021)</h1>
-<h2><a class="anchor" id="autotoc_md124"></a>
-New features</h2>
-<ul>
-<li>Core support for kit protocol over serial ports (i.e. tty/COM ports)</li>
-<li>PKCS11 support for TA100 auth sessions</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md125"></a>
-Fixes</h2>
-<ul>
-<li>Fix mbedtls integration combinations that would produce unexpected behavior. All variations of sign/verify _ALT now work as expected given a configured key (for example if a key is configured as a stored public and VERIFY_ALT is enabled then library will perform a stored key verify rather than an external public key load and verify)</li>
-<li>Added mbedtls integration tests to confirm that integrations are working on a target platform as expected. These generally bootstrap using NIST example vectors before using the validated functions/algorithms to test the remaining integration.</li>
-<li>Clean up warnings when run with very strict settings (-Wall -Wextra -pedantic -Werror)</li>
-<li>Fix false wake errors when baud rate switching for I2C</li>
-<li>Fix for I2C errors that could be created on the bus when there are devices on the bus that support general calls - this fix should also correct linux zero length kernel messages when enabled.</li>
-<li>Fix ESP32 HAL to work with the updated HAL structure.</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md126"></a>
-Release v3.3.0 (01/22/2021)</h1>
-<h2><a class="anchor" id="autotoc_md127"></a>
-API Updates</h2>
-<ul>
-<li>HAL API has been signifiantly revised to improve portability. This update simplies the requirements of each HAL to only the physical transport mechanisms. Please see the hal porting and library upgrading notes: <a href="https://github.com/MicrochipTech/cryptoauthlib/wiki/Upgrading-to-v3.3">https://github.com/MicrochipTech/cryptoauthlib/wiki/Upgrading-to-v3.3</a></li>
-<li>Internal structures have been updated by removing obsolete elements and combining mandatory fields. This saves significant memory in both program and data regions.</li>
-<li>Inclusive language update: all remaining legacy language elements have been updated. Where this impacts the external API there is the option ATCA_ENABLE_DEPRECATED to use the previous names.</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md128"></a>
-New features</h2>
-<ul>
-<li>ECC204 support has been added with one wire HAL support.</li>
-<li>ECC204, SHA206, one wire and single wire (uart and gpio) hals have been added to the Harmony 3 configurator.</li>
-<li>PKCS11 support for symmetric (AES &amp; HMAC) keys has been added and enabled for additional mechanisms such as HMAC signing and AES encrypt/decrypt</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md129"></a>
-Fixes</h2>
-<ul>
-<li>pkcs11_token_init had several conditions that were corrected</li>
-<li>fix to detect differences in i2c clock rate specifications between flexcom and sercom configurators in Harmony 3 and the emit the correct value for the cryptoauthlib interface config structure.</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md130"></a>
-Release v3.2.5 (11/30/2020)</h1>
-<h2><a class="anchor" id="autotoc_md131"></a>
-New features</h2>
-<ul>
-<li>TA100 ShareKey API to drive the sharekey process (requires NDA, consult with your FAE or submit a request through your myMicrochip account)</li>
-<li>Additional software crypto library interface functions for asymmetric cryptography (sign, verify, ecdh, etc)</li>
-<li>XC8 &amp; XC16 compiler support</li>
-<li>AES CCM &amp; CBC-MAC upper layer API using AES-ECB primatives</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md132"></a>
-Fixes</h2>
-<ul>
-<li>TA100 AES-GCM auth session tx packet length when command data is included</li>
-<li>PKCS11 Pin length check rejecting valid pin lengths</li>
-<li>aes-gcm nist vector test failed with mbedtls crypto backend due to aad update not being executed when aad length was zero</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md133"></a>
-Release v3.2.4 (10/17/2020)</h1>
-<h2><a class="anchor" id="autotoc_md134"></a>
-New features</h2>
-<ul>
-<li>Additional TA100 command support (requires NDA, consult with your FAE or submit a request through your myMicrochip account)</li>
-<li>Library build and install on linux now also installs the headers that were used to build the library including all configuration files like atca_config.h - customer applications building against the library will need to add the include/cryptoauthlib to their include search paths</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md135"></a>
-Fixes</h2>
-<ul>
-<li>Fixed errors produced when -fno-common was used during build of the library by resolving the variable declaration and exporting macros (tested with static/dynamic linkage on linux &amp; windows platforms)</li>
-<li>Added a timeout during i2c plib commands in the Harmony3 hals to prevent system lockups from failed peripheral transfers that don't return errors.</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md136"></a>
-Release v3.2.3 (09/12/2020)</h1>
-<h2><a class="anchor" id="autotoc_md137"></a>
-New features</h2>
-<ul>
-<li>Additional TA100 command support (requires NDA, consult with your FAE or submit a request through your myMicrochip account)</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md138"></a>
-Fixes</h2>
-<ul>
-<li>Security patch for USB HALs. Removed deprecated HALs and removed enumeration from the hidapi HAL.</li>
-<li>Fix device matching logic to support older kits when using "auto detect" settings in the interface configuration</li>
-<li>Fix SPI HAL generation errors for SAMG55 &amp; SAM71 (flexcom) devices</li>
-<li>Added a timeout for Harmony I2C calls to prevent infinite loops on peripheral failures. If a loop exists inside the peripheral library then it may still cause processor spins until a watchdog reset.</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md139"></a>
-Release v3.2.2 (07/28/2020)</h1>
-<h2><a class="anchor" id="autotoc_md140"></a>
-New Features</h2>
-<ul>
-<li>ATECC608B support added</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md141"></a>
-Fixes</h2>
-<ul>
-<li>Consistent null pointer checks between calib &amp; talib apis. Tracing enabled for most all status changes</li>
-<li>Fix for pkcs11 ecdh with the legacy slot write mode and encrypted read to pull the read key id from the correct slot (private key slot | 0x01)</li>
-<li>call the proper api from atcab_init_ext so it works with device structures that are not the global instance</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md142"></a>
-Release v3.2.1 (06/29/2020)</h1>
-<h2><a class="anchor" id="autotoc_md143"></a>
-Fixes</h2>
-<ul>
-<li>PKCS11 configuration option to set token label to the device serial number</li>
-<li>Fix OSX CLANG macro error</li>
-<li>Add missing c++ wrapper macros to calib_basic.h</li>
-<li>Ensure atcab_init_ext calls atcab_release_ext rather than atcab_release</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md144"></a>
-Release v3.2.0 (06/10/2020)</h1>
-<h2><a class="anchor" id="autotoc_md145"></a>
-New features</h2>
-<ul>
-<li>TA100 device support (requires NDA, consult with your FAE or submit a request through your myMicrochip account)</li>
-<li>Extension of the existing API to support device context retention to allow multiple independent contexts to be maintained. The application still needs to ensure concurrency protections are used in the application to guard bus communication.</li>
-<li>PKCS11 support has been moved into the main library and will be maintained together.</li>
-<li>TNG/TFLEX support has been added to PKCS11 so enabling a TNG part in pkcs11 can be done by specifying the part number: <code>device = ATECC608A-TNGTLS</code></li>
-<li>Several cryptographic library integrations have been added to enable additional host/mcu side functionality. This includes replacing cryptoauthlib software implementations of sha1 &amp; sha256 with your preferred library. For example using WolfSSL in Harmony 3 will also enable hardware acceleration of those cryptographic functions. Cryptographic libraries enabled: WolfSSL, mbedTLS, &amp; OpenSSL</li>
-<li>Changes to atcacert ("compressed" certificate processing) to enable exact certificate size retrival which will help with some use cases that had issues with the max possible size answers.</li>
-<li>Consolidation of HALs into device families rather than exact processor model This should reduce the amount of effort required to port the library to a specific platform if the framework is one that is already known.</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md146"></a>
-Known issues</h2>
-<ul>
-<li>Power modes/states for the TA100 are not automatically controlled by the library so the application has to manually change the power state when lower power modes are required. A command such as the info command will wake the TA100 from sleep but will produce an error. Try another command after the specified time to ensure communication is restored. This behavior is detailed in the datasheet.</li>
-<li>Several TA100 commands and features are planned for the next released of the library such as import/export, transfer, and devupdate.</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md147"></a>
-Release v3.1.1 (03/06/2020)</h1>
-<ul>
-<li>Update Trust Flex certificates. Add compile time options to reduce code space by selectively including the trust certificates that are required</li>
-<li>Python updates: add sha206 apis. Fix atcab_kdf parameters</li>
-<li>Fix compiler warnings in test application files and sha206 api</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md148"></a>
-Release v3.1.0 (02/05/2020)</h1>
-<ul>
-<li>The library is now semantic versioned along with the legacy date versioning. Python will continue to be released with the date version. Version APIs have been updated.</li>
-<li>Configuration is done via a configuration file atca_config.h rather than global compiler options. You have to add this file to your project to support this version of the library.</li>
-<li>Harmony 3 support has been added. Update harmony configurator (and content loader) or manually clone crytoauthlib into your harmony directory.</li>
-<li>Additional Compiler support has been added for IAR-ARM and ARMCC</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md149"></a>
-Release 11/22/2019</h1>
-<ul>
-<li>Patches for CVE-2019-16128 &amp; CVE-2019-16129: Ensure reported packet length is valid for the packet being processed.</li>
-<li>Improvement to encrypted read operations to allow supply of a host nonce (prevent replay of a read sequence to the host). Default API is changed but can be reverted by setting the option ATCA_USE_CONSTANT_HOST_NONCE</li>
-<li>Added Azure compatible TNGTLS and TNGLORA certificates. Use the TNG client API to retrieve the proper certificate based on the device.</li>
-<li>Misc Python updates (updated APIs for encrypted reads to match the C-API change) atcacert_cert_element_t now initializes properly</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md150"></a>
-Release 08/30/2019</h1>
-<ul>
-<li>Added big-endian architecture support</li>
-<li>Fixes to atcah_gen_dig() and atcah_nonce()</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md151"></a>
-Release 05/17/2019</h1>
-<ul>
-<li>Added support for TNG devices (cert transforms, new API)</li>
-<li>atcab_write_pub_key() now works when the data zone is unlocked</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md152"></a>
-Release 03/04/2019</h1>
-<ul>
-<li>mbed TLS wrapper added</li>
-<li>Minor bug fixes</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md153"></a>
-Release 01/25/2019</h1>
-<ul>
-<li>Python JWT support</li>
-<li>Python configuration structures added</li>
-<li>Restructure of secure boot app</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md154"></a>
-Release 01/04/2019</h1>
-<ul>
-<li>Added GCM functions</li>
-<li>Split AES modes into separate files</li>
-<li>Bug fix in SWI START driver</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md155"></a>
-Release 10/25/2018</h1>
-<ul>
-<li>Added basic certificate functions to the python wrapper.</li>
-<li>Added Espressif ESP32 I2C driver.</li>
-<li>Made generic Atmel START drivers to support most MCUs in START.</li>
-<li>Added AES-CTR mode functions.</li>
-<li>Python wrapper functions now return single values with AtcaReference.</li>
-<li>Added mutex support to HAL and better support for freeRTOS.</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md156"></a>
-Release 08/17/2018</h1>
-<ul>
-<li>Better support for multiple kit protocol devices</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md157"></a>
-Release 07/25/2018</h1>
-<ul>
-<li>Clean up python wrapper</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md158"></a>
-Release 07/18/2018</h1>
-<ul>
-<li>Added ATCA_NO_HEAP define to remove use of malloc/free.</li>
-<li>Moved PEM functions to their own file in atcacert.</li>
-<li>Added wake retry to accomodate power on self test delay.</li>
-<li>Added ca_cert_def member to <a class="el" href="a01656.html">atcacert_def_s</a> so cert chains can be traversed as a linked list.</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md159"></a>
-Release 03/29/2018</h1>
-<ul>
-<li>Added support for response polling by default, which will make commands return faster (define ATCA_NO_POLL to use old delay method).</li>
-<li>Removed atcatls related files as they were of limited value.</li>
-<li>Test framework generates a prompt before locking test configuration.</li>
-<li>Test framework puts device to sleep between tests.</li>
-<li>Fixed mode parameter issue in atcah_gen_key_msg().</li>
-<li>ATECC608A health test error code added.</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md160"></a>
-Release 01/15/2018</h1>
-<ul>
-<li>Added AES-128 CBC implementation using AES command</li>
-<li>Added AES-128 CMAC implementation using AES command</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md161"></a>
-Release 11/22/2017</h1>
-<ul>
-<li>Added support for FLEXCOM6 on SAMG55 driver</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md162"></a>
-Release 11/17/2017</h1>
-<ul>
-<li>Added library support for the ATECC608A device</li>
-<li>Added support for Counter command</li>
-<li>atca_basic functions and tests now split into multiple files based on command</li>
-<li>Added support for multiple base64 encoding rules</li>
-<li>Added support for JSON Web Tokens (jwt)</li>
-<li>Fixed <a class="el" href="a01499.html#ga78a5394997ea31b125cd57d07aa73636" title="Executes the Write command, which performs an encrypted write of a 32 byte block into given slot.">atcab_write_enc()</a> function to encrypt the data even when the device is unlocked</li>
-<li>Fixed <a class="el" href="a00278.html#aeeff0177acf29e6e7b134a14d7119d69" title="Encode data as base64 string with ruleset option.">atcab_base64encode_()</a> for the extra newline</li>
-<li>Updated <a class="el" href="a01499.html#ga51e3ae10f0596d473f646074650904e6" title="ECDH command with a private key in a slot and the premaster secret is read from the next slot.">atcab_ecdh_enc()</a> to work more consistently</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md163"></a>
-Release 07/01/2017</h1>
-<ul>
-<li>Removed assumption of SN[0:1]=0123, SN[8]=EE. SN now needs to be passed in for functions in atca_host and atca_basic functions will now read the config zone for the SN if needed.</li>
-<li>Renamed atcab_gendig_host() to <a class="el" href="a01499.html#ga70751ea87f2cf913986bc7bca2cc661f" title="Issues a GenDig command, which performs a SHA256 hash on the source data indicated by zone with the c...">atcab_gendig()</a> since it's not a host function. Removed original <a class="el" href="a01499.html#ga70751ea87f2cf913986bc7bca2cc661f" title="Issues a GenDig command, which performs a SHA256 hash on the source data indicated by zone with the c...">atcab_gendig()</a>, which had limited scope.</li>
-<li>Fixed atcah_hmac() for host side HMAC calculations. Added <a class="el" href="a01499.html#ga45f1d09a51f7a1f68916536ab5125b9d" title="Issues a HMAC command, which computes an HMAC/SHA-256 digest of a key stored in the device,...">atcab_hmac()</a>.</li>
-<li>Removed unnecessary ATCADeviceType parameters from some atca_basic functions.</li>
-<li>Added atcacert_create_csr() to create a signed CSR.</li>
-<li>New HAL implementation for Kit protocol over HID on Linux. Please see the Incorporating CryptoAuthLib in a Linux project using USB HID devices section in this file for more information.</li>
-<li>Added <a class="el" href="a00314.html#afa00725d50c68cfd2e0072bf563491a0" title="Take a full certificate and write it to the ATECC508A device according to the certificate definition.">atcacert_write_cert()</a> for writing certificates to the device.</li>
-<li>Added support for dynamic length certificate serial numbers in atcacert.</li>
-<li>Added <a class="el" href="a01499.html#gabf2b29b4d3ae926b63c403d084380dbe" title="Executes the Write command, which writes either one four byte word or a 32-byte block to one of the E...">atcab_write()</a> for lower level write commands.</li>
-<li>Fixed atcah_write_auth_mac(), which had wrong OpCode.</li>
-<li>Added <a class="el" href="a01499.html#ga694d921c7bc17a0e158ef96e3d476700" title="Executes the Verify command, which takes an ECDSA [R,S] signature and verifies that it is correctly g...">atcab_verify()</a> command for lower level verify commands.</li>
-<li>Added <a class="el" href="a01499.html#gae8cc7670847805423ad591985eecd832" title="Executes the Verify command, which verifies a signature (ECDSA verify operation) with a public key st...">atcab_verify_stored()</a> for verifying data with a stored public key.</li>
-<li>Removed atcab_write_bytes_slot(). Use <a class="el" href="a01499.html#gac395a7e195aa3cf28b48de345755feb0" title="Executes the Write command, which writes data into the configuration, otp, or data zones with a given...">atcab_write_bytes_zone()</a> instead.</li>
-<li>Modified <a class="el" href="a01499.html#gac395a7e195aa3cf28b48de345755feb0" title="Executes the Write command, which writes data into the configuration, otp, or data zones with a given...">atcab_write_bytes_zone()</a> and <a class="el" href="a01499.html#ga750704332198726725a327344f4f7dd5" title="Used to read an arbitrary number of bytes from any zone configured for clear reads.">atcab_read_bytes_zone()</a> to specify a slot</li>
-<li>Added <a class="el" href="a01499.html#gacf9a0c7772ebb65b87c4a4788850702b" title="Executes the Verify command in Validate mode to validate a public key stored in a slot.">atcab_verify_validate()</a> and <a class="el" href="a01499.html#ga9393b545b2fa1fdd539672a0428a30ab" title="Executes the Verify command in Invalidate mode which invalidates a previously validated public key st...">atcab_verify_invalidate()</a></li>
-<li>Improvements to host functions to handle more cases.</li>
-<li>Added <a class="el" href="a01499.html#ga416e4aeacf3acc35b1d5b76028c6947d" title="Executes UpdateExtra command to update the values of the two extra bytes within the Configuration zon...">atcab_updateextra()</a>, atcab_derive_key()</li>
-<li>Added support for more certificate formats.</li>
-<li>Added general purpose hardware SHA256 functions. See <a class="el" href="a01499.html#ga4bf8b665fe1712626a480742c2daa16b" title="Use the SHA command to compute a SHA-256 digest.">atcab_hw_sha2_256()</a>.</li>
-<li>Removed device specific config read/write. Generic now handles both.</li>
-<li>Removed unnecessary response parameter from lock commands.</li>
-<li>Enhanced and added unit tests.</li>
-<li>Encrypted read and write functions now handle keys with SlotConfig.NoMac set</li>
-<li><a class="el" href="a01499.html#gadb91d2c3601b95f0ad413cf84a4dfd87" title="Compares a specified configuration zone with the configuration zone currently on the device.">atcab_cmp_config_zone()</a> handles all devices now.</li>
-<li>Fixed some edge cases in <a class="el" href="a01499.html#ga750704332198726725a327344f4f7dd5" title="Used to read an arbitrary number of bytes from any zone configured for clear reads.">atcab_read_bytes_zone()</a>.</li>
-<li>Updated atSHA() to work with all devices.</li>
-<li>Fixed atcacert_get_device_locs() when using stored sn.</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md164"></a>
-Release 01/08/2016</h1>
-<ul>
-<li>New HAL implementations for<ul>
-<li>Single Wire interface for SAMD21 / SAMR21</li>
-<li>SAMV71 I2C HAL implementation</li>
-<li>XMega A3Bu HAL implementation</li>
-</ul>
-</li>
-<li>Added <a class="el" href="a01499.html#gaff701132013eaac5600dd9fd6253505d" title="basic API methods are all prefixed with atcab_ (CryptoAuthLib Basic) the fundamental premise of the b...">atcab_version()</a> method to return current version string of libary to application</li>
-<li>New Bus and Discovery API<ul>
-<li>returns a list of ATCA device configurations for each CryptoAuth device found</li>
-<li>currently implemented on SAMD21/R21 I2C, SAMV71</li>
-<li>additional discovery implementations to come</li>
-</ul>
-</li>
-<li>TLS APIs solidified and documented</li>
-<li>Added missing doxygen documentation for some CryptoAuthLib methods</li>
-<li>Stubs for HAL SPI removed as they are unused for SHA204A and ECC508A support</li>
-<li>bug fixes</li>
-<li>updated <a class="el" href="a01499.html#ga31d269ccdafd08519a899a8aebf53df1" title="Use the SHA command to compute a SHA-256 digest.">atcab_sha()</a> to accept a variable length message that is &gt; 64 bytes and not a multiple of 64 bytes (the SHA block size).</li>
-<li>refactored Cert I/O and Cert Data tests to be smaller</li>
-<li>'uncrustify' source formatting</li>
-<li>published on GitHub</li>
-</ul>
-<h1><a class="anchor" id="autotoc_md165"></a>
-Release 9/19/2015</h1>
-<ul>
-<li>Kit protocol over HID on Windows</li>
-<li>Kit protocol over CDC on Linux</li>
-<li>TLS integration with ATECC508A</li>
-<li>Certificate I/O and reconstruction</li>
-<li>New SHA2 implementation</li>
-<li>Major update to API docs, Doxygen files found in cryptoauthlib/docs</li>
-<li>load cryptoauthlib/docs/index.html with your browser </li>
-</ul>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md17"></a>
+atcacert</h1>
+<h2><a class="anchor" id="autotoc_md18"></a>
+atcacert API Migration</h2>
+<p>This release adds support for TA Compressed certs in atcacert module.</p>
+<p>In order to support these, especially on resource constrained device, the atcacert APIs have been modified to accept array inputs as a new structure, <code>cal_buffer</code> which allows multipart buffers to be used to provide data to these APIs. This makes for a substantial number of changes to function signatures</p>
+<h4><a class="anchor" id="autotoc_md19"></a>
+Using the &lt;tt&gt;cal_buffer&lt;/tt&gt; structure</h4>
+<p>This structure for most circumstances simply ensures that the length of the data is included with the buffer provided. There are two convienence macros provided for initialization: <code>CAL_BUF_INIT</code> &amp; <code>CAL_BUF_INIT_LINK</code>. The later macro is only used when multipart buffers are enabled (rare). A simple example of their usage is as follows: </p><pre class="fragment">uint8_t signer_ca_public_key[64] = { 0 };
+cal_buffer signer_ca_public_key_buf = CAL_BUF_INIT(sizeof(signer_ca_public_key), signer_ca_public_key);
+
+status = atcacert_read_cert(&amp;cert_def, &amp;signer_ca_public_key_buf, cert, &amp;cert_size);
+</pre><h4><a class="anchor" id="autotoc_md20"></a>
+Function Migration</h4>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">v3.7.6   </th><th class="markdownTableHeadNone">v3.7.7   </th><th class="markdownTableHeadNone">Parameter Changes    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">atcacert_get_response   </td><td class="markdownTableBodyNone">[atcacert_get_response]   </td><td class="markdownTableBodyNone">Buffers    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">atcacert_read_cert   </td><td class="markdownTableBodyNone">[atcacert_read_cert]   </td><td class="markdownTableBodyNone">Public key Buffer    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">atcacert_read_cert_ext   </td><td class="markdownTableBodyNone">[atcacert_read_cert_ext]   </td><td class="markdownTableBodyNone">Public key Buffer    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">atcacert_merge_device_loc   </td><td class="markdownTableBodyNone">[atcacert_merge_device_loc]   </td><td class="markdownTableBodyNone">Added device context    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">atcacert_cert_build_start   </td><td class="markdownTableBodyNone">[atcacert_cert_build_start]   </td><td class="markdownTableBodyNone">Buffers    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">atcacert_set_subj_public_key   </td><td class="markdownTableBodyNone">[atcacert_set_subj_public_key]   </td><td class="markdownTableBodyNone">Public key Buffer    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">atcacert_set_signature   </td><td class="markdownTableBodyNone">[atcacert_set_signature]   </td><td class="markdownTableBodyNone">Signature Buffer    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">atcacert_get_signature   </td><td class="markdownTableBodyNone">[atcacert_get_signature]   </td><td class="markdownTableBodyNone">Signature Buffer    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">atcacert_generate_sn   </td><td class="markdownTableBodyNone">[atcacert_generate_sn]   </td><td class="markdownTableBodyNone">Public key Buffer    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">atcacert_set_auth_key_id   </td><td class="markdownTableBodyNone">[atcacert_set_auth_key_id]   </td><td class="markdownTableBodyNone">Public key Buffer    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">atcacert_get_tbs_digest   </td><td class="markdownTableBodyNone">[atcacert_get_tbs_digest]   </td><td class="markdownTableBodyNone">Digest key Buffer    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">atcacert_get_key_id   </td><td class="markdownTableBodyNone">[atcacert_get_key_id]   </td><td class="markdownTableBodyNone">Public key Buffer    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">atcacert_der_enc_ecdsa_sig_value   </td><td class="markdownTableBodyNone">[atcacert_der_enc_ecdsa_sig_value]   </td><td class="markdownTableBodyNone">Signature Buffer    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">atcacert_der_dec_ecdsa_sig_value   </td><td class="markdownTableBodyNone">[atcacert_der_dec_ecdsa_sig_value]   </td><td class="markdownTableBodyNone">Signature Buffer    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">atcacert_verify_cert_hw   </td><td class="markdownTableBodyNone">[atcacert_verify_cert_hw]   </td><td class="markdownTableBodyNone">Public key Buffer    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">atcacert_gen_challenge_hw   </td><td class="markdownTableBodyNone">[atcacert_gen_challenge_hw]   </td><td class="markdownTableBodyNone">Buffers    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">atcacert_verify_response_hw   </td><td class="markdownTableBodyNone">[atcacert_verify_response_hw]   </td><td class="markdownTableBodyNone">Buffers    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">atcacert_gen_challenge_sw   </td><td class="markdownTableBodyNone">[atcacert_gen_challenge_sw]   </td><td class="markdownTableBodyNone">Buffers    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">atcacert_verify_cert_sw   </td><td class="markdownTableBodyNone">[atcacert_verify_cert_sw]   </td><td class="markdownTableBodyNone">Public key Buffer    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">atcacert_verify_response_sw   </td><td class="markdownTableBodyNone">[atcacert_verify_response_sw]   </td><td class="markdownTableBodyNone">Buffers   </td></tr>
+</table>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

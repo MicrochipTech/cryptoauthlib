@@ -1,23 +1,10 @@
 var a01518 =
 [
-    [ "_ATCACUSTOM", "a02560.html", null ],
-    [ "_ATCAHID", "a02552.html", null ],
-    [ "_ATCAI2C", "a02536.html", null ],
-    [ "_ATCAIfaceParams", "a02564.html", null ],
-    [ "_ATCAKIT", "a02556.html", null ],
-    [ "_ATCASPI", "a02544.html", null ],
-    [ "_ATCASWI", "a02540.html", null ],
-    [ "_ATCAUART", "a02548.html", null ],
-    [ "_U_Address", "a02532.html", null ],
-    [ "ATCADeviceType", "a02528.html", null ],
-    [ "ATCAIfaceCfg", "a02568.html", null ],
-    [ "ATCAIfaceType", "a02520.html", null ],
-    [ "ATCAKitType", "a02524.html", null ],
-    [ "_iface_load_default_config", "a01518.html#a3f0aeae05c5278420c02156257845b1d", null ],
-    [ "cfg_ateccx08a_i2c_default", "a01518.html#afe3491a94655b07c2608d3451e59d606", null ],
-    [ "cfg_ateccx08a_kithid_default", "a01518.html#a88737f422c86c2246a698fd64d59db1a", null ],
-    [ "cfg_ateccx08a_swi_default", "a01518.html#a64fa8e408c7c7abc0999d5b74825e69d", null ],
-    [ "cfg_atsha20xa_i2c_default", "a01518.html#acc3d4402aa912d4f90e3298a7e8de20c", null ],
-    [ "cfg_atsha20xa_kithid_default", "a01518.html#a1b929d7e15620e9c352c3cf1e75e2a22", null ],
-    [ "cfg_atsha20xa_swi_default", "a01518.html#a4638d28e57304b76ce9f50077e6b3b47", null ]
+    [ "mbedtls directory - Purpose", "a01518.html#md_lib_mbedtls_README", null ],
+    [ "atca_mbedtls_eckey_s", "a01865.html", null ],
+    [ "atca_mbedtls_eckey_t", "a01518.html#ga36d21431afe595eab1b7f7a2330ad727", null ],
+    [ "atca_mbedtls_ecdh_ioprot_cb", "a01518.html#gaa35682dc98e33ce3d6fad1fc902cdff0", null ],
+    [ "atca_mbedtls_ecdh_slot_cb", "a01518.html#ga98d684683ccecd3d56bdf5dc27ae999c", null ],
+    [ "atca_mbedtls_pk_init", "a01518.html#gaa55a112d0b087adc242cc9b0978b5d15", null ],
+    [ "atca_mbedtls_pk_init_ext", "a01518.html#gad0e60f7088f93556c4a0ac7aff174fe6", null ]
 ];

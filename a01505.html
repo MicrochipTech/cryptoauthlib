@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: Software crypto methods (atcac_)</title>
+<title>CryptoAuthLib: Deprecated List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.8</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -96,33 +96,22 @@ $(document).ready(function(){initNavTree('a01505.html',''); initResizable(); });
 </div>
 </div>
 
-<div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">Software crypto methods (atcac_)</div></div>
+<div><div class="header">
+  <div class="headertitle"><div class="title">Deprecated List </div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>These methods provide a software implementation of various crypto algorithms.  
-<a href="#details">More...</a></p>
-
-
-<h3><a id="md_lib_crypto_README" name="md_lib_crypto_README"></a>crypto directory - Purpose</h3><div class="textblock">This directory contains software implementations of cryptographic functions. The functions at the base level are wrappers that will point to the final implementations of the software crypto functions. </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga2011daa95c4ff6ecbeb8e12106664268"><td class="memItemLeft" align="right" valign="top"><a id="ga2011daa95c4ff6ecbeb8e12106664268" name="ga2011daa95c4ff6ecbeb8e12106664268"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_sw_sha1</b> (const uint8_t *data, size_t data_size, uint8_t digest[(20U)])</td></tr>
-<tr class="separator:ga2011daa95c4ff6ecbeb8e12106664268"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5109bc6a09e08885df90e90421dd9ccd"><td class="memItemLeft" align="right" valign="top"><a id="ga5109bc6a09e08885df90e90421dd9ccd" name="ga5109bc6a09e08885df90e90421dd9ccd"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_sha256_hmac_ctr_iteration</b> (struct <a class="el" href="a01840.html">atcac_hmac_ctx</a> *ctx, uint8_t iteration, uint16_t length, const uint8_t *label, size_t label_len, const uint8_t *data, size_t data_len, uint8_t digest[(32U)])</td></tr>
-<tr class="separator:ga5109bc6a09e08885df90e90421dd9ccd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5863b32f9de0e8896ec70bb51a715853"><td class="memItemLeft" align="right" valign="top"><a id="ga5863b32f9de0e8896ec70bb51a715853" name="ga5863b32f9de0e8896ec70bb51a715853"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_sha256_hmac_counter</b> (uint8_t *key, size_t key_len, const uint8_t *label, size_t label_len, const uint8_t *data, size_t data_len, uint8_t *digest, size_t diglen)</td></tr>
-<tr class="separator:ga5863b32f9de0e8896ec70bb51a715853"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>These methods provide a software implementation of various crypto algorithms. </p>
-</div><!-- contents -->
+<div class="textblock"><dl class="reflist">
+<dt>Global <a class="el" href="a01508.html#gab22d2a32e6c32c14c4e58ce794ff3ec4">atcab_init_device</a>  (ATCADevice ca_device)</dt>
+<dd><a class="anchor" id="_deprecated000001"></a>This function is not recommended for use generally. Use of _ext is recommended instead. You can use atcab_init_ext to obtain an initialized instance and associated it with the global structure - but this shouldn't be a required process except in extremely unusual circumstances. </dd>
+<dt>Global <a class="el" href="a01511.html#gac794fffe040e6d47a34c756720f3cbea">atidle</a>  (ATCAIface ca_iface)</dt>
+<dd><a class="anchor" id="_deprecated000003"></a>This function does not have defined behavior when ATCA_HAL_LEGACY_API is undefined.  </dd>
+<dt>Global <a class="el" href="a01511.html#gac06336335e5f3191e3b1fc06d2830d96">atsleep</a>  (ATCAIface ca_iface)</dt>
+<dd><a class="anchor" id="_deprecated000004"></a>This function does not have defined behavior when ATCA_HAL_LEGACY_API is undefined.  </dd>
+<dt>Global <a class="el" href="a01511.html#ga32693c852341e1b946bab3cca5f71761">atwake</a>  (ATCAIface ca_iface)</dt>
+<dd><a class="anchor" id="_deprecated000002"></a>This function does not have defined behavior when ATCA_HAL_LEGACY_API is undefined.</dd>
+</dl>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

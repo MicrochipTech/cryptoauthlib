@@ -1,7 +1,7 @@
 var a00698 =
 [
-    [ "atca_mbedtls_pk_init", "a01509.html#gaa55a112d0b087adc242cc9b0978b5d15", null ],
-    [ "atca_mbedtls_pk_init_ext", "a01509.html#gad0e60f7088f93556c4a0ac7aff174fe6", null ],
+    [ "atca_mbedtls_pk_init", "a01518.html#gaa55a112d0b087adc242cc9b0978b5d15", null ],
+    [ "atca_mbedtls_pk_init_ext", "a01518.html#gad0e60f7088f93556c4a0ac7aff174fe6", null ],
     [ "atcac_aes_cmac_finish", "a00698.html#a9fb429f011c7df55055763f41b896f28", null ],
     [ "atcac_aes_cmac_init", "a00698.html#a17af2d47faed0774e9277be42512b0f4", null ],
     [ "atcac_aes_cmac_update", "a00698.html#a9c6a8dc222080952c2541db9cf7cd3c0", null ],

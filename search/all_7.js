@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['gen_5fdig_5fdata_0',['gen_dig_data',['../a01744.html#afde9c1e6769f60992c7fb10280cdd199',1,'atca_temp_key']]],
-  ['gen_5fkey_5fdata_1',['gen_key_data',['../a01744.html#a82e1988542001c7499700f3e1b191339',1,'atca_temp_key']]],
+  ['gen_5fdig_5fdata_0',['gen_dig_data',['../a01753.html#afde9c1e6769f60992c7fb10280cdd199',1,'atca_temp_key']]],
+  ['gen_5fkey_5fdata_1',['gen_key_data',['../a01753.html#a82e1988542001c7499700f3e1b191339',1,'atca_temp_key']]],
   ['gendig_5fcount_2',['GENDIG_COUNT',['../a00383.html#a235eb9557fa074bf152f9ce9c5844058',1,'calib_command.h']]],
   ['gendig_5fdata_5fidx_3',['GENDIG_DATA_IDX',['../a00383.html#ac101f854026596231715eca664550e36',1,'calib_command.h']]],
   ['gendig_5fkeyid_5fidx_4',['GENDIG_KEYID_IDX',['../a00383.html#ac2d5b5de26d0318ba6db3ad1055eb6ec',1,'calib_command.h']]],
@@ -14,7 +14,7 @@ var searchData=
   ['gendig_5fzone_5fkey_5fconfig_11',['GENDIG_ZONE_KEY_CONFIG',['../a00383.html#aba61a1bd245d7471e59a39577498065b',1,'calib_command.h']]],
   ['gendig_5fzone_5fotp_12',['GENDIG_ZONE_OTP',['../a00383.html#aee95b219cf932dfedb3a3c5e23d01a9d',1,'calib_command.h']]],
   ['gendig_5fzone_5fshared_5fnonce_13',['GENDIG_ZONE_SHARED_NONCE',['../a00383.html#a49923a8835f64294a5e9b3660c80dc7e',1,'calib_command.h']]],
-  ['genericerror_14',['GenericError',['../a02420.html',1,'cryptoauthlib::exceptions']]],
+  ['genericerror_14',['GenericError',['../a02429.html',1,'cryptoauthlib::exceptions']]],
   ['genkey_5fcount_15',['GENKEY_COUNT',['../a00383.html#ab6782a07fce203169aba6dd32f8ab123',1,'calib_command.h']]],
   ['genkey_5fcount_5fdata_16',['GENKEY_COUNT_DATA',['../a00383.html#a07289de41178ecfb6392da31e31e27c3',1,'calib_command.h']]],
   ['genkey_5fdata_5fidx_17',['GENKEY_DATA_IDX',['../a00383.html#a9163acda5dd0653f40b6ad445f2c972d',1,'calib_command.h']]],
@@ -30,12 +30,12 @@ var searchData=
   ['genkey_5fprivate_5fto_5ftempkey_27',['GENKEY_PRIVATE_TO_TEMPKEY',['../a00383.html#ad5b1ead29f3ce3cee52d106af531ab86',1,'calib_command.h']]],
   ['genkey_5frsp_5fsize_5flong_28',['GENKEY_RSP_SIZE_LONG',['../a00383.html#a08e8a80be2717ece7c5ed5cc0a27fbab',1,'calib_command.h']]],
   ['genkey_5frsp_5fsize_5fshort_29',['GENKEY_RSP_SIZE_SHORT',['../a00383.html#a0543a644422ffc7460eeeb78799bde16',1,'calib_command.h']]],
-  ['get_5fcryptoauthlib_30',['get_cryptoauthlib',['../a01519.html#a851038e6c6158127d7ecbd1e6580081b',1,'cryptoauthlib::library']]],
-  ['get_5fctype_5farray_5finstance_31',['get_ctype_array_instance',['../a01519.html#a2748ff60b5f1512fbf9f228e4c86598a',1,'cryptoauthlib::library']]],
-  ['get_5fctype_5fby_5fname_32',['get_ctype_by_name',['../a01519.html#a5cc6d0583a5f0554e61e3886c5bf1785',1,'cryptoauthlib::library']]],
-  ['get_5fctype_5fstructure_5finstance_33',['get_ctype_structure_instance',['../a01519.html#a30811985170f0083009bbd5439d1bcc2',1,'cryptoauthlib::library']]],
-  ['get_5fdevice_5fname_34',['get_device_name',['../a01519.html#a2da0648c5d2cb3a8da467b8dfac16e8c',1,'cryptoauthlib::library']]],
-  ['get_5fdevice_5fname_5fwith_5fdevice_5fid_35',['get_device_name_with_device_id',['../a01519.html#ac4f25f606f7c968b08b874dc8d75ca50',1,'cryptoauthlib::library']]],
-  ['get_5fdevice_5ftype_5fid_36',['get_device_type_id',['../a01519.html#adaf39153cd62515d9750fdb0748dbacc',1,'cryptoauthlib::library']]],
-  ['get_5fsize_5fby_5fname_37',['get_size_by_name',['../a01519.html#a7c6a46d9327a395ac4909411d937b193',1,'cryptoauthlib::library']]]
+  ['get_5fcryptoauthlib_30',['get_cryptoauthlib',['../a01528.html#a851038e6c6158127d7ecbd1e6580081b',1,'cryptoauthlib::library']]],
+  ['get_5fctype_5farray_5finstance_31',['get_ctype_array_instance',['../a01528.html#a2748ff60b5f1512fbf9f228e4c86598a',1,'cryptoauthlib::library']]],
+  ['get_5fctype_5fby_5fname_32',['get_ctype_by_name',['../a01528.html#a5cc6d0583a5f0554e61e3886c5bf1785',1,'cryptoauthlib::library']]],
+  ['get_5fctype_5fstructure_5finstance_33',['get_ctype_structure_instance',['../a01528.html#a30811985170f0083009bbd5439d1bcc2',1,'cryptoauthlib::library']]],
+  ['get_5fdevice_5fname_34',['get_device_name',['../a01528.html#a2da0648c5d2cb3a8da467b8dfac16e8c',1,'cryptoauthlib::library']]],
+  ['get_5fdevice_5fname_5fwith_5fdevice_5fid_35',['get_device_name_with_device_id',['../a01528.html#ac4f25f606f7c968b08b874dc8d75ca50',1,'cryptoauthlib::library']]],
+  ['get_5fdevice_5ftype_5fid_36',['get_device_type_id',['../a01528.html#adaf39153cd62515d9750fdb0748dbacc',1,'cryptoauthlib::library']]],
+  ['get_5fsize_5fby_5fname_37',['get_size_by_name',['../a01528.html#a7c6a46d9327a395ac4909411d937b193',1,'cryptoauthlib::library']]]
 ];

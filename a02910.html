@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcab</title>
+<title>CryptoAuthLib: Secure boot using ATECC608</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.8</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -97,21 +97,53 @@ $(document).ready(function(){initNavTree('a02910.html',''); initResizable(); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">atcab </div></div>
+  <div class="headertitle"><div class="title">Secure boot using ATECC608 </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md29"></a>
-atcab API reference</h1>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Hardware Feature   </th><th class="markdownTableHeadNone">atcab_    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">SHA256   </td><td class="markdownTableBodyNone">[atcab_sha_start]    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">SHA256   </td><td class="markdownTableBodyNone">[atcab_sha_update]    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">SHA256   </td><td class="markdownTableBodyNone">[atcab_sha_end]   </td></tr>
-</table>
+<div class="textblock"><p><a class="anchor" id="app_info_secure_boot"></a>8</p>
+<p>The SecureBoot command is a new feature on the <a href="https://www.microchip.com/wwwproducts/en/ATECC608A">ATECC608A</a> device compared to earlier CryptoAuthentication devices from Microchip. This feature helps the MCU to identify fraudulent code installed on it. When this feature is implemented, the MCU can send a firmware digest and signature to the ATECC608. The ATECC608 validates this information (ECDSA verify) and responds to host with a yes or no answer.</p>
+<p>The ATECC608 provides options to reduce the firmware verification time by storing the signature or digest after a good full verification (FullStore mode of the SecureBoot command).</p>
+<ul>
+<li>When the ATECC608 stores the digest (SecureBootMode is FullDig), the host only needs to send the firmware digest, which is compared to the stored copy. This skips the comparatively lengthy ECDSA verify, speeding up the secure boot process.</li>
+<li>When the ATECC608 stores the signature (SecureBootMode is FullSig), the host only needs to send the firmware digest, which is verified against the stored signature using ECDSA. This saves time by not needing to send the signature in the command over the bus.</li>
+</ul>
+<p>The ATECC608 also provides wire protection features for the SecureBoot command, which can be used to encrypt the digest being sent from the host to the ATECC608 and add a MAC to the verify result coming back to the host so it can't be forced to a success state. This feature makes use of a shared secret between the host and ATECC608, called the IO protection key.</p>
+<p>The secure boot feature can be easily integrated to an existing project. The project should include the following files from the secure_boot folder:</p><ul>
+<li><a class="el" href="a00044.html" title="Provides required APIs to manage secure boot under various scenarios.">secure_boot.c</a></li>
+<li><a class="el" href="a00047.html" title="Provides required APIs to manage secure boot under various scenarios.">secure_boot.h</a></li>
+<li><a class="el" href="a00050.html" title="Provides interface to memory component for the secure boot.">secure_boot_memory.h</a></li>
+<li><a class="el" href="a00041.html" title="Provides required interface to access IO protection key.">io_protection_key.h</a></li>
+</ul>
+<p>The project should also implement the following platform-specific APIs:</p><ul>
+<li>secure_boot_init_memory()</li>
+<li>secure_boot_read_memory()</li>
+<li>secure_boot_deinit_memory()</li>
+<li>secure_boot_mark_full_copy_completion()</li>
+<li>secure_boot_check_full_copy_completion()</li>
+<li>io_protection_get_key()</li>
+<li>io_protection_set_key()</li>
+</ul>
+<p>The project can set the secure boot configuration with the following defines:</p><ul>
+<li>SECURE_BOOT_CONFIGURATION</li>
+<li>SECURE_BOOT_DIGEST_ENCRYPT_ENABLED</li>
+<li>SECURE_BOOT_UPGRADE_SUPPORT</li>
+</ul>
+<p>The secure boot process is performed by initializing CryptoAuthLib and calling the <a class="el" href="a00044.html#a861a785461af4116bca9343019225abd" title="Handles secure boot functionality through initialization, execution, and de-initialization.">secure_boot_process()</a> function.</p>
+<h1><a class="anchor" id="autotoc_md13"></a>
+Implementation Considerations</h1>
+<ul>
+<li>Need to perform SHA256 calculations on the host. CryptoAuthLib provides a software implementation in <a class="el" href="a00524.html" title="Wrapper API for software SHA 256 routines.">lib/crypto/atca_crypto_sw_sha2.c</a></li>
+<li>When using the wire protection features:<ul>
+<li>The host needs to be able to generate a nonce (number used once). This is the NumIn parameter to the Nonce command that is sent before the SecureBoot command. The ATECC608 can not be used to generate NumIn, but it should come from a good random or non-repeating source in the host.</li>
+<li>If the host has any protected internal memory, it should be used to store its copy of the IO protection key.</li>
+</ul>
+</li>
+<li>Secure boot depends on proper protections of the boot loader code in the host. If the code can be easily changed, then the secure boot process can be easily skipped. Boot loader should ideally be stored in an immutable (unchangeable) location like a boot ROM or write-protected flash.</li>
+<li>Note that these APIs don't provision the ATECC608. They assume the ATECC608 has already been configured and provisioned with the necessary keys for secure boot.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md14"></a>
+Examples</h1>
+<p>For more information about secure boot, please see the example implementation project and documentation at: <a href="https://github.com/MicrochipTech/cryptoauth_usecase_secureboot">https://github.com/MicrochipTech/cryptoauth_usecase_secureboot</a> </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

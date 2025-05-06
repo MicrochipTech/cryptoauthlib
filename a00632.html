@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.8</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -109,31 +109,31 @@ $(document).ready(function(){initNavTree('a00632.html',''); initResizable(); });
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gae3e41d9b466fb912625402db629b1a62"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#gae3e41d9b466fb912625402db629b1a62">hal_swi_init</a> (<a class="el" href="a01636.html">ATCAIface</a> iface, <a class="el" href="a01568.html">ATCAIfaceCfg</a> *cfg)</td></tr>
+<tr class="memitem:gae3e41d9b466fb912625402db629b1a62"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01515.html#gae3e41d9b466fb912625402db629b1a62">hal_swi_init</a> (<a class="el" href="a01645.html">ATCAIface</a> iface, <a class="el" href="a01577.html">ATCAIfaceCfg</a> *cfg)</td></tr>
 <tr class="memdesc:gae3e41d9b466fb912625402db629b1a62"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize an SWI interface using given config  <br /></td></tr>
 <tr class="separator:gae3e41d9b466fb912625402db629b1a62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9186e5235979216330ae580290872c77"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#ga9186e5235979216330ae580290872c77">hal_swi_post_init</a> (<a class="el" href="a01636.html">ATCAIface</a> iface)</td></tr>
+<tr class="memitem:ga9186e5235979216330ae580290872c77"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01515.html#ga9186e5235979216330ae580290872c77">hal_swi_post_init</a> (<a class="el" href="a01645.html">ATCAIface</a> iface)</td></tr>
 <tr class="memdesc:ga9186e5235979216330ae580290872c77"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI post init.  <br /></td></tr>
 <tr class="separator:ga9186e5235979216330ae580290872c77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9df4dbd666a87efe49578842e53ad91e"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#ga9df4dbd666a87efe49578842e53ad91e">hal_swi_send</a> (<a class="el" href="a01636.html">ATCAIface</a> iface, uint8_t word_address, uint8_t *txdata, int txlength)</td></tr>
+<tr class="memitem:ga9df4dbd666a87efe49578842e53ad91e"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01515.html#ga9df4dbd666a87efe49578842e53ad91e">hal_swi_send</a> (<a class="el" href="a01645.html">ATCAIface</a> iface, uint8_t word_address, uint8_t *txdata, int txlength)</td></tr>
 <tr class="memdesc:ga9df4dbd666a87efe49578842e53ad91e"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI send command over UART.  <br /></td></tr>
 <tr class="separator:ga9df4dbd666a87efe49578842e53ad91e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga159bdf9c24e429d54800da1eb1c21058"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#ga159bdf9c24e429d54800da1eb1c21058">hal_swi_receive</a> (<a class="el" href="a01636.html">ATCAIface</a> iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
+<tr class="memitem:ga159bdf9c24e429d54800da1eb1c21058"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01515.html#ga159bdf9c24e429d54800da1eb1c21058">hal_swi_receive</a> (<a class="el" href="a01645.html">ATCAIface</a> iface, uint8_t word_address, uint8_t *rxdata, uint16_t *rxlength)</td></tr>
 <tr class="memdesc:ga159bdf9c24e429d54800da1eb1c21058"><td class="mdescLeft">&#160;</td><td class="mdescRight">HAL implementation of SWI receive function over UART.  <br /></td></tr>
 <tr class="separator:ga159bdf9c24e429d54800da1eb1c21058"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafc428980ec95e37eee94813db229fe70"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#gafc428980ec95e37eee94813db229fe70">hal_swi_wake</a> (<a class="el" href="a01636.html">ATCAIface</a> iface)</td></tr>
+<tr class="memitem:gafc428980ec95e37eee94813db229fe70"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01515.html#gafc428980ec95e37eee94813db229fe70">hal_swi_wake</a> (<a class="el" href="a01645.html">ATCAIface</a> iface)</td></tr>
 <tr class="memdesc:gafc428980ec95e37eee94813db229fe70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send Wake flag via SWI.  <br /></td></tr>
 <tr class="separator:gafc428980ec95e37eee94813db229fe70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga252e365a30f2583dae8a8eac073a9f53"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#ga252e365a30f2583dae8a8eac073a9f53">hal_swi_sleep</a> (<a class="el" href="a01636.html">ATCAIface</a> iface)</td></tr>
+<tr class="memitem:ga252e365a30f2583dae8a8eac073a9f53"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01515.html#ga252e365a30f2583dae8a8eac073a9f53">hal_swi_sleep</a> (<a class="el" href="a01645.html">ATCAIface</a> iface)</td></tr>
 <tr class="memdesc:ga252e365a30f2583dae8a8eac073a9f53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send Sleep flag via SWI.  <br /></td></tr>
 <tr class="separator:ga252e365a30f2583dae8a8eac073a9f53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga618291172976da96c4f02dc9200c845c"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#ga618291172976da96c4f02dc9200c845c">hal_swi_idle</a> (<a class="el" href="a01636.html">ATCAIface</a> iface)</td></tr>
+<tr class="memitem:ga618291172976da96c4f02dc9200c845c"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01515.html#ga618291172976da96c4f02dc9200c845c">hal_swi_idle</a> (<a class="el" href="a01645.html">ATCAIface</a> iface)</td></tr>
 <tr class="memdesc:ga618291172976da96c4f02dc9200c845c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send Idle flag via SWI.  <br /></td></tr>
 <tr class="separator:ga618291172976da96c4f02dc9200c845c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad6ba20fd0d0d393f0cbf03ea9cb63346"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#gad6ba20fd0d0d393f0cbf03ea9cb63346">hal_swi_control</a> (<a class="el" href="a01636.html">ATCAIface</a> iface, uint8_t option, void *param, size_t paramlen)</td></tr>
+<tr class="memitem:gad6ba20fd0d0d393f0cbf03ea9cb63346"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01515.html#gad6ba20fd0d0d393f0cbf03ea9cb63346">hal_swi_control</a> (<a class="el" href="a01645.html">ATCAIface</a> iface, uint8_t option, void *param, size_t paramlen)</td></tr>
 <tr class="memdesc:gad6ba20fd0d0d393f0cbf03ea9cb63346"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform control operations for the kit protocol.  <br /></td></tr>
 <tr class="separator:gad6ba20fd0d0d393f0cbf03ea9cb63346"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga196dbc62546b39ac3e556a0f7f6b7132"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01506.html#ga196dbc62546b39ac3e556a0f7f6b7132">hal_swi_release</a> (void *hal_data)</td></tr>
+<tr class="memitem:ga196dbc62546b39ac3e556a0f7f6b7132"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01515.html#ga196dbc62546b39ac3e556a0f7f6b7132">hal_swi_release</a> (void *hal_data)</td></tr>
 <tr class="memdesc:ga196dbc62546b39ac3e556a0f7f6b7132"><td class="mdescLeft">&#160;</td><td class="mdescRight">manages reference count on given bus and releases resource if no more refences exist  <br /></td></tr>
 <tr class="separator:ga196dbc62546b39ac3e556a0f7f6b7132"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>

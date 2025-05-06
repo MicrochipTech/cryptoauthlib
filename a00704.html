@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.7</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.8</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -121,7 +121,7 @@ $(document).ready(function(){initNavTree('a00704.html',''); initResizable(); });
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01860.html">atca_evp_ctx</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01869.html">atca_evp_ctx</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -129,101 +129,101 @@ Functions</h2></td></tr>
 <tr class="memitem:a45fef91f1894c03f9fd94d2835a91342"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a45fef91f1894c03f9fd94d2835a91342">atcac_sw_random</a> (uint8_t *data, size_t data_size)</td></tr>
 <tr class="memdesc:a45fef91f1894c03f9fd94d2835a91342"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return Random Bytes.  <br /></td></tr>
 <tr class="separator:a45fef91f1894c03f9fd94d2835a91342"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7cc388d11506f9ef030994fab99cfaa7"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a7cc388d11506f9ef030994fab99cfaa7">atcac_aes_gcm_aad_update</a> (struct <a class="el" href="a01844.html">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *aad, const size_t aad_len)</td></tr>
+<tr class="memitem:a7cc388d11506f9ef030994fab99cfaa7"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a7cc388d11506f9ef030994fab99cfaa7">atcac_aes_gcm_aad_update</a> (struct <a class="el" href="a01853.html">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *aad, const size_t aad_len)</td></tr>
 <tr class="memdesc:a7cc388d11506f9ef030994fab99cfaa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the GCM context with additional authentication data (AAD)  <br /></td></tr>
 <tr class="separator:a7cc388d11506f9ef030994fab99cfaa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a856d7a2b4bdd82d01544cb4ee6048e48"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a856d7a2b4bdd82d01544cb4ee6048e48">atcac_aes_gcm_encrypt_start</a> (struct <a class="el" href="a01844.html">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *key, const uint8_t key_len, const uint8_t *iv, const uint8_t iv_len)</td></tr>
+<tr class="memitem:a856d7a2b4bdd82d01544cb4ee6048e48"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a856d7a2b4bdd82d01544cb4ee6048e48">atcac_aes_gcm_encrypt_start</a> (struct <a class="el" href="a01853.html">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *key, const uint8_t key_len, const uint8_t *iv, const uint8_t iv_len)</td></tr>
 <tr class="memdesc:a856d7a2b4bdd82d01544cb4ee6048e48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize an AES-GCM context.  <br /></td></tr>
 <tr class="separator:a856d7a2b4bdd82d01544cb4ee6048e48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34f53a6f8a1ef018ef886961e4f60694"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a34f53a6f8a1ef018ef886961e4f60694">atcac_aes_gcm_encrypt_update</a> (struct <a class="el" href="a01844.html">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *plaintext, const size_t pt_len, uint8_t *ciphertext, size_t *ct_len)</td></tr>
+<tr class="memitem:a34f53a6f8a1ef018ef886961e4f60694"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a34f53a6f8a1ef018ef886961e4f60694">atcac_aes_gcm_encrypt_update</a> (struct <a class="el" href="a01853.html">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *plaintext, const size_t pt_len, uint8_t *ciphertext, size_t *ct_len)</td></tr>
 <tr class="memdesc:a34f53a6f8a1ef018ef886961e4f60694"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypt a data using the initialized context.  <br /></td></tr>
 <tr class="separator:a34f53a6f8a1ef018ef886961e4f60694"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bdd8ba09593bb7a2ce1f48df873250a"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a5bdd8ba09593bb7a2ce1f48df873250a">atcac_aes_gcm_encrypt_finish</a> (struct <a class="el" href="a01844.html">atcac_aes_gcm_ctx</a> *ctx, uint8_t *tag, size_t tag_len)</td></tr>
+<tr class="memitem:a5bdd8ba09593bb7a2ce1f48df873250a"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a5bdd8ba09593bb7a2ce1f48df873250a">atcac_aes_gcm_encrypt_finish</a> (struct <a class="el" href="a01853.html">atcac_aes_gcm_ctx</a> *ctx, uint8_t *tag, size_t tag_len)</td></tr>
 <tr class="memdesc:a5bdd8ba09593bb7a2ce1f48df873250a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the AES-GCM tag and free the context.  <br /></td></tr>
 <tr class="separator:a5bdd8ba09593bb7a2ce1f48df873250a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a473ff3c449375989e846d66342333b3a"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a473ff3c449375989e846d66342333b3a">atcac_aes_gcm_decrypt_start</a> (struct <a class="el" href="a01844.html">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *key, const uint8_t key_len, const uint8_t *iv, const uint8_t iv_len)</td></tr>
+<tr class="memitem:a473ff3c449375989e846d66342333b3a"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a473ff3c449375989e846d66342333b3a">atcac_aes_gcm_decrypt_start</a> (struct <a class="el" href="a01853.html">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *key, const uint8_t key_len, const uint8_t *iv, const uint8_t iv_len)</td></tr>
 <tr class="memdesc:a473ff3c449375989e846d66342333b3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize an AES-GCM context for decryption.  <br /></td></tr>
 <tr class="separator:a473ff3c449375989e846d66342333b3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04b292df2006e31743224b66e16a29e9"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a04b292df2006e31743224b66e16a29e9">atcac_aes_gcm_decrypt_update</a> (struct <a class="el" href="a01844.html">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *ciphertext, const size_t ct_len, uint8_t *plaintext, size_t *pt_len)</td></tr>
+<tr class="memitem:a04b292df2006e31743224b66e16a29e9"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a04b292df2006e31743224b66e16a29e9">atcac_aes_gcm_decrypt_update</a> (struct <a class="el" href="a01853.html">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *ciphertext, const size_t ct_len, uint8_t *plaintext, size_t *pt_len)</td></tr>
 <tr class="memdesc:a04b292df2006e31743224b66e16a29e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypt ciphertext using the initialized context.  <br /></td></tr>
 <tr class="separator:a04b292df2006e31743224b66e16a29e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9cde02547c1ed0122c87f0a156ee268"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#ac9cde02547c1ed0122c87f0a156ee268">atcac_aes_gcm_decrypt_finish</a> (struct <a class="el" href="a01844.html">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *tag, size_t tag_len, bool *is_verified)</td></tr>
+<tr class="memitem:ac9cde02547c1ed0122c87f0a156ee268"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#ac9cde02547c1ed0122c87f0a156ee268">atcac_aes_gcm_decrypt_finish</a> (struct <a class="el" href="a01853.html">atcac_aes_gcm_ctx</a> *ctx, const uint8_t *tag, size_t tag_len, bool *is_verified)</td></tr>
 <tr class="memdesc:ac9cde02547c1ed0122c87f0a156ee268"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare the AES-GCM tag and free the context.  <br /></td></tr>
 <tr class="separator:ac9cde02547c1ed0122c87f0a156ee268"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a723448315d3bbc03a39104d36fd2b4bc"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a723448315d3bbc03a39104d36fd2b4bc">atcac_sw_sha1_init</a> (struct <a class="el" href="a01836.html">atcac_sha1_ctx</a> *ctx)</td></tr>
+<tr class="memitem:a723448315d3bbc03a39104d36fd2b4bc"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a723448315d3bbc03a39104d36fd2b4bc">atcac_sw_sha1_init</a> (struct <a class="el" href="a01845.html">atcac_sha1_ctx</a> *ctx)</td></tr>
 <tr class="memdesc:a723448315d3bbc03a39104d36fd2b4bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for performing SHA1 hash in software.  <br /></td></tr>
 <tr class="separator:a723448315d3bbc03a39104d36fd2b4bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b8bae42b5963d812f4cf2329807f778"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a1b8bae42b5963d812f4cf2329807f778">atcac_sw_sha1_update</a> (struct <a class="el" href="a01836.html">atcac_sha1_ctx</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
+<tr class="memitem:a1b8bae42b5963d812f4cf2329807f778"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a1b8bae42b5963d812f4cf2329807f778">atcac_sw_sha1_update</a> (struct <a class="el" href="a01845.html">atcac_sha1_ctx</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
 <tr class="memdesc:a1b8bae42b5963d812f4cf2329807f778"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add data to a SHA1 hash.  <br /></td></tr>
 <tr class="separator:a1b8bae42b5963d812f4cf2329807f778"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb02186059737ad5fb792665cf0b97dd"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#abb02186059737ad5fb792665cf0b97dd">atcac_sw_sha1_finish</a> (struct <a class="el" href="a01836.html">atcac_sha1_ctx</a> *ctx, uint8_t digest[ATCA_SHA1_DIGEST_SIZE])</td></tr>
+<tr class="memitem:abb02186059737ad5fb792665cf0b97dd"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#abb02186059737ad5fb792665cf0b97dd">atcac_sw_sha1_finish</a> (struct <a class="el" href="a01845.html">atcac_sha1_ctx</a> *ctx, uint8_t digest[ATCA_SHA1_DIGEST_SIZE])</td></tr>
 <tr class="memdesc:abb02186059737ad5fb792665cf0b97dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Complete the SHA1 hash in software and return the digest.  <br /></td></tr>
 <tr class="separator:abb02186059737ad5fb792665cf0b97dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17af2d47faed0774e9277be42512b0f4"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a17af2d47faed0774e9277be42512b0f4">atcac_aes_cmac_init</a> (struct <a class="el" href="a01848.html">atcac_aes_cmac_ctx</a> *ctx, const uint8_t *key, const uint8_t key_len)</td></tr>
+<tr class="memitem:a17af2d47faed0774e9277be42512b0f4"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a17af2d47faed0774e9277be42512b0f4">atcac_aes_cmac_init</a> (struct <a class="el" href="a01857.html">atcac_aes_cmac_ctx</a> *ctx, const uint8_t *key, const uint8_t key_len)</td></tr>
 <tr class="memdesc:a17af2d47faed0774e9277be42512b0f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for performing CMAC in software.  <br /></td></tr>
 <tr class="separator:a17af2d47faed0774e9277be42512b0f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c6a8dc222080952c2541db9cf7cd3c0"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a9c6a8dc222080952c2541db9cf7cd3c0">atcac_aes_cmac_update</a> (struct <a class="el" href="a01848.html">atcac_aes_cmac_ctx</a> *ctx, const uint8_t *data, const size_t data_size)</td></tr>
+<tr class="memitem:a9c6a8dc222080952c2541db9cf7cd3c0"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a9c6a8dc222080952c2541db9cf7cd3c0">atcac_aes_cmac_update</a> (struct <a class="el" href="a01857.html">atcac_aes_cmac_ctx</a> *ctx, const uint8_t *data, const size_t data_size)</td></tr>
 <tr class="memdesc:a9c6a8dc222080952c2541db9cf7cd3c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update CMAC context with input data.  <br /></td></tr>
 <tr class="separator:a9c6a8dc222080952c2541db9cf7cd3c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9fb429f011c7df55055763f41b896f28"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a9fb429f011c7df55055763f41b896f28">atcac_aes_cmac_finish</a> (struct <a class="el" href="a01848.html">atcac_aes_cmac_ctx</a> *ctx, uint8_t *cmac, size_t *cmac_size)</td></tr>
+<tr class="memitem:a9fb429f011c7df55055763f41b896f28"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a9fb429f011c7df55055763f41b896f28">atcac_aes_cmac_finish</a> (struct <a class="el" href="a01857.html">atcac_aes_cmac_ctx</a> *ctx, uint8_t *cmac, size_t *cmac_size)</td></tr>
 <tr class="memdesc:a9fb429f011c7df55055763f41b896f28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finish CMAC calculation and clear the CMAC context.  <br /></td></tr>
 <tr class="separator:a9fb429f011c7df55055763f41b896f28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a107f3a8b6eb198dff510926061cabb43"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a107f3a8b6eb198dff510926061cabb43">atcac_sha256_hmac_init</a> (struct <a class="el" href="a01840.html">atcac_hmac_ctx</a> *ctx, struct <a class="el" href="a01864.html">atcac_sha2_256_ctx</a> *sha256_ctx, const uint8_t *key, const uint8_t key_len)</td></tr>
+<tr class="memitem:a107f3a8b6eb198dff510926061cabb43"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a107f3a8b6eb198dff510926061cabb43">atcac_sha256_hmac_init</a> (struct <a class="el" href="a01849.html">atcac_hmac_ctx</a> *ctx, struct <a class="el" href="a01873.html">atcac_sha2_256_ctx</a> *sha256_ctx, const uint8_t *key, const uint8_t key_len)</td></tr>
 <tr class="memdesc:a107f3a8b6eb198dff510926061cabb43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize context for performing HMAC (sha256) in software.  <br /></td></tr>
 <tr class="separator:a107f3a8b6eb198dff510926061cabb43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15fed8a07cb9fef1f7cb0dc5fffcbfee"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a15fed8a07cb9fef1f7cb0dc5fffcbfee">atcac_sha256_hmac_update</a> (struct <a class="el" href="a01840.html">atcac_hmac_ctx</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
+<tr class="memitem:a15fed8a07cb9fef1f7cb0dc5fffcbfee"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a15fed8a07cb9fef1f7cb0dc5fffcbfee">atcac_sha256_hmac_update</a> (struct <a class="el" href="a01849.html">atcac_hmac_ctx</a> *ctx, const uint8_t *data, size_t data_size)</td></tr>
 <tr class="memdesc:a15fed8a07cb9fef1f7cb0dc5fffcbfee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update HMAC context with input data.  <br /></td></tr>
 <tr class="separator:a15fed8a07cb9fef1f7cb0dc5fffcbfee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac5f016c7c9fa74cadbd76508e68ffe66"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#ac5f016c7c9fa74cadbd76508e68ffe66">atcac_sha256_hmac_finish</a> (struct <a class="el" href="a01840.html">atcac_hmac_ctx</a> *ctx, uint8_t *digest, size_t *digest_len)</td></tr>
+<tr class="memitem:ac5f016c7c9fa74cadbd76508e68ffe66"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#ac5f016c7c9fa74cadbd76508e68ffe66">atcac_sha256_hmac_finish</a> (struct <a class="el" href="a01849.html">atcac_hmac_ctx</a> *ctx, uint8_t *digest, size_t *digest_len)</td></tr>
 <tr class="memdesc:ac5f016c7c9fa74cadbd76508e68ffe66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finish CMAC calculation and clear the HMAC context.  <br /></td></tr>
 <tr class="separator:ac5f016c7c9fa74cadbd76508e68ffe66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1cfc16d20a4a93bc8cc45f68bd6a74f"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#aa1cfc16d20a4a93bc8cc45f68bd6a74f">atcac_pk_init</a> (struct <a class="el" href="a01852.html">atcac_pk_ctx</a> *ctx, const uint8_t *buf, size_t buflen, uint8_t key_type, bool pubkey)</td></tr>
+<tr class="memitem:aa1cfc16d20a4a93bc8cc45f68bd6a74f"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#aa1cfc16d20a4a93bc8cc45f68bd6a74f">atcac_pk_init</a> (struct <a class="el" href="a01861.html">atcac_pk_ctx</a> *ctx, const uint8_t *buf, size_t buflen, uint8_t key_type, bool pubkey)</td></tr>
 <tr class="memdesc:aa1cfc16d20a4a93bc8cc45f68bd6a74f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up a public/private key structure for use in asymmetric cryptographic functions.  <br /></td></tr>
 <tr class="separator:aa1cfc16d20a4a93bc8cc45f68bd6a74f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93806f5fc89ac97ab70e74dc9c41dd76"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a93806f5fc89ac97ab70e74dc9c41dd76">atcac_pk_init_pem</a> (struct <a class="el" href="a01852.html">atcac_pk_ctx</a> *ctx, const uint8_t *buf, size_t buflen, bool pubkey)</td></tr>
+<tr class="memitem:a93806f5fc89ac97ab70e74dc9c41dd76"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a93806f5fc89ac97ab70e74dc9c41dd76">atcac_pk_init_pem</a> (struct <a class="el" href="a01861.html">atcac_pk_ctx</a> *ctx, const uint8_t *buf, size_t buflen, bool pubkey)</td></tr>
 <tr class="memdesc:a93806f5fc89ac97ab70e74dc9c41dd76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up a public/private key structure for use in asymmetric cryptographic functions.  <br /></td></tr>
 <tr class="separator:a93806f5fc89ac97ab70e74dc9c41dd76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a757c5734289254c48f43cc26b7d5e6a4"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a757c5734289254c48f43cc26b7d5e6a4">atcac_pk_free</a> (struct <a class="el" href="a01852.html">atcac_pk_ctx</a> *ctx)</td></tr>
+<tr class="memitem:a757c5734289254c48f43cc26b7d5e6a4"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a757c5734289254c48f43cc26b7d5e6a4">atcac_pk_free</a> (struct <a class="el" href="a01861.html">atcac_pk_ctx</a> *ctx)</td></tr>
 <tr class="memdesc:a757c5734289254c48f43cc26b7d5e6a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free a public/private key structure.  <br /></td></tr>
 <tr class="separator:a757c5734289254c48f43cc26b7d5e6a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd482e1225ffba53b6bfe903e133a541"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#acd482e1225ffba53b6bfe903e133a541">atcac_pk_public</a> (struct <a class="el" href="a01852.html">atcac_pk_ctx</a> *ctx, uint8_t *buf, size_t *buflen)</td></tr>
+<tr class="memitem:acd482e1225ffba53b6bfe903e133a541"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#acd482e1225ffba53b6bfe903e133a541">atcac_pk_public</a> (struct <a class="el" href="a01861.html">atcac_pk_ctx</a> *ctx, uint8_t *buf, size_t *buflen)</td></tr>
 <tr class="memdesc:acd482e1225ffba53b6bfe903e133a541"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the public key from the context.  <br /></td></tr>
 <tr class="separator:acd482e1225ffba53b6bfe903e133a541"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef7827b56555e8efcc4646855335555f"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#aef7827b56555e8efcc4646855335555f">atcac_pk_sign</a> (struct <a class="el" href="a01852.html">atcac_pk_ctx</a> *ctx, const uint8_t *digest, size_t dig_len, uint8_t *signature, size_t *sig_len)</td></tr>
+<tr class="memitem:aef7827b56555e8efcc4646855335555f"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#aef7827b56555e8efcc4646855335555f">atcac_pk_sign</a> (struct <a class="el" href="a01861.html">atcac_pk_ctx</a> *ctx, const uint8_t *digest, size_t dig_len, uint8_t *signature, size_t *sig_len)</td></tr>
 <tr class="memdesc:aef7827b56555e8efcc4646855335555f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a signature with the private key in the context.  <br /></td></tr>
 <tr class="separator:aef7827b56555e8efcc4646855335555f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29573bbcca0c005de19ec709109538df"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a29573bbcca0c005de19ec709109538df">atcac_pk_verify</a> (struct <a class="el" href="a01852.html">atcac_pk_ctx</a> *ctx, const uint8_t *digest, size_t dig_len, const uint8_t *signature, size_t sig_len)</td></tr>
+<tr class="memitem:a29573bbcca0c005de19ec709109538df"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a29573bbcca0c005de19ec709109538df">atcac_pk_verify</a> (struct <a class="el" href="a01861.html">atcac_pk_ctx</a> *ctx, const uint8_t *digest, size_t dig_len, const uint8_t *signature, size_t sig_len)</td></tr>
 <tr class="memdesc:a29573bbcca0c005de19ec709109538df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a verify using the public key in the provided context.  <br /></td></tr>
 <tr class="separator:a29573bbcca0c005de19ec709109538df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b82589420e299091e6b80459bfb90d8"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a7b82589420e299091e6b80459bfb90d8">atcac_pk_derive</a> (struct <a class="el" href="a01852.html">atcac_pk_ctx</a> *private_ctx, struct <a class="el" href="a01852.html">atcac_pk_ctx</a> *public_ctx, uint8_t *buf, size_t *buflen)</td></tr>
+<tr class="memitem:a7b82589420e299091e6b80459bfb90d8"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html#a7b82589420e299091e6b80459bfb90d8">atcac_pk_derive</a> (struct <a class="el" href="a01861.html">atcac_pk_ctx</a> *private_ctx, struct <a class="el" href="a01861.html">atcac_pk_ctx</a> *public_ctx, uint8_t *buf, size_t *buflen)</td></tr>
 <tr class="memdesc:a7b82589420e299091e6b80459bfb90d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute the key agreement protocol for the provided keys (if they can)  <br /></td></tr>
 <tr class="separator:a7b82589420e299091e6b80459bfb90d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4637a8c094c111bd8e05b32c9b51af96"><td class="memItemLeft" align="right" valign="top"><a id="a4637a8c094c111bd8e05b32c9b51af96" name="a4637a8c094c111bd8e05b32c9b51af96"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_parse_der</b> (struct <a class="el" href="a01832.html">atcac_x509_ctx</a> **cert, <a class="el" href="a01664.html">cal_buffer</a> *der)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_parse_der</b> (struct <a class="el" href="a01841.html">atcac_x509_ctx</a> **cert, <a class="el" href="a01673.html">cal_buffer</a> *der)</td></tr>
 <tr class="separator:a4637a8c094c111bd8e05b32c9b51af96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf7d8d8b7ce7ef4197b8573f1f379b00"><td class="memItemLeft" align="right" valign="top"><a id="acf7d8d8b7ce7ef4197b8573f1f379b00" name="acf7d8d8b7ce7ef4197b8573f1f379b00"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_get_subject</b> (const struct <a class="el" href="a01832.html">atcac_x509_ctx</a> *cert, <a class="el" href="a01664.html">cal_buffer</a> *cert_subject)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_get_subject</b> (const struct <a class="el" href="a01841.html">atcac_x509_ctx</a> *cert, <a class="el" href="a01673.html">cal_buffer</a> *cert_subject)</td></tr>
 <tr class="separator:acf7d8d8b7ce7ef4197b8573f1f379b00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c94da5fad6ffb4d9a12f5f0f5518003"><td class="memItemLeft" align="right" valign="top"><a id="a0c94da5fad6ffb4d9a12f5f0f5518003" name="a0c94da5fad6ffb4d9a12f5f0f5518003"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_get_subj_public_key</b> (const struct <a class="el" href="a01832.html">atcac_x509_ctx</a> *cert, <a class="el" href="a01664.html">cal_buffer</a> *subj_public_key)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_get_subj_public_key</b> (const struct <a class="el" href="a01841.html">atcac_x509_ctx</a> *cert, <a class="el" href="a01673.html">cal_buffer</a> *subj_public_key)</td></tr>
 <tr class="separator:a0c94da5fad6ffb4d9a12f5f0f5518003"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af862c12aba0b19338ab0e2e5507c7b40"><td class="memItemLeft" align="right" valign="top"><a id="af862c12aba0b19338ab0e2e5507c7b40" name="af862c12aba0b19338ab0e2e5507c7b40"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_get_subj_key_id</b> (const struct <a class="el" href="a01832.html">atcac_x509_ctx</a> *cert, <a class="el" href="a01664.html">cal_buffer</a> *subj_public_key_id)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_get_subj_key_id</b> (const struct <a class="el" href="a01841.html">atcac_x509_ctx</a> *cert, <a class="el" href="a01673.html">cal_buffer</a> *subj_public_key_id)</td></tr>
 <tr class="separator:af862c12aba0b19338ab0e2e5507c7b40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42c862e8a02fc087e61fce5a3dfe1f11"><td class="memItemLeft" align="right" valign="top"><a id="a42c862e8a02fc087e61fce5a3dfe1f11" name="a42c862e8a02fc087e61fce5a3dfe1f11"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_get_issuer</b> (const struct <a class="el" href="a01832.html">atcac_x509_ctx</a> *cert, <a class="el" href="a01664.html">cal_buffer</a> *issuer_buf)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_get_issuer</b> (const struct <a class="el" href="a01841.html">atcac_x509_ctx</a> *cert, <a class="el" href="a01673.html">cal_buffer</a> *issuer_buf)</td></tr>
 <tr class="separator:a42c862e8a02fc087e61fce5a3dfe1f11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a4bdabcdf4087c6f8849d672775568a"><td class="memItemLeft" align="right" valign="top"><a id="a8a4bdabcdf4087c6f8849d672775568a" name="a8a4bdabcdf4087c6f8849d672775568a"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_get_auth_key_id</b> (const struct <a class="el" href="a01832.html">atcac_x509_ctx</a> *cert, <a class="el" href="a01664.html">cal_buffer</a> *auth_key_id)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_get_auth_key_id</b> (const struct <a class="el" href="a01841.html">atcac_x509_ctx</a> *cert, <a class="el" href="a01673.html">cal_buffer</a> *auth_key_id)</td></tr>
 <tr class="separator:a8a4bdabcdf4087c6f8849d672775568a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a27f6daab034ae3405961b1fc3edc4c"><td class="memItemLeft" align="right" valign="top"><a id="a4a27f6daab034ae3405961b1fc3edc4c" name="a4a27f6daab034ae3405961b1fc3edc4c"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_get_issue_date</b> (const struct <a class="el" href="a01832.html">atcac_x509_ctx</a> *cert, <a class="el" href="a01664.html">cal_buffer</a> *not_before, uint8_t *fmt)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_get_issue_date</b> (const struct <a class="el" href="a01841.html">atcac_x509_ctx</a> *cert, <a class="el" href="a01673.html">cal_buffer</a> *not_before, uint8_t *fmt)</td></tr>
 <tr class="separator:a4a27f6daab034ae3405961b1fc3edc4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1bb1ff518ae932962911e6cb04bc1e51"><td class="memItemLeft" align="right" valign="top"><a id="a1bb1ff518ae932962911e6cb04bc1e51" name="a1bb1ff518ae932962911e6cb04bc1e51"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_get_expire_date</b> (const struct <a class="el" href="a01832.html">atcac_x509_ctx</a> *cert, <a class="el" href="a01664.html">cal_buffer</a> *not_after, uint8_t *fmt)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_get_expire_date</b> (const struct <a class="el" href="a01841.html">atcac_x509_ctx</a> *cert, <a class="el" href="a01673.html">cal_buffer</a> *not_after, uint8_t *fmt)</td></tr>
 <tr class="separator:a1bb1ff518ae932962911e6cb04bc1e51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a725fc0a7976a5c9a7c2aacd42f24ffe2"><td class="memItemLeft" align="right" valign="top"><a id="a725fc0a7976a5c9a7c2aacd42f24ffe2" name="a725fc0a7976a5c9a7c2aacd42f24ffe2"></a>
-ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_get_cert_sn</b> (const struct <a class="el" href="a01832.html">atcac_x509_ctx</a> *cert, <a class="el" href="a01664.html">cal_buffer</a> *cert_sn)</td></tr>
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_get_cert_sn</b> (const struct <a class="el" href="a01841.html">atcac_x509_ctx</a> *cert, <a class="el" href="a01673.html">cal_buffer</a> *cert_sn)</td></tr>
 <tr class="separator:a725fc0a7976a5c9a7c2aacd42f24ffe2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adb59e5dd051a54383437623e42c427f1"><td class="memItemLeft" align="right" valign="top"><a id="adb59e5dd051a54383437623e42c427f1" name="adb59e5dd051a54383437623e42c427f1"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (void *cert)</td></tr>
@@ -242,7 +242,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (
         <tr>
           <td class="memname">ATCA_STATUS atcac_aes_cmac_finish </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="a01848.html">atcac_aes_cmac_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01857.html">atcac_aes_cmac_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -287,7 +287,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (
         <tr>
           <td class="memname">ATCA_STATUS atcac_aes_cmac_init </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="a01848.html">atcac_aes_cmac_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01857.html">atcac_aes_cmac_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -332,7 +332,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (
         <tr>
           <td class="memname">ATCA_STATUS atcac_aes_cmac_update </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="a01848.html">atcac_aes_cmac_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01857.html">atcac_aes_cmac_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -377,7 +377,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (
         <tr>
           <td class="memname">ATCA_STATUS atcac_aes_gcm_aad_update </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="a01844.html">atcac_aes_gcm_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01853.html">atcac_aes_gcm_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -422,7 +422,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (
         <tr>
           <td class="memname">ATCA_STATUS atcac_aes_gcm_decrypt_finish </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="a01844.html">atcac_aes_gcm_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01853.html">atcac_aes_gcm_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -474,7 +474,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (
         <tr>
           <td class="memname">ATCA_STATUS atcac_aes_gcm_decrypt_start </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="a01844.html">atcac_aes_gcm_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01853.html">atcac_aes_gcm_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -533,7 +533,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (
         <tr>
           <td class="memname">ATCA_STATUS atcac_aes_gcm_decrypt_update </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="a01844.html">atcac_aes_gcm_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01853.html">atcac_aes_gcm_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -592,7 +592,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (
         <tr>
           <td class="memname">ATCA_STATUS atcac_aes_gcm_encrypt_finish </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="a01844.html">atcac_aes_gcm_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01853.html">atcac_aes_gcm_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -637,7 +637,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (
         <tr>
           <td class="memname">ATCA_STATUS atcac_aes_gcm_encrypt_start </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="a01844.html">atcac_aes_gcm_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01853.html">atcac_aes_gcm_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -696,7 +696,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (
         <tr>
           <td class="memname">ATCA_STATUS atcac_aes_gcm_encrypt_update </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="a01844.html">atcac_aes_gcm_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01853.html">atcac_aes_gcm_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -755,13 +755,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (
         <tr>
           <td class="memname">ATCA_STATUS atcac_pk_derive </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="a01852.html">atcac_pk_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01861.html">atcac_pk_ctx</a> *&#160;</td>
           <td class="paramname"><em>private_ctx</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">struct <a class="el" href="a01852.html">atcac_pk_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01861.html">atcac_pk_ctx</a> *&#160;</td>
           <td class="paramname"><em>public_ctx</em>, </td>
         </tr>
         <tr>
@@ -798,7 +798,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (
         <tr>
           <td class="memname">ATCA_STATUS atcac_pk_free </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="a01852.html">atcac_pk_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01861.html">atcac_pk_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em></td><td>)</td>
           <td></td>
         </tr>
@@ -825,7 +825,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (
         <tr>
           <td class="memname">ATCA_STATUS atcac_pk_init </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="a01852.html">atcac_pk_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01861.html">atcac_pk_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -883,7 +883,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (
         <tr>
           <td class="memname">ATCA_STATUS atcac_pk_init_pem </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="a01852.html">atcac_pk_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01861.html">atcac_pk_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -935,7 +935,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (
         <tr>
           <td class="memname">ATCA_STATUS atcac_pk_public </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="a01852.html">atcac_pk_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01861.html">atcac_pk_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -972,7 +972,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (
         <tr>
           <td class="memname">ATCA_STATUS atcac_pk_sign </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="a01852.html">atcac_pk_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01861.html">atcac_pk_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -1021,7 +1021,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (
         <tr>
           <td class="memname">ATCA_STATUS atcac_pk_verify </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="a01852.html">atcac_pk_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01861.html">atcac_pk_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -1070,7 +1070,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (
         <tr>
           <td class="memname">ATCA_STATUS atcac_sha256_hmac_finish </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="a01840.html">atcac_hmac_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01849.html">atcac_hmac_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -1115,13 +1115,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (
         <tr>
           <td class="memname">ATCA_STATUS atcac_sha256_hmac_init </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="a01840.html">atcac_hmac_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01849.html">atcac_hmac_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">struct <a class="el" href="a01864.html">atcac_sha2_256_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01873.html">atcac_sha2_256_ctx</a> *&#160;</td>
           <td class="paramname"><em>sha256_ctx</em>, </td>
         </tr>
         <tr>
@@ -1167,7 +1167,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (
         <tr>
           <td class="memname">ATCA_STATUS atcac_sha256_hmac_update </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="a01840.html">atcac_hmac_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01849.html">atcac_hmac_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -1243,7 +1243,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (
         <tr>
           <td class="memname">ATCA_STATUS atcac_sw_sha1_finish </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="a01836.html">atcac_sha1_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01845.html">atcac_sha1_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
@@ -1281,7 +1281,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (
         <tr>
           <td class="memname">ATCA_STATUS atcac_sw_sha1_init </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="a01836.html">atcac_sha1_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01845.html">atcac_sha1_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1308,7 +1308,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_free</b> (
         <tr>
           <td class="memname">ATCA_STATUS atcac_sw_sha1_update </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="a01836.html">atcac_sha1_ctx</a> *&#160;</td>
+          <td class="paramtype">struct <a class="el" href="a01845.html">atcac_sha1_ctx</a> *&#160;</td>
           <td class="paramname"><em>ctx</em>, </td>
         </tr>
         <tr>
