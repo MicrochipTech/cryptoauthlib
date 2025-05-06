@@ -41,6 +41,7 @@
 #include "pkcs11_os.h"
 #include "pkcs11_util.h"
 #include "pkcs11_slot.h"
+#include "pkcs11_key.h"
 
 /**
  * \defgroup pkcs11 Key (pkcs11_key_)
@@ -184,32 +185,38 @@ static CK_RV pkcs11_cert_load_ca(pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pAt
             size_t temp = pAttribute->ulValueLen;
 
 #if (FEATURE_ENABLED == ATCACERT_INTEGRATION_EN)
-            cert_status = atcacert_read_cert_ext(device, (atcacert_def_t*)pObject->data, NULL, (uint8_t*)pAttribute->pValue, &temp);
-#else
-            ATCA_STATUS status = ATCA_SUCCESS;
-            uint8_t ca_key[64] = { 0 };
-            cal_buffer ca_key_buf = CAL_BUF_INIT(sizeof(ca_key), ca_key);
-
-            if (NULL != cert_cfg->ca_cert_def)
+            if (CERTTYPE_X509_FULL_STORED == cert_cfg->type)
             {
-                if (cert_cfg->ca_cert_def->public_key_dev_loc.is_genkey == 1u)
-                {
-                    status = atcab_get_pubkey_ext(device, cert_cfg->ca_cert_def->public_key_dev_loc.slot, ca_key);
-                }
-                else
-                {
-                    status = atcab_read_pubkey_ext(device, cert_cfg->ca_cert_def->public_key_dev_loc.slot, ca_key);
-                }
+                cert_status = atcacert_read_cert_ext(device, (atcacert_def_t*)pObject->data, NULL, (uint8_t*)pAttribute->pValue, &temp);
             }
-
-            if (ATCA_SUCCESS != status)
-            {
-                return CKR_DEVICE_ERROR;
-            }
-
-            cert_status = atcacert_read_cert_ext(device, (atcacert_def_t*)pObject->data, (cert_cfg->ca_cert_def != NULL) ? &ca_key_buf : NULL,
-                                                 (uint8_t*)pAttribute->pValue, &temp);
+            else
 #endif
+            {
+                ATCA_STATUS status = ATCA_SUCCESS;
+                uint8_t ca_key[64] = { 0 };
+                cal_buffer ca_key_buf = CAL_BUF_INIT(sizeof(ca_key), ca_key);
+
+                if (NULL != cert_cfg->ca_cert_def)
+                {
+                    if (cert_cfg->ca_cert_def->public_key_dev_loc.is_genkey == 1u)
+                    {
+                        status = atcab_get_pubkey_ext(device, cert_cfg->ca_cert_def->public_key_dev_loc.slot, ca_key);
+                    }
+                    else
+                    {
+                        status = atcab_read_pubkey_ext(device, cert_cfg->ca_cert_def->public_key_dev_loc.slot, ca_key);
+                    }
+                }
+
+                if (ATCA_SUCCESS != status)
+                {
+                    return CKR_DEVICE_ERROR;
+                }
+
+                cert_status = atcacert_read_cert_ext(device, (atcacert_def_t*)pObject->data, (cert_cfg->ca_cert_def != NULL) ? &ca_key_buf : NULL,
+                                                     (uint8_t*)pAttribute->pValue, &temp);
+            }
+
             pAttribute->ulValueLen = (uint32_t)(temp & 0xffffffffu);
 
             if (ATCACERT_E_DECODING_ERROR == cert_status)
@@ -316,11 +323,8 @@ static CK_RV pkcs11_cert_get_encoded(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttr
         if (PKCS11_OBJECT_FLAG_TRUST_TYPE == (PKCS11_OBJECT_FLAG_TRUST_TYPE & obj_ptr->flags))
         {
 #if defined(ATCA_TNGTLS_SUPPORT) || defined(ATCA_TNGLORA_SUPPORT) || defined(ATCA_TFLEX_SUPPORT)
-            rv = pkcs11_cert_check_trust_data(obj_ptr, psession);
-            if (CKR_OK == rv)
-            {
-                return pkcs11_cert_load(obj_ptr, pAttribute, psession->slot->device_ctx);
-            }
+            (void)pkcs11_cert_check_trust_data(obj_ptr, psession);
+            return pkcs11_cert_load(obj_ptr, pAttribute, psession->slot->device_ctx);
 #endif
         }
         #if defined(ATCA_HEAP) && (FEATURE_ENABLED == ATCACERT_INTEGRATION_EN)
@@ -597,7 +601,7 @@ static CK_RV pkcs11_cert_get_subject_key_id(CK_VOID_PTR pObject, CK_ATTRIBUTE_PT
                 else
                 {
 #if ATCACERT_COMPCERT_EN
-                    cert_status = atcacert_read_subj_key_id(cert_cfg, subj_key_id);
+                    cert_status = atcacert_read_subj_key_id_ext(psession->slot->device_ctx, cert_cfg, subj_key_id);
 #endif
                 }
 

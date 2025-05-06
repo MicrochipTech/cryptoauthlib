@@ -68,7 +68,8 @@ typedef struct
 } sw_sha256_ctx;
 #endif
 
-#if ATCA_CRYPTO_SHA512_EN
+// Software SHA-384 relies on SHA-512's algorithm, requiring SHA-512 to be enabled for SHA-384 support
+#if ATCA_CRYPTO_SHA512_EN || ATCA_CRYPTO_SHA384_EN
 typedef struct
 {
     uint32_t total_msg_size;                //!< Total number of message bytes processed
@@ -94,7 +95,8 @@ ATCA_STATUS sw_sha384_final(sw_sha512_ctx * ctx, uint8_t digest[SHA384_DIGEST_SI
 ATCA_STATUS sw_sha384(const uint8_t * message, unsigned int len, uint8_t digest[SHA384_DIGEST_SIZE]);
 #endif
 
-#if ATCA_CRYPTO_SHA512_EN
+// Software SHA-384 relies on SHA-512's algorithm, requiring SHA-512 to be enabled for SHA-384 support
+#if ATCA_CRYPTO_SHA512_EN || ATCA_CRYPTO_SHA384_EN
 //sha512
 ATCA_STATUS sw_sha512_init(sw_sha512_ctx* ctx);
 ATCA_STATUS sw_sha512_update(sw_sha512_ctx* ctx, const uint8_t* msg, uint32_t msg_size);

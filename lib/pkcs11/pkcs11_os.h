@@ -31,6 +31,8 @@
 #include "cryptoki.h"
 #include "cryptoauthlib.h"
 
+#define ATCA_SHARED_MUTEX_NAME "atca_shared_mutex"
+
 CK_RV pkcs11_os_create_mutex(CK_VOID_PTR_PTR ppMutex);
 CK_RV pkcs11_os_destroy_mutex(CK_VOID_PTR pMutex);
 CK_RV pkcs11_os_lock_mutex(CK_VOID_PTR pMutex);

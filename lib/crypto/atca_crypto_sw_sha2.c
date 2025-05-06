@@ -32,7 +32,10 @@
 #ifdef __COVERITY__
 #pragma coverity compliance block \
     (deviate "CERT EXP39-C" "Type casting of pointer is required for using sha_routines") \
-    (deviate "MISRA C-2012 Rule 11.3" "Type casting of pointer is required for using sha_routines")
+    (deviate "MISRA C-2012 Rule 11.3" "Type casting of pointer is required for using sha_routines") \
+    (deviate "MISRA C-2012 Rule 10.1" "Essential type of operand doesnt affect functionality for SHA") \
+    (deviate "MISRA C-2012 Rule 10.3" "Essential type of operand doesnt affect functionality for SHA") \
+    (deviate "MISRA C-2012 Rule 10.4" "Essential type of operand doesnt affect functionality for SHA")
 #endif
 
 #if ATCA_CRYPTO_SHA2_EN
@@ -461,3 +464,11 @@ ATCA_STATUS atcac_sha256_hmac_counter(
     return status;
 }
 #endif /* ATCA_CRYPTO_SHA2_HMAC_CTR_EN */
+
+#ifdef __COVERITY__
+#pragma coverity compliance end_block "CERT EXP39-C"    \
+#pragma coverity compliance end_block "MISRA C-2012 Rule 11.3"  \
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"  \
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"  \
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+#endif

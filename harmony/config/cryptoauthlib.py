@@ -402,6 +402,11 @@ def instantiateComponent(calComponent):
     calDebugPrint.setLabel("Enable Debug Print?")
     calDebugPrint.setVisible(True)
 
+    calEnableCheckParams = calComponent.createBooleanSymbol("CAL_ENABLE_CHECK_PARAMS", None)
+    calEnableCheckParams.setLabel("Enable Check Params?")
+    calEnableCheckParams.setVisible(True)
+    calEnableCheckParams.setDefaultValue(True)
+
     calPreprocessorWarning = calComponent.createBooleanSymbol("CAL_ENABLE_PREPROCESSOR_WARNING", None)
     calPreprocessorWarning.setLabel("Enable Preprocessor Warning?")
     calPreprocessorWarning.setVisible(True)

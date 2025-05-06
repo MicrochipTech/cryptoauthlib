@@ -46,6 +46,10 @@ extern "C" {
 #define ATCA_SHA2_512_DIGEST_SIZE   (64U)
 #define ATCA_SHA2_512_BLOCK_SIZE    (128U)
 
+#ifdef __COVERITY__
+#pragma coverity compliance block deviate "MISRA C-2012 Rule 20.9" "Required for feature enable/disable"
+#endif
+
 #if ATCA_HOSTLIB_EN
 ATCA_STATUS atcac_sw_random(uint8_t* data, size_t data_size);
 #endif
@@ -259,6 +263,10 @@ void atcac_x509_free(void* cert);
 
 #endif /* HOSTLIB_CERT_EN */
 #endif /* defined(HOSTLIB_CERT_EN) */
+
+#ifdef __COVERITY__
+#pragma coverity compliance end_block "MISRA C-2012 Rule 20.9"
+#endif
 
 #ifdef __cplusplus
 }

@@ -439,6 +439,7 @@ ATCA_STATUS calib_execute_receive(ATCADevice device, uint8_t device_address, uin
                 break;
             }
 
+            /* coverity[misra_c_2012_rule_10_4_violation:FALSE] left and right operand of the same signness*/
             if (read_length < UINT16_MAX)
             {
                 read_length += 1u;

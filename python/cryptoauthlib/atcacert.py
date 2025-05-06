@@ -378,12 +378,14 @@ def atcacert_get_response(device_private_key_slot, challenge, response):
     Returns:
         ATCACERT_E_SUCCESS on success, otherwise an error code.
     """
-    if not isinstance(challenge, cal_buffer) or not isinstance(response, bytearray):
+    if not isinstance(challenge, bytearray) or not isinstance(response, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
-        c_response = create_string_buffer(64)
-        status = get_cryptoauthlib().atcacert_get_response(device_private_key_slot, byref(challenge), byref(c_response))
-        response[0:] = bytes(c_response.raw)
+        c_challenge = cal_buffer(len(challenge), challenge)
+        c_response = bytes(64)
+        c_response_buf = cal_buffer(len(c_response), c_response)
+        status = get_cryptoauthlib().atcacert_get_response(device_private_key_slot, byref(c_challenge), byref(c_response_buf))
+        response[0:] = c_response[:c_response_buf.len]
     return status
 
 
@@ -412,12 +414,13 @@ def atcacert_read_cert(cert_def, ca_public_key, cert, cert_size):
     Returns:
         ATCACERT_E_SUCCESS on success, otherwise an error code.
     """
-    if not isinstance(ca_public_key, cal_buffer) or not isinstance(cert, bytearray) or not isinstance(cert_size, AtcaReference):
+    if not isinstance(cert, bytearray) or not isinstance(cert_size, AtcaReference):
         status = Status.ATCA_BAD_PARAM
     else:
         c_cert_size = c_uint32(cert_size.value)
         c_cert = create_string_buffer(cert_size.value)
-        status = get_cryptoauthlib().atcacert_read_cert(byref(cert_def), byref(ca_public_key), byref(c_cert),
+        ca_public_key_buf = cal_buffer(len(ca_public_key), ca_public_key)
+        status = get_cryptoauthlib().atcacert_read_cert(byref(cert_def), byref(ca_public_key_buf), byref(c_cert),
                                                         byref(c_cert_size))
         cert[:] = bytes(c_cert.raw)[0:c_cert_size.value]
         cert_size.value = c_cert_size.value

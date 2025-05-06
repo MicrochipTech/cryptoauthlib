@@ -693,6 +693,11 @@ ATCA_STATUS cal_buf_set(cal_buffer * dst, size_t dst_offset, uint8_t value, size
     return status;
 }
 
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Waggregate-return"
+#endif
+
 /** \brief Initialize a cal buffer with constant pointer
  * Returns the initialized cal buffer
  */
@@ -706,6 +711,10 @@ cal_buffer cal_buf_init_const_ptr(size_t len,const uint8_t* message)
     cal_buffer init_buf = CAL_BUF_INIT(len,*ptr);
     return init_buf;
 }
+
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
 
 #ifdef ATCA_PRINTF
 void cal_buf_print(cal_buffer * buf)

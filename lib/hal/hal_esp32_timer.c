@@ -24,7 +24,7 @@ void hal_delay_us(uint32_t delay)
     ets_delay_us(delay);
 }
 
-void hal_delay_ms(uint32_t msec)
+void hal_delay_ms(uint32_t delay)
 {
-    ets_delay_us(msec * 1000);
+    ets_delay_us(delay * 1000);
 }

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10.0)
+cmake_minimum_required(VERSION 3.20.0)
 project(cryptoauth C)
 
 include(CheckSymbolExists)
@@ -18,6 +18,7 @@ option(ATCA_JWT_EN "Enable jwt functionality")
 option(ATCA_PKCS11 "Build PKCS11 Library")
 option(ATCA_BUILD_SHARED_LIBS "Build CryptoAuthLib as shared library" ON)
 option(ATCA_NO_HEAP "Do not use dynamic (heap) allocation functions" OFF)
+option(ATCA_CHECK_PARAMS_EN "Check parameters" ON)
 option(ATCA_USE_ATCAB_FUNCTIONS "Build the atcab_ api functions rather than using macros" OFF)
 option(ATCA_ENABLE_DEPRECATED "Enable the use of older APIs that that been replaced" OFF)
 option(ATCA_STRICT_C99 "Enable strict C99 compliance for the libray" OFF)
@@ -326,6 +327,10 @@ include_directories(cryptoauth PUBLIC ${CMAKE_CURRENT_BINARY_DIR}
                                       ../third_party
                                       ../third_party/hidapi/hidapi
                                       ${USB_INCLUDE_DIR})
+
+if(APPLE)
+include_directories(cryptoauth PUBLIC ../third_party/hidapi/mac) 
+endif()
 
 if(ATCA_MBEDTLS)
 target_link_libraries(cryptoauth mbedtls)

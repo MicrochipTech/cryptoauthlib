@@ -61,7 +61,6 @@ static pkcs11_session_ctx_ptr pkcs11_allocate_session_context(void)
     CK_ULONG i;
     for (i = 0; i < (CK_ULONG)PKCS11_MAX_SESSIONS_ALLOWED; i++)
     {
-
         if (!pkcs11_session_cache[i].initialized)
         {
             rv = &pkcs11_session_cache[i];
@@ -76,7 +75,11 @@ static pkcs11_session_ctx_ptr pkcs11_allocate_session_context(void)
         {
             /* Use dynamic memory assignement from OS abstraction layer */
             rv = pkcs11_os_malloc(sizeof(pkcs11_session_ctx));
-            pkcs11_session_cache[i] = rv;
+            if (rv != NULL)
+            {
+                (void)memset(rv, 0, sizeof(pkcs11_session_ctx));
+                pkcs11_session_cache[i] = rv;
+            }
             break;
         }
     }

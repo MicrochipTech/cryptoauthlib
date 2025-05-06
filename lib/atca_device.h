@@ -70,10 +70,12 @@ struct atca_device
 
 typedef struct atca_device * ATCADevice;
 
-ATCA_STATUS initATCADevice(ATCAIfaceCfg* cfg, ATCADevice ca_dev);
+#ifdef ATCA_HEAP
 ATCADevice newATCADevice(ATCAIfaceCfg *cfg);
-ATCA_STATUS releaseATCADevice(ATCADevice ca_dev);
 void deleteATCADevice(ATCADevice *ca_dev);
+#endif
+ATCA_STATUS initATCADevice(ATCAIfaceCfg* cfg, ATCADevice ca_dev);
+ATCA_STATUS releaseATCADevice(ATCADevice ca_dev);
 
 ATCAIface atGetIFace(ATCADevice dev);
 

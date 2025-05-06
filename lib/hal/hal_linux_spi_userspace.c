@@ -7,6 +7,8 @@
 #include <sys/ioctl.h>
 #include <linux/spi/spidev.h>
 
+#define F_CLOSED    (-1)
+
 typedef struct atca_spi_host_s
 {
     char    spi_file[20];
@@ -134,18 +136,16 @@ ATCA_STATUS hal_spi_post_init(ATCAIface iface)
  */
 static ATCA_STATUS hal_spi_select(ATCAIface iface)
 {
+    ATCA_STATUS status = ATCA_BAD_PARAM;
     ATCAIfaceCfg *cfg = atgetifacecfg(iface);
     atca_spi_host_t * hal_data = (atca_spi_host_t*)atgetifacehaldat(iface);
 
     if ((NULL != hal_data) && (NULL != cfg))
     {
-        return hal_spi_open_file(hal_data->spi_file,
+        status = hal_spi_open_file(hal_data->spi_file,
                                  ATCA_IFACECFG_VALUE(cfg, atcaspi.baud), &hal_data->f_spi);
     }
-    else
-    {
-        return ATCA_BAD_PARAM;
-    }
+    return status;
 }
 
 
@@ -155,6 +155,7 @@ static ATCA_STATUS hal_spi_select(ATCAIface iface)
  */
 static ATCA_STATUS hal_spi_deselect(ATCAIface iface)
 {
+    ATCA_STATUS status = ATCA_BAD_PARAM;
     atca_spi_host_t * hal_data = (atca_spi_host_t*)atgetifacehaldat(iface);
 
     if (NULL != hal_data)
@@ -166,12 +167,14 @@ static ATCA_STATUS hal_spi_deselect(ATCAIface iface)
         /* coverity[misra_c_2012_rule_12_2_violation] SPI_IOC_MESSAGE is defined by the Linux Specification and is used correctly here */
         (void)ioctl(hal_data->f_spi, SPI_IOC_MESSAGE(1), &spi_xfer);
 
-        return close(hal_data->f_spi);
+        if (hal_data->f_spi >= 0) // Check if the file descriptor is still open
+        {
+            (void)close(hal_data->f_spi);
+            hal_data->f_spi = F_CLOSED; 
+        }
+        status = ATCA_SUCCESS;
     }
-    else
-    {
-        return ATCA_BAD_PARAM;
-    }
+    return status;
 }
 
 
@@ -309,7 +312,11 @@ ATCA_STATUS hal_spi_release(void *hal_data)
     {
         atca_spi_host_t *hal = (atca_spi_host_t*)hal_data;
 
-        (void)close(hal->f_spi);
+        if (hal->f_spi >= 0) // Check if the file descriptor is still open
+        {
+            (void)close(hal->f_spi);
+            hal->f_spi = F_CLOSED; 
+        }
 
         /* coverity[misra_c_2012_rule_21_3_violation] Intentional as it is required for the linux environment */
         free(hal);

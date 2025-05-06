@@ -54,12 +54,13 @@ ATCA_STATUS calib_derivekey(ATCADevice device, uint8_t mode, uint16_t target_key
 
     do
     {
+#if ATCA_CHECK_PARAMS_EN
         if (device == NULL)
         {
             status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
             break;
         }
-
+#endif
         #if (CA_MAX_PACKET_SIZE < (ATCA_CMD_SIZE_MIN + MAC_SIZE))
         #if ATCA_PREPROCESSOR_WARNING
         #warning "CA_MAX_PACKET_SIZE will not support optional mac with the derivekey command"

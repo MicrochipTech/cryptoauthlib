@@ -88,6 +88,10 @@
 #define SHARED_LIB_IMPORT       extern
 #endif
 
+#ifdef __APPLE__
+#define ATCA_VECTOR_NO_PRAGMA_PACK
+#endif
+
 //#elif defined(__ICC) || defined(__INTEL_COMPILER)
 /* Intel ICC/ICPC. ------------------------------------------ */
 
@@ -139,6 +143,9 @@
 #define SHARED_LIB_IMPORT       extern
 #endif
 
+#ifdef __APPLE__
+#define ATCA_VECTOR_NO_PRAGMA_PACK
+#endif
 
 //#elif defined(__HP_cc) || defined(__HP_aCC)
 /* Hewlett-Packard C/aC++. ---------------------------------- */

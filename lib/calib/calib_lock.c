@@ -60,11 +60,13 @@ ATCA_STATUS calib_lock(ATCADevice device, uint8_t mode, uint16_t summary_crc)
 
     do
     {
+#if ATCA_CHECK_PARAMS_EN
         if (device == NULL)
         {
             status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
             break;
         }
+#endif
 
         packet = calib_packet_alloc();
         if(NULL == packet)
@@ -227,6 +229,9 @@ ATCA_STATUS calib_lock_data_slot(ATCADevice device, uint16_t slot)
 #endif
     {
 #if CALIB_LOCK_EN
+        /* coverity[misra_c_2012_rule_10_1_violation:FALSE] The cast is safe because only the lower 8 bits are used after bitwise masking*/
+        /* coverity[misra_c_2012_rule_10_4_violation:FALSE] No loss of information due to the applied UINT8_MAX mask*/
+        /* coverity[misra_c_2012_rule_10_8_violation:FALSE] The final result is constrained to 8 bits using & UINT8_MAX*/
         status = calib_lock(device, (uint8_t)((LOCK_ZONE_DATA_SLOT | (slot << 2)) & UINT8_MAX), 0);
 #endif
     }

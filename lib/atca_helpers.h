@@ -48,6 +48,8 @@ extern "C" {
 #define IS_MUL_SAFE_UINT64_T(a,b)       ((((a)  <= UINT64_MAX / (b))) ? true : false)
 #define IS_MUL_SAFE_SIZE_T(a,b)         ((((a)  <= SIZE_MAX   / (b))) ? true : false)
 
+#define ABS_VAL(x)                      (((x) < 0) ? -(x) : (x))
+
 ATCA_STATUS atcab_bin2hex(const uint8_t* bin, size_t bin_size, char* hex, size_t* hex_size);
 ATCA_STATUS atcab_bin2hex_(const uint8_t* bin, size_t bin_size, char* hex, size_t* hex_size, bool is_pretty, bool is_space, bool is_upper);
 ATCA_STATUS atcab_hex2bin(const char* ascii_hex, size_t ascii_hex_len, uint8_t* binary, size_t* bin_len);

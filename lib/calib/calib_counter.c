@@ -54,9 +54,16 @@ ATCA_STATUS calib_counter(ATCADevice device, uint8_t mode, uint16_t counter_id, 
 
     do
     {
-        if ((device == NULL) || (counter_id > 1u))
+#if ATCA_CHECK_PARAMS_EN
+        if (device == NULL)
         {
-            status = ATCA_TRACE(ATCA_BAD_PARAM, "Either NULL pointer or invalid counter id received");
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
+        }
+#endif
+        if (counter_id > 1u)
+        {
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "Invalid counter id received");
             break;
         }
 

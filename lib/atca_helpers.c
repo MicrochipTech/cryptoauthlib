@@ -905,6 +905,7 @@ size_t atcab_pointer_delta(const void* start, const void* end)
     }
     else
     {
+        /* coverity[misra_c_2012_rule_10_8_violation:FALSE] The code is intended to measure the difference between `start` and `end` addresses in bytes, which is a legitimate use of pointer casting for arithmetic */
         return (size_t)((const uint8_t*)start - (const uint8_t*)end);
     }
 }

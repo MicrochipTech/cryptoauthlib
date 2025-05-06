@@ -77,11 +77,33 @@ TEST(atcacert_host_sw, test_atcacert_verify_response_sw_success)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     /* Load the public key */
-    status = atcab_get_pubkey(private_key_id, public_key);
+    if ((true == atcab_is_ca_device(gCfg->devtype)) || (true == atcab_is_ca2_device(gCfg->devtype)))
+    {
+#if ATCA_CA_SUPPORT
+        status = atcab_get_pubkey(private_key_id, public_key);
+#endif
+    }
+    else
+    {
+#if ATCA_TA_SUPPORT
+        status = talib_get_pubkey(atcab_get_device(), private_key_id, &pubkey_buf);
+#endif
+    }
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     /* Sign message */
-    status = atcab_sign(private_key_id, msg, signature);
+    if ((true == atcab_is_ca_device(gCfg->devtype)) || (true == atcab_is_ca2_device(gCfg->devtype)))
+    {
+#if ATCA_CA_SUPPORT
+        status = atcab_sign(private_key_id, msg, signature);
+#endif
+    }
+    else
+    {
+#if ATCA_TA_SUPPORT
+        status = talib_sign_external(atcab_get_device(), TA_KEY_TYPE_ECCP256, private_key_id, TA_HANDLE_INPUT_BUFFER, &msg_buf, &sig_buf);
+#endif
+    }
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
     status = atcacert_verify_response_sw(&pubkey_buf, &msg_buf, &sig_buf);

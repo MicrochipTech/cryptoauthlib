@@ -519,7 +519,13 @@ ATCA_STATUS calib_write_config_counter(ATCADevice device, uint16_t counter_id, u
     }
 
     /* coverity[misra_c_2012_rule_12_2_violation] Shifting more than 15 bits doesnot harm the functonality */
+    /* coverity[misra_c_2012_rule_10_1_violation:FALSE] Ensures proper promotion/demotion without overflow in shift operations */
+    /* coverity[misra_c_2012_rule_10_4_violation:FALSE] The result is masked with `UINT16_MAX` to constrain to the expected range */
+    /* coverity[misra_c_2012_rule_10_7_violation:SUPPRESS] All shifts and modulus operations are explicit and side-effect free */
     lin_a = (uint16_t)((0xFFFFu >> (counter_value % 32u)) & UINT16_MAX);
+    /* coverity[misra_c_2012_rule_10_1_violation:FALSE] Ensures proper promotion/demotion without overflow in shift operations */
+    /* coverity[misra_c_2012_rule_10_4_violation:FALSE] The result is masked with `UINT16_MAX` to constrain to the expected range */
+    /* coverity[misra_c_2012_rule_10_7_violation:SUPPRESS] All shifts and modulus operations are explicit and side-effect free */
     lin_b = (uint16_t)((0xFFFFu >> ((counter_value >= 16u) ? (counter_value - 16u) % 32u : 0u)) & UINT16_MAX);
     bin_a = (uint16_t)(counter_value / 32u);
     bin_b = (counter_value >= 16u) ? ((uint16_t)((counter_value - 16u) / 32u)) : 0u;
@@ -562,7 +568,13 @@ ATCA_STATUS calib_ca2_write(ATCADevice device, uint8_t zone, uint16_t address, c
     uint8_t write_zone = (zone == ATCA_ZONE_CONFIG) ? ATCA_ZONE_CA2_CONFIG : ATCA_ZONE_CA2_DATA;
     bool require_mac = false;
 
-    if ((NULL == device) || (NULL == value))
+#if ATCA_CHECK_PARAMS_EN
+    if (NULL == device)
+    {
+        status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
+    }
+#endif
+    if (NULL == value)
     {
         status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
     }
@@ -660,8 +672,13 @@ ATCA_STATUS calib_ca2_write_zone(ATCADevice device, uint8_t zone, uint16_t slot,
     uint16_t addr;
 
     ((void)offset);
-
-    if ((NULL == device) && (NULL == data))
+#if ATCA_CHECK_PARAMS_EN
+    if (NULL == device)
+    {
+        status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
+    }
+#endif
+    if (NULL == data)
     {
         status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
     }
@@ -698,12 +715,16 @@ ATCA_STATUS calib_ca2_write_config_zone(ATCADevice device, const uint8_t* config
 {
     ATCA_STATUS status = ATCA_SUCCESS;
     uint8_t slot = 1;
-
-    if ((NULL == device) || (NULL == config_data))
+#if ATCA_CHECK_PARAMS_EN
+    if (NULL == device)
     {
         status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
     }
-
+#endif
+    if (NULL == config_data)
+    {
+        status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encountered");
+    }
     if (ATCA_SUCCESS == status)
     {
         while (slot <= 3u)
@@ -795,11 +816,16 @@ ATCA_STATUS calib_ca2_write_enc(ATCADevice device, uint16_t slot, uint8_t* data,
     uint8_t mac[WRITE_MAC_SIZE] = { 0 };
     uint16_t addr;
 
-    if ((NULL == data) || (NULL == transport_key))
+#if ATCA_CHECK_PARAMS_EN
+    if (NULL == data)
     {
         return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encounteed");
     }
-
+#endif
+    if (NULL == transport_key)
+    {
+        return ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer encounteed");
+    }
     do
     {
         // Read device serial number
@@ -902,7 +928,13 @@ ATCA_STATUS calib_ca2_write_bytes_zone(ATCADevice device, uint8_t zone, uint16_t
     uint8_t data_set_size;
     int8_t no_of_sets;
 
-    if ((NULL == device) || (NULL == data))
+#if ATCA_CHECK_PARAMS_EN
+    if (NULL == device)
+    {
+        return ATCA_TRACE(ATCA_BAD_PARAM, "Encountered NULL pointer");
+    }
+#endif
+    if (NULL == data)
     {
         return ATCA_TRACE(ATCA_BAD_PARAM, "Encountered NULL pointer");
     }
@@ -910,6 +942,7 @@ ATCA_STATUS calib_ca2_write_bytes_zone(ATCADevice device, uint8_t zone, uint16_t
     {
         return ATCA_TRACE(ATCA_BAD_PARAM, "Invalid zone parameter received");
     }
+
     if ((ATCA_ZONE_DATA == zone) && (
             // Only Slot 1-3 are valid for data zone write
             ((SHA105 != device->mIface.mIfaceCFG->devtype) && (slot == 0u)) || (slot > 3u) ||

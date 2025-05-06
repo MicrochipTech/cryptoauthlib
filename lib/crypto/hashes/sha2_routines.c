@@ -30,7 +30,10 @@
 
 #ifdef __COVERITY__
 #pragma coverity compliance block \
-    (deviate "CERT INT30-C" "Wrap doesnt affect functionality for SHA")
+    (deviate "MISRA C-2012 Rule 20.7" "Macro expansion without parantheses doesnt affect functionality for SHA") \
+    (deviate "MISRA C-2012 Rule 10.1" "Essential type of operand doesnt affect functionality for SHA") \
+    (deviate "MISRA C-2012 Rule 10.3" "Essential type of operand doesnt affect functionality for SHA") \
+    (deviate "MISRA C-2012 Rule 10.4" "Essential type of operand doesnt affect functionality for SHA")
 #endif
 
 #define rotate_right(value, places) (((value) >> (places)) | ((value) << (32U - (places))))
@@ -156,7 +159,7 @@ static ATCA_STATUS sw_sha256_process(sw_sha256_ctx* ctx, const uint8_t* blocks, 
 }
 #endif
 
-#if ATCA_CRYPTO_SHA512_EN
+#if ATCA_CRYPTO_SHA512_EN || ATCA_CRYPTO_SHA384_EN
 /**
  * \brief Processes whole blocks (128 bytes) of data.
  *
@@ -484,7 +487,7 @@ ATCA_STATUS sw_sha256(const uint8_t* message, unsigned int len, uint8_t digest[S
 }
 #endif
 
-#if ATCA_CRYPTO_SHA512_EN
+#if ATCA_CRYPTO_SHA512_EN || ATCA_CRYPTO_SHA384_EN
 /**
  * \brief Intialize the software SHA512.
  *
@@ -788,4 +791,11 @@ ATCA_STATUS sw_sha384(const uint8_t* message, unsigned int len, uint8_t digest[S
 
     return status;
 }
+#endif
+
+#ifdef __COVERITY__
+#pragma coverity compliance end_block "MISRA C-2012 Rule 20.7"  \
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"  \
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"  \
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
 #endif

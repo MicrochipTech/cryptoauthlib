@@ -210,7 +210,9 @@ typedef struct atca_iface
 
 ATCA_STATUS initATCAIface(ATCAIfaceCfg *cfg, ATCAIface ca_iface);
 ATCA_STATUS releaseATCAIface(ATCAIface ca_iface);
+#ifdef ATCA_HEAP
 void deleteATCAIface(ATCAIface *ca_iface);
+#endif
 
 #if defined(ATCA_HEAP) && defined(ENABLE_NEWATCAIFACE)
 ATCAIface newATCAIface(ATCAIfaceCfg *cfg);

@@ -39,10 +39,12 @@
 
 ATCA_STATUS atcac_sw_sha1_init(struct atcac_sha1_ctx* ctx)
 {
+    /* coverity[misra_c_2012_rule_14_3_violation] This matches the definition used by most systems */
     if (sizeof(CL_HashContext) > sizeof(atcac_sha1_ctx_t))
     {
         return ATCA_ASSERT_FAILURE;  // atcac_sha1_ctx isn't large enough for this implementation
     }
+    /* coverity[misra_c_2012_rule_11_3_violation:FALSE] This pattern is a deliberate abstraction for SHA-1 context portability between platforms and libraries */
     CL_hashInit((CL_HashContext*)ctx);
 
     return ATCA_SUCCESS;
@@ -57,6 +59,7 @@ ATCA_STATUS atcac_sw_sha1_init(struct atcac_sha1_ctx* ctx)
  */
 ATCA_STATUS atcac_sw_sha1_update(struct atcac_sha1_ctx* ctx, const uint8_t* data, size_t data_size)
 {
+    /* coverity[misra_c_2012_rule_11_3_violation:FALSE] This pattern is a deliberate abstraction for SHA-1 context portability between platforms and libraries */
     CL_hashUpdate((CL_HashContext*)ctx, data, (int)data_size);
 
     return ATCA_SUCCESS;
@@ -69,6 +72,7 @@ ATCA_STATUS atcac_sw_sha1_update(struct atcac_sha1_ctx* ctx, const uint8_t* data
  */
 ATCA_STATUS atcac_sw_sha1_finish(struct atcac_sha1_ctx* ctx, uint8_t digest[ATCA_SHA1_DIGEST_SIZE])
 {
+    /* coverity[misra_c_2012_rule_11_3_violation:FALSE] This pattern is a deliberate abstraction for SHA-1 context portability between platforms and libraries */
     CL_hashFinal((CL_HashContext*)ctx, digest);
 
     return ATCA_SUCCESS;

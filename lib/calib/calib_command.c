@@ -447,6 +447,7 @@ ATCA_STATUS atSHA(ATCADeviceType device_type, ATCAPacket *packet, uint16_t write
         break;
 
     case SHA_MODE_SHA256_UPDATE:                                           // UPDATE
+        /* coverity[misra_c_2012_rule_10_1_violation:FALSE] Casting to uint8_t after addition is safe */
         packet->txsize = (uint8_t)((ATCA_CMD_SIZE_MIN + packet->param2) & UINT8_MAX);
         break;
 
@@ -454,10 +455,14 @@ ATCA_STATUS atSHA(ATCADeviceType device_type, ATCAPacket *packet, uint16_t write
     case SHA_MODE_HMAC_END:
         // check the given packet for a size variable in param2.  If it is > 0, it should
         // be 0-63, incorporate that size into the packet
+        /* coverity[misra_c_2012_rule_10_1_violation:FALSE] Casting to uint8_t and applying bitmask do not affect functional behavior*/
+        /* coverity[misra_c_2012_rule_10_4_violation:FALSE] Doesnot affect functionaliy*/
         packet->txsize = (uint8_t)((ATCA_CMD_SIZE_MIN + packet->param2) & UINT8_MAX);
         break;
 
     case SHA_MODE_WRITE_CONTEXT:
+        /* coverity[misra_c_2012_rule_10_1_violation:FALSE] Casting ensures proper size assignment*/
+        /* coverity[misra_c_2012_rule_10_4_violation:FALSE] Doesnot affect functionaliy*/
         packet->txsize = (uint8_t)((ATCA_CMD_SIZE_MIN + write_context_size) & UINT8_MAX);
         break;
 
@@ -679,6 +684,10 @@ ATCA_STATUS atKDF(ATCADeviceType device_type, ATCAPacket *packet)
     else
     {
         // All other algorithms encode message size in the last byte of details
+        /* coverity[misra_c_2012_rule_10_1_violation:FALSE] The operand has an usigned type*/
+        /* coverity[misra_c_2012_rule_10_3_violation:FALSE] Doesnot affect functionaliy*/
+        /* coverity[misra_c_2012_rule_10_4_violation:FALSE] Doesnot affect functionaliy. Safe conversion between arithmetic types */
+        /* coverity[misra_c_2012_rule_10_7_violation:FALSE] safe shift/bitmask operation */
         packet->txsize = (ATCA_CMD_SIZE_MIN + KDF_DETAILS_SIZE + packet->data[3]) & UINT8_MAX;
     }
     atCalcCrc(packet);
@@ -732,12 +741,16 @@ void atCalcCrc(ATCAPacket *packet)
     packet->param2 = ATCA_UINT16_HOST_TO_LE(packet->param2);
 
     /* coverity[cert_int31_c_violation] txsize is properly set so length will not underflow */
+    /* coverity[misra_c_2012_rule_10_1_violation:FALSE] Explicit cast from wider integer type to uint8_t after safe arithmetic */
+    /* coverity[misra_c_2012_rule_10_4_violation:FALSE] Doesnot affect functionaliy. Although the arithmetic involves mixed-width types, the result is explicitly cast*/
+    /* coverity[misra_c_2012_rule_10_7_violation:FALSE] Bitmasking with UINT8_MAX ensures only valid 8-bit values */
     length = (packet->txsize - (uint8_t)ATCA_CRC_SIZE) & UINT8_MAX;
 
     // calculate crc location
     crc = &packet->data[length - ((uint8_t)ATCA_CMD_SIZE_MIN - (uint8_t)ATCA_CRC_SIZE)];
 
     // stuff CRC into packet
+    /* coverity[misra_c_2012_rule_18_1_violation:FALSE] Access is within bounds of packet->data, as ensured by packet format */
     atCRC(length, &(packet->txsize), crc);
 }
 

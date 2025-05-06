@@ -700,16 +700,16 @@ class AtcaStructure(Structure):
             raise ValueError
         memmove(addressof(self), buffer, sizeof(self))
 
-class cal_buffer(AtcaStructure):
+class cal_buffer(Structure):
     _fields_ = [
         ('len', c_size_t),
-        ('buf', c_char_p)
+        ('buf', POINTER(c_uint8))
     ]
     _pack_ = 1
 
     def __init__(self, length, data):
         self.len = c_size_t(length)
-        self.buf = bytes(data)
+        self.buf = cast(bytes(data), POINTER(c_uint8))
 
 def ctypes_to_bytes(obj):
     """

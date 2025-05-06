@@ -364,7 +364,7 @@ ATCA_STATUS atca_jwt_verify(
         {
             break;
         }
-#elif ATCA_HOSTLIB_EN
+#elif ATCAC_PKEY_EN
         atcac_pk_ctx pkey_ctx;
 
         /* Initialize the key using the provided X,Y cordinantes */

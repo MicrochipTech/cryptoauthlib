@@ -28,6 +28,10 @@
 
 #include "atca_crypto_sw.h"
 
+#ifdef __COVERITY__
+#pragma coverity compliance block deviate "MISRA C-2012 Rule 20.9" "Required for feature enable/disable"
+#endif
+
 #if ATCAC_AES_GCM_EN
 
 ATCA_STATUS atcac_aes_gcm_encrypt(
@@ -256,4 +260,8 @@ ATCA_STATUS atcac_aes_gcm_decrypt_finish(
     return ATCA_UNIMPLEMENTED;
 }
 
+#endif
+
+#ifdef __COVERITY__
+#pragma coverity compliance end_block "MISRA C-2012 Rule 20.9"
 #endif

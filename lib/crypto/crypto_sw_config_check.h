@@ -109,6 +109,18 @@
 #define ATCAC_SHA256_HMAC_CTR_EN            ATCAC_SHA256_HMAC_EN
 #endif
 
+/** \def ATCAC_PKEY_EN
+ *
+ * Requires: ATCA_HOSTLIB_EN
+ *
+ * Enable ATCAC_PKEY_EN to use the host's asymmetric cryptography functions - generally
+ * assumed to come from the host's cryptographic library or peripheral driver.
+ *
+ */
+#ifndef ATCAC_PKEY_EN
+#define ATCAC_PKEY_EN                       ATCA_HOSTLIB_EN
+#endif
+
 /** \def ATCAC_RANDOM_EN
  *
  * Requires: ATCA_HOSTLIB_EN

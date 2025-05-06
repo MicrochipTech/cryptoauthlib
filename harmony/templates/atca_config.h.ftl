@@ -53,6 +53,13 @@
 #endif
 </#if>
 
+/** Define if the library is not to use malloc/free */
+<#if CAL_ENABLE_CHECK_PARAMS == false>
+        <#lt>#define ATCA_CHECK_PARAMS_EN               (FEATURE_DISABLED)
+<#else>
+        <#lt>#define ATCA_CHECK_PARAMS_EN               (FEATURE_ENABLED)
+</#if>
+
 /** Symmetric Commands Configurations */
 
 /* AES Command */
@@ -530,8 +537,8 @@
 #define PLIB_I2C_TRANSFER_SETUP I2C_TRANSFER_SETUP
 </#if>
 
-typedef bool (* atca_i2c_plib_read)( uint16_t, uint8_t *, ${size_var} );
-typedef bool (* atca_i2c_plib_write)( uint16_t, uint8_t *, ${size_var} );
+typedef bool (* atca_i2c_plib_read)( uint16_t address, uint8_t * data, ${size_var} datalen);
+typedef bool (* atca_i2c_plib_write)( uint16_t address, uint8_t * data, ${size_var} datalen);
 typedef bool (* atca_i2c_plib_is_busy)( void );
 typedef PLIB_I2C_ERROR (* atca_i2c_error_get)( void );
 typedef bool (* atca_i2c_plib_transfer_setup)(PLIB_I2C_TRANSFER_SETUP* setup, uint32_t srcClkFreq);
@@ -550,8 +557,8 @@ typedef struct atca_plib_i2c_api
 
 <#if plib_info[plib_info?size-1] == "spi">
 <#if is_atca_plib_spi_exists == "False">
-typedef bool (* atca_spi_plib_read)( void * , size_t );
-typedef bool (* atca_spi_plib_write)( void *, size_t );
+typedef bool (* atca_spi_plib_read)( void * data, size_t datalen);
+typedef bool (* atca_spi_plib_write)( void * data, size_t datalen);
 typedef bool (* atca_spi_plib_is_busy)( void );
 typedef void (* atca_spi_plib_select)(uint32_t pin, bool value);
 
@@ -597,8 +604,8 @@ typedef struct atca_plib_spi_api
 #define PLIB_SWI_EVENT             USART_EVENT
 </#if>
 
-typedef size_t (* atca_uart_plib_read)( uint8_t *, const size_t );
-typedef size_t (* atca_uart_plib_write)( uint8_t *, const size_t );
+typedef size_t (* atca_uart_plib_read)( uint8_t * data, const size_t datalen);
+typedef size_t (* atca_uart_plib_write)( uint8_t * data, const size_t datalen);
 typedef PLIB_SWI_ERROR (* atca_uart_error_get)( void );
 typedef bool (* atca_uart_plib_serial_setup)(PLIB_SWI_SERIAL_SETUP* , uint32_t );
 typedef size_t (* atca_uart_plib_readcount_get)( void );

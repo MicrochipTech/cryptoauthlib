@@ -55,7 +55,14 @@ ATCA_STATUS calib_gendig(ATCADevice device, uint8_t zone, uint16_t key_id, const
 
     do
     {
-        if ((device == NULL) || (other_data_size > 0u && other_data == NULL))
+#if ATCA_CHECK_PARAMS_EN
+        if (device == NULL)
+        {
+            status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
+            break;
+        }
+#endif
+        if (other_data_size > 0u && other_data == NULL)
         {
             status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
             break;

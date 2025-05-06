@@ -1,6 +1,29 @@
 
 # Microchip Cryptoauthlib Release Notes
 
+## Release v3.7.8 (05/05/2025)
+
+### Fixes
+  - Updated minimum required version of CMake to v3.20 to support its new features and improvements
+  - Resolved tng_atcacert_read_signer_cert build failure when using MPLAB Harmony projects
+  - Fixed tng_atcacert_max_device_cert_size function to prevent overwriting max_cert_size
+  - Addressed the dependency issue where SHA512 is required for SHA384 in the SW Crypto module
+  - Fixed an issue in the Linux environment where the SPI file descriptor was inadvertently closed twice 
+  - Incorporated additional ATCA_CHECK_PARAMS_EN checks in sections of the code where they were previously absent
+  - Eliminated all compiler warnings in MPLAB Melody related to the atcacert module
+  - Eliminated all compiler warnings in MPLAB Harmony projects when adding the CAL library 
+    as a project component
+  - Addressed all MISRA violations categorized as "Required" in MPLAB Harmony. 
+    Note that "Advisory" issues remain unaddressed
+  - Resolved build issues in the PyCAL library to ensure its compatibility CAL library counterpart in C
+  - Resolved build errors on arm64 MacOS platforms when utilizing the USB library for hidapi; kick-start
+    transition to libusb-maintained version of hidapi, moving away from the previous signal11 repository
+  - Addressed incorrect header file inclusions in atca_mbedtls_wrap.h related to the ATCA_MBEDTLS configuration
+  - PKCS11 layer fixes/updates
+    - Corrected return value in C_FindObjectsInit API to no longer return CKR_OK when no objects are found
+    - Fixed an issue causing certificate export failures when using ATECCC608 TNGTLS devices
+    - Resolved a race condition that occurred during the creation of a mutex
+
 ## Release v3.7.7 (02/07/2025)
 
 ### New Features

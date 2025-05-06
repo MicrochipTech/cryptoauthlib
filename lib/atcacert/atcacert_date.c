@@ -1361,7 +1361,9 @@ ATCA_STATUS atcacert_date_dec_compcert_ext(const uint8_t            comp_cert[AT
         issue_date->tm_year = (int)((uint8_t)((((comp_cert[64] & (uint8_t)0xF8u) >> 3u)) + 100u));
         expire_years = (comp_cert[66] & (uint8_t)0x1F);
     }
-    issue_date->tm_mon = (int)((uint8_t)((uint8_t)((((comp_cert[64] & (uint8_t)0x07) << 1u) | ((comp_cert[65] & (uint8_t)0x80) >> 7u)) - 1u)) & 0x0Fu);
+    /* coverity[cert_int31_c_violation] value of tm_mon within range */
+    /* coverity[misra_c_2012_rule_10_8_violation] tm_mon is known to be a positive value within range */
+    issue_date->tm_mon = (int)((uint8_t)((uint8_t)((uint8_t)(((comp_cert[64] & (uint8_t)0x07) << 1u) | ((comp_cert[65] & (uint8_t)0x80) >> 7u)) - 1u)) & 0x0Fu);
     issue_date->tm_mday = (int)((uint8_t)((comp_cert[65] & (uint8_t)0x7C) >> 2u));
     issue_date->tm_hour = (int)((uint8_t)(((comp_cert[65] & (uint8_t)0x03) << 3u) | ((comp_cert[66] & (uint8_t)0xE0) >> 5u)));
 

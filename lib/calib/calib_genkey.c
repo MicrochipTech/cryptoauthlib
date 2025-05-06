@@ -63,12 +63,13 @@ ATCA_STATUS calib_genkey_base(ATCADevice device, uint8_t mode, uint16_t key_id, 
 
     do
     {
+#if ATCA_CHECK_PARAMS_EN
         if (device == NULL)
         {
             status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
             break;
         }
-
+#endif
         packet = calib_packet_alloc();
         if(NULL == packet)
         {

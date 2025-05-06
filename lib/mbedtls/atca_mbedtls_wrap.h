@@ -28,6 +28,8 @@
 #ifndef ATCA_MBEDTLS_WRAP_H
 #define ATCA_MBEDTLS_WRAP_H
 
+#include "atca_config_check.h"
+
 #ifdef ATCA_MBEDTLS
 
 #ifdef __COVERITY__

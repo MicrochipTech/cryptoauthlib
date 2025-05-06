@@ -30,6 +30,14 @@
 #include "atca_compiler.h"
 #include "cryptoauthlib.h"
 
+#ifdef __COVERITY__
+#pragma coverity compliance block \
+    (deviate "MISRA C-2012 Rule 21.15" "Calling memcpy with differnt types oesnt affect functionality for SHA") \
+    (deviate "MISRA C-2012 Rule 10.1" "Essential type of operand doesnt affect functionality for SHA") \
+    (deviate "MISRA C-2012 Rule 10.3" "Essential type of operand doesnt affect functionality for SHA") \
+    (deviate "MISRA C-2012 Rule 10.4" "Essential type of operand doesnt affect functionality for SHA")
+#endif
+
 #if ATCA_CRYPTO_SHA1_EN
 /**
  * \brief Initialize context for performing SHA1 hash in software.
@@ -74,6 +82,7 @@ void CL_hashUpdate(CL_HashContext *ctx, const U8 *src, int nbytes)
     // Get number of free bytes in the buf
     freeBytes = (U8)(ctx->byteCount);
     freeBytes &= 63u;
+    /* coverity[misra_c_2012_rule_10_8_violation:FALSE] */
     freeBytes = (U8)(64u - freeBytes);
 
     while (nbytes > 0)
@@ -342,3 +351,10 @@ void shaEngine(U32 *buf, U32 *h)
 
 }
 #endif /* ATCA_CRYPTO_SHA1_EN */
+
+#ifdef __COVERITY__
+#pragma coverity compliance end_block "MISRA C-2012 Rule 21.15"  \
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.1"  \
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.3"  \
+#pragma coverity compliance end_block "MISRA C-2012 Rule 10.4"
+#endif

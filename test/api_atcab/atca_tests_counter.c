@@ -70,7 +70,11 @@ TEST(atca_cmd_basic_test, counter_test)
 
     // Check bad counter ID
     status = atcab_counter_increment(3, NULL);
+#if ATCA_CHECK_PARAMS_EN
     TEST_ASSERT_EQUAL(ATCA_BAD_PARAM, status);
+#else
+    TEST_ASSERT_EQUAL(ATCA_PARSE_ERROR, status);
+#endif
 }
 
 /*

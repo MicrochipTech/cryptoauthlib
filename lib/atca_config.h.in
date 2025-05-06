@@ -60,6 +60,9 @@ selected plus however additional slots one would like */
 /** Enable preprocessor warning messages */
 #cmakedefine01 ATCA_PREPROCESSOR_WARNING
 
+/** Enable check params */
+#cmakedefine01 ATCA_CHECK_PARAMS_EN
+
 /** Enable jwt functionality */
 #cmakedefine ATCA_JWT_EN
 

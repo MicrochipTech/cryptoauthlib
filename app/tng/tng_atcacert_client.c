@@ -39,6 +39,7 @@ int tng_atcacert_max_device_cert_size(size_t* max_cert_size)
     int ret = ATCACERT_E_WRONG_CERT_DEF;
     int index = 0;
     size_t cert_size = 0;
+    size_t current_max_cert_size = 0;
     const atcacert_def_t* cert_def;
 
     if (NULL != max_cert_size)
@@ -50,13 +51,14 @@ int tng_atcacert_max_device_cert_size(size_t* max_cert_size)
             if (NULL != cert_def)
             {
                 ret = atcacert_max_cert_size(cert_def, &cert_size);
-                if (ATCACERT_E_SUCCESS == ret)
-                {
-                    *max_cert_size = cert_size;
-                }
-                else
+                if (ATCACERT_E_SUCCESS != ret)
                 {
                     break;
+                }
+
+                if (cert_size > current_max_cert_size)
+                {
+                    current_max_cert_size = cert_size;
                 }
 
                 if (index < INT_MAX)
@@ -70,6 +72,11 @@ int tng_atcacert_max_device_cert_size(size_t* max_cert_size)
                 }
             }
         } while ((NULL != cert_def) && (ret == ATCACERT_E_SUCCESS));
+
+        if (ret == ATCACERT_E_SUCCESS)
+        {
+            *max_cert_size = current_max_cert_size;
+        }
     }
 
     return ret;
@@ -165,19 +172,13 @@ int tng_atcacert_read_signer_cert(uint8_t* cert, size_t* cert_size)
 {
     int ret;
     const atcacert_def_t* cert_def = NULL;
-    uint8_t* ca_public_key = NULL;
-    cal_buffer ca_pubkey = CAL_BUF_INIT(ATCA_ECCP256_PUBKEY_SIZE, NULL);
+    const cal_buffer ca_public_key = cal_buf_init_const_ptr(ATCA_ECCP256_PUBKEY_SIZE, &g_cryptoauth_root_ca_002_cert[CRYPTOAUTH_ROOT_CA_002_PUBLIC_KEY_OFFSET]);
 
     ret = tng_get_device_cert_def(&cert_def);
     if (ATCA_SUCCESS == ret)
     {
         cert_def = cert_def->ca_cert_def;
-
-        // Get the CA (root) public key
-        ca_public_key = &g_cryptoauth_root_ca_002_cert[CRYPTOAUTH_ROOT_CA_002_PUBLIC_KEY_OFFSET];
-
-        ca_pubkey.buf = ca_public_key;
-        ret = atcacert_read_cert(cert_def, &ca_pubkey, cert, cert_size);
+        ret = atcacert_read_cert(cert_def, &ca_public_key, cert, cert_size);
     }
 
     return ret;

@@ -54,11 +54,13 @@ ATCA_STATUS calib_random(ATCADevice device, uint8_t *rand_out)
 
     do
     {
+#if ATCA_CHECK_PARAMS_EN
         if (device == NULL)
         {
             status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
             break;
         }
+#endif
 
         packet = calib_packet_alloc();
         if(NULL == packet)

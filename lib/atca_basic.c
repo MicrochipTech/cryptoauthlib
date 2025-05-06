@@ -37,6 +37,10 @@
 #endif
 #endif
 
+#ifdef __COVERITY__
+#pragma coverity compliance block deviate "MISRA C-2012 Rule 8.4" "The object prototype is defined "
+#endif
+
 SHARED_LIB_EXPORT ATCADevice g_atcab_device_ptr = NULL;
 
 #ifdef ATCA_NO_HEAP
@@ -4629,3 +4633,7 @@ ATCA_STATUS atcab_write_config_counter(uint16_t counter_id, uint32_t counter_val
     return status;
 }
 #endif /* ATCAB_WRITE_CONFIG_BYTES_ZONE */
+
+#ifdef __COVERITY__
+#pragma coverity compliance end_block "MISRA C-2012 Rule 8.4"
+#endif

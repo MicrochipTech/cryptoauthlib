@@ -33,7 +33,7 @@
 
 /* See https://csrc.nist.gov/projects/cryptographic-algorithm-validation-program/digital-signatures */
 
-#ifndef ATCA_NO_PRAGMA_PACK
+#if !defined(ATCA_NO_PRAGMA_PACK) && !defined(ATCA_VECTOR_NO_PRAGMA_PACK)
 #pragma pack(push, 1)
 #endif
 
@@ -108,7 +108,7 @@ extern const ecdsa_p521_test_vector ecdsa_p521_test_vectors[];
 extern const size_t ecdsa_p521_test_vectors_count;
 #endif
 
-#ifndef ATCA_NO_PRAGMA_PACK
+#if !defined(ATCA_NO_PRAGMA_PACK) && !defined(ATCA_VECTOR_NO_PRAGMA_PACK)
 #pragma pack(pop)
 #endif
 

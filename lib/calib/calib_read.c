@@ -844,6 +844,8 @@ ATCA_STATUS calib_read_config_zone(ATCADevice device, uint8_t* config_data)
 
     if (NULL != config_data)
     {
+        /* coverity[misra_c_2012_rule_16_1_violation:FALSE] The switch body is compact and readable, without deep nesting or side effects */
+        /* coverity[misra_c_2012_rule_16_6_violation:SUPPRESS] Designed for device configuration */
         switch (devtype)
         {
 #if CALIB_SHA204_EN || CALIB_SHA206_EN

@@ -61,11 +61,13 @@ ATCA_STATUS calib_selftest(ATCADevice device, uint8_t mode, uint16_t param2, uin
 
     do
     {
+#if ATCA_CHECK_PARAMS_EN
         if (device == NULL)
         {
             status = ATCA_TRACE(ATCA_BAD_PARAM, "NULL pointer received");
             break;
         }
+#endif
 
         packet = calib_packet_alloc();
         if(NULL == packet)

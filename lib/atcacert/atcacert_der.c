@@ -239,10 +239,18 @@ ATCA_STATUS atcacert_der_enc_integer(const uint8_t* int_data,
         pad = 1u;
     }
 
-    ret = atcacert_der_enc_length((uint32_t)(int_data_size + pad - trim), der_length, &der_length_size);
-    if (ret != ATCACERT_E_SUCCESS)
+    if ((int_data_size + pad) < trim)
     {
-        return ret;
+        // trim can reach a maximum value of "int_data_size - 1" resulting in all bytes, except the last byte could be trimmed
+        return ATCACERT_E_BAD_PARAMS; 
+    }
+    else
+    {
+        ret = atcacert_der_enc_length((int_data_size + pad - trim), der_length, &der_length_size);
+        if (ret != ATCACERT_E_SUCCESS)
+        {
+            return ret;
+        }
     }
 
     der_int_size_calc = 1u + der_length_size + int_data_size + pad - trim;

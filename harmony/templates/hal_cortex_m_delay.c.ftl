@@ -154,16 +154,16 @@ void _delay_cycles(void *const hw, uint32_t cycles)
 /**
  * \brief Perform delay in us
  */
-void hal_delay_us(const uint32_t us)
+void hal_delay_us(uint32_t delay)
 {
-    uint32_t cycles = (GET_CYCLES_FOR_US_INTERNAL(us,CONF_CPU_FREQUENCY));
+    uint32_t cycles = (GET_CYCLES_FOR_US_INTERNAL(delay,CONF_CPU_FREQUENCY));
     DELAY_CYCLES_US(cycles);
 }
 
 /**
  * \brief Perform delay in ms
  */
-void hal_delay_ms(const uint32_t ms)
+void hal_delay_ms(uint32_t delay)
 {
-    _delay_cycles((void*)0,(_get_cycles_for_ms(ms)/ MS_CYCLE_COUNT_DIVIDER));
+    _delay_cycles((void*)0,(_get_cycles_for_ms(delay)/ MS_CYCLE_COUNT_DIVIDER));
 }

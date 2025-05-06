@@ -974,11 +974,24 @@ ATCA_STATUS atcacert_set_signature(const atcacert_def_t*    cert_def,
     size_t new_der_sig_size;
     size_t old_cert_der_length_size;
     size_t new_cert_length;
+    int eff_offset = 0;
 
     ATCA_CHECK_INVALID((NULL == cert_def) || (NULL == cert) || (0 == cert_size) || (NULL == signature), ATCACERT_E_BAD_PARAMS);
 
     sig_offset = cert_def->std_cert_elements[STDCERT_SIGNATURE].offset;
-    sig_offset += get_effective_offset(cert_def, cert, sig_offset);
+
+    eff_offset = get_effective_offset(cert_def, cert, sig_offset);
+    
+    if (eff_offset > 0)
+    {
+        sig_offset += (size_t)eff_offset;
+    }
+    else
+    {
+        /* coverity[cert_int31_c_violation: FALSE] value of eff_offset checked before casting */
+        /* coverity[cert_int30_c_violation: FALSE] eff_offset return is being checked with out of bounds at every usage level of this function addressing the integer wrap effectively */
+        sig_offset -= (size_t)ABS_VAL(eff_offset);
+    }
 
     // Non X.509 signatures are treated like normal certificate elements
     if (cert_def->type != CERTTYPE_X509)
@@ -1036,6 +1049,7 @@ ATCA_STATUS atcacert_get_signature(const atcacert_def_t*    cert_def,
 {
     size_t sig_offset;
     size_t der_sig_size = 0;
+    int eff_offset = 0;
 
     if (cert_def == NULL || cert == NULL || signature == NULL)
     {
@@ -1043,7 +1057,17 @@ ATCA_STATUS atcacert_get_signature(const atcacert_def_t*    cert_def,
     }
 
     sig_offset = cert_def->std_cert_elements[STDCERT_SIGNATURE].offset;
-    sig_offset += get_effective_offset(cert_def, cert, sig_offset);
+    eff_offset = get_effective_offset(cert_def, cert, sig_offset);
+    if (eff_offset > 0)
+    {
+        sig_offset += (size_t)eff_offset;
+    }
+    else
+    {
+        /* coverity[cert_int31_c_violation: FALSE] value of eff_offset checked before casting */
+        /* coverity[cert_int30_c_violation: FALSE] eff_offset return is being checked with out of bounds at every usage level of this function addressing the integer wrap effectively */
+        sig_offset -= (size_t)ABS_VAL(eff_offset);
+    }
 
     // Non X.509 signatures are treated like normal certificate elements
     if (cert_def->type != CERTTYPE_X509)
@@ -1419,29 +1443,61 @@ ATCA_STATUS atcacert_set_cert_sn(const atcacert_def_t*  cert_def,
             size_t cert_len = 0;
             size_t tbs_der_len = 0;
 
-            // The SN field has changed size
-            /* coverity[misra_c_2012_rule_10_4_violation] error is returned based on explicit value check */
-            /* coverity[cert_int30_c_violation] overflow is checked by the next statement */
-            if (*cert_size + sn_offset > max_cert_size)
+            if (sn_offset > 0)
             {
-                return ATCACERT_E_BUFFER_TOO_SMALL; // Cert buffer is too small for resizing
-            }
-            // Shift everything after the serial number to accommodate its new size
-            if (*cert_size > ((size_t)sn_cert_loc->offset + (size_t)sn_cert_loc->count))
-            {
-                (void)memmove(
-                    &cert[sn_cert_loc->offset + sn_cert_loc->count],
-                    /* coverity[misra_c_2012_rule_10_4_violation] Since certificate offsets are calculated, sn_offset being signed will not cause problem */
-                    /* coverity[misra_c_2012_rule_10_7_violation:FALSE] False positive, value within type limits */
-                    &cert[sn_cert_loc->offset + sn_cert_loc->count + sn_offset],
-                    *cert_size - ((size_t)sn_cert_loc->offset + (size_t)sn_cert_loc->count));
-                *cert_size += sn_offset;
+                /* sn_offset is small and controlled by comparing cert and template SN lengths; result is within size_t range. No negative overflow possible. */
+                /* coverity[misra_c_2012_rule_10_4_violation] error is returned based on explicit value check */
+                /* coverity[cert_int30_c_violation] overflow is checked by the next statement */
+                if (*cert_size + (size_t)sn_offset > max_cert_size)
+                {
+                    return ATCACERT_E_BUFFER_TOO_SMALL; // Cert buffer is too small for resizing
+                }
+                // Shift everything after the serial number to accommodate its new size
+                if (*cert_size > ((size_t)sn_cert_loc->offset + (size_t)sn_cert_loc->count))
+                {
+                    (void)memmove(
+                        &cert[sn_cert_loc->offset + sn_cert_loc->count],
+                        /* sn_offset is validated earlier, and cert size checked before shifting; array access remains within bounds. */
+                        /* coverity[misra_c_2012_rule_10_4_violation] Since certificate offsets are calculated, sn_offset being signed will not cause problem */
+                        /* coverity[misra_c_2012_rule_10_7_violation:FALSE] False positive, value within type limits */
+                        &cert[sn_cert_loc->offset + sn_cert_loc->count + (size_t)sn_offset],
+                        *cert_size - ((size_t)sn_cert_loc->offset + (size_t)sn_cert_loc->count));
+                    /* cert_size adjustment is safe as sn_offset is verified, and buffer bounds are checked before shifting. */    
+                    *cert_size += (size_t)sn_offset;
+                }
+                else
+                {
+                    return ATCACERT_E_ELEM_OUT_OF_BOUNDS;
+                }
             }
             else
             {
-                return ATCACERT_E_ELEM_OUT_OF_BOUNDS;
+                /* coverity[cert_int31_c_violation: FALSE] value of sn_offset checked before casting */
+                /* coverity[cert_int30_c_violation: FALSE] sn_offset return is being checked with out of bounds at every usage level of this function addressing the integer wrap effectively */
+                if (*cert_size - (size_t)ABS_VAL(sn_offset) > max_cert_size)
+                {
+                    return ATCACERT_E_BUFFER_TOO_SMALL; // Cert buffer is too small for resizing
+                }
+                // Shift everything after the serial number to accommodate its new size
+                if (*cert_size > ((size_t)sn_cert_loc->offset + (size_t)sn_cert_loc->count))
+                {
+                    (void)memmove(
+                        &cert[sn_cert_loc->offset + sn_cert_loc->count],
+                        /* sn_offset is validated earlier, and cert size checked before shifting; array access remains within bounds. */
+                        /* coverity[misra_c_2012_rule_10_4_violation] Since certificate offsets are calculated, sn_offset being signed will not cause problem */
+                        /* coverity[misra_c_2012_rule_10_7_violation:FALSE] False positive, value within type limits */
+                        /* coverity[cert_int31_c_violation: FALSE] value of sn_offset checked before casting */
+                        &cert[sn_cert_loc->offset + sn_cert_loc->count - (size_t)ABS_VAL(sn_offset)],
+                        *cert_size - ((size_t)sn_cert_loc->offset + (size_t)sn_cert_loc->count));
+                    /* cert_size adjustment is safe as sn_offset is verified, and buffer bounds are checked before shifting. */  
+                    /* coverity[cert_int31_c_violation: FALSE] value of sn_offset checked before casting */  
+                    *cert_size -= (size_t)ABS_VAL(sn_offset);
+                }
+                else
+                {
+                    return ATCACERT_E_ELEM_OUT_OF_BOUNDS;
+                }
             }
-
 
             // Indicate how much buffer it has to work with
             cert_der_len = *cert_size - 1U; // Right after first sequence tag; 1 for der_len_offset
@@ -2378,9 +2434,21 @@ ATCA_STATUS atcacert_set_cert_element(const atcacert_def_t*         cert_def,
 
     eff_offset = get_effective_offset(cert_def, cert, cert_loc->offset);
 
-    if ((cert_loc->offset > SIZE_MAX - data_size) || ((size_t)(cert_loc->offset + data_size + eff_offset) > cert_size))
+    // eff_offset is calculated as a signed value to allow flexible offset adjustments (can be negative if needed).
+    if(eff_offset >= 0)
     {
-        return ATCACERT_E_ELEM_OUT_OF_BOUNDS;
+        if ((cert_loc->offset > SIZE_MAX - data_size) || ((size_t)(cert_loc->offset + data_size + (size_t)eff_offset) > cert_size))
+        {
+            return ATCACERT_E_ELEM_OUT_OF_BOUNDS;
+        }
+    }
+    else
+    {
+        /* coverity[cert_int31_c_violation: FALSE] value of eff_offset checked before casting */
+        if ((cert_loc->offset > SIZE_MAX - data_size) || ((size_t)(cert_loc->offset + data_size - (size_t)ABS_VAL(eff_offset)) > cert_size))
+        {
+            return ATCACERT_E_ELEM_OUT_OF_BOUNDS;
+        }
     }
 
     (void)memcpy(&cert[cert_loc->offset + (size_t)eff_offset], data, data_size);

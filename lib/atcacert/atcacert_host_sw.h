@@ -69,6 +69,7 @@ ATCA_STATUS atcacert_verify_cert_sw(const atcacert_def_t* cert_def,
 #endif
 
 
+#if ATCAC_RANDOM_EN
 /**
  * \brief Generate a random challenge to be sent to the client using a software PRNG.The function is currently not implemented.
  *
@@ -77,10 +78,10 @@ ATCA_STATUS atcacert_verify_cert_sw(const atcacert_def_t* cert_def,
  * \return ATCA_UNIMPLEMENTED , as the function is currently not implemented.
  */
 ATCA_STATUS atcacert_gen_challenge_sw(cal_buffer* challenge);
+#endif
 
 
-
-
+#if ATCAC_VERIFY_EN
 /**
  * \brief Verify a client's response to a challenge using software crypto functions.The function is currently not implemented.
  *
@@ -98,6 +99,7 @@ ATCA_STATUS atcacert_gen_challenge_sw(cal_buffer* challenge);
 ATCA_STATUS atcacert_verify_response_sw(const cal_buffer* device_public_key,
                                         const cal_buffer* challenge,
                                         const cal_buffer* response);
+#endif
 
 /** @} */
 #ifdef __cplusplus
