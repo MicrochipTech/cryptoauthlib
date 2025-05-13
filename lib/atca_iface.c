@@ -441,6 +441,7 @@ uint8_t ifacecfg_get_address(ATCAIfaceCfg * cfg)
         {
 #ifdef ATCA_HAL_I2C
         case ATCA_I2C_IFACE:
+            UNUSED(kitiface);
 #ifdef ATCA_ENABLE_DEPRECATED
             addr = ATCA_IFACECFG_VALUE(cfg, atcai2c.slave_address);
 #else
