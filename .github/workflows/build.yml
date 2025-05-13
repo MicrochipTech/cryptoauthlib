@@ -41,14 +41,15 @@ jobs:
         with:
           package-dir: python 
         env:
-          CIBW_SKIP: "cp27-* cp36-* cp37-* pp37-* *-musllinux* pp*-macosx*"
+          CIBW_SKIP: cp36-* cp37-* pp37-* cp38-* pp38-* *-musllinux* pp*-macosx*"
           CIBW_MANYLINUX_X86_64_IMAGE: "manylinux_2_28"
           CIBW_BEFORE_BUILD_LINUX: "yum update -y && yum install -y libusb-devel"
           CIBW_BUILD_VERBOSITY: 3
           CIBW_ARCHS_LINUX: "x86_64"
-          CIBW_ARCHS_MACOS: "x86_64 arm64"
+          CIBW_ARCHS_MACOS: "universal2"
           # Skip trying to test arm64 builds on Intel Macs
-          CIBW_TEST_SKIP: "*-macosx_arm64 *-macosx_universal2:arm64"
+          # Latest MacOS GitHub actions runner is arm64 based
+          #CIBW_TEST_SKIP: "*-macosx_arm64 *-macosx_universal2:arm64"
           CMAKE_OSX_ARCHITECTURES: "arm64;x86_64"
 
       - uses: actions/upload-artifact@v4
@@ -133,7 +134,7 @@ jobs:
   
       - name: Production Release
         if: startsWith(github.repository, 'MicrochipTech')
-        uses: pypa/gh-action-pypi-publish@release/v1.10
+        uses: pypa/gh-action-pypi-publish@release/v1.12.4
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
@@ -141,7 +142,7 @@ jobs:
 
       - name: Test Release
         if: ${{ !startsWith(github.repository, 'MicrochipTech') }}
-        uses: pypa/gh-action-pypi-publish@release/v1.10
+        uses: pypa/gh-action-pypi-publish@release/v1.12.4
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
