@@ -134,7 +134,7 @@ jobs:
   
       - name: Production Release
         if: startsWith(github.repository, 'MicrochipTech')
-        uses: pypa/gh-action-pypi-publish@release/v1.12.4
+        uses: pypa/gh-action-pypi-publish@release/v1.12
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
@@ -142,7 +142,7 @@ jobs:
 
       - name: Test Release
         if: ${{ !startsWith(github.repository, 'MicrochipTech') }}
-        uses: pypa/gh-action-pypi-publish@release/v1.12.4
+        uses: pypa/gh-action-pypi-publish@release/v1.12
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
