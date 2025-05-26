@@ -53,7 +53,7 @@ ATCA_STATUS atcacert_verify_cert_sw(const atcacert_def_t* cert_def,
 
     switch(ca_public_key->len)
     {
-        case ATCA_KEY_TYPE_ECCP256:
+        case ATCA_SHA2_256_DIGEST_SIZE:
             dig.len = ATCA_SHA2_256_DIGEST_SIZE;
             break;
 #if ATCA_TA_SUPPORT
@@ -94,7 +94,7 @@ ATCA_STATUS atcacert_verify_cert_sw(const atcacert_def_t* cert_def,
     }
 
     /* Perform the verification */
-    ret = atcac_pk_verify(&pkey_ctx, tbs_digest, sizeof(tbs_digest), signature, sig.len);
+    ret = atcac_pk_verify(&pkey_ctx, dig.buf, dig.len, sig.buf, sig.len);
 
     /* Make sure to free the key before testing the result of the verify */
     (void)atcac_pk_free(&pkey_ctx);
