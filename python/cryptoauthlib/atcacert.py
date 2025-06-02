@@ -378,7 +378,7 @@ def atcacert_get_response(device_private_key_slot, challenge, response):
     Returns:
         ATCACERT_E_SUCCESS on success, otherwise an error code.
     """
-    if not isinstance(challenge, bytearray) or not isinstance(response, bytearray):
+    if not isinstance(response, bytearray):
         status = Status.ATCA_BAD_PARAM
     else:
         c_challenge = cal_buffer(len(challenge), challenge)
