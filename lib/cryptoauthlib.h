@@ -49,6 +49,10 @@
 #include "atca_helpers.h"
 #include "hal/atca_hal.h"
 
+#ifndef UNUSED
+#define UNUSED(X) (void)X /* To avoid gcc/g++ "unused-parameter" warnings */
+#endif
+
 /* Common Cryptographic Definitions */
 #define ATCA_SHA256_BLOCK_SIZE              (64u)
 #define ATCA_SHA256_DIGEST_SIZE             (32u)
