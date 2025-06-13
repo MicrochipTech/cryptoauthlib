@@ -188,3 +188,73 @@ Edit the mchp-cryptoauth.rules file and add the following line to the file:
 ```text
 SUBSYSTEM=="hidraw", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2312", MODE="0666"
 ```
+
+
+## Incorporating CryptoAuthLib in a Zephyr Project
+
+CryptoAuthLib now builds as a proper Zephyr module and exposes its Kconfig options directly.
+
+### Out-of-tree Zephyr application
+
+Add this **before** your `find_package(Zephyr …)` in your top-level `CMakeLists.txt`:
+
+```cmake
+# Tell Zephyr where to find the CryptoAuthLib module
+set(EXTRA_ZEPHYR_MODULES ${CMAKE_CURRENT_SOURCE_DIR}/../modules/lib/cryptoauthlib)
+
+# Now discover Zephyr (and CryptoAuthLib)
+find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
+````
+
+### In-tree Zephyr workspace
+
+If you’ve placed CryptoAuthLib under `zephyr/modules/lib/cryptoauthlib`, simply:
+
+```cmake
+find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
+```
+
+and Zephyr will auto-scan its `modules/` folder.
+
+### Available Kconfig Options
+
+All of CryptoAuthLib’s Zephyr build flags are controlled via Kconfig. In your `prj.conf`, you can enable or disable:
+
+```conf
+# HAL drivers
+CONFIG_ATCA_HAL_I2C=y
+CONFIG_ATCA_HAL_SPI=n
+CONFIG_ATCA_HAL_KIT_HID=y
+# …
+
+# Library behavior
+CONFIG_ATCA_PRINTF=y
+CONFIG_ATCA_NO_HEAP=n
+CONFIG_ATCA_STRICT_C99=y
+# …
+
+# Crypto backends
+CONFIG_ATCA_MBEDTLS=y
+# …
+
+# Certificate & JWT
+CONFIG_ATCA_JWT_EN=y
+CONFIG_ATCACERT_COMPCERT_EN=y
+CONFIG_ATCACERT_FULLSTOREDCERT_EN=y
+# …
+
+# Device support
+CONFIG_ATCA_ATECC608_SUPPORT=y
+CONFIG_ATCA_ECC204_SUPPORT=y
+# …
+```
+
+When you build, these `CONFIG_ATCA_*` settings are automatically mapped into the corresponding `ATCA_*` CMake options, and into `atca_config.h`, so your source sees:
+
+```c
+#ifdef ATCA_HAL_I2C
+  // I2C driver code is compiled in
+#endif
+```
+
+This gives you seamless, Zephyr-style integration of CryptoAuthLib alongside your application.
