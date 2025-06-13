@@ -100,11 +100,12 @@ typedef enum
     ATCA_KIT_SPI_IFACE,
     ATCA_KIT_UNKNOWN_IFACE } ATCAKitType;
 
+typedef struct atca_iface * ATCAIface;
 
 /* ATCAIfaceCfg is the configuration object for a device
  */
 
-typedef struct
+typedef struct ATCAIfaceCfgType
 {
 
     ATCAIfaceType  iface_type;      // active iface - how to interpret the union below
@@ -166,13 +167,13 @@ typedef struct
 
         struct
         {
-            ATCA_STATUS (*halinit)(void *hal, void *cfg);
-            ATCA_STATUS (*halpostinit)(void *iface);
-            ATCA_STATUS (*halsend)(void *iface, uint8_t word_address, uint8_t *txdata, int txlength);
-            ATCA_STATUS (*halreceive)(void *iface, uint8_t word_address, uint8_t* rxdata, uint16_t* rxlength);
-            ATCA_STATUS (*halwake)(void *iface);
-            ATCA_STATUS (*halidle)(void *iface);
-            ATCA_STATUS (*halsleep)(void *iface);
+            ATCA_STATUS (*halinit)(ATCAIface hal, struct ATCAIfaceCfgType* cfg);
+            ATCA_STATUS (*halpostinit)(ATCAIface iface);
+            ATCA_STATUS (*halsend)(ATCAIface iface, uint8_t word_address, uint8_t *txdata, int txlength);
+            ATCA_STATUS (*halreceive)(ATCAIface iface, uint8_t word_address, uint8_t* rxdata, uint16_t* rxlength);
+            ATCA_STATUS (*halwake)(ATCAIface iface);
+            ATCA_STATUS (*halidle)(ATCAIface iface);
+            ATCA_STATUS (*halsleep)(ATCAIface iface);
             ATCA_STATUS (*halrelease)(void* hal_data);
         } atcacustom;
     } ATCA_IFACECFG_NAME(cfg);
@@ -181,10 +182,6 @@ typedef struct
     int      rx_retries;    // the number of retries to attempt for receiving bytes
     void *   cfg_data;      // opaque data used by HAL in device discovery
 } ATCAIfaceCfg;
-
-
-
-typedef struct atca_iface * ATCAIface;
 
 /** \brief HAL Driver Structure
  */
