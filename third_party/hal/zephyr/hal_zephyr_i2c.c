@@ -96,15 +96,42 @@ ATCA_STATUS hal_i2c_post_init(ATCAIface iface)
  * \param[in] txlength      number of bytes to send
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-
-ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t address, uint8_t *txdata, int txlength)
+ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata, int txlength)
 {
 	struct device *zdev = (struct device *)atgetifacehaldat(iface);
+	ATCAIfaceCfg *cfg = iface->mIfaceCFG;
 
-	if (!zdev || (0 == txlength) || (NULL == txdata)) {
+	if (!zdev || !cfg) {
 		return ATCA_BAD_PARAM;
 	}
-	if (i2c_write(zdev, txdata, txlength, (address >> 0x1))) {
+
+#ifdef ATCA_ENABLE_DEPRECATED
+	uint8_t dev_addr = cfg->atcai2c.slave_address >> 1;
+#else
+	uint8_t dev_addr = cfg->atcai2c.address >> 1;
+#endif
+
+	struct i2c_msg msgs[2];
+
+	/* First message, send word address. */
+	uint8_t word_addr = word_address;
+	msgs[0].buf = &word_addr;
+	msgs[0].len = 1;
+	msgs[0].flags = I2C_MSG_WRITE;
+
+	uint8_t num_msgs = 1;
+
+	/* Optional second message, send txdata if provided. */
+	if (txdata && txlength > 0) {
+		msgs[1].buf = txdata;
+		msgs[1].len = txlength;
+		msgs[1].flags = I2C_MSG_WRITE | I2C_MSG_STOP;
+		num_msgs = 2;
+	} else {
+		msgs[0].flags |= I2C_MSG_STOP;
+	}
+
+	if (i2c_transfer(zdev, msgs, num_msgs, dev_addr)) {
 		return ATCA_TX_FAIL;
 	}
 
