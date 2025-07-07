@@ -349,12 +349,6 @@ if (ATCA_ZEPHYR_SUPPORT)
         zephyr_library_link_libraries(${OPENSSL_CRYPTO_LIBRARY})
     endif()
 
-    zephyr_library_compile_options(
-        -ffile-prefix-map=${CMAKE_CURRENT_SOURCE_DIR}=.
-        -fmacro-prefix-map=${CMAKE_CURRENT_SOURCE_DIR}=.
-        -Wall -Wextra
-    )
-
     if (ATCA_STRICT_C99)
         zephyr_library_compile_options(-Wpedantic)
     endif()
