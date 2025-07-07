@@ -6,12 +6,10 @@
 
 #include "hal/atca_hal.h"
 
-#include <zephyr.h>
-#include <kernel.h>
-
+#include <zephyr/kernel.h>
 
 #ifndef ATCA_MUTEX_TIMEOUT
-#define ATCA_MUTEX_TIMEOUT  K_FOREVER
+#define ATCA_MUTEX_TIMEOUT K_FOREVER
 #endif
 
 /**
@@ -23,16 +21,16 @@
    @{ */
 
 #if !defined(ATCA_PLATFORM_MALLOC)
-void*   hal_malloc(size_t size)
+void *hal_malloc(size_t size)
 {
-    return k_malloc(size);
+	return k_malloc(size);
 }
 #endif
 
 #if !defined(ATCA_PLATFORM_FREE)
-void    hal_free(void* ptr)
+void hal_free(void *ptr)
 {
-    k_free(ptr);
+	k_free(ptr);
 }
 #endif
 
@@ -42,7 +40,7 @@ void    hal_free(void* ptr)
  */
 void hal_delay_us(uint32_t delay)
 {
-    k_busy_wait(delay);
+	k_busy_wait(delay);
 }
 
 /** \brief This function delays for a number of tens of microseconds.
@@ -51,9 +49,8 @@ void hal_delay_us(uint32_t delay)
  */
 void hal_delay_10us(uint32_t delay)
 {
-    k_usleep(delay * 10);
+	k_usleep(delay * 10);
 }
-
 
 /** \brief This function delays for a number of milliseconds.
  *
@@ -65,70 +62,61 @@ void hal_delay_10us(uint32_t delay)
 /* ASF already has delay_ms - see delay.h */
 void hal_delay_ms(uint32_t delay)
 {
-    hal_delay_us(delay * 1000);
+	hal_delay_us(delay * 1000);
 }
 
-
-ATCA_STATUS hal_create_mutex(void ** ppMutex, char* pName)
+ATCA_STATUS hal_create_mutex(void **ppMutex, const char *pName)
 {
-    (void)pName;
+	(void)pName;
 
-    if (!ppMutex)
-    {
-        return ATCA_BAD_PARAM;
-    }
+	if (!ppMutex) {
+		return ATCA_BAD_PARAM;
+	}
 
-    (*ppMutex) = (struct k_mutex*)k_malloc(sizeof(struct k_mutex));
+	(*ppMutex) = (struct k_mutex *)k_malloc(sizeof(struct k_mutex));
 
-    if (!*ppMutex)
-    {
-        return ATCA_FUNC_FAIL;
-    }
+	if (!*ppMutex) {
+		return ATCA_FUNC_FAIL;
+	}
 
-    k_mutex_init((struct k_mutex*)(*ppMutex));
+	k_mutex_init((struct k_mutex *)(*ppMutex));
 
-    return ATCA_SUCCESS;
+	return ATCA_SUCCESS;
 }
 
-ATCA_STATUS hal_destroy_mutex(void * pMutex)
+ATCA_STATUS hal_destroy_mutex(void *pMutex)
 {
-    if (!pMutex)
-    {
-        return ATCA_BAD_PARAM;
-    }
+	if (!pMutex) {
+		return ATCA_BAD_PARAM;
+	}
 
-    k_free(pMutex);
+	k_free(pMutex);
 
-    return ATCA_SUCCESS;
+	return ATCA_SUCCESS;
 }
 
-ATCA_STATUS hal_lock_mutex(void * pMutex)
+ATCA_STATUS hal_lock_mutex(void *pMutex)
 {
-    if (!pMutex)
-    {
-        return ATCA_BAD_PARAM;
-    }
+	if (!pMutex) {
+		return ATCA_BAD_PARAM;
+	}
 
-    if (k_mutex_lock((struct k_mutex*)pMutex, ATCA_MUTEX_TIMEOUT))
-    {
-        return ATCA_GEN_FAIL;
-    }
-    else
-    {
-        return ATCA_SUCCESS;
-    }
+	if (k_mutex_lock((struct k_mutex *)pMutex, ATCA_MUTEX_TIMEOUT)) {
+		return ATCA_GEN_FAIL;
+	} else {
+		return ATCA_SUCCESS;
+	}
 }
 
-ATCA_STATUS hal_unlock_mutex(void * pMutex)
+ATCA_STATUS hal_unlock_mutex(void *pMutex)
 {
-    if (!pMutex)
-    {
-        return ATCA_BAD_PARAM;
-    }
+	if (!pMutex) {
+		return ATCA_BAD_PARAM;
+	}
 
-    k_mutex_unlock((struct k_mutex*)pMutex);
+	k_mutex_unlock((struct k_mutex *)pMutex);
 
-    return ATCA_SUCCESS;
+	return ATCA_SUCCESS;
 }
 
 /** @} */

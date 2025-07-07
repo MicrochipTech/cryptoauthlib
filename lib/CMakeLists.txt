@@ -1,5 +1,11 @@
 cmake_minimum_required(VERSION 3.20.0)
-project(cryptoauth C)
+
+if (ATCA_ZEPHYR_SUPPORT)
+    project(cryptoauthlib NONE)
+    find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
+else()
+    project(cryptoauth C)
+endif()
 
 include(CheckSymbolExists)
 
@@ -23,6 +29,11 @@ option(ATCA_USE_ATCAB_FUNCTIONS "Build the atcab_ api functions rather than usin
 option(ATCA_ENABLE_DEPRECATED "Enable the use of older APIs that that been replaced" OFF)
 option(ATCA_STRICT_C99 "Enable strict C99 compliance for the libray" OFF)
 option(MULTIPART_BUF_EN "Enable MultiPart Buffer" OFF)
+
+# Force-disable shared libs under Zephyr builds
+if (ATCA_ZEPHYR_SUPPORT)
+    set(ATCA_BUILD_SHARED_LIBS OFF CACHE BOOL "Disable shared libs under Zephyr" FORCE)
+endif()
 
 # Software Cryptographic backend for host crypto abstractions
 option(ATCA_MBEDTLS "Integrate with mbedtls" OFF)
@@ -62,26 +73,21 @@ include(cmake/devices.cmake)
 
 # Preprocessor Warning option
 if (NOT MSVC)
-option(ATCA_PREPROCESSOR_WARNING "Enable preprocessor warning statements in library" OFF)
+    option(ATCA_PREPROCESSOR_WARNING "Enable preprocessor warning statements in library" OFF)
 else()
-SET(ATCA_PREPROCESSOR_WARNING OFF CACHE BOOL "Force the option to OFF since visual studio compiler does not support corresponding preprocessor directive" FORCE)
-endif()
-
-# RTOS Selection
-if (TARGET zephyr_interface)
-SET(ATCA_ZEPHYR_SUPPORT ON CACHE INTERNAL "Include zephyr hal drivers")
+    SET(ATCA_PREPROCESSOR_WARNING OFF CACHE BOOL "Force the option to OFF since visual studio compiler does not support corresponding preprocessor directive" FORCE)
 endif()
 
 # Check Integration Options
 if (ATCA_MBEDTLS AND (ATCA_WOLFSSL OR ATCA_OPENSSL))
-message(FATAL_ERROR "Only one external SSL/TLS library can be supported")
+    message(FATAL_ERROR "Only one external SSL/TLS library can be supported")
 elseif (ATCA_WOLFSSL AND (ATCA_MBEDTLS OR ATCA_OPENSSL))
-message(FATAL_ERROR "Only one external SSL/TLS library can be supported")
+    message(FATAL_ERROR "Only one external SSL/TLS library can be supported")
 endif()
 
 # Full certificate integration option
 if (ATCA_MBEDTLS OR ATCA_WOLFSSL OR ATCA_OPENSSL)
-option(ATCACERT_INTEGRATION_EN "Enable ATCACERT full certificate integration" ON)
+    option(ATCACERT_INTEGRATION_EN "Enable ATCACERT full certificate integration" ON)
 endif()
 
 # Check Platform Information
@@ -114,20 +120,20 @@ file(GLOB SHA206_API_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../app/api_206a/*
 file(GLOB SHA206_API_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../app/api_206a/*.h")
 
 if(ATCA_PKCS11 AND (ATCA_TNGTLS_SUPPORT OR ATCA_TNGLORA_SUPPORT OR ATCA_TFLEX_SUPPORT))
-SET(TNG_SRC ${TNG_SRC} ../app/pkcs11/trust_pkcs11_config.c)
+    SET(TNG_SRC ${TNG_SRC} ../app/pkcs11/trust_pkcs11_config.c)
 endif()
 
 if(${CMAKE_VERSION} VERSION_GREATER "3.8.0")
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${ATCACERT_SRC})
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${CALIB_SRC})
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${CRYPTO_SRC})
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${HOST_SRC})
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${JWT_SRC})
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${PKCS11_SRC})
-if(ATCA_TNGTLS_SUPPORT OR ATCA_TNGLORA_SUPPORT OR ATCA_TFLEX_SUPPORT)
-source_group("App/Tng" FILES ${TNG_SRC})
-endif()
-source_group("App/Wpc" FILES ${WPC_SRC})
+    source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${ATCACERT_SRC})
+    source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${CALIB_SRC})
+    source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${CRYPTO_SRC})
+    source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${HOST_SRC})
+    source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${JWT_SRC})
+    source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${PKCS11_SRC})
+    if(ATCA_TNGTLS_SUPPORT OR ATCA_TNGLORA_SUPPORT OR ATCA_TFLEX_SUPPORT)
+        source_group("App/Tng" FILES ${TNG_SRC})
+    endif()
+    source_group("App/Wpc" FILES ${WPC_SRC})
 endif()
 
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/talib" AND IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/talib")
@@ -154,15 +160,15 @@ endif(ATCA_OPENSSL)
 if (ATCA_ATSHA204A_SUPPORT OR ATCA_ATSHA206A_SUPPORT OR
     ATCA_ATECC108A_SUPPORT OR ATCA_ATECC508A_SUPPORT OR
     ATCA_ATECC608_SUPPORT OR ATCA_ECC204_SUPPORT OR ATCA_TA010_SUPPORT OR ATCA_SHA104_SUPPORT OR ATCA_SHA105_SUPPORT)
-set(LIB_SRC ${LIB_SRC} ${CALIB_SRC} ${HOST_SRC})
+    set(LIB_SRC ${LIB_SRC} ${CALIB_SRC} ${HOST_SRC})
 endif()
 
 if (ATCA_ATSHA206A_SUPPORT)
-set(LIB_SRC ${LIB_SRC} ${SHA206_API_SRC})
+    set(LIB_SRC ${LIB_SRC} ${SHA206_API_SRC})
 endif()
 
 if (ATCA_TNGTLS_SUPPORT OR ATCA_TNGLORA_SUPPORT OR ATCA_TFLEX_SUPPORT)
-set(LIB_SRC ${LIB_SRC} ${TNG_SRC})
+    set(LIB_SRC ${LIB_SRC} ${TNG_SRC})
 endif()
 
 # Add the basic sources to the library
@@ -178,101 +184,101 @@ set(CRYPTOAUTH_SRC ${LIB_SRC}
 set(HAL_INC hal/atca_hal.h)
 
 if(ATCA_HAL_KIT_HID)
-set(NEED_USB true)
+    set(NEED_USB true)
 endif()
 
 if(WIN32)
-set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_windows.c)
-set(HID_SRC ../third_party/hidapi/windows/hid.c)
+    set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_windows.c)
+    set(HID_SRC ../third_party/hidapi/windows/hid.c)
 elseif(APPLE)
-set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_linux.c)
-set(HID_SRC ../third_party/hidapi/mac/hid.c)
+    set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_linux.c)
+    set(HID_SRC ../third_party/hidapi/mac/hid.c)
 elseif(UNIX)
-set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_linux.c)
-set(TWI_SRC hal/hal_linux_i2c_userspace.c)
-set(SPI_SRC hal/hal_linux_spi_userspace.c)
-set(LINUX TRUE)
+    set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_linux.c)
+    set(TWI_SRC hal/hal_linux_i2c_userspace.c)
+    set(SPI_SRC hal/hal_linux_spi_userspace.c)
+    set(LINUX TRUE)
 endif()
 
 if(ATCA_ZEPHYR_SUPPORT)
-set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ../third_party/hal/zephyr/hal_zephyr.c)
-SET(TWI_SRC ../third_party/hal/zephyr/hal_zephyr_i2c.c)
-SET(SPI_SRC ../third_party/hal/zephyr/hal_zephyr_spi.c)
+    set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ../third_party/hal/zephyr/hal_zephyr.c)
+    SET(TWI_SRC ../third_party/hal/zephyr/hal_zephyr_i2c.c)
+    SET(SPI_SRC ../third_party/hal/zephyr/hal_zephyr_spi.c)
 endif()
 
 if(LINUX AND NEED_USB)
-find_path(LIBUSB_INCLUDE_DIR NAMES libusb.h PATH_SUFFIXES "include" "libusb" "libusb-1.0")
-find_path(LIBUDEV_INCLUDE_DIR NAMES libudev.h PATH_SUFFIXES "include")
-find_library(HAS_LIBUSB usb-1.0)
-find_library(HAS_LIBUDEV udev)
+    find_path(LIBUSB_INCLUDE_DIR NAMES libusb.h PATH_SUFFIXES "include" "libusb" "libusb-1.0")
+    find_path(LIBUDEV_INCLUDE_DIR NAMES libudev.h PATH_SUFFIXES "include")
+    find_library(HAS_LIBUSB usb-1.0)
+    find_library(HAS_LIBUDEV udev)
 
-if(HAS_LIBUSB AND LIBUSB_INCLUDE_DIR)
-set(LIBUSB_GOOD TRUE)
-endif()
+    if(HAS_LIBUSB AND LIBUSB_INCLUDE_DIR)
+        set(LIBUSB_GOOD TRUE)
+    endif()
 
-if(HAS_LIBUDEV AND LIBUDEV_INCLUDE_DIR)
-set(LIBUDEV_GOOD TRUE)
-endif()
+    if(HAS_LIBUDEV AND LIBUDEV_INCLUDE_DIR)
+        set(LIBUDEV_GOOD TRUE)
+    endif()
 
-if(LIBUDEV_GOOD)
-set(USE_UDEV TRUE)
-elseif(LIBUSB_GOOD)
-set(USE_LIBUSB TRUE)
-else()
-message(FATAL_ERROR, "Missing Build Dependencies for USB - install libusb-1.0-0-dev or libudev-dev")
-endif()
+    if(LIBUDEV_GOOD)
+        set(USE_UDEV TRUE)
+    elseif(LIBUSB_GOOD)
+        set(USE_LIBUSB TRUE)
+    else()
+        message(FATAL_ERROR, "Missing Build Dependencies for USB - install libusb-1.0-0-dev or libudev-dev")
+    endif()
 
 endif(LINUX AND NEED_USB)
 
 if(USE_UDEV)
-set(USB_INCLUDE_DIR ${LIBUDEV_INCLUDE_DIR})
-set(HID_SRC ../third_party/hidapi/linux/hid.c)
+    set(USB_INCLUDE_DIR ${LIBUDEV_INCLUDE_DIR})
+    set(HID_SRC ../third_party/hidapi/linux/hid.c)
 endif(USE_UDEV)
 
 if(USE_LIBUSB)
-set(USB_INCLUDE_DIR ${LIBUSB_INCLUDE_DIR})
-set(HID_SRC ../third_party/hidapi/libusb/hid.c)
+    set(USB_INCLUDE_DIR ${LIBUSB_INCLUDE_DIR})
+    set(HID_SRC ../third_party/hidapi/libusb/hid.c)
 endif(USE_LIBUSB)
 
 if(NEED_USB OR ATCA_HAL_KIT_UART)
-set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/kit_protocol.c)
+    set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/kit_protocol.c)
 endif()
 
 if(ATCA_HAL_KIT_HID)
-set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${HID_SRC} hal/hal_all_platforms_kit_hidapi.c)
+    set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${HID_SRC} hal/hal_all_platforms_kit_hidapi.c)
 endif(ATCA_HAL_KIT_HID)
 
 if(ATCA_HAL_KIT_UART OR ATCA_HAL_SWI_UART)
-if(WIN32)
-set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_windows_kit_uart.c)
-elseif(LINUX OR APPLE)
-set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_linux_uart_userspace.c)
-endif()
+    if(WIN32)
+        set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_windows_kit_uart.c)
+    elseif(LINUX OR APPLE)
+        set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_linux_uart_userspace.c)
+    endif()
 endif()
 
 if(ATCA_HAL_I2C)
-set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${TWI_SRC})
+    set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${TWI_SRC})    
 endif(ATCA_HAL_I2C)
 
 if(ATCA_HAL_SPI)
-set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${SPI_SRC})
+    set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${SPI_SRC})
 endif(ATCA_HAL_SPI)
 
 if(ATCA_HAL_SWI_UART)
-set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_swi_uart.c)
+    set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_swi_uart.c)
 endif(ATCA_HAL_SWI_UART)
 
 if(ATCA_HAL_KIT_BRIDGE)
-set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_kit_bridge.c)
+    set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} hal/hal_kit_bridge.c)
 endif(ATCA_HAL_KIT_BRIDGE)
 
 if(ATCA_WPC_SUPPORT)
-set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${WPC_SRC})
+    set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${WPC_SRC})
 endif(ATCA_WPC_SUPPORT)
 
 # Add Remaining Sources depending on target library type
 if(ATCA_MBEDTLS)
-set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${MBEDTLS_SRC})
+    set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${MBEDTLS_SRC})
 endif()
 
 if(ATCA_PKCS11)
@@ -290,134 +296,194 @@ add_definitions(-DATCA_BUILD_SHARED_LIBS)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} atca_utils_sizes.c)
 endif(ATCA_BUILD_SHARED_LIBS)
 
-add_library(cryptoauth ${CRYPTOAUTH_SRC} ${ATCACERT_DEF_SRC})
-if (ATCA_TA_SUPPORT)
-add_subdirectory(talib)
-endif()
+if (ATCA_ZEPHYR_SUPPORT)        
+    zephyr_library()
+    
+    zephyr_library_sources(${CRYPTOAUTH_SRC})
 
-set_target_properties(cryptoauth PROPERTIES C_STANDARD 99 VERSION ${VERSION} SOVERSION ${VERSION_MAJOR})
+    zephyr_library_include_directories(
+        ${ZEPHYR_INCLUDE_DIRS}
+        ${CMAKE_CURRENT_BINARY_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/hal        
+        ${CMAKE_CURRENT_SOURCE_DIR}/../app/tng
+        ${CMAKE_CURRENT_SOURCE_DIR}/../third_party
+    )
 
-if(HAS_MALLOC)
-set(ATCA_PLATFORM_MALLOC malloc CACHE STRING "" FORCE)
-endif(HAS_MALLOC)
+    zephyr_include_directories(
+        ${CMAKE_CURRENT_BINARY_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}
+    )    
 
-if(HAS_FREE)
-set(ATCA_PLATFORM_FREE free CACHE STRING "" FORCE)
-endif(HAS_FREE)
+    if (ATCA_TA_SUPPORT)
+        add_subdirectory(talib)
+    endif()
 
-if(HAS_STRCASESTR)
-set(ATCA_PLATFORM_STRCASESTR strcasestr CACHE STRING "" FORCE)
-endif(HAS_STRCASESTR)
+    if(HAS_MALLOC)
+        set(ATCA_PLATFORM_MALLOC malloc CACHE STRING "" FORCE)
+    endif()
+    if(HAS_FREE)
+        set(ATCA_PLATFORM_FREE free CACHE STRING "" FORCE)
+    endif()
+    if(HAS_STRCASESTR)
+        set(ATCA_PLATFORM_STRCASESTR strcasestr CACHE STRING "" FORCE)
+    endif()
+    if(HAS_MEMSET_S)
+        set(ATCA_PLATFORM_MEMSET_S memset_s CACHE STRING "" FORCE)
+    endif()
 
-if(HAS_MEMSET_S)
-set(ATCA_PLATFORM_MEMSET_S memset_s CACHE STRING "" FORCE)
-endif(HAS_MEMSET_S)
+    if(BUILD_TESTS)
+        set(ATCA_TESTS_ENABLED ON CACHE INTERNAL "")
+    endif()
 
-if(BUILD_TESTS)
-set(ATCA_TESTS_ENABLED ON CACHE INTERNAL "")
-endif(BUILD_TESTS)
+    configure_file(atca_config.h.in atca_config.h @ONLY)
 
-configure_file(atca_config.h.in atca_config.h @ONLY)
-set(LIB_INC ${LIB_INC} ${CMAKE_CURRENT_BINARY_DIR}/atca_config.h)
+    if (ATCA_MBEDTLS)
+        zephyr_library_link_libraries(mbedtls)
+    endif()
+    if (ATCA_WOLFSSL)
+        zephyr_library_link_libraries(wolfssl)
+    endif()
+    if (ATCA_OPENSSL)
+        zephyr_library_include_directories(${OPENSSL_INCLUDE_DIR})
+        zephyr_library_link_libraries(${OPENSSL_CRYPTO_LIBRARY})
+    endif()
 
-include_directories(cryptoauth PUBLIC ${CMAKE_CURRENT_BINARY_DIR}
-                                      ${CMAKE_CURRENT_SOURCE_DIR}
-                                      ${CMAKE_BINARY_DIR}/downloaded
-                                      ../app/tng
-                                      ../third_party
-                                      ../third_party/hidapi/hidapi
-                                      ${USB_INCLUDE_DIR})
+    if (ATCA_STRICT_C99)
+        zephyr_library_compile_options(-Wpedantic)
+    endif()
 
-if(APPLE)
-include_directories(cryptoauth PUBLIC ../third_party/hidapi/mac) 
-endif()
-
-if(ATCA_MBEDTLS)
-target_link_libraries(cryptoauth mbedtls)
-endif()
-
-if(ATCA_WOLFSSL)
-target_link_libraries(cryptoauth wolfssl)
-endif()
-
-if(ATCA_OPENSSL)
-include_directories(cryptoauth PUBLIC ${OPENSSL_INCLUDE_DIR})
-target_link_libraries(cryptoauth ${OPENSSL_CRYPTO_LIBRARY})
-endif()
-
-if(WIN32)
-set_target_properties(cryptoauth PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
-target_link_libraries(cryptoauth setupapi.lib)
-endif(WIN32)
-
-if(APPLE)
-find_library(IO_KIT_LIB IOKit)
-find_library(CORE_LIB CoreFoundation)
-target_link_libraries(cryptoauth ${IO_KIT_LIB} ${CORE_LIB})
-endif()
-
-if(LINUX)
-add_definitions(-DATCA_USE_SHARED_MUTEX)
-if(USE_LIBUSB)
-target_link_libraries(cryptoauth usb-1.0)
-elseif(USE_UDEV)
-target_link_libraries(cryptoauth udev)
-endif()
-target_link_libraries(cryptoauth rt)
-endif(LINUX)
-
-if(NOT MSVC)
-target_compile_options(cryptoauth PRIVATE -ffile-prefix-map=${CMAKE_CURRENT_SOURCE_DIR}=.
-                                                   -fmacro-prefix-map=${CMAKE_CURRENT_SOURCE_DIR}=.)
-#target_compile_options(cryptoauth PRIVATE -Wall -Wextra -Werror)
-target_compile_options(cryptoauth PRIVATE -Wall -Wextra)
-endif()
-
-if(ATCA_STRICT_C99)
-set_property(TARGET cryptoauth PROPERTY C_STANDARD 99)
-if(NOT MSVC)
-target_compile_options(cryptoauth PRIVATE -Wpedantic)
-endif()
-endif()
-
-if(NOT MSVC AND ATCA_HAL_KIT_HID)
-set_source_files_properties(${HID_SRC} PROPERTIES COMPILE_FLAGS "-w")
-endif()
-
-if(DEFAULT_LIB_PATH)
-if(${CMAKE_VERSION} VERSION_GREATER "3.12.0")
-install(TARGETS ${PROJECT_NAME}
-        LIBRARY
-          DESTINATION ${DEFAULT_LIB_PATH}
-          COMPONENT Libraries
-          NAMELINK_COMPONENT Development)
 else()
-install(TARGETS ${PROJECT_NAME}
-        LIBRARY
-          DESTINATION ${DEFAULT_LIB_PATH}
-          COMPONENT Libraries)
-endif()
-endif(DEFAULT_LIB_PATH)
+    add_library(cryptoauth ${CRYPTOAUTH_SRC} ${ATCACERT_DEF_SRC})
 
-if(DEFAULT_INC_PATH)
-install(FILES ${LIB_INC} DESTINATION ${DEFAULT_INC_PATH} COMPONENT Development)
-install(FILES ${HAL_INC} DESTINATION ${DEFAULT_INC_PATH}/hal COMPONENT Development)
-install(FILES ${ATCACERT_INC} DESTINATION ${DEFAULT_INC_PATH}/atcacert COMPONENT Development)
-install(FILES ${CALIB_INC} DESTINATION ${DEFAULT_INC_PATH}/calib COMPONENT Development)
-install(FILES ${CRYPTO_INC} DESTINATION ${DEFAULT_INC_PATH}/crypto COMPONENT Development)
-install(FILES ${CRYPTO_HASHES_INC} DESTINATION ${DEFAULT_INC_PATH}/crypto/hashes COMPONENT Development)
-install(FILES ${HOST_INC} DESTINATION ${DEFAULT_INC_PATH}/host COMPONENT Development)
-install(FILES ${JWT_INC} DESTINATION ${DEFAULT_INC_PATH}/jwt COMPONENT Development)
-install(FILES ${TNG_INC} DESTINATION ${DEFAULT_INC_PATH}/app/tng COMPONENT Development)
-install(FILES ${WPC_INC} DESTINATION ${DEFAULT_INC_PATH}/app/wpc COMPONENT Development)
-install(FILES ${SHA206_API_INC} DESTINATION ${DEFAULT_INC_PATH}/app/api_206a COMPONENT Development)
-if(ATCA_MBEDTLS)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls/atca_mbedtls_interface.h DESTINATION ${DEFAULT_INC_PATH}/mbedtls COMPONENT Development)
-endif(ATCA_MBEDTLS)
-if(ATCA_OPENSSL)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/openssl/atca_openssl_interface.h DESTINATION ${DEFAULT_INC_PATH}/openssl COMPONENT Development)
-endif(ATCA_OPENSSL)
-if(ATCA_WOLFSSL)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/wolfssl/atca_wolfssl_interface.h DESTINATION ${DEFAULT_INC_PATH}/wolfssl COMPONENT Development)
-endif(ATCA_WOLFSSL)
-endif(DEFAULT_INC_PATH)
+    if (ATCA_TA_SUPPORT)
+        add_subdirectory(talib)
+    endif()
+
+    set_target_properties(cryptoauth PROPERTIES C_STANDARD 99 VERSION ${VERSION} SOVERSION ${VERSION_MAJOR})
+
+    if(HAS_MALLOC)
+        set(ATCA_PLATFORM_MALLOC malloc CACHE STRING "" FORCE)
+    endif(HAS_MALLOC)
+
+    if(HAS_FREE)
+        set(ATCA_PLATFORM_FREE free CACHE STRING "" FORCE)
+    endif(HAS_FREE)
+
+    if(HAS_STRCASESTR)
+        set(ATCA_PLATFORM_STRCASESTR strcasestr CACHE STRING "" FORCE)
+    endif(HAS_STRCASESTR)
+
+    if(HAS_MEMSET_S)
+        set(ATCA_PLATFORM_MEMSET_S memset_s CACHE STRING "" FORCE)
+    endif(HAS_MEMSET_S)
+
+    if(BUILD_TESTS)
+        set(ATCA_TESTS_ENABLED ON CACHE INTERNAL "")
+    endif(BUILD_TESTS)
+
+    configure_file(atca_config.h.in atca_config.h @ONLY)
+    set(LIB_INC ${LIB_INC} ${CMAKE_CURRENT_BINARY_DIR}/atca_config.h)
+
+    include_directories(cryptoauth PUBLIC ${CMAKE_CURRENT_BINARY_DIR}
+                                        ${CMAKE_CURRENT_SOURCE_DIR}
+                                        ${CMAKE_BINARY_DIR}/downloaded
+                                        ../app/tng
+                                        ../third_party
+                                        ../third_party/hidapi/hidapi
+                                        ${USB_INCLUDE_DIR})
+
+    if(APPLE)
+        include_directories(cryptoauth PUBLIC ../third_party/hidapi/mac) 
+    endif()
+
+    if(ATCA_MBEDTLS)
+        target_link_libraries(cryptoauth mbedtls)
+    endif()
+
+    if(ATCA_WOLFSSL)
+        target_link_libraries(cryptoauth wolfssl)
+    endif()
+
+    if(ATCA_OPENSSL)
+        include_directories(cryptoauth PUBLIC ${OPENSSL_INCLUDE_DIR})
+        target_link_libraries(cryptoauth ${OPENSSL_CRYPTO_LIBRARY})
+    endif()
+
+    if(WIN32)
+        set_target_properties(cryptoauth PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
+        target_link_libraries(cryptoauth setupapi.lib)
+    endif(WIN32)
+
+    if(APPLE)
+        find_library(IO_KIT_LIB IOKit)
+        find_library(CORE_LIB CoreFoundation)
+        target_link_libraries(cryptoauth ${IO_KIT_LIB} ${CORE_LIB})
+    endif()
+
+    if(LINUX)
+        add_definitions(-DATCA_USE_SHARED_MUTEX)
+        if(USE_LIBUSB)
+            target_link_libraries(cryptoauth usb-1.0)
+        elseif(USE_UDEV)
+            target_link_libraries(cryptoauth udev)
+        endif()
+        target_link_libraries(cryptoauth rt)
+    endif(LINUX)
+
+    if(NOT MSVC)
+        target_compile_options(cryptoauth PRIVATE -ffile-prefix-map=${CMAKE_CURRENT_SOURCE_DIR}=.
+                                                        -fmacro-prefix-map=${CMAKE_CURRENT_SOURCE_DIR}=.)
+        #target_compile_options(cryptoauth PRIVATE -Wall -Wextra -Werror)
+        target_compile_options(cryptoauth PRIVATE -Wall -Wextra)
+    endif()
+
+    if(ATCA_STRICT_C99)
+        set_property(TARGET cryptoauth PROPERTY C_STANDARD 99)
+        if(NOT MSVC)
+            target_compile_options(cryptoauth PRIVATE -Wpedantic)
+        endif()
+    endif()
+
+    if(NOT MSVC AND ATCA_HAL_KIT_HID)
+        set_source_files_properties(${HID_SRC} PROPERTIES COMPILE_FLAGS "-w")
+    endif()
+
+    if(DEFAULT_LIB_PATH)
+        if(${CMAKE_VERSION} VERSION_GREATER "3.12.0")
+            install(TARGETS ${PROJECT_NAME}
+                    LIBRARY
+                    DESTINATION ${DEFAULT_LIB_PATH}
+                    COMPONENT Libraries
+                    NAMELINK_COMPONENT Development)
+        else()
+            install(TARGETS ${PROJECT_NAME}
+                    LIBRARY
+                    DESTINATION ${DEFAULT_LIB_PATH}
+                    COMPONENT Libraries)
+        endif()
+    endif(DEFAULT_LIB_PATH)
+
+    if(DEFAULT_INC_PATH)
+        install(FILES ${LIB_INC} DESTINATION ${DEFAULT_INC_PATH} COMPONENT Development)
+        install(FILES ${HAL_INC} DESTINATION ${DEFAULT_INC_PATH}/hal COMPONENT Development)
+        install(FILES ${ATCACERT_INC} DESTINATION ${DEFAULT_INC_PATH}/atcacert COMPONENT Development)
+        install(FILES ${CALIB_INC} DESTINATION ${DEFAULT_INC_PATH}/calib COMPONENT Development)
+        install(FILES ${CRYPTO_INC} DESTINATION ${DEFAULT_INC_PATH}/crypto COMPONENT Development)
+        install(FILES ${CRYPTO_HASHES_INC} DESTINATION ${DEFAULT_INC_PATH}/crypto/hashes COMPONENT Development)
+        install(FILES ${HOST_INC} DESTINATION ${DEFAULT_INC_PATH}/host COMPONENT Development)
+        install(FILES ${JWT_INC} DESTINATION ${DEFAULT_INC_PATH}/jwt COMPONENT Development)
+        install(FILES ${TNG_INC} DESTINATION ${DEFAULT_INC_PATH}/app/tng COMPONENT Development)
+        install(FILES ${WPC_INC} DESTINATION ${DEFAULT_INC_PATH}/app/wpc COMPONENT Development)
+        install(FILES ${SHA206_API_INC} DESTINATION ${DEFAULT_INC_PATH}/app/api_206a COMPONENT Development)
+        if(ATCA_MBEDTLS)
+            install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/mbedtls/atca_mbedtls_interface.h DESTINATION ${DEFAULT_INC_PATH}/mbedtls COMPONENT Development)
+        endif(ATCA_MBEDTLS)
+        if(ATCA_OPENSSL)
+            install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/openssl/atca_openssl_interface.h DESTINATION ${DEFAULT_INC_PATH}/openssl COMPONENT Development)
+        endif(ATCA_OPENSSL)
+        if(ATCA_WOLFSSL)
+            install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/wolfssl/atca_wolfssl_interface.h DESTINATION ${DEFAULT_INC_PATH}/wolfssl COMPONENT Development)
+        endif(ATCA_WOLFSSL)
+    endif(DEFAULT_INC_PATH)
+endif()

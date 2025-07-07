@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <drivers/i2c.h>
+#include <zephyr/drivers/i2c.h>
 
 #include "hal/atca_hal.h"
 
@@ -15,49 +15,39 @@
  *
    @{ */
 
-
 /** \brief The function return pre defined macro value for corrsponding i2c speed
- * 
+ *
  *  \param[in] speed   As input, i2c clock speed in HZ
- * 
+ *
  *  \return Zephyr I2C speed constant
  */
 static uint32_t hal_zephyr_i2c_convert_speed(const uint32_t speed)
 {
-    if (400000 < speed)
-    {
-        return I2C_SPEED_FAST_PLUS;
-    }
-    else if (100000 < speed)
-    {
-        return I2C_SPEED_FAST;
-    }
-    else
-    {
-        return I2C_SPEED_STANDARD;
-    }
+	if (400000 < speed) {
+		return I2C_SPEED_FAST_PLUS;
+	} else if (100000 < speed) {
+		return I2C_SPEED_FAST;
+	} else {
+		return I2C_SPEED_STANDARD;
+	}
 }
 
 /** \brief Configure the zephyr i2c peripheral
  *  \return ATCA_SUCCESS otherwise an error
  */
-static ATCA_STATUS hal_zephyr_i2c_configure(
-    const struct device *   zdev,            /**< Zephyr device to configure */
-    const uint32_t          speed            /**< baud rate (typically 100000 or 400000) */
+static ATCA_STATUS
+hal_zephyr_i2c_configure(const struct device *zdev, /**< Zephyr device to configure */
+			 const uint32_t speed       /**< baud rate (typically 100000 or 400000) */
 )
 {
-    uint32_t i2c_cfg = I2C_MODE_MASTER | I2C_SPEED_SET(hal_zephyr_i2c_convert_speed(speed));
+	uint32_t i2c_cfg = I2C_MODE_CONTROLLER | I2C_SPEED_SET(hal_zephyr_i2c_convert_speed(speed));
 
-    if (i2c_configure(zdev, i2c_cfg)) 
-    {
-        return ATCA_GEN_FAIL;
-    }
-    else
-    {
-        return ATCA_SUCCESS;
-    }
+	if (i2c_configure(zdev, i2c_cfg)) {
+		return ATCA_GEN_FAIL;
+	} else {
+		return ATCA_SUCCESS;
+	}
 }
-
 
 /** \brief HAL implementation of I2C init
  *
@@ -69,28 +59,24 @@ static ATCA_STATUS hal_zephyr_i2c_configure(
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
 
-ATCA_STATUS hal_i2c_init(ATCAIface iface, ATCAIfaceCfg* cfg)
+ATCA_STATUS hal_i2c_init(ATCAIface iface, ATCAIfaceCfg *cfg)
 {
-    ATCA_STATUS status = ATCA_BAD_PARAM;
+	ATCA_STATUS status = ATCA_BAD_PARAM;
 
-    if (iface && cfg && cfg->cfg_data)
-    {
-        if (!iface->hal_data)
-        {
-            const struct device * zdev = device_get_binding(cfg->cfg_data);
+	if (iface && cfg && cfg->cfg_data) {
+		if (!iface->hal_data) {
+			const struct device *zdev = device_get_binding(cfg->cfg_data);
 
-            if (ATCA_SUCCESS == (status = hal_zephyr_i2c_configure(zdev, cfg->atcai2c.baud)))
-            {
-                iface->hal_data = (void*)zdev;
-            }
-        }
-        else
-        {
-            status = ATCA_SUCCESS;
-        }
-    }
+			if (ATCA_SUCCESS ==
+			    (status = hal_zephyr_i2c_configure(zdev, cfg->atcai2c.baud))) {
+				iface->hal_data = (void *)zdev;
+			}
+		} else {
+			status = ATCA_SUCCESS;
+		}
+	}
 
-    return status;
+	return status;
 }
 
 /** \brief HAL implementation of I2C post init
@@ -99,8 +85,8 @@ ATCA_STATUS hal_i2c_init(ATCAIface iface, ATCAIfaceCfg* cfg)
  */
 ATCA_STATUS hal_i2c_post_init(ATCAIface iface)
 {
-    ((void)iface);
-    return ATCA_SUCCESS;
+	((void)iface);
+	return ATCA_SUCCESS;
 }
 
 /** \brief HAL implementation of I2C send
@@ -110,21 +96,46 @@ ATCA_STATUS hal_i2c_post_init(ATCAIface iface)
  * \param[in] txlength      number of bytes to send
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-
-ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t address, uint8_t *txdata, int txlength)
+ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata, int txlength)
 {
-    struct device * zdev = (struct device *)atgetifacehaldat(iface);
+	struct device *zdev = (struct device *)atgetifacehaldat(iface);
+	ATCAIfaceCfg *cfg = iface->mIfaceCFG;
 
-    if (!zdev || (0 == txlength) || (NULL == txdata))
-    {
-        return ATCA_BAD_PARAM;
-    }
-    if (i2c_write(zdev, txdata, txlength, (address >> 0x1)))
-    {
-        return ATCA_TX_FAIL;
-    }
-     
-    return ATCA_SUCCESS;
+	if (!zdev || !cfg) {
+		return ATCA_BAD_PARAM;
+	}
+
+#ifdef ATCA_ENABLE_DEPRECATED
+	uint8_t dev_addr = cfg->atcai2c.slave_address >> 1;
+#else
+	uint8_t dev_addr = cfg->atcai2c.address >> 1;
+#endif
+
+	struct i2c_msg msgs[2];
+
+	/* First message, send word address. */
+	uint8_t word_addr = word_address;
+	msgs[0].buf = &word_addr;
+	msgs[0].len = 1;
+	msgs[0].flags = I2C_MSG_WRITE;
+
+	uint8_t num_msgs = 1;
+
+	/* Optional second message, send txdata if provided. */
+	if (txdata && txlength > 0) {
+		msgs[1].buf = txdata;
+		msgs[1].len = txlength;
+		msgs[1].flags = I2C_MSG_WRITE | I2C_MSG_STOP;
+		num_msgs = 2;
+	} else {
+		msgs[0].flags |= I2C_MSG_STOP;
+	}
+
+	if (i2c_transfer(zdev, msgs, num_msgs, dev_addr)) {
+		return ATCA_TX_FAIL;
+	}
+
+	return ATCA_SUCCESS;
 }
 
 /** \brief HAL implementation of I2C receive function
@@ -137,19 +148,17 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t address, uint8_t *txdata, int 
  */
 ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t address, uint8_t *rxdata, uint16_t *rxlength)
 {
-    struct device * zdev = (struct device *)atgetifacehaldat(iface);
+	struct device *zdev = (struct device *)atgetifacehaldat(iface);
 
-    if (!zdev || (NULL == rxlength) || (NULL == rxdata))
-    {
-        return ATCA_BAD_PARAM;
-    }
+	if (!zdev || (NULL == rxlength) || (NULL == rxdata)) {
+		return ATCA_BAD_PARAM;
+	}
 
-    if (i2c_read(zdev, rxdata, *rxlength, (address >> 0x1)))
-    {
-        return ATCA_RX_FAIL;
-    }
+	if (i2c_read(zdev, rxdata, *rxlength, (address >> 0x1))) {
+		return ATCA_RX_FAIL;
+	}
 
-    return ATCA_SUCCESS;
+	return ATCA_SUCCESS;
 }
 
 /** \brief Perform control operations for the kit protocol
@@ -159,25 +168,21 @@ ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t address, uint8_t *rxdata, u
  * \param[in]     paramlen       Length of the parameter
  * \return ATCA_SUCCESS on success, otherwise an error code.
  */
-ATCA_STATUS hal_i2c_control(ATCAIface iface, uint8_t option, void* param, size_t paramlen)
+ATCA_STATUS hal_i2c_control(ATCAIface iface, uint8_t option, void *param, size_t paramlen)
 {
-    (void)param;
-    (void)paramlen;
+	(void)param;
+	(void)paramlen;
 
-    struct device * zdev = (struct device *)atgetifacehaldat(iface);
+	struct device *zdev = (struct device *)atgetifacehaldat(iface);
 
-    if (zdev)
-    {
-        if (ATCA_HAL_CHANGE_BAUD == option && sizeof(uint32_t) == paramlen)
-        {
-            return hal_zephyr_i2c_configure(zdev, *(uint32_t*)param);
-        }
-        else
-        {
-            return ATCA_UNIMPLEMENTED;
-        }
-    }
-    return ATCA_BAD_PARAM;
+	if (zdev) {
+		if (ATCA_HAL_CHANGE_BAUD == option && sizeof(uint32_t) == paramlen) {
+			return hal_zephyr_i2c_configure(zdev, *(uint32_t *)param);
+		} else {
+			return ATCA_UNIMPLEMENTED;
+		}
+	}
+	return ATCA_BAD_PARAM;
 }
 
 /** \brief manages reference count on given bus and releases resource if no more refences exist
@@ -187,7 +192,7 @@ ATCA_STATUS hal_i2c_control(ATCAIface iface, uint8_t option, void* param, size_t
 
 ATCA_STATUS hal_i2c_release(void *hal_data)
 {
-    return ATCA_SUCCESS;
+	return ATCA_SUCCESS;
 }
 
 /** @} */
