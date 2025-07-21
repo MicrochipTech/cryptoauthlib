@@ -188,3 +188,9 @@ Edit the mchp-cryptoauth.rules file and add the following line to the file:
 ```text
 SUBSYSTEM=="hidraw", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2312", MODE="0666"
 ```
+Updating *X.509 compressed certificate format* to support extended years 
+===========================================
+
+The X.509 compressed certificate format now supports encoding issue and expiry years beyond 2031.
+
+For implementation details, see: [Extending Certificate Years](https://github.com/MicrochipTech/cryptoauthlib/wiki/Extending-Certificate-Years)
