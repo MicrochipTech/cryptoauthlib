@@ -1,10 +1,10 @@
 var a01797 =
 [
-    [ "auth_mac", "a01797.html#aaa57ce590925c0efe017af1d4457d479", null ],
-    [ "encrypted_data", "a01797.html#a38f7761577529e0bbf52cd0b8c17658b", null ],
-    [ "input_data", "a01797.html#a423e1db9e86ff369d49d78d8f5ea2525", null ],
-    [ "key_id", "a01797.html#a213cc14f2d1c67be382cb8918aca4362", null ],
-    [ "sn", "a01797.html#a2c43368d48a41123da5f69356b6f29f5", null ],
-    [ "temp_key", "a01797.html#a8786d124038d3516d98f2456f19985cf", null ],
-    [ "zone", "a01797.html#adf4e9d92c10469c78810f2881a95843b", null ]
+    [ "key", "a01528.html#gab6fe3f8a17d3a68f63c9c537cadd0fd0", null ],
+    [ "key_id", "a01528.html#ga10f04328eda5cffcea79652ac3509c2d", null ],
+    [ "mode", "a01528.html#ga1616d5efe59851d97fed27b47923c786", null ],
+    [ "otp", "a01528.html#gaad38386d9ec6afcdcd39eab98e2a4a1c", null ],
+    [ "response", "a01528.html#gacf6675faad5f7a43ca3fbec2108f57cd", null ],
+    [ "sn", "a01528.html#gaf0d7fe9a16cad1ba38c7daca4295823b", null ],
+    [ "temp_key", "a01528.html#ga7507880718dc536d6122f0401073b8c8", null ]
 ];

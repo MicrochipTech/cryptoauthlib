@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_write_mac_in_out Struct Reference</title>
+<title>CryptoAuthLib: atca_hmac_in_out Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.8</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.9</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,54 +99,54 @@ $(document).ready(function(){initNavTree('a01797.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">atca_write_mac_in_out Struct Reference<div class="ingroups"><a class="el" href="a01516.html">Host side crypto methods (atcah_)</a></div></div></div>
+  <div class="headertitle"><div class="title">atca_hmac_in_out Struct Reference<div class="ingroups"><a class="el" href="a01528.html">Host side crypto methods (atcah_)</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Input/output parameters for function atcah_write_auth_mac() and atcah_privwrite_auth_mac().  
+<p>Input/output parameters for function atca_hmac().  
  <a href="a01797.html#details">More...</a></p>
 
 <p><code>#include &lt;lib/host/atca_host.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:adf4e9d92c10469c78810f2881a95843b"><td class="memItemLeft" align="right" valign="top"><a id="adf4e9d92c10469c78810f2881a95843b" name="adf4e9d92c10469c78810f2881a95843b"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>zone</b></td></tr>
-<tr class="memdesc:adf4e9d92c10469c78810f2881a95843b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zone/Param1 for the Write or PrivWrite command. <br /></td></tr>
-<tr class="separator:adf4e9d92c10469c78810f2881a95843b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a213cc14f2d1c67be382cb8918aca4362"><td class="memItemLeft" align="right" valign="top"><a id="a213cc14f2d1c67be382cb8918aca4362" name="a213cc14f2d1c67be382cb8918aca4362"></a>
+<tr class="memitem:ga1616d5efe59851d97fed27b47923c786"><td class="memItemLeft" align="right" valign="top">
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>mode</b></td></tr>
+<tr class="memdesc:ga1616d5efe59851d97fed27b47923c786"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Mode parameter used in HMAC command (Param1). <br /></td></tr>
+<tr class="separator:ga1616d5efe59851d97fed27b47923c786"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga10f04328eda5cffcea79652ac3509c2d"><td class="memItemLeft" align="right" valign="top">
 uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>key_id</b></td></tr>
-<tr class="memdesc:a213cc14f2d1c67be382cb8918aca4362"><td class="mdescLeft">&#160;</td><td class="mdescRight">KeyID/Param2 for the Write or PrivWrite command. <br /></td></tr>
-<tr class="separator:a213cc14f2d1c67be382cb8918aca4362"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c43368d48a41123da5f69356b6f29f5"><td class="memItemLeft" align="right" valign="top"><a id="a2c43368d48a41123da5f69356b6f29f5" name="a2c43368d48a41123da5f69356b6f29f5"></a>
+<tr class="memdesc:ga10f04328eda5cffcea79652ac3509c2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] KeyID parameter used in HMAC command (Param2). <br /></td></tr>
+<tr class="separator:ga10f04328eda5cffcea79652ac3509c2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab6fe3f8a17d3a68f63c9c537cadd0fd0"><td class="memItemLeft" align="right" valign="top">
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>key</b></td></tr>
+<tr class="memdesc:gab6fe3f8a17d3a68f63c9c537cadd0fd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to 32-byte key used to generate HMAC digest. <br /></td></tr>
+<tr class="separator:gab6fe3f8a17d3a68f63c9c537cadd0fd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad38386d9ec6afcdcd39eab98e2a4a1c"><td class="memItemLeft" align="right" valign="top">
+const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>otp</b></td></tr>
+<tr class="memdesc:gaad38386d9ec6afcdcd39eab98e2a4a1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to 11-byte OTP, optionally included in HMAC digest, depending on mode. <br /></td></tr>
+<tr class="separator:gaad38386d9ec6afcdcd39eab98e2a4a1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf0d7fe9a16cad1ba38c7daca4295823b"><td class="memItemLeft" align="right" valign="top">
 const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>sn</b></td></tr>
-<tr class="memdesc:a2c43368d48a41123da5f69356b6f29f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device serial number SN[0:8]. Only SN[0:1] and SN[8] are required though. <br /></td></tr>
-<tr class="separator:a2c43368d48a41123da5f69356b6f29f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a423e1db9e86ff369d49d78d8f5ea2525"><td class="memItemLeft" align="right" valign="top"><a id="a423e1db9e86ff369d49d78d8f5ea2525" name="a423e1db9e86ff369d49d78d8f5ea2525"></a>
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>input_data</b></td></tr>
-<tr class="memdesc:a423e1db9e86ff369d49d78d8f5ea2525"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data to be encrypted. 32 bytes for Write command, 36 bytes for PrivWrite command. <br /></td></tr>
-<tr class="separator:a423e1db9e86ff369d49d78d8f5ea2525"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38f7761577529e0bbf52cd0b8c17658b"><td class="memItemLeft" align="right" valign="top"><a id="a38f7761577529e0bbf52cd0b8c17658b" name="a38f7761577529e0bbf52cd0b8c17658b"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>encrypted_data</b></td></tr>
-<tr class="memdesc:a38f7761577529e0bbf52cd0b8c17658b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypted version of input_data will be returned here. 32 bytes for Write command, 36 bytes for PrivWrite command. <br /></td></tr>
-<tr class="separator:a38f7761577529e0bbf52cd0b8c17658b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa57ce590925c0efe017af1d4457d479"><td class="memItemLeft" align="right" valign="top"><a id="aaa57ce590925c0efe017af1d4457d479" name="aaa57ce590925c0efe017af1d4457d479"></a>
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>auth_mac</b></td></tr>
-<tr class="memdesc:aaa57ce590925c0efe017af1d4457d479"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write MAC will be returned here. 32 bytes. <br /></td></tr>
-<tr class="separator:aaa57ce590925c0efe017af1d4457d479"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8786d124038d3516d98f2456f19985cf"><td class="memItemLeft" align="right" valign="top"><a id="a8786d124038d3516d98f2456f19985cf" name="a8786d124038d3516d98f2456f19985cf"></a>
-struct <a class="el" href="a01753.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>temp_key</b></td></tr>
-<tr class="memdesc:a8786d124038d3516d98f2456f19985cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current state of TempKey. <br /></td></tr>
-<tr class="separator:a8786d124038d3516d98f2456f19985cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gaf0d7fe9a16cad1ba38c7daca4295823b"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to 9-byte SN, optionally included in HMAC digest, depending on mode. <br /></td></tr>
+<tr class="separator:gaf0d7fe9a16cad1ba38c7daca4295823b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacf6675faad5f7a43ca3fbec2108f57cd"><td class="memItemLeft" align="right" valign="top">
+uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>response</b></td></tr>
+<tr class="memdesc:gacf6675faad5f7a43ca3fbec2108f57cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">[out] Pointer to 32-byte SHA-256 HMAC digest. <br /></td></tr>
+<tr class="separator:gacf6675faad5f7a43ca3fbec2108f57cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7507880718dc536d6122f0401073b8c8"><td class="memItemLeft" align="right" valign="top">
+struct <a class="el" href="a01765.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>temp_key</b></td></tr>
+<tr class="memdesc:ga7507880718dc536d6122f0401073b8c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in,out] Pointer to TempKey structure. <br /></td></tr>
+<tr class="separator:ga7507880718dc536d6122f0401073b8c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Input/output parameters for function atcah_write_auth_mac() and atcah_privwrite_auth_mac(). </p>
+<div class="textblock"><p>Input/output parameters for function atca_hmac(). </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01797.html">atca_write_mac_in_out</a></li>
+    <li class="navelem"><a class="el" href="a01797.html">atca_hmac_in_out</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

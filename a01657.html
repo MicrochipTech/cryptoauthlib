@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcacert_cert_loc_s Struct Reference</title>
+<title>CryptoAuthLib: atca_iface Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.8</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.9</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,31 +99,95 @@ $(document).ready(function(){initNavTree('a01657.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">atcacert_cert_loc_s Struct Reference<div class="ingroups"><a class="el" href="a01512.html">Certificate manipulation methods (atcacert_)</a></div></div></div>
+  <div class="headertitle"><div class="title">atca_iface Struct Reference<div class="ingroups"><a class="el" href="a01523.html">ATCAIface (atca_)</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;lib/atcacert/atcacert_def.h&gt;</code></p>
+<p><a class="el" href="a01657.html" title="atca_iface is the context structure for a configured interface">atca_iface</a> is the context structure for a configured interface  
+ <a href="a01657.html#details">More...</a></p>
+
+<p><code>#include &lt;lib/atca_iface.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aee425cdec2c6c77ccb291993a6526d0b"><td class="memItemLeft" align="right" valign="top"><a id="aee425cdec2c6c77ccb291993a6526d0b" name="aee425cdec2c6c77ccb291993a6526d0b"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>offset</b></td></tr>
-<tr class="memdesc:aee425cdec2c6c77ccb291993a6526d0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Byte offset in the certificate template. <br /></td></tr>
-<tr class="separator:aee425cdec2c6c77ccb291993a6526d0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2cf939ba243a6dc7c8da9a74040b83f3"><td class="memItemLeft" align="right" valign="top"><a id="a2cf939ba243a6dc7c8da9a74040b83f3" name="a2cf939ba243a6dc7c8da9a74040b83f3"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>count</b></td></tr>
-<tr class="memdesc:a2cf939ba243a6dc7c8da9a74040b83f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Byte count. Set to 0 if it doesn't exist. <br /></td></tr>
-<tr class="separator:a2cf939ba243a6dc7c8da9a74040b83f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a093b94b5d693f4e7a8facfc40f1443b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01589.html">ATCAIfaceCfg</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01657.html#a093b94b5d693f4e7a8facfc40f1443b0">mIfaceCFG</a></td></tr>
+<tr class="separator:a093b94b5d693f4e7a8facfc40f1443b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7cee716c7c8c20d0d8aac6243baff819"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01653.html">ATCAHAL_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01657.html#a7cee716c7c8c20d0d8aac6243baff819">hal</a></td></tr>
+<tr class="separator:a7cee716c7c8c20d0d8aac6243baff819"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ac7e576da4958d6c0488ec606d9cbff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01653.html">ATCAHAL_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01657.html#a3ac7e576da4958d6c0488ec606d9cbff">phy</a></td></tr>
+<tr class="separator:a3ac7e576da4958d6c0488ec606d9cbff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab316c2d139b46380bc97be4d23428caa"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01657.html#ab316c2d139b46380bc97be4d23428caa">hal_data</a></td></tr>
+<tr class="separator:ab316c2d139b46380bc97be4d23428caa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Defines a chunk of data in a certificate template. </p>
-</div></div><!-- contents -->
+<div class="textblock"><p><a class="el" href="a01657.html" title="atca_iface is the context structure for a configured interface">atca_iface</a> is the context structure for a configured interface </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a id="a7cee716c7c8c20d0d8aac6243baff819" name="a7cee716c7c8c20d0d8aac6243baff819"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7cee716c7c8c20d0d8aac6243baff819">&#9670;&#160;</a></span>hal</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01653.html">ATCAHAL_t</a>* atca_iface::hal</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The configured HAL for the interface </p>
+
+</div>
+</div>
+<a id="ab316c2d139b46380bc97be4d23428caa" name="ab316c2d139b46380bc97be4d23428caa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab316c2d139b46380bc97be4d23428caa">&#9670;&#160;</a></span>hal_data</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* atca_iface::hal_data</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pointer to HAL specific context/data </p>
+
+</div>
+</div>
+<a id="a093b94b5d693f4e7a8facfc40f1443b0" name="a093b94b5d693f4e7a8facfc40f1443b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a093b94b5d693f4e7a8facfc40f1443b0">&#9670;&#160;</a></span>mIfaceCFG</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01589.html">ATCAIfaceCfg</a>* atca_iface::mIfaceCFG</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Points to previous defined/given Cfg object, the caller manages this </p>
+
+</div>
+</div>
+<a id="a3ac7e576da4958d6c0488ec606d9cbff" name="a3ac7e576da4958d6c0488ec606d9cbff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ac7e576da4958d6c0488ec606d9cbff">&#9670;&#160;</a></span>phy</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01653.html">ATCAHAL_t</a>* atca_iface::phy</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>When a HAL is not a "native" hal it needs a physical layer to be associated with it </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01657.html">atcacert_cert_loc_s</a></li>
+    <li class="navelem"><a class="el" href="a01657.html">atca_iface</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

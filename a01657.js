@@ -1,5 +1,7 @@
 var a01657 =
 [
-    [ "count", "a01657.html#a2cf939ba243a6dc7c8da9a74040b83f3", null ],
-    [ "offset", "a01657.html#aee425cdec2c6c77ccb291993a6526d0b", null ]
+    [ "hal", "a01657.html#a7cee716c7c8c20d0d8aac6243baff819", null ],
+    [ "hal_data", "a01657.html#ab316c2d139b46380bc97be4d23428caa", null ],
+    [ "mIfaceCFG", "a01657.html#a093b94b5d693f4e7a8facfc40f1443b0", null ],
+    [ "phy", "a01657.html#a3ac7e576da4958d6c0488ec606d9cbff", null ]
 ];

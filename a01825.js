@@ -1,10 +1,13 @@
 var a01825 =
 [
-    [ "key_id", "a01825.html#a2582ecc282bd3d712918e6109a18c7d2", null ],
-    [ "mode", "a01825.html#afa39cec9e8d332618910a0f519b5b48d", null ],
-    [ "other_data", "a01825.html#a9aa171dc3ed5403822d780a2d0220d61", null ],
-    [ "public_key", "a01825.html#ad6eba00bdedd4375c93419eb4cda6850", null ],
-    [ "public_key_size", "a01825.html#a44b034625f63afcfaab306ac6275cd5b", null ],
-    [ "sn", "a01825.html#a17c83c0e810b2bf35b364f026e1cecb0", null ],
-    [ "temp_key", "a01825.html#afa11fd0401f2d8884d385ffc77962ec3", null ]
+    [ "client_chal", "a01825.html#ac4f5b60a59fa29d78c720c2be434c5c3", null ],
+    [ "client_resp", "a01825.html#a4daaa0bccc92503ccc31eaed78eb7409", null ],
+    [ "key_id", "a01825.html#a11807b6f83083ad17c66640c77c78973", null ],
+    [ "mode", "a01825.html#a0619aaead2b82313d761804f40c24926", null ],
+    [ "other_data", "a01825.html#af2d1c007ab43e8556a917efc5bcee9c8", null ],
+    [ "otp", "a01825.html#ac97a41612246b0527ed1a242bbe28a99", null ],
+    [ "slot_key", "a01825.html#aad7093cf772d6e337b3c09af9cea92ac", null ],
+    [ "sn", "a01825.html#a26f951076270f2389044a69b30c86d74", null ],
+    [ "target_key", "a01825.html#ae00a5116b4b55fb2bc6546ca3156522e", null ],
+    [ "temp_key", "a01825.html#a605e9f150203a43a550e68e940233245", null ]
 ];

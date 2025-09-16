@@ -1,11 +1,12 @@
 var a01781 =
 [
-    [ "challenge", "a01516.html#gac4c2db1a307043c7677e76310911d944", null ],
-    [ "key", "a01516.html#ga84ee714046fea52fb6b334e37b958c89", null ],
-    [ "key_id", "a01516.html#ga326ed9df4c9b966616e0b1a73f1b2796", null ],
-    [ "mode", "a01516.html#ga25187965ed87f828c98e4a20c93166e8", null ],
-    [ "otp", "a01516.html#gac9d561caddec61e481d241a88d73b653", null ],
-    [ "response", "a01516.html#ga3237adaae1e30c7ed469405e1ebfb435", null ],
-    [ "sn", "a01516.html#gaba323f1307689412ea6cc1e54810edb9", null ],
-    [ "temp_key", "a01516.html#ga7bf1d912d79b62cc598395642d77365f", null ]
+    [ "io_key", "a01781.html#a93cba5300302d50e26f70457f84df0da", null ],
+    [ "key_id", "a01781.html#ad4c4854451abd367cf8a13aad5f6372b", null ],
+    [ "mac", "a01781.html#afc99cd20d6193df126ae2b32b42f7546", null ],
+    [ "mode", "a01781.html#ac90559108804dc16ac1ac91a0212bff9", null ],
+    [ "msg_dig_buf", "a01781.html#acb0498448f486070d33e121ade525c64", null ],
+    [ "other_data", "a01781.html#ad89fec1f50b8e8ffc890d3683c4b5afe", null ],
+    [ "signature", "a01781.html#ad94d1c8d1635e597bd70823a207dc727", null ],
+    [ "sn", "a01781.html#a5e63ccd727b87d022ed0eedc0446410f", null ],
+    [ "temp_key", "a01781.html#ac9231df54b2f77c5061bdfbcea927a5e", null ]
 ];

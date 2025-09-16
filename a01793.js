@@ -1,5 +1,11 @@
 var a01793 =
 [
-    [ "sn", "a01793.html#ab2ca3ae12be534d58e22bb68d6042ea3", null ],
-    [ "temp_key", "a01793.html#a8406e4a6d09e2f6b8e3bfc12579d8653", null ]
+    [ "challenge", "a01528.html#gac4c2db1a307043c7677e76310911d944", null ],
+    [ "key", "a01528.html#ga84ee714046fea52fb6b334e37b958c89", null ],
+    [ "key_id", "a01528.html#ga326ed9df4c9b966616e0b1a73f1b2796", null ],
+    [ "mode", "a01528.html#ga25187965ed87f828c98e4a20c93166e8", null ],
+    [ "otp", "a01528.html#gac9d561caddec61e481d241a88d73b653", null ],
+    [ "response", "a01528.html#ga3237adaae1e30c7ed469405e1ebfb435", null ],
+    [ "sn", "a01528.html#gaba323f1307689412ea6cc1e54810edb9", null ],
+    [ "temp_key", "a01528.html#ga7bf1d912d79b62cc598395642d77365f", null ]
 ];

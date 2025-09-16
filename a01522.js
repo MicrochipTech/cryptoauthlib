@@ -1,29 +1,15 @@
 var a01522 =
 [
-    [ "atcacert_cert_element_t", "a02293.html", null ],
-    [ "atcacert_cert_loc_t", "a02289.html", null ],
-    [ "atcacert_cert_sn_src_t", "a02257.html", null ],
-    [ "atcacert_cert_type_t", "a02253.html", null ],
-    [ "atcacert_comp_data_t", "a02281.html", null ],
-    [ "atcacert_date_format_t", "a02269.html", null ],
-    [ "atcacert_def_t", "a02297.html", null ],
-    [ "atcacert_device_loc_t", "a02285.html", null ],
-    [ "atcacert_device_zone_t", "a02261.html", null ],
-    [ "atcacert_std_cert_element_t", "a02273.html", null ],
-    [ "atcacert_tm_utc_t", "a02301.html", null ],
-    [ "atcacert_transform_t", "a02265.html", null ],
-    [ "CertStatus", "a02277.html", null ],
-    [ "_atcacert_convert_bytes", "a01522.html#aa9c8b1588cae90a37ef827d71e4ae909", null ],
-    [ "_atcacert_convert_enum", "a01522.html#acf013c955f2fd024a8669085dadbd3ba", null ],
-    [ "atcacert_create_csr", "a01522.html#a453696e86822c980d8e5b9e6a27eb861", null ],
-    [ "atcacert_create_csr_pem", "a01522.html#a6c23b4916b8fa6dc8aa56b45f558d870", null ],
-    [ "atcacert_date_dec", "a01522.html#a7e05b319688a07bbfeee23895341303e", null ],
-    [ "atcacert_date_dec_compcert", "a01522.html#a7910146d6e2097e9fb075a2bf60d1b25", null ],
-    [ "atcacert_date_enc", "a01522.html#a23ff0ccfc75d564fc9f6200ef8cff5fb", null ],
-    [ "atcacert_date_enc_compcert", "a01522.html#a82bd7bbea46866cb644016ea7faff329", null ],
-    [ "atcacert_date_get_max_date", "a01522.html#a0ffefee23107bcbbadef2508ccaaba4f", null ],
-    [ "atcacert_get_response", "a01522.html#a9c3717acbb392ceed968c1172400e6dd", null ],
-    [ "atcacert_max_cert_size", "a01522.html#a3b6192388c29b0efb1968d6b44efd712", null ],
-    [ "atcacert_read_cert", "a01522.html#a4fe33f1da468796b39c80a34e12411fb", null ],
-    [ "atcacert_write_cert", "a01522.html#a5c4d1755dfd9a2b378cd45f14de1f1ee", null ]
+    [ "atca_device", "a01581.html", [
+      [ "device_state", "a01581.html#a6ce22e245944629826d4869f69babf81", null ],
+      [ "mIface", "a01581.html#a725646466f0ea8e0982251189c15724a", null ]
+    ] ],
+    [ "ATSHA204A", "a01522.html#ga054acfe7d4dd4064f9d27a9ea7fc2337", null ],
+    [ "ctx_cb", "a01522.html#gada27ffa70c78964d3b38abd11c5f4f22", null ],
+    [ "ATCADeviceState", "a01522.html#ga765308123cf522f5ec8b528bf4ea1243", null ],
+    [ "atGetIFace", "a01522.html#ga3f98e29cffa06446fc91b329703606af", null ],
+    [ "deleteATCADevice", "a01522.html#gac087cf04cd5bd6ff2e026d89bfbf5e12", null ],
+    [ "initATCADevice", "a01522.html#ga8eec7f2190d1f9bda6684f5d2177db15", null ],
+    [ "newATCADevice", "a01522.html#gad5e12e12d3030e28d75164286df9e5e9", null ],
+    [ "releaseATCADevice", "a01522.html#gab729e6c838c0a247d4f226fb92492d96", null ]
 ];

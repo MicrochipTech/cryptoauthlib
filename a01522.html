@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: cryptoauthlib.atcacert Namespace Reference</title>
+<title>CryptoAuthLib: ATCADevice (atca_)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.8</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.9</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,189 +99,195 @@ $(document).ready(function(){initNavTree('a01522.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">cryptoauthlib.atcacert Namespace Reference</div></div>
+  <div class="headertitle"><div class="title">ATCADevice (atca_)</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>ATCADevice object - composite of command and interface objects.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02293.html">atcacert_cert_element_t</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01581.html">atca_device</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a01581.html" title="atca_device is the C object backing ATCADevice. See the atca_device.h file for details on the ATCADev...">atca_device</a> is the C object backing ATCADevice. See the <a class="el" href="a00275.html" title="Microchip Crypto Auth device object.">atca_device.h</a> file for details on the ATCADevice methods  <a href="a01581.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02289.html">atcacert_cert_loc_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02257.html">atcacert_cert_sn_src_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02253.html">atcacert_cert_type_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02281.html">atcacert_comp_data_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02269.html">atcacert_date_format_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02297.html">atcacert_def_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02285.html">atcacert_device_loc_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02261.html">atcacert_device_zone_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02273.html">atcacert_std_cert_element_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02301.html">atcacert_tm_utc_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02265.html">atcacert_transform_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02277.html">CertStatus</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga054acfe7d4dd4064f9d27a9ea7fc2337"><td class="memItemLeft" align="right" valign="top"><a id="ga054acfe7d4dd4064f9d27a9ea7fc2337" name="ga054acfe7d4dd4064f9d27a9ea7fc2337"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATSHA204A</b>&#160;&#160;&#160;(0U)</td></tr>
+<tr class="memdesc:ga054acfe7d4dd4064f9d27a9ea7fc2337"><td class="mdescLeft">&#160;</td><td class="mdescRight">The supported Device type in Cryptoauthlib library. <br /></td></tr>
+<tr class="separator:ga054acfe7d4dd4064f9d27a9ea7fc2337"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2b767a2b1d8cb0ae1e4f83ffd2085ea0"><td class="memItemLeft" align="right" valign="top"><a id="ga2b767a2b1d8cb0ae1e4f83ffd2085ea0" name="ga2b767a2b1d8cb0ae1e4f83ffd2085ea0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATECC108A</b>&#160;&#160;&#160;(1U)</td></tr>
+<tr class="separator:ga2b767a2b1d8cb0ae1e4f83ffd2085ea0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac7a02cdce313ac78b17772f8793bd682"><td class="memItemLeft" align="right" valign="top"><a id="gac7a02cdce313ac78b17772f8793bd682" name="gac7a02cdce313ac78b17772f8793bd682"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATECC508A</b>&#160;&#160;&#160;(2U)</td></tr>
+<tr class="separator:gac7a02cdce313ac78b17772f8793bd682"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga90656b69df981c7e0201c728fe86b005"><td class="memItemLeft" align="right" valign="top"><a id="ga90656b69df981c7e0201c728fe86b005" name="ga90656b69df981c7e0201c728fe86b005"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATECC608A</b>&#160;&#160;&#160;(3U)</td></tr>
+<tr class="separator:ga90656b69df981c7e0201c728fe86b005"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac402c8eee4248972d6e6f1d992ba679d"><td class="memItemLeft" align="right" valign="top"><a id="gac402c8eee4248972d6e6f1d992ba679d" name="gac402c8eee4248972d6e6f1d992ba679d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATECC608B</b>&#160;&#160;&#160;(3U)</td></tr>
+<tr class="separator:gac402c8eee4248972d6e6f1d992ba679d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga611aa2420e290e503ac4f4314c9c0be6"><td class="memItemLeft" align="right" valign="top"><a id="ga611aa2420e290e503ac4f4314c9c0be6" name="ga611aa2420e290e503ac4f4314c9c0be6"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATECC608</b>&#160;&#160;&#160;(3U)</td></tr>
+<tr class="separator:ga611aa2420e290e503ac4f4314c9c0be6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf8b2c97b00d5b2af24a7951ff329752f"><td class="memItemLeft" align="right" valign="top"><a id="gaf8b2c97b00d5b2af24a7951ff329752f" name="gaf8b2c97b00d5b2af24a7951ff329752f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATSHA206A</b>&#160;&#160;&#160;(4U)</td></tr>
+<tr class="separator:gaf8b2c97b00d5b2af24a7951ff329752f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac3953580d87655939c7317b2e50c7c3e"><td class="memItemLeft" align="right" valign="top"><a id="gac3953580d87655939c7317b2e50c7c3e" name="gac3953580d87655939c7317b2e50c7c3e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TA100</b>&#160;&#160;&#160;(0x10U)</td></tr>
+<tr class="separator:gac3953580d87655939c7317b2e50c7c3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga37ebcb51388ab794050f341e43d610b0"><td class="memItemLeft" align="right" valign="top"><a id="ga37ebcb51388ab794050f341e43d610b0" name="ga37ebcb51388ab794050f341e43d610b0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TA101</b>&#160;&#160;&#160;(0x11U)</td></tr>
+<tr class="separator:ga37ebcb51388ab794050f341e43d610b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5399e6ba1fbb64731761457c7a82f3f4"><td class="memItemLeft" align="right" valign="top"><a id="ga5399e6ba1fbb64731761457c7a82f3f4" name="ga5399e6ba1fbb64731761457c7a82f3f4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ECC204</b>&#160;&#160;&#160;(0x20U)</td></tr>
+<tr class="separator:ga5399e6ba1fbb64731761457c7a82f3f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9c3e2dd3111e88755f38f8837b96a3b8"><td class="memItemLeft" align="right" valign="top"><a id="ga9c3e2dd3111e88755f38f8837b96a3b8" name="ga9c3e2dd3111e88755f38f8837b96a3b8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TA010</b>&#160;&#160;&#160;(0x21U)</td></tr>
+<tr class="separator:ga9c3e2dd3111e88755f38f8837b96a3b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1b8f8e2f0e8fb67aaae0346d73aeb77f"><td class="memItemLeft" align="right" valign="top"><a id="ga1b8f8e2f0e8fb67aaae0346d73aeb77f" name="ga1b8f8e2f0e8fb67aaae0346d73aeb77f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ECC206</b>&#160;&#160;&#160;(0x22U)</td></tr>
+<tr class="separator:ga1b8f8e2f0e8fb67aaae0346d73aeb77f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafe8f0370e1e659cf76fd87e317125750"><td class="memItemLeft" align="right" valign="top"><a id="gafe8f0370e1e659cf76fd87e317125750" name="gafe8f0370e1e659cf76fd87e317125750"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>RNG90</b>&#160;&#160;&#160;(0x23U)</td></tr>
+<tr class="separator:gafe8f0370e1e659cf76fd87e317125750"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f3749b4860dc79e60660766c989d4b2"><td class="memItemLeft" align="right" valign="top"><a id="ga3f3749b4860dc79e60660766c989d4b2" name="ga3f3749b4860dc79e60660766c989d4b2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>SHA104</b>&#160;&#160;&#160;(0x24U)</td></tr>
+<tr class="separator:ga3f3749b4860dc79e60660766c989d4b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabab8518eb86b1a9b4173c149cbb1db4f"><td class="memItemLeft" align="right" valign="top"><a id="gabab8518eb86b1a9b4173c149cbb1db4f" name="gabab8518eb86b1a9b4173c149cbb1db4f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>SHA105</b>&#160;&#160;&#160;(0x25U)</td></tr>
+<tr class="separator:gabab8518eb86b1a9b4173c149cbb1db4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaa1b4923c2cdded417d2311798df3263"><td class="memItemLeft" align="right" valign="top"><a id="gaaa1b4923c2cdded417d2311798df3263" name="gaaa1b4923c2cdded417d2311798df3263"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>SHA106</b>&#160;&#160;&#160;(0x26U)</td></tr>
+<tr class="separator:gaaa1b4923c2cdded417d2311798df3263"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga509a3e67bf4310c53cb299df01509428"><td class="memItemLeft" align="right" valign="top"><a id="ga509a3e67bf4310c53cb299df01509428" name="ga509a3e67bf4310c53cb299df01509428"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_DEV_UNKNOWN</b>&#160;&#160;&#160;(0x7EU)</td></tr>
+<tr class="separator:ga509a3e67bf4310c53cb299df01509428"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a85c2f84c672f43d1895d2013184371"><td class="memItemLeft" align="right" valign="top"><a id="ga7a85c2f84c672f43d1895d2013184371" name="ga7a85c2f84c672f43d1895d2013184371"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ATCA_DEV_INVALID</b>&#160;&#160;&#160;(0x7FU)</td></tr>
+<tr class="separator:ga7a85c2f84c672f43d1895d2013184371"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gada27ffa70c78964d3b38abd11c5f4f22"><td class="memItemLeft" align="right" valign="top"><a id="gada27ffa70c78964d3b38abd11c5f4f22" name="gada27ffa70c78964d3b38abd11c5f4f22"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><b>ctx_cb</b>) (void *ctx)</td></tr>
+<tr class="memdesc:gada27ffa70c78964d3b38abd11c5f4f22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function to clean up the session context. <br /></td></tr>
+<tr class="separator:gada27ffa70c78964d3b38abd11c5f4f22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa94f7bb4af0a3d6735225cc85d92cb50"><td class="memItemLeft" align="right" valign="top"><a id="gaa94f7bb4af0a3d6735225cc85d92cb50" name="gaa94f7bb4af0a3d6735225cc85d92cb50"></a>
+typedef struct <a class="el" href="a01581.html">atca_device</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>ATCADevice</b></td></tr>
+<tr class="separator:gaa94f7bb4af0a3d6735225cc85d92cb50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf0b069b15260debc17d73fe47336338c"><td class="memItemLeft" align="right" valign="top"><a id="gaf0b069b15260debc17d73fe47336338c" name="gaf0b069b15260debc17d73fe47336338c"></a>
+typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>ATCADeviceType</b></td></tr>
+<tr class="separator:gaf0b069b15260debc17d73fe47336338c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga765308123cf522f5ec8b528bf4ea1243"><td class="memItemLeft" align="right" valign="top"><a id="ga765308123cf522f5ec8b528bf4ea1243" name="ga765308123cf522f5ec8b528bf4ea1243"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01522.html#ga765308123cf522f5ec8b528bf4ea1243">ATCADeviceState</a> { <b>ATCA_DEVICE_STATE_UNKNOWN</b> = 0
+, <b>ATCA_DEVICE_STATE_SLEEP</b>
+, <b>ATCA_DEVICE_STATE_IDLE</b>
+, <b>ATCA_DEVICE_STATE_ACTIVE</b>
+ }</td></tr>
+<tr class="memdesc:ga765308123cf522f5ec8b528bf4ea1243"><td class="mdescLeft">&#160;</td><td class="mdescRight">ATCADeviceState says about device state. <br /></td></tr>
+<tr class="separator:ga765308123cf522f5ec8b528bf4ea1243"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aa9c8b1588cae90a37ef827d71e4ae909"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01522.html#aa9c8b1588cae90a37ef827d71e4ae909">_atcacert_convert_bytes</a> (kwargs, name, pointer)</td></tr>
-<tr class="separator:aa9c8b1588cae90a37ef827d71e4ae909"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf013c955f2fd024a8669085dadbd3ba"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01522.html#acf013c955f2fd024a8669085dadbd3ba">_atcacert_convert_enum</a> (kwargs, name, enum)</td></tr>
-<tr class="separator:acf013c955f2fd024a8669085dadbd3ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b6192388c29b0efb1968d6b44efd712"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01522.html#a3b6192388c29b0efb1968d6b44efd712">atcacert_max_cert_size</a> (cert_def, max_cert_size)</td></tr>
-<tr class="separator:a3b6192388c29b0efb1968d6b44efd712"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c3717acbb392ceed968c1172400e6dd"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01522.html#a9c3717acbb392ceed968c1172400e6dd">atcacert_get_response</a> (device_private_key_slot, challenge, response)</td></tr>
-<tr class="separator:a9c3717acbb392ceed968c1172400e6dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4fe33f1da468796b39c80a34e12411fb"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01522.html#a4fe33f1da468796b39c80a34e12411fb">atcacert_read_cert</a> (cert_def, ca_public_key, cert, cert_size)</td></tr>
-<tr class="separator:a4fe33f1da468796b39c80a34e12411fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c4d1755dfd9a2b378cd45f14de1f1ee"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01522.html#a5c4d1755dfd9a2b378cd45f14de1f1ee">atcacert_write_cert</a> (cert_def, cert, cert_size)</td></tr>
-<tr class="separator:a5c4d1755dfd9a2b378cd45f14de1f1ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a453696e86822c980d8e5b9e6a27eb861"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01522.html#a453696e86822c980d8e5b9e6a27eb861">atcacert_create_csr</a> (csr_def, csr, csr_size)</td></tr>
-<tr class="separator:a453696e86822c980d8e5b9e6a27eb861"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c23b4916b8fa6dc8aa56b45f558d870"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01522.html#a6c23b4916b8fa6dc8aa56b45f558d870">atcacert_create_csr_pem</a> (csr_def, csr, csr_size)</td></tr>
-<tr class="separator:a6c23b4916b8fa6dc8aa56b45f558d870"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23ff0ccfc75d564fc9f6200ef8cff5fb"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01522.html#a23ff0ccfc75d564fc9f6200ef8cff5fb">atcacert_date_enc</a> (date_format, timestamp, formatted_date, formatted_date_size)</td></tr>
-<tr class="separator:a23ff0ccfc75d564fc9f6200ef8cff5fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e05b319688a07bbfeee23895341303e"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01522.html#a7e05b319688a07bbfeee23895341303e">atcacert_date_dec</a> (date_format, formatted_date, formatted_date_size, timestamp)</td></tr>
-<tr class="separator:a7e05b319688a07bbfeee23895341303e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82bd7bbea46866cb644016ea7faff329"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01522.html#a82bd7bbea46866cb644016ea7faff329">atcacert_date_enc_compcert</a> (issue_date, expire_years, enc_dates)</td></tr>
-<tr class="separator:a82bd7bbea46866cb644016ea7faff329"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7910146d6e2097e9fb075a2bf60d1b25"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01522.html#a7910146d6e2097e9fb075a2bf60d1b25">atcacert_date_dec_compcert</a> (enc_dates, expire_date_format, issue_date, expire_date)</td></tr>
-<tr class="separator:a7910146d6e2097e9fb075a2bf60d1b25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ffefee23107bcbbadef2508ccaaba4f"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01522.html#a0ffefee23107bcbbadef2508ccaaba4f">atcacert_date_get_max_date</a> (date_format, timestamp)</td></tr>
-<tr class="separator:a0ffefee23107bcbbadef2508ccaaba4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad5e12e12d3030e28d75164286df9e5e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01581.html">ATCADevice</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01522.html#gad5e12e12d3030e28d75164286df9e5e9">newATCADevice</a> (<a class="el" href="a01589.html">ATCAIfaceCfg</a> *cfg)</td></tr>
+<tr class="memdesc:gad5e12e12d3030e28d75164286df9e5e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">constructor for a Microchip CryptoAuth device  <br /></td></tr>
+<tr class="separator:gad5e12e12d3030e28d75164286df9e5e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac087cf04cd5bd6ff2e026d89bfbf5e12"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01522.html#gac087cf04cd5bd6ff2e026d89bfbf5e12">deleteATCADevice</a> (<a class="el" href="a01581.html">ATCADevice</a> *ca_dev)</td></tr>
+<tr class="memdesc:gac087cf04cd5bd6ff2e026d89bfbf5e12"><td class="mdescLeft">&#160;</td><td class="mdescRight">destructor for a device NULLs reference after object is freed  <br /></td></tr>
+<tr class="separator:gac087cf04cd5bd6ff2e026d89bfbf5e12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8eec7f2190d1f9bda6684f5d2177db15"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01522.html#ga8eec7f2190d1f9bda6684f5d2177db15">initATCADevice</a> (<a class="el" href="a01589.html">ATCAIfaceCfg</a> *cfg, <a class="el" href="a01581.html">ATCADevice</a> ca_dev)</td></tr>
+<tr class="memdesc:ga8eec7f2190d1f9bda6684f5d2177db15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializer for an Microchip CryptoAuth device.  <br /></td></tr>
+<tr class="separator:ga8eec7f2190d1f9bda6684f5d2177db15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3f98e29cffa06446fc91b329703606af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01657.html">ATCAIface</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01522.html#ga3f98e29cffa06446fc91b329703606af">atGetIFace</a> (<a class="el" href="a01581.html">ATCADevice</a> dev)</td></tr>
+<tr class="memdesc:ga3f98e29cffa06446fc91b329703606af"><td class="mdescLeft">&#160;</td><td class="mdescRight">returns a reference to the ATCAIface interface object for the device  <br /></td></tr>
+<tr class="separator:ga3f98e29cffa06446fc91b329703606af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab729e6c838c0a247d4f226fb92492d96"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01522.html#gab729e6c838c0a247d4f226fb92492d96">releaseATCADevice</a> (<a class="el" href="a01581.html">ATCADevice</a> ca_dev)</td></tr>
+<tr class="memdesc:gab729e6c838c0a247d4f226fb92492d96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Release any resources associated with the device.  <br /></td></tr>
+<tr class="separator:gab729e6c838c0a247d4f226fb92492d96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><pre class="fragment">ATCACERT: classes and functions for interacting with compressed certificates
-</pre> </div><h2 class="groupheader">Function Documentation</h2>
-<a id="aa9c8b1588cae90a37ef827d71e4ae909" name="aa9c8b1588cae90a37ef827d71e4ae909"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa9c8b1588cae90a37ef827d71e4ae909">&#9670;&#160;</a></span>_atcacert_convert_bytes()</h2>
+<p>ATCADevice object - composite of command and interface objects. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga3f98e29cffa06446fc91b329703606af" name="ga3f98e29cffa06446fc91b329703606af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3f98e29cffa06446fc91b329703606af">&#9670;&#160;</a></span>atGetIFace()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">def cryptoauthlib.atcacert._atcacert_convert_bytes </td>
+          <td class="memname"><a class="el" href="a01657.html">ATCAIface</a> atGetIFace </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>kwargs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="a01581.html">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>dev</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>pointer</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<pre class="fragment">Internal Helper Function: Convert python 'bytes' into memory pointer for ctypes structure
-:param kwargs: kwargs dictionary
-:param name: _field_ name that will be converted
-:param pointer: Conversion Class (resulting type - pointer of type x)
-:return:
-</pre> 
+
+<p>returns a reference to the ATCAIface interface object for the device </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">dev</td><td>reference to a device </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>reference to the ATCAIface object for the device </dd></dl>
+
 </div>
 </div>
-<a id="acf013c955f2fd024a8669085dadbd3ba" name="acf013c955f2fd024a8669085dadbd3ba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acf013c955f2fd024a8669085dadbd3ba">&#9670;&#160;</a></span>_atcacert_convert_enum()</h2>
+<a id="gac087cf04cd5bd6ff2e026d89bfbf5e12" name="gac087cf04cd5bd6ff2e026d89bfbf5e12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac087cf04cd5bd6ff2e026d89bfbf5e12">&#9670;&#160;</a></span>deleteATCADevice()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">def cryptoauthlib.atcacert._atcacert_convert_enum </td>
+          <td class="memname">void deleteATCADevice </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>kwargs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="a01581.html">ATCADevice</a> *&#160;</td>
+          <td class="paramname"><em>ca_dev</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>enum</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<pre class="fragment">Internal Helper Function: Convert python enum into ctypes integer
-:param kwargs: kwargs dictionary
-:param name: _field_ name that will be converted
-:param enum: Conversion Class (resulting type)
-:return:
-</pre> 
+
+<p>destructor for a device NULLs reference after object is freed </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ca_dev</td><td>pointer to a reference to a device </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
-<a id="a453696e86822c980d8e5b9e6a27eb861" name="a453696e86822c980d8e5b9e6a27eb861"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a453696e86822c980d8e5b9e6a27eb861">&#9670;&#160;</a></span>atcacert_create_csr()</h2>
+<a id="ga8eec7f2190d1f9bda6684f5d2177db15" name="ga8eec7f2190d1f9bda6684f5d2177db15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8eec7f2190d1f9bda6684f5d2177db15">&#9670;&#160;</a></span>initATCADevice()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def cryptoauthlib.atcacert.atcacert_create_csr </td>
+          <td class="memname">ATCA_STATUS initATCADevice </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>csr_def</em>, </td>
+          <td class="paramtype"><a class="el" href="a01589.html">ATCAIfaceCfg</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>csr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>csr_size</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a01581.html">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>ca_dev</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -290,503 +296,71 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Creates a CSR specified by the CSR definition from the ATECC508A device.
-This process involves reading the dynamic CSR data from the device and combining it
-with the template found in the CSR definition, then signing it. Return the CSR int der format
 
-Args:
-    csr_def                 CSR definition describing where to find the dynamic CSR information
-                            on the device and how to incorporate it into the template.
-                            Expects atcacert_def_t.
-    csr                     Buffer to receive the CSR. Expects bytearray.
-    csr_size                As input, the size of the CSR buffer in bytes.
-                            As output, the size of the CSR as PEM returned in cert in bytes.
-                            Expects AtcaReference.
+<p>Initializer for an Microchip CryptoAuth device. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>pointer to an interface configuration object </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">ca_dev</td><td>As input, pre-allocated structure to be initialized. mCommands and mIface members should point to existing structures to be initialized. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
 
-Returns:
-    ATCACERT_E_SUCCESS on success, otherwise an error code.
-</pre> 
 </div>
 </div>
-<a id="a6c23b4916b8fa6dc8aa56b45f558d870" name="a6c23b4916b8fa6dc8aa56b45f558d870"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c23b4916b8fa6dc8aa56b45f558d870">&#9670;&#160;</a></span>atcacert_create_csr_pem()</h2>
+<a id="gad5e12e12d3030e28d75164286df9e5e9" name="gad5e12e12d3030e28d75164286df9e5e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad5e12e12d3030e28d75164286df9e5e9">&#9670;&#160;</a></span>newATCADevice()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def cryptoauthlib.atcacert.atcacert_create_csr_pem </td>
+          <td class="memname"><a class="el" href="a01581.html">ATCADevice</a> newATCADevice </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>csr_def</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="a01589.html">ATCAIfaceCfg</a> *&#160;</td>
+          <td class="paramname"><em>cfg</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>csr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>csr_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Creates a CSR specified by the CSR definition from the ATECC508A device.
-This process involves reading the dynamic CSR data from the device and combining it
-with the template found in the CSR definition, then signing it. Return the CSR int der format
 
-Args:
-    csr_def                 CSR definition describing where to find the dynamic CSR information
-                            on the device and how to incorporate it into the template.
-                            Expects atcacert_def_t.
-    csr                     Buffer to receive the CSR. Expects bytearray.
-    csr_size                As input, the size of the CSR buffer in bytes.
-                            As output, the size of the CSR as PEM returned in cert in bytes.
-                            Expects AtcaReference.
+<p>constructor for a Microchip CryptoAuth device </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>Interface configuration object </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to a new ATCADevice on success. NULL on failure. </dd></dl>
 
-Returns:
-    ATCACERT_E_SUCCESS on success, otherwise an error code.
-</pre> 
 </div>
 </div>
-<a id="a7e05b319688a07bbfeee23895341303e" name="a7e05b319688a07bbfeee23895341303e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7e05b319688a07bbfeee23895341303e">&#9670;&#160;</a></span>atcacert_date_dec()</h2>
+<a id="gab729e6c838c0a247d4f226fb92492d96" name="gab729e6c838c0a247d4f226fb92492d96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab729e6c838c0a247d4f226fb92492d96">&#9670;&#160;</a></span>releaseATCADevice()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def cryptoauthlib.atcacert.atcacert_date_dec </td>
+          <td class="memname">ATCA_STATUS releaseATCADevice </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>date_format</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="a01581.html">ATCADevice</a>&#160;</td>
+          <td class="paramname"><em>ca_dev</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>formatted_date</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>formatted_date_size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>timestamp</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Parse a formatted timestamp according to the specified format.
 
-Args:
-    date_format             Format to parse the formatted date as.
-    formatted_date          Formatted date to be parsed.
-    formatted_date_size     Size of the formatted date in bytes.
-    timestamp               Parsed timestamp is returned here. Expects atcacert_tm_utc_t.
+<p>Release any resources associated with the device. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ca_dev</td><td>Device to release </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ATCA_SUCCESS on success, otherwise an error code. </dd></dl>
 
-Returns:
-    ATCACERT_E_SUCCESS on success, otherwise an error code.
-</pre> 
-</div>
-</div>
-<a id="a7910146d6e2097e9fb075a2bf60d1b25" name="a7910146d6e2097e9fb075a2bf60d1b25"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7910146d6e2097e9fb075a2bf60d1b25">&#9670;&#160;</a></span>atcacert_date_dec_compcert()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def cryptoauthlib.atcacert.atcacert_date_dec_compcert </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>enc_dates</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>expire_date_format</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>issue_date</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>expire_date</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<pre class="fragment">Decode the issue and expire dates from the format used by the compressed certificate.
-
-Args:
-    enc_dates               Encoded date from the compressed certificate. 3 bytes.
-    expire_date_format      Expire date format. Only used to determine max date when no
-                            expiration date is specified by the encoded date.
-    issue_date              Decoded issue date is returned here. Expects atcacert_tm_utc_t.
-    expire_date             Decoded expire date is returned here. If there is no
-                            expiration date, the expire date will be set to a maximum
-                            value for the given expire_date_format. Expects atcacert_tm_utc_t.
-Returns:
-    ATCACERT_E_SUCCESS on success
-</pre> 
-</div>
-</div>
-<a id="a23ff0ccfc75d564fc9f6200ef8cff5fb" name="a23ff0ccfc75d564fc9f6200ef8cff5fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a23ff0ccfc75d564fc9f6200ef8cff5fb">&#9670;&#160;</a></span>atcacert_date_enc()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def cryptoauthlib.atcacert.atcacert_date_enc </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>date_format</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>timestamp</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>formatted_date</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>formatted_date_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<pre class="fragment">Format a timestamp according to the format type.
-
-Args:
-    date_format             Format to use.
-    timestamp               Timestamp to format. Expects atcacert_tm_utc_t.
-    formatted_date          Formatted date will be returned in this buffer.
-                            Expects bytearray.
-    formatted_date_size     As input, the size of the formatted_date buffer.
-                            As output, the size of the returned formatted_date.
-                            Expects AtcaReference.
-
-Returns:
-    ATCACERT_E_SUCCESS on success, otherwise an error code.
-</pre> 
-</div>
-</div>
-<a id="a82bd7bbea46866cb644016ea7faff329" name="a82bd7bbea46866cb644016ea7faff329"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a82bd7bbea46866cb644016ea7faff329">&#9670;&#160;</a></span>atcacert_date_enc_compcert()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def cryptoauthlib.atcacert.atcacert_date_enc_compcert </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>issue_date</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>expire_years</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>enc_dates</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<pre class="fragment">Encode the issue and expire dates in the format used by the compressed certificate.
-
-Args:
-    issue_date              Issue date to encode. Note that minutes and seconds will be ignored.
-                            Expects atcacert_tm_utc_t.
-    expire_years            Expire date is expressed as a number of years past the issue date.
-                            0 should be used if there is no expire date.
-    enc_dates               Encoded dates for use in the compressed certificate is returned here.
-                            3 bytes. Expects bytearray.
-
-Returns:
-    ATCACERT_E_SUCCESS on success
-</pre> 
-</div>
-</div>
-<a id="a0ffefee23107bcbbadef2508ccaaba4f" name="a0ffefee23107bcbbadef2508ccaaba4f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ffefee23107bcbbadef2508ccaaba4f">&#9670;&#160;</a></span>atcacert_date_get_max_date()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def cryptoauthlib.atcacert.atcacert_date_get_max_date </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>date_format</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>timestamp</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<pre class="fragment">Return the maximum date available for the given format.
-
-Args:
-    format                  Format to get the max date for.
-    timestamp               Max date is returned here. Expects atcacert_tm_utc_t.
-
-Returns:
-    ATCACERT_E_SUCCESS on success, otherwise an error code.
-</pre> 
-</div>
-</div>
-<a id="a9c3717acbb392ceed968c1172400e6dd" name="a9c3717acbb392ceed968c1172400e6dd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9c3717acbb392ceed968c1172400e6dd">&#9670;&#160;</a></span>atcacert_get_response()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def cryptoauthlib.atcacert.atcacert_get_response </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>device_private_key_slot</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>challenge</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>response</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<pre class="fragment">Calculates the response to a challenge sent from the host.
-The challenge-response protocol is an ECDSA Sign and Verify. This performs the ECDSA Sign on the
-challenge and returns the signature as the response.
-
-Args:
-    device_private_key_slot         Slot number for the device's private key. This must be the
-                                    same slot used to generate the public key included in the
-                                    device's certificate.
-    challenge                       Challenge to generate the response for. Must be 32 bytes.
-    response                        Response will be returned in this buffer. 64 bytes.
-
-Returns:
-    ATCACERT_E_SUCCESS on success, otherwise an error code.
-</pre> 
-</div>
-</div>
-<a id="a3b6192388c29b0efb1968d6b44efd712" name="a3b6192388c29b0efb1968d6b44efd712"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3b6192388c29b0efb1968d6b44efd712">&#9670;&#160;</a></span>atcacert_max_cert_size()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def cryptoauthlib.atcacert.atcacert_max_cert_size </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>cert_def</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>max_cert_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<pre class="fragment">Return the maximum possible certificate size in bytes for a given
-cert def. Certificate can be variable size, so this gives an
-appropriate buffer size when reading the certificates.
-
-Args:
-    cert_def       Certificate definition to find a max size for.
-                   Expects atcacert_def_t.
-    max_cert_size  Maximum certificate size will be returned here in bytes.
-                   Expects AtcaReference.
-
-Returns:
-    ATCACERT_E_SUCCESS on success, otherwise an error code.
-</pre> 
-</div>
-</div>
-<a id="a4fe33f1da468796b39c80a34e12411fb" name="a4fe33f1da468796b39c80a34e12411fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4fe33f1da468796b39c80a34e12411fb">&#9670;&#160;</a></span>atcacert_read_cert()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def cryptoauthlib.atcacert.atcacert_read_cert </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>cert_def</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>ca_public_key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>cert</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>cert_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<pre class="fragment">Reads the certificate specified by the certificate definition from the
-ATECC508A device.
-This process involves reading the dynamic cert data from the device and combining it
-with the template found in the certificate definition.
-
-Args:
-    cert_def                Certificate definition describing where to find the dynamic
-                            certificate information on the device and how to incorporate it
-                            into the template. Expects atcacert_def_t.
-    ca_public_key           The ECC P256 public key of the certificate authority that signed
-                            this certificate. Formatted as the 32 byte X and Y integers
-                            concatenated together (64 bytes total). Set to NULL if the
-                            authority key id is not needed, set properly in the cert_def
-                            template, or stored on the device as specifed in the
-                            cert_def cert_elements.
-    cert                    Buffer to received the certificate. Expects bytearray.
-    cert_size               As input, the size of the cert buffer in bytes.
-                            As output, the size of the certificate returned in cert in bytes.
-                            Expects AtcaReference.
-
-Returns:
-    ATCACERT_E_SUCCESS on success, otherwise an error code.
-</pre> 
-</div>
-</div>
-<a id="a5c4d1755dfd9a2b378cd45f14de1f1ee" name="a5c4d1755dfd9a2b378cd45f14de1f1ee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c4d1755dfd9a2b378cd45f14de1f1ee">&#9670;&#160;</a></span>atcacert_write_cert()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def cryptoauthlib.atcacert.atcacert_write_cert </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>cert_def</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>cert</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>cert_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<pre class="fragment">Take a full certificate and write it to the ATECC508A device according to the
-certificate definition.
-
-Args:
-    cert_def                Certificate definition describing where the dynamic certificate
-                            information is and how to store it on the device.
-                            Expects atcacert_def_t.
-    cert                    Full certificate to be stored.
-    cert_size               Size of the full certificate in bytes.
-
-Returns:
-    ATCACERT_E_SUCCESS on success, otherwise an error code.
-</pre> 
 </div>
 </div>
 </div><!-- contents -->
@@ -794,7 +368,6 @@ Returns:
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01520.html">cryptoauthlib</a></li><li class="navelem"><a class="el" href="a01522.html">atcacert</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

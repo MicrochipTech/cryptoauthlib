@@ -1,7 +1,11 @@
 var a01765 =
 [
-    [ "data", "a01765.html#ab910eb48d182d8f191da149339fd6c51", null ],
-    [ "data_size", "a01765.html#a1d7f86d28ad089ae4401043c117be844", null ],
-    [ "io_key", "a01765.html#aa6d2797ec2cdef70aa51438e96e2a301", null ],
-    [ "out_nonce", "a01765.html#a597e62aa42a9971b98a5d76c7f1baef5", null ]
+    [ "gen_dig_data", "a01765.html#afde9c1e6769f60992c7fb10280cdd199", null ],
+    [ "gen_key_data", "a01765.html#a82e1988542001c7499700f3e1b191339", null ],
+    [ "is_64", "a01765.html#a0f766111832176ea2c8eda8fbf13743d", null ],
+    [ "key_id", "a01765.html#a70b94559475530db2be60e9d30758098", null ],
+    [ "no_mac_flag", "a01765.html#ae381dabe56bdd77f48a8241050d16d82", null ],
+    [ "source_flag", "a01765.html#abd69b6707bf73ae91675a6a0a250ca40", null ],
+    [ "valid", "a01765.html#aadedd52833b6ce041dfb9e923b448481", null ],
+    [ "value", "a01765.html#a76f98ffaa2aa528c93321f83b0775405", null ]
 ];

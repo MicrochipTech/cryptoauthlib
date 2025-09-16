@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: cryptoauthlib.atcab.atca_aes_ctr_ctx Class Reference</title>
+<title>CryptoAuthLib: CK_SEED_CBC_ENCRYPT_DATA_PARAMS Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.8</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.9</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,56 +98,29 @@ $(document).ready(function(){initNavTree('a02229.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#pro-static-attribs">Static Protected Attributes</a>  </div>
-  <div class="headertitle"><div class="title">cryptoauthlib.atcab.atca_aes_ctr_ctx Class Reference</div></div>
+<a href="#pub-attribs">Data Fields</a>  </div>
+  <div class="headertitle"><div class="title">CK_SEED_CBC_ENCRYPT_DATA_PARAMS Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="dynheader">
-Inheritance diagram for cryptoauthlib.atcab.atca_aes_ctr_ctx:</div>
-<div class="dyncontent">
- <div class="center">
-  <img src="a02229.png" alt=""/>
- </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-attribs" name="pro-static-attribs"></a>
-Static Protected Attributes</h2></td></tr>
-<tr class="memitem:aa6b515ec565054c8bfe76b282e4b4334"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02229.html#aa6b515ec565054c8bfe76b282e4b4334">_fields_</a></td></tr>
-<tr class="separator:aa6b515ec565054c8bfe76b282e4b4334"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:a3188d7402716451340f16de71cd24f11"><td class="memItemLeft" align="right" valign="top"><a id="a3188d7402716451340f16de71cd24f11" name="a3188d7402716451340f16de71cd24f11"></a>
+CK_BYTE&#160;</td><td class="memItemRight" valign="bottom"><b>iv</b> [16]</td></tr>
+<tr class="separator:a3188d7402716451340f16de71cd24f11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a331d7ad272c1ea3e1feac85ef26dbade"><td class="memItemLeft" align="right" valign="top"><a id="a331d7ad272c1ea3e1feac85ef26dbade" name="a331d7ad272c1ea3e1feac85ef26dbade"></a>
+CK_BYTE_PTR&#160;</td><td class="memItemRight" valign="bottom"><b>pData</b></td></tr>
+<tr class="separator:a331d7ad272c1ea3e1feac85ef26dbade"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31654320ef995adad7d8a9cde0575fa2"><td class="memItemLeft" align="right" valign="top"><a id="a31654320ef995adad7d8a9cde0575fa2" name="a31654320ef995adad7d8a9cde0575fa2"></a>
+CK_ULONG&#160;</td><td class="memItemRight" valign="bottom"><b>length</b></td></tr>
+<tr class="separator:a31654320ef995adad7d8a9cde0575fa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><pre class="fragment">AES CTR Context</pre> </div><h2 class="groupheader">Field Documentation</h2>
-<a id="aa6b515ec565054c8bfe76b282e4b4334" name="aa6b515ec565054c8bfe76b282e4b4334"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa6b515ec565054c8bfe76b282e4b4334">&#9670;&#160;</a></span>_fields_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">list cryptoauthlib.atcab.atca_aes_ctr_ctx._fields_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=  [(<span class="stringliteral">&quot;key_id&quot;</span>, c_uint16),</div>
-<div class="line">                (<span class="stringliteral">&quot;key_block&quot;</span>, c_uint8),</div>
-<div class="line">                (<span class="stringliteral">&quot;iv&quot;</span>, c_char*16),</div>
-<div class="line">                (<span class="stringliteral">&quot;counter_size&quot;</span>, c_uint8)]</div>
-</div><!-- fragment -->
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01520.html">cryptoauthlib</a></li><li class="navelem"><a class="el" href="a01521.html">atcab</a></li><li class="navelem"><a class="el" href="a02229.html">atca_aes_ctr_ctx</a></li>
+    <li class="navelem"><a class="el" href="a02229.html">CK_SEED_CBC_ENCRYPT_DATA_PARAMS</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

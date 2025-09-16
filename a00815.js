@@ -1,6 +1,8 @@
 var a00815 =
 [
-    [ "pkcs11_token_get_info", "a01519.html#ga7bf2fea766cab4645fe615661bcf0db9", null ],
-    [ "pkcs11_token_init", "a01519.html#ga7e207adf2d26c1d6ea64f7c60252bf45", null ],
-    [ "pkcs11_token_random", "a01519.html#gaf4c0c6a2d12d879308f2d42cc61ef401", null ]
+    [ "pkcs11_slot_ctx_s", "a01965.html", "a01965" ],
+    [ "pkcs11_slot_ctx", "a00815.html#a1813685567d78b9f762d2f1eec531616", null ],
+    [ "pkcs11_slot_get_context", "a01531.html#ga987853011908614aba0db7c5933b0a20", null ],
+    [ "pkcs11_slot_get_info", "a01531.html#ga3bba79e03141bfb7a9ec76c273db63d2", null ],
+    [ "pkcs11_slot_init", "a01531.html#ga418414364e88d0673b4f6c90cd62ebed", null ]
 ];

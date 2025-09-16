@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atcaSWImaster Struct Reference</title>
+<title>CryptoAuthLib: atca_uart_host_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.8</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.9</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,41 +99,31 @@ $(document).ready(function(){initNavTree('a01749.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">atcaSWImaster Struct Reference<div class="ingroups"><a class="el" href="a01515.html">Hardware abstraction layer (hal_)</a></div></div></div>
+  <div class="headertitle"><div class="title">atca_uart_host_s Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>this is the hal_data for ATCA HAL for ASF SERCOM  
- <a href="a01749.html#details">More...</a></p>
-
-<p><code>#include &lt;lib/hal/swi_uart_start.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aef513578c755a583f1e1262c3332b8b3"><td class="memItemLeft" align="right" valign="top"><a id="aef513578c755a583f1e1262c3332b8b3" name="aef513578c755a583f1e1262c3332b8b3"></a>
-struct usart_module&#160;</td><td class="memItemRight" valign="bottom"><b>usart_instance</b></td></tr>
-<tr class="separator:aef513578c755a583f1e1262c3332b8b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b966ed98118e9a505196c352f7a4866"><td class="memItemLeft" align="right" valign="top"><a id="a8b966ed98118e9a505196c352f7a4866" name="a8b966ed98118e9a505196c352f7a4866"></a>
+<tr class="memitem:af712affb63d8f83b5bc7e56f0e6e1faa"><td class="memItemLeft" align="right" valign="top"><a id="af712affb63d8f83b5bc7e56f0e6e1faa" name="af712affb63d8f83b5bc7e56f0e6e1faa"></a>
+char&#160;</td><td class="memItemRight" valign="bottom"><b>uart_file</b> [20]</td></tr>
+<tr class="separator:af712affb63d8f83b5bc7e56f0e6e1faa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a795cd432688df934b9da7c5e9aca0b01"><td class="memItemLeft" align="right" valign="top"><a id="a795cd432688df934b9da7c5e9aca0b01" name="a795cd432688df934b9da7c5e9aca0b01"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>fd_uart</b></td></tr>
+<tr class="separator:a795cd432688df934b9da7c5e9aca0b01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f4c9be2ceae748b9b8001a7118af9bb"><td class="memItemLeft" align="right" valign="top"><a id="a4f4c9be2ceae748b9b8001a7118af9bb" name="a4f4c9be2ceae748b9b8001a7118af9bb"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>ref_ct</b></td></tr>
-<tr class="separator:a8b966ed98118e9a505196c352f7a4866"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd8e25a2f741793b339a8119d03b0af2"><td class="memItemLeft" align="right" valign="top"><a id="afd8e25a2f741793b339a8119d03b0af2" name="afd8e25a2f741793b339a8119d03b0af2"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>bus_index</b></td></tr>
-<tr class="separator:afd8e25a2f741793b339a8119d03b0af2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5b8e72d0944679a7ea31ef295562d3c"><td class="memItemLeft" align="right" valign="top"><a id="ae5b8e72d0944679a7ea31ef295562d3c" name="ae5b8e72d0944679a7ea31ef295562d3c"></a>
-struct usart_sync_descriptor&#160;</td><td class="memItemRight" valign="bottom"><b>USART_SWI</b></td></tr>
-<tr class="separator:ae5b8e72d0944679a7ea31ef295562d3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a1a16fd9217b6b94cdf7a9de3604abe"><td class="memItemLeft" align="right" valign="top"><a id="a3a1a16fd9217b6b94cdf7a9de3604abe" name="a3a1a16fd9217b6b94cdf7a9de3604abe"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>sercom_core_freq</b></td></tr>
-<tr class="separator:a3a1a16fd9217b6b94cdf7a9de3604abe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a4f4c9be2ceae748b9b8001a7118af9bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0480a6b3446da345c4ddc7ada0fd4eeb"><td class="memItemLeft" align="right" valign="top"><a id="a0480a6b3446da345c4ddc7ada0fd4eeb" name="a0480a6b3446da345c4ddc7ada0fd4eeb"></a>
+HANDLE&#160;</td><td class="memItemRight" valign="bottom"><b>hSerial</b></td></tr>
+<tr class="separator:a0480a6b3446da345c4ddc7ada0fd4eeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>this is the hal_data for ATCA HAL for ASF SERCOM </p>
-</div></div><!-- contents -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01749.html">atcaSWImaster</a></li>
+    <li class="navelem"><a class="el" href="a01749.html">atca_uart_host_s</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

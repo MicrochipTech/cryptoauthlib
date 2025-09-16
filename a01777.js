@@ -1,10 +1,7 @@
 var a01777 =
 [
-    [ "digest", "a01777.html#ad3a988f3c029fff3805a8a9dd4caaaa5", null ],
-    [ "hashed_key", "a01777.html#a9ebeb5a66a80189ae8e7bb2ea97701c9", null ],
-    [ "mac", "a01777.html#aeb4c9a28028bd625ac3650b39392cf07", null ],
-    [ "mode", "a01777.html#a2c6c43889156357aee27b3b09657ebd2", null ],
-    [ "param2", "a01777.html#ac94f545daf7381aeb770fb42b467d338", null ],
-    [ "secure_boot_config", "a01777.html#a28771c8ed4754eabcb50649d753ee956", null ],
-    [ "signature", "a01777.html#acafb471d7cc7a71d613503760930d9f5", null ]
+    [ "data", "a01777.html#ab910eb48d182d8f191da149339fd6c51", null ],
+    [ "data_size", "a01777.html#a1d7f86d28ad089ae4401043c117be844", null ],
+    [ "io_key", "a01777.html#aa6d2797ec2cdef70aa51438e96e2a301", null ],
+    [ "out_nonce", "a01777.html#a597e62aa42a9971b98a5d76c7f1baef5", null ]
 ];

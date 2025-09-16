@@ -1,5 +1,7 @@
 var a00746 =
 [
-    [ "pkcs11_decrypt_final", "a01519.html#ga045a35287c46a29da2ad13e700087e0d", null ],
-    [ "pkcs11_encrypt_final", "a01519.html#gaae94f85980031bec34148341efd537e3", null ]
+    [ "pkcs11_digest", "a00746.html#a81936ce8429c7a97bc42921589c1522e", null ],
+    [ "pkcs11_digest_final", "a00746.html#abd1c9ccc6899b550d241f007fd023d6b", null ],
+    [ "pkcs11_digest_init", "a00746.html#a903aed9c7d096dced1233a11539c781d", null ],
+    [ "pkcs11_digest_update", "a00746.html#a87a4b63b1a4ced5e40a1cc0bbc88599d", null ]
 ];

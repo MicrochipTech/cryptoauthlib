@@ -1,9 +1,8 @@
 var a01665 =
 [
-    [ "ca_cert_def", "a01665.html#ae6dc350fb1a599dd6585c41e34a1e0e8", null ],
-    [ "cert_template", "a01665.html#a9cb94eeaa2efe33041488950cbe94ecd", null ],
-    [ "cert_template_size", "a01665.html#ad739f05b87a335974a8ea0dbdf71b21b", null ],
-    [ "comp_cert_dev_loc", "a01665.html#a56f1328d6aec74cd0eb92a30182065b1", null ],
-    [ "private_key_slot", "a01665.html#aab3f6b9d9de50ebd0befc3a78d61aefb", null ],
-    [ "type", "a01665.html#aeb847b88caadd6fad351f4d239edea42", null ]
+    [ "count", "a01665.html#a24329906c1970b0510479835d52b70b5", null ],
+    [ "is_genkey", "a01665.html#a209ce3b19c7ebdd32847334c64a9deb2", null ],
+    [ "offset", "a01665.html#a6d4c996ba426bfb964f3c2c4d1238f3c", null ],
+    [ "slot", "a01665.html#ac393a690cd7891565dc679e6ffa4b021", null ],
+    [ "zone", "a01665.html#af8e8e6406f9252c503f2eaed02f0dbca", null ]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: cryptoauthlib.atcab.atca_sha256_ctx Class Reference</title>
+<title>CryptoAuthLib: cryptoauthlib.atcab.atca_aes_cbc_ctx Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.8</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.9</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,28 +99,25 @@ $(document).ready(function(){initNavTree('a02233.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pro-static-attribs">Static Protected Attributes</a>  </div>
-  <div class="headertitle"><div class="title">cryptoauthlib.atcab.atca_sha256_ctx Class Reference</div></div>
+  <div class="headertitle"><div class="title">cryptoauthlib.atcab.atca_aes_cbc_ctx Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="dynheader">
-Inheritance diagram for cryptoauthlib.atcab.atca_sha256_ctx:</div>
+Inheritance diagram for cryptoauthlib.atcab.atca_aes_cbc_ctx:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="a02233.png" usemap="#cryptoauthlib.atcab.atca_5Fsha256_5Fctx_map" alt=""/>
-  <map id="cryptoauthlib.atcab.atca_5Fsha256_5Fctx_map" name="cryptoauthlib.atcab.atca_5Fsha256_5Fctx_map">
-<area href="a02249.html" alt="cryptoauthlib.atcab.atca_hmac_sha256_ctx" shape="rect" coords="0,112,256,136"/>
-  </map>
-</div></div>
+  <img src="a02233.png" alt=""/>
+ </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-attribs" name="pro-static-attribs"></a>
 Static Protected Attributes</h2></td></tr>
-<tr class="memitem:addf064b521762b8f0d13a2eaa84cda90"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02233.html#addf064b521762b8f0d13a2eaa84cda90">_fields_</a></td></tr>
-<tr class="separator:addf064b521762b8f0d13a2eaa84cda90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fbacab76e7f223d79c91c7be67c5647"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02233.html#a2fbacab76e7f223d79c91c7be67c5647">_fields_</a></td></tr>
+<tr class="separator:a2fbacab76e7f223d79c91c7be67c5647"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><pre class="fragment">SHA256 context</pre> </div><h2 class="groupheader">Field Documentation</h2>
-<a id="addf064b521762b8f0d13a2eaa84cda90" name="addf064b521762b8f0d13a2eaa84cda90"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#addf064b521762b8f0d13a2eaa84cda90">&#9670;&#160;</a></span>_fields_</h2>
+<div class="textblock"><pre class="fragment">AES CBC Context</pre> </div><h2 class="groupheader">Field Documentation</h2>
+<a id="a2fbacab76e7f223d79c91c7be67c5647" name="a2fbacab76e7f223d79c91c7be67c5647"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fbacab76e7f223d79c91c7be67c5647">&#9670;&#160;</a></span>_fields_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -129,7 +126,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">list cryptoauthlib.atcab.atca_sha256_ctx._fields_</td>
+          <td class="memname">list cryptoauthlib.atcab.atca_aes_cbc_ctx._fields_</td>
         </tr>
       </table>
   </td>
@@ -138,9 +135,10 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=  [(<span class="stringliteral">&quot;total_msg_size&quot;</span>, c_uint32),</div>
-<div class="line">                (<span class="stringliteral">&quot;block_size&quot;</span>, c_uint32),</div>
-<div class="line">                (<span class="stringliteral">&quot;block&quot;</span>, c_char*64*2)]</div>
+<b>Initial value:</b><div class="fragment"><div class="line">=  [(<span class="stringliteral">&quot;device&quot;</span>, c_void_p),</div>
+<div class="line">                (<span class="stringliteral">&quot;key_id&quot;</span>, c_uint16),</div>
+<div class="line">                (<span class="stringliteral">&quot;key_block&quot;</span>, c_uint8),</div>
+<div class="line">                (<span class="stringliteral">&quot;ciphertext&quot;</span>, c_char*16)]</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -149,7 +147,7 @@ Static Protected Attributes</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01520.html">cryptoauthlib</a></li><li class="navelem"><a class="el" href="a01521.html">atcab</a></li><li class="navelem"><a class="el" href="a02233.html">atca_sha256_ctx</a></li>
+    <li class="navelem"><a class="el" href="a01532.html">cryptoauthlib</a></li><li class="navelem"><a class="el" href="a01533.html">atcab</a></li><li class="navelem"><a class="el" href="a02233.html">atca_aes_cbc_ctx</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

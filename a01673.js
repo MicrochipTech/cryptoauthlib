@@ -1,5 +1,7 @@
 var a01673 =
 [
-    [ "buf", "a01673.html#a56ecba8dd00dd0bed1056152f4e9f9dc", null ],
-    [ "len", "a01673.html#a9e07b6d33b7cdc866e6625c18d9c5f92", null ]
+    [ "cert_loc", "a01673.html#a6a6584538d9ba2e8304e2c103d4501a5", null ],
+    [ "device_loc", "a01673.html#aaac07ecbeef8734077fec8ea17a7e015", null ],
+    [ "id", "a01673.html#a437f85f49d7a943a0e9f06353a2b6875", null ],
+    [ "transforms", "a01673.html#a1e4d5bbf62b7cbe49b6d222d6e124833", null ]
 ];

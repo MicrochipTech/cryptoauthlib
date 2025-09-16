@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.8</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.9</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -103,7 +103,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="textblock"><p><a class="anchor" id="mainpage"></a></p>
 <h1><a class="anchor" id="autotoc_md56"></a>
 Introduction</h1>
-<p>This library implements the APIs required to communicate with Microchip Security device. The family of devices supported currently are:</p>
+<p>This library implements the APIs required to communicate with Microchip Security devices. The family of devices supported currently are:</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadRight">CryptoAuth   </th><th class="markdownTableHeadLeft">CryptoAuth2    </th></tr>
@@ -147,7 +147,7 @@ Examples</h1>
 </ul>
 <h1><a class="anchor" id="autotoc_md58"></a>
 Configuration</h1>
-<p>In order to properly configured the library there must be a header file in your project named <code>atca_config.h</code> at minimum this needs to contain defines for the hal and device types being used. Most integrations have an configuration mechanism for generating this file. See the <a href="lib/atca_config.h.in">atca_config.h.in</a> template which is configured by CMake for Linux, MacOS, &amp; Windows projects.</p>
+<p>In order to properly configure the library there must be a header file in your project named <code>atca_config.h</code> at minimum this needs to contain defines for the hal and device types being used. Most integrations have a configuration mechanism for generating this file. See the <a href="lib/atca_config.h.in">atca_config.h.in</a> template which is configured by CMake for Linux, MacOS, &amp; Windows projects. This file also contains some specific options that are fully documented where the desired features can be selected.</p>
 <p>An example of the configuration:</p>
 <div class="fragment"><div class="line">/* Cryptoauthlib Configuration File */</div>
 <div class="line">#ifndef ATCA_CONFIG_H</div>
@@ -173,13 +173,12 @@ Configuration</h1>
 <li>ATCA_NO_POLL can be used to revert to a non-polling mechanism for device responses. Normally responses are polled for after sending a command, giving quicker response times. However, if ATCA_NO_POLL is defined, then the library will simply delay the max execution time of a command before reading the response.</li>
 <li>ATCA_NO_HEAP can be used to remove the use of malloc/free from the main library. This can be helpful for smaller MCUs that don't have a heap implemented. If just using the basic API, then there shouldn't be any code changes required. The lower-level API will no longer use the new/delete functions and the init/release functions should be used directly.</li>
 </ul>
-<p>Some specific options are available in the fully documented configuration files <code>lib/calib/calib_config.h</code>, <code>atca_configuration.h</code>, <code>lib/crypto/crypto_config.h</code>, <code>lib/host/atca_host_config.h</code> which is also the place where features can be selected. We provide some configurations focused on specific use cases and the checks are enabled by default.</p>
 <h1><a class="anchor" id="autotoc_md59"></a>
 Release notes</h1>
-<p>See <a class="el" href="a02922.html">Release Notes</a></p>
+<p>See <a class="el" href="a02934.html">Release Notes</a></p>
 <h1><a class="anchor" id="autotoc_md60"></a>
 Host Device Support</h1>
-<p>CryptoAuthLib will run on a variety of platforms from small micro-controllers to desktop host systems. See <a class="el" href="a01515.html">hal readme</a></p>
+<p>CryptoAuthLib will run on a variety of platforms from small micro-controllers to desktop host systems. See <a class="el" href="a01527.html">hal readme</a></p>
 <p>Porting requires a time delay function of millisecond resolution (hal_delay_ms) which can be implemented via loop, timer, or rtos sleep/wait and a communication interface.</p>
 <h1><a class="anchor" id="autotoc_md61"></a>
 CryptoAuthLib Architecture</h1>
@@ -222,7 +221,11 @@ Incorporating CryptoAuthLib in a Linux project using USB HID devices</h2>
 <div class="fragment"><div class="line">cd /etc/udev/rules.d</div>
 <div class="line">sudo touch mchp-cryptoauth.rules</div>
 </div><!-- fragment --><p>Edit the mchp-cryptoauth.rules file and add the following line to the file: </p><div class="fragment"><div class="line">SUBSYSTEM==&quot;hidraw&quot;, ATTRS{idVendor}==&quot;03eb&quot;, ATTRS{idProduct}==&quot;2312&quot;, MODE=&quot;0666&quot;</div>
-</div><!-- fragment --> </div></div><!-- PageDoc -->
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md66"></a>
+Updating &lt;em&gt;X.509 compressed certificate format&lt;/em&gt; to support extended years</h1>
+<p>The X.509 compressed certificate format now supports encoding issue and expiry years beyond 2031.</p>
+<p>For implementation details, see: <a href="https://github.com/MicrochipTech/cryptoauthlib/wiki/Extending-Certificate-Years">Extending Certificate Years</a> </p>
+</div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

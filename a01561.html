@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: secure_boot_parameters Struct Reference</title>
+<title>CryptoAuthLib: _ascii_kit_host_context Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.8</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.9</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,28 +99,37 @@ $(document).ready(function(){initNavTree('a01561.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">secure_boot_parameters Struct Reference</div></div>
+  <div class="headertitle"><div class="title">_ascii_kit_host_context Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a649b18dfbb2bdf2f80532ecd276a64b6"><td class="memItemLeft" align="right" valign="top"><a id="a649b18dfbb2bdf2f80532ecd276a64b6" name="a649b18dfbb2bdf2f80532ecd276a64b6"></a>
-<a class="el" href="a01565.html">memory_parameters</a>&#160;</td><td class="memItemRight" valign="bottom"><b>memory_params</b></td></tr>
-<tr class="separator:a649b18dfbb2bdf2f80532ecd276a64b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad42a4c34eda8ddcbd7d3d18f46c36ae9"><td class="memItemLeft" align="right" valign="top"><a id="ad42a4c34eda8ddcbd7d3d18f46c36ae9" name="ad42a4c34eda8ddcbd7d3d18f46c36ae9"></a>
-<a class="el" href="a01873.html">atcac_sha2_256_ctx</a>&#160;</td><td class="memItemRight" valign="bottom"><b>s_sha_context</b></td></tr>
-<tr class="separator:ad42a4c34eda8ddcbd7d3d18f46c36ae9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaed0c62d06ac64b146ed24b15265ecf8"><td class="memItemLeft" align="right" valign="top"><a id="aaed0c62d06ac64b146ed24b15265ecf8" name="aaed0c62d06ac64b146ed24b15265ecf8"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>app_digest</b> [ATCA_SHA_DIGEST_SIZE]</td></tr>
-<tr class="separator:aaed0c62d06ac64b146ed24b15265ecf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae307a445cc564dbe14c9aad8b3dfaf2e"><td class="memItemLeft" align="right" valign="top"><a id="ae307a445cc564dbe14c9aad8b3dfaf2e" name="ae307a445cc564dbe14c9aad8b3dfaf2e"></a>
+const <a class="el" href="a01725.html">atca_hal_kit_phy_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>phy</b></td></tr>
+<tr class="separator:ae307a445cc564dbe14c9aad8b3dfaf2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a114d7f7b57169e9de81722eebae0fd0f"><td class="memItemLeft" align="right" valign="top"><a id="a114d7f7b57169e9de81722eebae0fd0f" name="a114d7f7b57169e9de81722eebae0fd0f"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>buffer</b> [(2500)]</td></tr>
+<tr class="separator:a114d7f7b57169e9de81722eebae0fd0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37b9fb4160a4997388a071ed0b9fc972"><td class="memItemLeft" align="right" valign="top"><a id="a37b9fb4160a4997388a071ed0b9fc972" name="a37b9fb4160a4997388a071ed0b9fc972"></a>
+<a class="el" href="a01581.html">ATCADevice</a>&#160;</td><td class="memItemRight" valign="bottom"><b>device</b></td></tr>
+<tr class="separator:a37b9fb4160a4997388a071ed0b9fc972"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59ac65151e0dfd03baf366befa74e400"><td class="memItemLeft" align="right" valign="top"><a id="a59ac65151e0dfd03baf366befa74e400" name="a59ac65151e0dfd03baf366befa74e400"></a>
+<a class="el" href="a01589.html">ATCAIfaceCfg</a> **&#160;</td><td class="memItemRight" valign="bottom"><b>iface</b></td></tr>
+<tr class="separator:a59ac65151e0dfd03baf366befa74e400"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e515f8e8f829a7e8c2d439a913634c6"><td class="memItemLeft" align="right" valign="top"><a id="a1e515f8e8f829a7e8c2d439a913634c6" name="a1e515f8e8f829a7e8c2d439a913634c6"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>iface_count</b></td></tr>
+<tr class="separator:a1e515f8e8f829a7e8c2d439a913634c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa88c5f5287dc7486ae9620c9b1d9f953"><td class="memItemLeft" align="right" valign="top"><a id="aa88c5f5287dc7486ae9620c9b1d9f953" name="aa88c5f5287dc7486ae9620c9b1d9f953"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>flags</b></td></tr>
+<tr class="separator:aa88c5f5287dc7486ae9620c9b1d9f953"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01561.html">secure_boot_parameters</a></li>
+    <li class="navelem"><a class="el" href="a01561.html">_ascii_kit_host_context</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: Python CryptoAuthLib Module Testing</title>
+<title>CryptoAuthLib: Application Support</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.8</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.9</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -97,30 +97,14 @@ $(document).ready(function(){initNavTree('a02921.html',''); initResizable(); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Python CryptoAuthLib Module Testing </div></div>
+  <div class="headertitle"><div class="title">Application Support </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md53"></a>
-Introduction</h1>
-<p>These tests are designed to only test the python interface to the library and are not designed to test the library itself which is covered by the main cryptoauthlib tests</p>
-<h2><a class="anchor" id="autotoc_md54"></a>
-Running</h2>
-<p>The best way to run the test suite is to use <a href="https://tox.readthedocs.io/en/latest/">tox</a> which can be easily installed with pip:</p>
-<div class="fragment"><div class="line">$ pip install tox</div>
-</div><!-- fragment --><p>From the python folder:</p>
-<div class="fragment"><div class="line">:~/cryptoauthlib/python $ tox</div>
-</div><!-- fragment --><p>It is possible to directly run tests but requires more setup</p>
-<p>1) Install pytest</p>
-<div class="fragment"><div class="line">$ pip install pytest</div>
-</div><!-- fragment --><p>2) Modify the PYTHONPATH environment variable</p>
-<p>Windows: </p><div class="fragment"><div class="line">cryptoauthlib/python&gt; set PYTHONPATH=&lt;path_to&gt;/cryptoauthlib/python</div>
-</div><!-- fragment --><p>Linux: </p><div class="fragment"><div class="line">$ export PYTHONPATH=${PYTHONPATH}:&lt;path_to&gt;/cryptoauthlib/python</div>
-</div><!-- fragment --><p>3) Run the tests </p><div class="fragment"><div class="line">$ pytest -vv</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md55"></a>
-Test options</h2>
-<p>There are additional options that can be invoked with the tests that define what tests will be run</p>
-<p>1) &ndash;with-lib will attempt to run tests against the compiled c library. These tests are good for detecting possible platform incompabilities between the C compiler and the expectations of python</p>
-<p>2) &ndash;with-device will attempt to invoke some tests with a real attached device These tests are restricted to only the minimum required to verify the python to library connectivity and are only meant to detect situations can can not be determined from the library tests alone. </p>
+<div class="textblock"><p>This directory is for application specific implementation of various use cases.</p>
+<p>Methods in this directory provide a simple API to perform potentially complex combinations of calls to the main library or API.</p>
+<p><a class="el" href="a02919.html#app_info_ip_prot">app_info_ip_prot</a></p>
+<p><a class="el" href="a02920.html#app_info_pkcs11">app_info_pkcs11</a></p>
+<p><a class="el" href="a02922.html#app_info_secure_boot">app_info_secure_boot</a> </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

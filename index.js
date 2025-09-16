@@ -10,5 +10,6 @@ var index =
     [ "Tests", "index.html#autotoc_md63", null ],
     [ "Using CryptoAuthLib (Microchip CryptoAuth Library)", "index.html#autotoc_md64", [
       [ "Incorporating CryptoAuthLib in a Linux project using USB HID devices", "index.html#autotoc_md65", null ]
-    ] ]
+    ] ],
+    [ "Updating <em>X.509 compressed certificate format</em> to support extended years", "index.html#autotoc_md66", null ]
 ];
