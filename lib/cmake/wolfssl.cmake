@@ -52,9 +52,9 @@ if(NOT MSVC)
 target_compile_options(wolfssl PRIVATE -fPIC)
 endif()
 
-include_directories(wolfssl PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
-                                    ${CMAKE_BINARY_DIR}/downloaded/wolfssl
-                                    ${CMAKE_CURRENT_BINARY_DIR})
+target_include_directories(wolfssl PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
+                                           ${CMAKE_BINARY_DIR}/downloaded/wolfssl
+                                           ${CMAKE_CURRENT_BINARY_DIR})
 
 
 file(GLOB WOLFSSL_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "wolfssl/*.c")

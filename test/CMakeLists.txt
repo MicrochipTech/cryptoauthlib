@@ -52,22 +52,23 @@ endif()
 
 add_executable(cryptoauth_test ${CRYPTOAUTH_TEST_SRC} ${UNITY_SRC})
 
-include_directories(cryptoauth_test ${CMAKE_CURRENT_SOURCE_DIR}
-                                    ${CMAKE_BINARY_DIR}/downloaded
-                                    ${CMAKE_BINARY_DIR}/downloaded/wolfssl
-                                    ${CMAKE_BINARY_DIR}/downloaded/mbedtls/include
-                                    ${CMAKE_CURRENT_SOURCE_DIR}/../
-                                    ${CMAKE_CURRENT_SOURCE_DIR}/api_atcab
-                                    ${CMAKE_CURRENT_SOURCE_DIR}/api_calib
-                                    ${CMAKE_CURRENT_SOURCE_DIR}/api_crypto
-                                    ${CMAKE_CURRENT_SOURCE_DIR}/api_talib
-                                    ${CMAKE_CURRENT_SOURCE_DIR}/hal
-                                    ${CMAKE_CURRENT_SOURCE_DIR}/integration
-                                    ${CMAKE_CURRENT_SOURCE_DIR}/../lib
-                                    ${CMAKE_CURRENT_SOURCE_DIR}/../third_party
-                                    ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/mbedtls/include
-                                    ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/wolfssl
-                                    ${CMAKE_CURRENT_BINARY_DIR}/../lib)
+target_include_directories(cryptoauth_test PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_BINARY_DIR}/downloaded
+    ${CMAKE_BINARY_DIR}/downloaded/wolfssl
+    ${CMAKE_BINARY_DIR}/downloaded/mbedtls/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../
+    ${CMAKE_CURRENT_SOURCE_DIR}/api_atcab
+    ${CMAKE_CURRENT_SOURCE_DIR}/api_calib
+    ${CMAKE_CURRENT_SOURCE_DIR}/api_crypto
+    ${CMAKE_CURRENT_SOURCE_DIR}/api_talib
+    ${CMAKE_CURRENT_SOURCE_DIR}/hal
+    ${CMAKE_CURRENT_SOURCE_DIR}/integration
+    ${CMAKE_CURRENT_SOURCE_DIR}/../lib
+    ${CMAKE_CURRENT_SOURCE_DIR}/../third_party
+    ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/mbedtls/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/wolfssl
+    ${CMAKE_CURRENT_BINARY_DIR}/../lib)
 
 target_link_libraries(cryptoauth_test cryptoauth)
 
