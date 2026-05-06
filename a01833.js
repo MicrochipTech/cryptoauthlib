@@ -1,7 +1,6 @@
 var a01833 =
 [
-    [ "curve_type", "a01528.html#gadf3470738c60dbe57b33fb1e6005f40e", null ],
-    [ "public_key", "a01528.html#gaf61f82fe19690b80bf370b295c58920b", null ],
-    [ "signature", "a01528.html#gad2e0f0dbb511520e5d79bdb4ab649c22", null ],
-    [ "temp_key", "a01528.html#ga4409850783c991d3b429ee78e67c9813", null ]
+    [ "otp", "a01591.html#gaf07ffae9f842764c321a060ead038ac2", null ],
+    [ "p_temp", "a01591.html#ga80ad9effe2957aaa0e604b175fcdbc63", null ],
+    [ "sn", "a01591.html#ga46b121ddb13c417e4d65a3fc2f6c365b", null ]
 ];

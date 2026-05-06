@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: i2c_start_instance Struct Reference</title>
+<title>CryptoAuthLib: atcacert_cert_element_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.9</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.8.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,25 +99,39 @@ $(document).ready(function(){initNavTree('a01737.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">i2c_start_instance Struct Reference<div class="ingroups"><a class="el" href="a01527.html">Hardware abstraction layer (hal_)</a></div></div></div>
+  <div class="headertitle"><div class="title">atcacert_cert_element_s Struct Reference<div class="ingroups"><a class="el" href="a01587.html">Certificate manipulation methods (atcacert_)</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;lib/atcacert/atcacert_def.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a6af845fc47ee0fbc7986a22193f0b92e"><td class="memItemLeft" align="right" valign="top"><a id="a6af845fc47ee0fbc7986a22193f0b92e" name="a6af845fc47ee0fbc7986a22193f0b92e"></a>
-struct i2c_m_sync_desc *&#160;</td><td class="memItemRight" valign="bottom"><b>i2c_descriptor</b></td></tr>
-<tr class="separator:a6af845fc47ee0fbc7986a22193f0b92e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42c346041854fc0a75a6a8f50e955cdd"><td class="memItemLeft" align="right" valign="top"><a id="a42c346041854fc0a75a6a8f50e955cdd" name="a42c346041854fc0a75a6a8f50e955cdd"></a>
-start_change_baudrate&#160;</td><td class="memItemRight" valign="bottom"><b>change_baudrate</b></td></tr>
-<tr class="separator:a42c346041854fc0a75a6a8f50e955cdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a437f85f49d7a943a0e9f06353a2b6875"><td class="memItemLeft" align="right" valign="top"><a id="a437f85f49d7a943a0e9f06353a2b6875" name="a437f85f49d7a943a0e9f06353a2b6875"></a>
+char&#160;</td><td class="memItemRight" valign="bottom"><b>id</b> [25]</td></tr>
+<tr class="memdesc:a437f85f49d7a943a0e9f06353a2b6875"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID identifying this element. <br /></td></tr>
+<tr class="separator:a437f85f49d7a943a0e9f06353a2b6875"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaac07ecbeef8734077fec8ea17a7e015"><td class="memItemLeft" align="right" valign="top"><a id="aaac07ecbeef8734077fec8ea17a7e015" name="aaac07ecbeef8734077fec8ea17a7e015"></a>
+<a class="el" href="a01587.html#ga5973a9cc26357822a232433f57741777">atcacert_device_loc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>device_loc</b></td></tr>
+<tr class="memdesc:aaac07ecbeef8734077fec8ea17a7e015"><td class="mdescLeft">&#160;</td><td class="mdescRight">Location in the device for the element. <br /></td></tr>
+<tr class="separator:aaac07ecbeef8734077fec8ea17a7e015"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a6584538d9ba2e8304e2c103d4501a5"><td class="memItemLeft" align="right" valign="top"><a id="a6a6584538d9ba2e8304e2c103d4501a5" name="a6a6584538d9ba2e8304e2c103d4501a5"></a>
+<a class="el" href="a01587.html#gad473c89ee9a934029ff87e86fc1c570d">atcacert_cert_loc_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>cert_loc</b></td></tr>
+<tr class="memdesc:a6a6584538d9ba2e8304e2c103d4501a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Location in the certificate template for the element. <br /></td></tr>
+<tr class="separator:a6a6584538d9ba2e8304e2c103d4501a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e4d5bbf62b7cbe49b6d222d6e124833"><td class="memItemLeft" align="right" valign="top"><a id="a1e4d5bbf62b7cbe49b6d222d6e124833" name="a1e4d5bbf62b7cbe49b6d222d6e124833"></a>
+<a class="el" href="a01587.html#ga249c2793a533c5487b5b7b935683a78f">atcacert_transform_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>transforms</b> [2]</td></tr>
+<tr class="memdesc:a1e4d5bbf62b7cbe49b6d222d6e124833"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of transforms from device to cert for this element. <br /></td></tr>
+<tr class="separator:a1e4d5bbf62b7cbe49b6d222d6e124833"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Defines a generic dynamic element for a certificate including the device and template locations. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01737.html">i2c_start_instance</a></li>
+    <li class="navelem"><a class="el" href="a01737.html">atcacert_cert_element_s</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

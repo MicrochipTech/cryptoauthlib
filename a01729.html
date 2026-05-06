@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_hal_shm_t Struct Reference</title>
+<title>CryptoAuthLib: atcacert_device_loc_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.9</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.8.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,28 +99,43 @@ $(document).ready(function(){initNavTree('a01729.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">atca_hal_shm_t Struct Reference<div class="ingroups"><a class="el" href="a01527.html">Hardware abstraction layer (hal_)</a></div></div></div>
+  <div class="headertitle"><div class="title">atcacert_device_loc_s Struct Reference<div class="ingroups"><a class="el" href="a01587.html">Certificate manipulation methods (atcacert_)</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;lib/atcacert/atcacert_def.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ad7f73b86301435f23fd1963624d6755c"><td class="memItemLeft" align="right" valign="top"><a id="ad7f73b86301435f23fd1963624d6755c" name="ad7f73b86301435f23fd1963624d6755c"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>recordedPID</b></td></tr>
-<tr class="separator:ad7f73b86301435f23fd1963624d6755c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ce0b846243d20af8ef571cd01db2315"><td class="memItemLeft" align="right" valign="top"><a id="a3ce0b846243d20af8ef571cd01db2315" name="a3ce0b846243d20af8ef571cd01db2315"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>sessionID</b></td></tr>
-<tr class="separator:a3ce0b846243d20af8ef571cd01db2315"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24d811c8f80c23d8a560296db4b2c3e4"><td class="memItemLeft" align="right" valign="top"><a id="a24d811c8f80c23d8a560296db4b2c3e4" name="a24d811c8f80c23d8a560296db4b2c3e4"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>index</b></td></tr>
-<tr class="separator:a24d811c8f80c23d8a560296db4b2c3e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8e8e6406f9252c503f2eaed02f0dbca"><td class="memItemLeft" align="right" valign="top"><a id="af8e8e6406f9252c503f2eaed02f0dbca" name="af8e8e6406f9252c503f2eaed02f0dbca"></a>
+<a class="el" href="a01587.html#ga63df515d393c9ebb6979d53208263458">atcacert_device_zone_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>zone</b></td></tr>
+<tr class="memdesc:af8e8e6406f9252c503f2eaed02f0dbca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zone in the device. <br /></td></tr>
+<tr class="separator:af8e8e6406f9252c503f2eaed02f0dbca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac393a690cd7891565dc679e6ffa4b021"><td class="memItemLeft" align="right" valign="top"><a id="ac393a690cd7891565dc679e6ffa4b021" name="ac393a690cd7891565dc679e6ffa4b021"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>slot</b></td></tr>
+<tr class="memdesc:ac393a690cd7891565dc679e6ffa4b021"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slot within the data zone. Only applies if zone is DEVZONE_DATA. <br /></td></tr>
+<tr class="separator:ac393a690cd7891565dc679e6ffa4b021"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a209ce3b19c7ebdd32847334c64a9deb2"><td class="memItemLeft" align="right" valign="top"><a id="a209ce3b19c7ebdd32847334c64a9deb2" name="a209ce3b19c7ebdd32847334c64a9deb2"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>is_genkey</b></td></tr>
+<tr class="memdesc:a209ce3b19c7ebdd32847334c64a9deb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">If true, use GenKey command to get the contents instead of Read. <br /></td></tr>
+<tr class="separator:a209ce3b19c7ebdd32847334c64a9deb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d4c996ba426bfb964f3c2c4d1238f3c"><td class="memItemLeft" align="right" valign="top"><a id="a6d4c996ba426bfb964f3c2c4d1238f3c" name="a6d4c996ba426bfb964f3c2c4d1238f3c"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>offset</b></td></tr>
+<tr class="memdesc:a6d4c996ba426bfb964f3c2c4d1238f3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Byte offset in the zone. <br /></td></tr>
+<tr class="separator:a6d4c996ba426bfb964f3c2c4d1238f3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24329906c1970b0510479835d52b70b5"><td class="memItemLeft" align="right" valign="top"><a id="a24329906c1970b0510479835d52b70b5" name="a24329906c1970b0510479835d52b70b5"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>count</b></td></tr>
+<tr class="memdesc:a24329906c1970b0510479835d52b70b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Byte count. <br /></td></tr>
+<tr class="separator:a24329906c1970b0510479835d52b70b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Defines a chunk of data in an ATECC device. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01729.html">atca_hal_shm_t</a></li>
+    <li class="navelem"><a class="el" href="a01729.html">atcacert_device_loc_s</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

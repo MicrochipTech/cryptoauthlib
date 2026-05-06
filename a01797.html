@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_hmac_in_out Struct Reference</title>
+<title>CryptoAuthLib: atcaI2Cmaster Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.9</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.8.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -99,54 +99,53 @@ $(document).ready(function(){initNavTree('a01797.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
-  <div class="headertitle"><div class="title">atca_hmac_in_out Struct Reference<div class="ingroups"><a class="el" href="a01528.html">Host side crypto methods (atcah_)</a></div></div></div>
+  <div class="headertitle"><div class="title">atcaI2Cmaster Struct Reference<div class="ingroups"><a class="el" href="a01590.html">Hardware abstraction layer (hal_)</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Input/output parameters for function atca_hmac().  
+<p>this is the hal_data for ATCA HAL for ASF SERCOM  
  <a href="a01797.html#details">More...</a></p>
 
-<p><code>#include &lt;lib/host/atca_host.h&gt;</code></p>
+<p><code>#include &lt;lib/hal/hal_uc3_i2c_asf.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ga1616d5efe59851d97fed27b47923c786"><td class="memItemLeft" align="right" valign="top">
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>mode</b></td></tr>
-<tr class="memdesc:ga1616d5efe59851d97fed27b47923c786"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Mode parameter used in HMAC command (Param1). <br /></td></tr>
-<tr class="separator:ga1616d5efe59851d97fed27b47923c786"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga10f04328eda5cffcea79652ac3509c2d"><td class="memItemLeft" align="right" valign="top">
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>key_id</b></td></tr>
-<tr class="memdesc:ga10f04328eda5cffcea79652ac3509c2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] KeyID parameter used in HMAC command (Param2). <br /></td></tr>
-<tr class="separator:ga10f04328eda5cffcea79652ac3509c2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab6fe3f8a17d3a68f63c9c537cadd0fd0"><td class="memItemLeft" align="right" valign="top">
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>key</b></td></tr>
-<tr class="memdesc:gab6fe3f8a17d3a68f63c9c537cadd0fd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to 32-byte key used to generate HMAC digest. <br /></td></tr>
-<tr class="separator:gab6fe3f8a17d3a68f63c9c537cadd0fd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaad38386d9ec6afcdcd39eab98e2a4a1c"><td class="memItemLeft" align="right" valign="top">
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>otp</b></td></tr>
-<tr class="memdesc:gaad38386d9ec6afcdcd39eab98e2a4a1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to 11-byte OTP, optionally included in HMAC digest, depending on mode. <br /></td></tr>
-<tr class="separator:gaad38386d9ec6afcdcd39eab98e2a4a1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf0d7fe9a16cad1ba38c7daca4295823b"><td class="memItemLeft" align="right" valign="top">
-const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>sn</b></td></tr>
-<tr class="memdesc:gaf0d7fe9a16cad1ba38c7daca4295823b"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in] Pointer to 9-byte SN, optionally included in HMAC digest, depending on mode. <br /></td></tr>
-<tr class="separator:gaf0d7fe9a16cad1ba38c7daca4295823b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacf6675faad5f7a43ca3fbec2108f57cd"><td class="memItemLeft" align="right" valign="top">
-uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><b>response</b></td></tr>
-<tr class="memdesc:gacf6675faad5f7a43ca3fbec2108f57cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">[out] Pointer to 32-byte SHA-256 HMAC digest. <br /></td></tr>
-<tr class="separator:gacf6675faad5f7a43ca3fbec2108f57cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7507880718dc536d6122f0401073b8c8"><td class="memItemLeft" align="right" valign="top">
-struct <a class="el" href="a01765.html">atca_temp_key</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>temp_key</b></td></tr>
-<tr class="memdesc:ga7507880718dc536d6122f0401073b8c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">[in,out] Pointer to TempKey structure. <br /></td></tr>
-<tr class="separator:ga7507880718dc536d6122f0401073b8c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a692c5669fc6f6ffa256e93aa495fefd4"><td class="memItemLeft" align="right" valign="top"><a id="a692c5669fc6f6ffa256e93aa495fefd4" name="a692c5669fc6f6ffa256e93aa495fefd4"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
+<tr class="separator:a692c5669fc6f6ffa256e93aa495fefd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32c265a89578e7aef0ea14185496de93"><td class="memItemLeft" align="right" valign="top"><a id="a32c265a89578e7aef0ea14185496de93" name="a32c265a89578e7aef0ea14185496de93"></a>
+i2c_master_bus_config_t&#160;</td><td class="memItemRight" valign="bottom"><b>conf</b></td></tr>
+<tr class="separator:a32c265a89578e7aef0ea14185496de93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ff3c78d99d9c74553b02489ff4ea2a0"><td class="memItemLeft" align="right" valign="top"><a id="a9ff3c78d99d9c74553b02489ff4ea2a0" name="a9ff3c78d99d9c74553b02489ff4ea2a0"></a>
+i2c_device_config_t&#160;</td><td class="memItemRight" valign="bottom"><b>dev_conf</b></td></tr>
+<tr class="separator:a9ff3c78d99d9c74553b02489ff4ea2a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7cc8b98df6536c23b4717d45d7903f53"><td class="memItemLeft" align="right" valign="top"><a id="a7cc8b98df6536c23b4717d45d7903f53" name="a7cc8b98df6536c23b4717d45d7903f53"></a>
+i2c_master_bus_handle_t&#160;</td><td class="memItemRight" valign="bottom"><b>bus_handle</b></td></tr>
+<tr class="separator:a7cc8b98df6536c23b4717d45d7903f53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc5ca9a5b5d751570886e5f2edd9abe9"><td class="memItemLeft" align="right" valign="top"><a id="abc5ca9a5b5d751570886e5f2edd9abe9" name="abc5ca9a5b5d751570886e5f2edd9abe9"></a>
+i2c_master_dev_handle_t&#160;</td><td class="memItemRight" valign="bottom"><b>dev_handle</b></td></tr>
+<tr class="separator:abc5ca9a5b5d751570886e5f2edd9abe9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d2c1b9a68f365d01f6b0be9dad7dc6a"><td class="memItemLeft" align="right" valign="top"><a id="a1d2c1b9a68f365d01f6b0be9dad7dc6a" name="a1d2c1b9a68f365d01f6b0be9dad7dc6a"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>ref_ct</b></td></tr>
+<tr class="separator:a1d2c1b9a68f365d01f6b0be9dad7dc6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f357fab31485a55f93eeef31b730c4f"><td class="memItemLeft" align="right" valign="top"><a id="a2f357fab31485a55f93eeef31b730c4f" name="a2f357fab31485a55f93eeef31b730c4f"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>twi_id</b></td></tr>
+<tr class="separator:a2f357fab31485a55f93eeef31b730c4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d3d9c7382b93a45858a1b327a38fc35"><td class="memItemLeft" align="right" valign="top"><a id="a8d3d9c7382b93a45858a1b327a38fc35" name="a8d3d9c7382b93a45858a1b327a38fc35"></a>
+avr32_twi_t *&#160;</td><td class="memItemRight" valign="bottom"><b>twi_master_instance</b></td></tr>
+<tr class="separator:a8d3d9c7382b93a45858a1b327a38fc35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94c2633397e4a8895e2592fba8cfb2b0"><td class="memItemLeft" align="right" valign="top"><a id="a94c2633397e4a8895e2592fba8cfb2b0" name="a94c2633397e4a8895e2592fba8cfb2b0"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>bus_index</b></td></tr>
+<tr class="separator:a94c2633397e4a8895e2592fba8cfb2b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Input/output parameters for function atca_hmac(). </p>
+<div class="textblock"><p>this is the hal_data for ATCA HAL for ASF SERCOM </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a01797.html">atca_hmac_in_out</a></li>
+    <li class="navelem"><a class="el" href="a01797.html">atcaI2Cmaster</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>

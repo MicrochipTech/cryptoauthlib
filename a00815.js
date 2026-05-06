@@ -1,8 +1,5 @@
 var a00815 =
 [
-    [ "pkcs11_slot_ctx_s", "a01965.html", "a01965" ],
-    [ "pkcs11_slot_ctx", "a00815.html#a1813685567d78b9f762d2f1eec531616", null ],
-    [ "pkcs11_slot_get_context", "a01531.html#ga987853011908614aba0db7c5933b0a20", null ],
-    [ "pkcs11_slot_get_info", "a01531.html#ga3bba79e03141bfb7a9ec76c273db63d2", null ],
-    [ "pkcs11_slot_init", "a01531.html#ga418414364e88d0673b4f6c90cd62ebed", null ]
+    [ "pkcs11_find_cache_fields_s", "a01973.html", "a01973" ],
+    [ "pkcs11_find_cache_fields_t", "a00815.html#ac46b49027c291bad1e82c40209f9211d", null ]
 ];

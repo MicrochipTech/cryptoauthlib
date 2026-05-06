@@ -1,6 +1,8 @@
 var a00638 =
 [
-    [ "atca_delay_10us", "a01527.html#ga19891182689551cc3a88603135959351", null ],
-    [ "atca_delay_ms", "a01527.html#ga0544f36422b5e9a8890fb9c90fc5eb55", null ],
-    [ "atca_delay_us", "a01527.html#ga7598dfcd6dcac882836544d48356d02f", null ]
+    [ "hal_gpio_init", "a00638.html#a5159dcc0de9cf18a0a46d390fcde3d59", null ],
+    [ "hal_gpio_post_init", "a00638.html#a680903ede9921710475c23f3e0f5c56c", null ],
+    [ "hal_gpio_receive", "a00638.html#ac4ec5194f4ed97053e725b4f5d3b6db4", null ],
+    [ "hal_gpio_release", "a00638.html#a34a8c0ab6cfceb80c15080b571c0b3f7", null ],
+    [ "hal_gpio_send", "a00638.html#a0509181ebe5c1f3311cacc800796469b", null ]
 ];

@@ -1,7 +1,6 @@
 var a00788 =
 [
-    [ "pkcs11_object_create", "a01531.html#ga5cdd6e87496f480f42c44430250794bb", null ],
-    [ "pkcs11_object_destroy", "a01531.html#ga34dbd233b6ac0bf1d2aa2be541d66b25", null ],
-    [ "pkcs11_object_is_private", "a01531.html#gad3eaa8d90b81d65f8e585c81c701f893", null ],
-    [ "pkcs11_object_monotonic_attributes", "a01531.html#ga230747fbe3b7a13dfda75980844c3e9d", null ]
+    [ "pkcs11_cert_wtlspublic_attributes", "a01594.html#gabc10a1f1b90bc7d2fb047db0af539e80", null ],
+    [ "pkcs11_cert_x509_attributes", "a01594.html#gafa471eb33699e2cba5dc3cc50a2d8df7", null ],
+    [ "pkcs11_cert_x509public_attributes", "a01594.html#ga8de4193ede04a12ab4e44b8df9eec478", null ]
 ];

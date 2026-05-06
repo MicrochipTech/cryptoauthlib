@@ -1,6 +1,5 @@
 var a00812 =
 [
-    [ "pkcs11_slot_get_context", "a01531.html#ga987853011908614aba0db7c5933b0a20", null ],
-    [ "pkcs11_slot_get_info", "a01531.html#ga3bba79e03141bfb7a9ec76c273db63d2", null ],
-    [ "pkcs11_slot_init", "a01531.html#ga418414364e88d0673b4f6c90cd62ebed", null ]
+    [ "pkcs11_decrypt_final", "a01594.html#ga045a35287c46a29da2ad13e700087e0d", null ],
+    [ "pkcs11_encrypt_final", "a01594.html#gaae94f85980031bec34148341efd537e3", null ]
 ];

@@ -1,5 +1,6 @@
 var a00719 =
 [
-    [ "pkcs11_attrib_fill", "a01531.html#ga8b1206a513938768655cdd541ffee9b3", null ],
-    [ "pkcs11_attrib_value", "a01531.html#ga50e9c64b899d1b2f78c9634298225303", null ]
+    [ "kit_id_from_devtype", "a01590.html#ga554072f32204a0eb8d7b8c7931e43343", null ],
+    [ "kit_interface", "a01590.html#ga33fe33933fb59dde6e6fb8975da6c12d", null ],
+    [ "kit_interface_from_kittype", "a01590.html#ga31075898964b61f4877ba882477b71c3", null ]
 ];

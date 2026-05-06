@@ -1,11 +1,8 @@
 var a00383 =
 [
-    [ "atCalcCrc", "a00383.html#aff659b1042abf6e1376e38ccb4a20f3e", null ],
-    [ "atCheckCrc", "a00383.html#a7723a58d1781b3ba54e8f45d5729b33a", null ],
-    [ "atCRC", "a00383.html#a53ded4ed630b6ef4d292056c2e6b34f6", null ],
-    [ "atInfo", "a00383.html#a640d3cfd0f5b41f50cea0b987094d8a1", null ],
-    [ "atIsECCFamily", "a00383.html#ae82dca54cc3fd1cc2f1671e98d64df07", null ],
-    [ "atIsSHAFamily", "a00383.html#aae5866a78d2f0464b04eee9ef1f97030", null ],
-    [ "atPause", "a00383.html#afaf2ec3ff6b7feba0ca50a9b4f8d3ad8", null ],
-    [ "isATCAError", "a00383.html#ae41108996848638519849163e51cd10a", null ]
+    [ "cal_buf_init_const_ptr", "a00383.html#a923fdd71f9a98e47040d26acb74a0202", null ],
+    [ "cal_buf_read_bytes", "a00383.html#acc0d724d5fc815cc98dea12aa5bb15d0", null ],
+    [ "cal_buf_read_number", "a00383.html#a546b07423022359a8b27fcbeadfdd93d", null ],
+    [ "cal_buf_write_bytes", "a00383.html#a0890ecff5c568d7ee2d631bd3877fcc6", null ],
+    [ "cal_buf_write_number", "a00383.html#af8a1f17b5af51c3539246d03282206a2", null ]
 ];

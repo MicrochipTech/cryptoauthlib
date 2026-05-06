@@ -1,6 +1,9 @@
 var a00659 =
 [
-    [ "kit_id_from_devtype", "a01527.html#ga554072f32204a0eb8d7b8c7931e43343", null ],
-    [ "kit_interface", "a01527.html#ga33fe33933fb59dde6e6fb8975da6c12d", null ],
-    [ "kit_interface_from_kittype", "a01527.html#ga31075898964b61f4877ba882477b71c3", null ]
+    [ "hal_i2c_control", "a01590.html#ga4f82572f05b8587d98bc38601453863e", null ],
+    [ "hal_i2c_init", "a01590.html#ga17df8d983df73e2e8f62f1236f157909", null ],
+    [ "hal_i2c_post_init", "a01590.html#gafbe53519362f18c2688d10da6f7c618f", null ],
+    [ "hal_i2c_receive", "a01590.html#gac1baf65047dc3efe1f14f1b79b62c04f", null ],
+    [ "hal_i2c_release", "a01590.html#gac382cc4431d2d1c721c21a453ba36c22", null ],
+    [ "hal_i2c_send", "a01590.html#gacc9a889e19d2f1a475a39391565b66dd", null ]
 ];

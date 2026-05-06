@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['timeouterror_0',['TimeOutError',['../a02489.html',1,'cryptoauthlib::exceptions']]],
-  ['transmissionerror_1',['TransmissionError',['../a02509.html',1,'cryptoauthlib::exceptions']]],
-  ['transmissiontimeouterror_2',['TransmissionTimeoutError',['../a02477.html',1,'cryptoauthlib::exceptions']]]
+  ['timeouterror_0',['TimeOutError',['../a02557.html',1,'cryptoauthlib::exceptions']]],
+  ['transmissionerror_1',['TransmissionError',['../a02577.html',1,'cryptoauthlib::exceptions']]],
+  ['transmissiontimeouterror_2',['TransmissionTimeoutError',['../a02545.html',1,'cryptoauthlib::exceptions']]]
 ];

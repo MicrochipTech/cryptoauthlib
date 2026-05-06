@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CryptoAuthLib: atca_openssl_interface.h File Reference</title>
+<title>CryptoAuthLib: hal_windows.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -31,7 +31,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="microchip.png"/></td>
   <td id="projectalign">
-   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.7.9</span>
+   <div id="projectname">CryptoAuthLib<span id="projectnumber">&#160;v3.8.0</span>
    </div>
    <div id="projectbrief">Microchip CryptoAuthentication Library</div>
   </td>
@@ -98,214 +98,51 @@ $(document).ready(function(){initNavTree('a00710.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
-  <div class="headertitle"><div class="title">atca_openssl_interface.h File Reference</div></div>
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">hal_windows.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>OpenSSL Integration Support.  
+<p>ATCA Hardware abstraction layer for windows timer functions.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00263.html">atca_config_check.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00617.html">atca_hal.h</a>&quot;</code><br />
+<code>#include &lt;windows.h&gt;</code><br />
+<code>#include &lt;math.h&gt;</code><br />
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01857.html">atcac_sha1_ctx</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01885.html">atcac_sha2_256_ctx</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01889.html">atcac_sha2_384_ctx</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01893.html">atcac_sha2_512_ctx</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01869.html">atcac_aes_cmac_ctx</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01861.html">atcac_hmac_ctx</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01873.html">atcac_pk_ctx</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01853.html">atcac_x509_ctx</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a8e3c7ddf3a16cbdcc42060cdee2d884e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00710.html#a8e3c7ddf3a16cbdcc42060cdee2d884e">ATCAC_SHA1_EN</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:a8e3c7ddf3a16cbdcc42060cdee2d884e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99dab792a5983a089fe816abc57bad25"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00710.html#a99dab792a5983a089fe816abc57bad25">ATCAC_SHA256_EN</a>&#160;&#160;&#160;(FEATURE_ENABLED)</td></tr>
-<tr class="separator:a99dab792a5983a089fe816abc57bad25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a372b1be02c2a55afbe5eda47580c7ee8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00710.html#a372b1be02c2a55afbe5eda47580c7ee8">ATCAC_SHA384_EN</a>&#160;&#160;&#160;(FEATURE_DISABLED)</td></tr>
-<tr class="separator:a372b1be02c2a55afbe5eda47580c7ee8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7815fa6e2b361a72ae88bb26bea8a9ad"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00710.html#a7815fa6e2b361a72ae88bb26bea8a9ad">ATCAC_SHA512_EN</a>&#160;&#160;&#160;(FEATURE_DISABLED)</td></tr>
-<tr class="separator:a7815fa6e2b361a72ae88bb26bea8a9ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace0d6e503c0db5222207053a7c537103"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00710.html#ace0d6e503c0db5222207053a7c537103">ATCAC_AES_CMAC_EN</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:ace0d6e503c0db5222207053a7c537103"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2cf377cd3579f3ba898ec2391835cfd5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00710.html#a2cf377cd3579f3ba898ec2391835cfd5">ATCAC_AES_GCM_EN</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:a2cf377cd3579f3ba898ec2391835cfd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0b5716ff6baea028959764dc6d88e96"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00710.html#ae0b5716ff6baea028959764dc6d88e96">ATCAC_PKEY_EN</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:ae0b5716ff6baea028959764dc6d88e96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82cc4e898685eda93b47e741e5b44137"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00710.html#a82cc4e898685eda93b47e741e5b44137">HOSTLIB_CERT_EN</a>&#160;&#160;&#160;(DEFAULT_ENABLED)</td></tr>
-<tr class="separator:a82cc4e898685eda93b47e741e5b44137"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a7c2fb19f8c381b8a88c1a8adca740f12"><td class="memItemLeft" align="right" valign="top"><a id="a7c2fb19f8c381b8a88c1a8adca740f12" name="a7c2fb19f8c381b8a88c1a8adca740f12"></a>
-typedef struct <a class="el" href="a01857.html">atcac_sha1_ctx</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_sha1_ctx_t</b></td></tr>
-<tr class="separator:a7c2fb19f8c381b8a88c1a8adca740f12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a256cfddcdd9deebf7128e4e2d8183449"><td class="memItemLeft" align="right" valign="top"><a id="a256cfddcdd9deebf7128e4e2d8183449" name="a256cfddcdd9deebf7128e4e2d8183449"></a>
-typedef struct <a class="el" href="a01885.html">atcac_sha2_256_ctx</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_sha2_256_ctx_t</b></td></tr>
-<tr class="separator:a256cfddcdd9deebf7128e4e2d8183449"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ca4381db79e7d512dcff05e5b5d1151"><td class="memItemLeft" align="right" valign="top"><a id="a1ca4381db79e7d512dcff05e5b5d1151" name="a1ca4381db79e7d512dcff05e5b5d1151"></a>
-typedef struct <a class="el" href="a01889.html">atcac_sha2_384_ctx</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_sha2_384_ctx_t</b></td></tr>
-<tr class="separator:a1ca4381db79e7d512dcff05e5b5d1151"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6a802cde2b88c2f66baef303af2443c"><td class="memItemLeft" align="right" valign="top"><a id="ab6a802cde2b88c2f66baef303af2443c" name="ab6a802cde2b88c2f66baef303af2443c"></a>
-typedef struct <a class="el" href="a01893.html">atcac_sha2_512_ctx</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_sha2_512_ctx_t</b></td></tr>
-<tr class="separator:ab6a802cde2b88c2f66baef303af2443c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac6ed8b399d8fde92fd55f6dfb2c70d6c"><td class="memItemLeft" align="right" valign="top"><a id="ac6ed8b399d8fde92fd55f6dfb2c70d6c" name="ac6ed8b399d8fde92fd55f6dfb2c70d6c"></a>
-typedef struct <a class="el" href="a01869.html">atcac_aes_cmac_ctx</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_aes_cmac_ctx_t</b></td></tr>
-<tr class="separator:ac6ed8b399d8fde92fd55f6dfb2c70d6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e510dfa9a6286253542211600ae0756"><td class="memItemLeft" align="right" valign="top"><a id="a5e510dfa9a6286253542211600ae0756" name="a5e510dfa9a6286253542211600ae0756"></a>
-typedef struct <a class="el" href="a01861.html">atcac_hmac_ctx</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_hmac_ctx_t</b></td></tr>
-<tr class="separator:a5e510dfa9a6286253542211600ae0756"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e5ac96683eb21202062582c5666e049"><td class="memItemLeft" align="right" valign="top"><a id="a0e5ac96683eb21202062582c5666e049" name="a0e5ac96683eb21202062582c5666e049"></a>
-typedef struct <a class="el" href="a01873.html">atcac_pk_ctx</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_pk_ctx_t</b></td></tr>
-<tr class="separator:a0e5ac96683eb21202062582c5666e049"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a983b554cf13830ea92c7132de1470173"><td class="memItemLeft" align="right" valign="top"><a id="a983b554cf13830ea92c7132de1470173" name="a983b554cf13830ea92c7132de1470173"></a>
-typedef struct <a class="el" href="a01853.html">atcac_x509_ctx</a>&#160;</td><td class="memItemRight" valign="bottom"><b>atcac_x509_ctx_t</b></td></tr>
-<tr class="separator:a983b554cf13830ea92c7132de1470173"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga7e9019810ba5ab81b256282392cd5079"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01590.html#ga7e9019810ba5ab81b256282392cd5079">hal_delay_us</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:ga7e9019810ba5ab81b256282392cd5079"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function delays for a number of microseconds.  <br /></td></tr>
+<tr class="separator:ga7e9019810ba5ab81b256282392cd5079"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc23b8130e72a445f76c68d62e8c95c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01590.html#gadc23b8130e72a445f76c68d62e8c95c5">hal_delay_ms</a> (uint32_t delay)</td></tr>
+<tr class="memdesc:gadc23b8130e72a445f76c68d62e8c95c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer API implemented at the HAL level.  <br /></td></tr>
+<tr class="separator:gadc23b8130e72a445f76c68d62e8c95c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad9da28968a527ce51a2b081461d4cfe"><td class="memItemLeft" align="right" valign="top">ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01590.html#gaad9da28968a527ce51a2b081461d4cfe">hal_create_mutex</a> (void **ppMutex, const char *pName)</td></tr>
+<tr class="memdesc:gaad9da28968a527ce51a2b081461d4cfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optional hal interfaces.  <br /></td></tr>
+<tr class="separator:gaad9da28968a527ce51a2b081461d4cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_destroy_mutex</b> (void *pMutex)</td></tr>
+<tr class="separator:ga4589d7b3e951f40b7928f1cf31f7ddf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_lock_mutex</b> (void *pMutex)</td></tr>
+<tr class="separator:gad4cd02ff7ae4e75844eab4e84eb61994"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31fd8170a49623686543f6247b883bd1"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_unlock_mutex</b> (void *pMutex)</td></tr>
+<tr class="separator:ga31fd8170a49623686543f6247b883bd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae31246ac870409a3d694c240c6c3498a"><td class="memItemLeft" align="right" valign="top">
+ATCA_STATUS&#160;</td><td class="memItemRight" valign="bottom"><b>hal_check_pid</b> (hal_pid_t pid)</td></tr>
+<tr class="memdesc:gae31246ac870409a3d694c240c6c3498a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the pid exists in the system. <br /></td></tr>
+<tr class="separator:gae31246ac870409a3d694c240c6c3498a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>OpenSSL Integration Support. </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2020 Microchip Technology Inc. and its subsidiaries. </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="ace0d6e503c0db5222207053a7c537103" name="ace0d6e503c0db5222207053a7c537103"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace0d6e503c0db5222207053a7c537103">&#9670;&#160;</a></span>ATCAC_AES_CMAC_EN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAC_AES_CMAC_EN&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indicates if this module is a provider of an AES-CMAC implementation </p>
-
-</div>
-</div>
-<a id="a2cf377cd3579f3ba898ec2391835cfd5" name="a2cf377cd3579f3ba898ec2391835cfd5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2cf377cd3579f3ba898ec2391835cfd5">&#9670;&#160;</a></span>ATCAC_AES_GCM_EN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAC_AES_GCM_EN&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indicates if this module is a provider of an AES-GCM implementation </p>
-
-</div>
-</div>
-<a id="ae0b5716ff6baea028959764dc6d88e96" name="ae0b5716ff6baea028959764dc6d88e96"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae0b5716ff6baea028959764dc6d88e96">&#9670;&#160;</a></span>ATCAC_PKEY_EN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAC_PKEY_EN&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indicates if this module is a provider of a generic asymmetric cryptography implementation </p>
-
-</div>
-</div>
-<a id="a8e3c7ddf3a16cbdcc42060cdee2d884e" name="a8e3c7ddf3a16cbdcc42060cdee2d884e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8e3c7ddf3a16cbdcc42060cdee2d884e">&#9670;&#160;</a></span>ATCAC_SHA1_EN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAC_SHA1_EN&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indicates if this module is a provider of a SHA1 implementation </p>
-
-</div>
-</div>
-<a id="a99dab792a5983a089fe816abc57bad25" name="a99dab792a5983a089fe816abc57bad25"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99dab792a5983a089fe816abc57bad25">&#9670;&#160;</a></span>ATCAC_SHA256_EN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAC_SHA256_EN&#160;&#160;&#160;(FEATURE_ENABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indicates if this module is a provider of a SHA256 implementation </p>
-
-</div>
-</div>
-<a id="a372b1be02c2a55afbe5eda47580c7ee8" name="a372b1be02c2a55afbe5eda47580c7ee8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a372b1be02c2a55afbe5eda47580c7ee8">&#9670;&#160;</a></span>ATCAC_SHA384_EN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAC_SHA384_EN&#160;&#160;&#160;(FEATURE_DISABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indicates if this module is a provider of a SHA384 implementation</p>
-<p>Disabled by default. Use FEATURE_ENABLED to use SHA384 </p>
-
-</div>
-</div>
-<a id="a7815fa6e2b361a72ae88bb26bea8a9ad" name="a7815fa6e2b361a72ae88bb26bea8a9ad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7815fa6e2b361a72ae88bb26bea8a9ad">&#9670;&#160;</a></span>ATCAC_SHA512_EN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ATCAC_SHA512_EN&#160;&#160;&#160;(FEATURE_DISABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indicates if this module is a provider of a SHA512 implementation</p>
-<p>Disabled by default. Use FEATURE_ENABLED to use SHA512 </p>
-
-</div>
-</div>
-<a id="a82cc4e898685eda93b47e741e5b44137" name="a82cc4e898685eda93b47e741e5b44137"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a82cc4e898685eda93b47e741e5b44137">&#9670;&#160;</a></span>HOSTLIB_CERT_EN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define HOSTLIB_CERT_EN&#160;&#160;&#160;(DEFAULT_ENABLED)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indicates if this module is a provider of x509 certificate handling </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>ATCA Hardware abstraction layer for windows timer functions. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>(c) 2015-2026 Microchip Technology Inc. and its subsidiaries. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_ec1cbef6cba079ce838897574eab818a.html">openssl</a></li><li class="navelem"><a class="el" href="a00710.html">atca_openssl_interface.h</a></li>
+    <li class="navelem"><a class="el" href="dir_97aefd0d527b934f1d99a682da8fe6a9.html">lib</a></li><li class="navelem"><a class="el" href="dir_e870e4dac26de7990352b1cb7547818f.html">hal</a></li><li class="navelem"><a class="el" href="a00710.html">hal_windows.c</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6 </li>
   </ul>
 </div>
