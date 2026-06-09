@@ -5,7 +5,7 @@
  * low-level physical interfaces.  Its main goal is to keep low-level details from bleeding into
  * the logical interface implemetation.
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -308,12 +308,12 @@ ATCA_STATUS hal_iface_init(ATCAIfaceCfg *cfg, ATCAHAL_t **hal, ATCAHAL_t **phy)
             *hal = hal_malloc(sizeof(ATCAHAL_t));
             if (NULL != *hal)
             {
-                (*hal)->halinit = cfg->atcacustom.halinit;
-                (*hal)->halpostinit = cfg->atcacustom.halpostinit;
-                (*hal)->halreceive = cfg->atcacustom.halreceive;
-                (*hal)->halsend = cfg->atcacustom.halsend;
+                (*hal)->halinit = ATCA_IFACECFG_VALUE(cfg, atcacustom.halinit);
+                (*hal)->halpostinit = ATCA_IFACECFG_VALUE(cfg, atcacustom.halpostinit);
+                (*hal)->halreceive = ATCA_IFACECFG_VALUE(cfg, atcacustom.halreceive);
+                (*hal)->halsend = ATCA_IFACECFG_VALUE(cfg, atcacustom.halsend);
                 (*hal)->halcontrol = hal_custom_control;
-                (*hal)->halrelease = cfg->atcacustom.halrelease;
+                (*hal)->halrelease = ATCA_IFACECFG_VALUE(cfg, atcacustom.halrelease);
                 status = ATCA_SUCCESS;
             }
             else
@@ -563,13 +563,13 @@ ATCA_STATUS hal_custom_control(ATCAIface iface, uint8_t option, void* param, siz
         switch (option)
         {
         case ATCA_HAL_CONTROL_WAKE:
-            status = iface->mIfaceCFG->atcacustom.halwake(iface);
+            status = ATCA_IFACECFG_VALUE(iface->mIfaceCFG, atcacustom.halwake)(iface);
             break;
         case ATCA_HAL_CONTROL_IDLE:
-            status = iface->mIfaceCFG->atcacustom.halidle(iface);
+            status = ATCA_IFACECFG_VALUE(iface->mIfaceCFG, atcacustom.halidle)(iface);
             break;
         case ATCA_HAL_CONTROL_SLEEP:
-            status = iface->mIfaceCFG->atcacustom.halsleep(iface);
+            status = ATCA_IFACECFG_VALUE(iface->mIfaceCFG, atcacustom.halsleep)(iface);
             break;
         case ATCA_HAL_CONTROL_SELECT:
         /* fallthrough */

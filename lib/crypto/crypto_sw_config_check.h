@@ -2,7 +2,7 @@
  * \file
  * \brief Consistency checks for configuration options
  *
- * \copyright (c) 2015-2021 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -222,7 +222,7 @@
  * Supported API's: atcac_sha256_hmac_init, atcac_sha256_hmac_update, atcac_sha256_hmac_finish
  **/
 #ifndef ATCA_CRYPTO_SHA2_HMAC_EN
-#define ATCA_CRYPTO_SHA2_HMAC_EN            (ATCAC_SHA256_HMAC_EN && !ATCA_HOSTLIB_EN && !LIBRARY_BUILD_EN_CHECK)
+#define ATCA_CRYPTO_SHA2_HMAC_EN            (ATCAC_SHA256_HMAC_EN && !ATCA_HOSTLIB_EN)
 #endif
 
 /** \def ATCA_CRYPTO_SHA2_HMAC_CTR_EN
@@ -258,7 +258,7 @@
  * Requires: CALIB_SHA_HMAC_EN
  *
  * Enable ATCAB_PBKDF2_SHA256_EN to calculate a PBKDF2 password hash using a stored key inside a
- * device. The key length is determined by the device being used. ECCx08: 32 bytes, TA100: 16-64 bytes
+ * device. The key length is determined by the device being used. ECCX08: 32 bytes, TA: 16-64 bytes
  *
  * Supported API's: atcab_pbkdf2_256, atcab_pbkdf2_256_ext
  **/
@@ -273,33 +273,12 @@
 #define ATCAC_AES_GCM_EN                    (ATCA_HOSTLIB_EN)
 #endif /* ATCAC_AES_GCM_EN */
 
-/** \def ATCA_CRYPTO_AES_GCM_EN
- * Enable ATCA_CRYPTO_AES_GCM_EN to enable AES GCM host side api
- */
-#ifndef ATCA_CRYPTO_AES_GCM_EN
-#define ATCA_CRYPTO_AES_GCM_EN              (!ATCA_HOSTLIB_EN && (LIBRARY_BUILD_EN_CHECK || LIBRARY_USAGE_EN_CHECK))
-#endif /* ATCA_CRYPTO_AES_GCM_EN */
-
 /** \def ATCAC_AES_CMAC_EN
  * Indicates if this module is a provider of an AES-CMAC implementation
  */
 #ifndef ATCAC_AES_CMAC_EN
 #define ATCAC_AES_CMAC_EN                   (ATCA_HOSTLIB_EN)
 #endif /* ATCAC_AES_CMAC_EN */
-
-/** \def ATCA_CRYPTO_AES_CMAC_EN
- * Enable ATCA_CRYPTO_AES_CMAC_EN to enable AES CMAC host side api
- */
-#ifndef ATCA_CRYPTO_AES_CMAC_EN
-#define ATCA_CRYPTO_AES_CMAC_EN             (!ATCA_HOSTLIB_EN && (LIBRARY_BUILD_EN_CHECK || LIBRARY_USAGE_EN_CHECK))
-#endif /* ATCA_CRYPTO_AES_CMAC_EN */
-
-/** \def MAX_HMAC_CTX_SIZE
- * Set to Maximum HMAC context size
- */
-#ifndef MAX_HMAC_CTX_SIZE
-#define MAX_HMAC_CTX_SIZE                   (648)
-#endif /* MAX_HMAC_CTX_SIZE */
 
 /** \def MAX_AES_CMAC_CTX_SIZE
  * Set to Maximum AES CMAC context size

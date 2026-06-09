@@ -2,7 +2,7 @@
  * \file
  * \brief Consistency checks for configuration options
  *
- * \copyright (c) 2015-2021 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -34,7 +34,7 @@
 #include "calib/calib_config_check.h"
 #endif
 
-#if ATCA_TA_SUPPORT && !LIBRARY_USAGE_EN_CHECK
+#if ATCA_TA_SUPPORT
 #include "talib/talib_config_check.h"
 #endif
 
@@ -44,7 +44,7 @@
  * CBC, CBCMAC, CTR, & CCM modes at once rather than individually
  */
 #ifndef ATCAB_AES_EXTRAS_EN
-#define ATCAB_AES_EXTRAS_EN         (CALIB_AES_EN || TALIB_AES_EN || LIBRARY_USAGE_EN_CHECK)
+#define ATCAB_AES_EXTRAS_EN         (CALIB_AES_EN || TALIB_AES_EN)
 #endif
 
 #ifndef ATCAB_AES_RANDOM_IV_EN

@@ -2,7 +2,7 @@
  * \file
  * \brief Date handling with regard to certificates.
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -1357,7 +1357,7 @@ ATCA_STATUS atcacert_date_dec_compcert_ext(const uint8_t            comp_cert[AT
         expire_years = (uint8_t)((comp_cert[66] & 0x1Fu) | ((comp_cert[71] & 0x30u) << 1u));
     }
     else
-    {   
+    {
         issue_date->tm_year = (int)((uint8_t)((((comp_cert[64] & (uint8_t)0xF8u) >> 3u)) + 100u));
         expire_years = (comp_cert[66] & (uint8_t)0x1F);
     }

@@ -2,7 +2,7 @@
  * \file
  * \brief Unity tests for the cryptoauthlib Write Command
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -405,7 +405,7 @@ TEST_CONDITION(atca_cmd_basic_test, write_hmac_key)
 {
     ATCADeviceType dev_type = atca_test_get_device_type();
 
-    return (ECC204 == dev_type) || (TA010 == dev_type) || (SHA104 == dev_type) || (SHA105 == dev_type);
+    return (ECC204 == dev_type) || (ECC206 == dev_type) || (TA010 == dev_type) || (SHA104 == dev_type) || (SHA105 == dev_type);
 }
 
 TEST(atca_cmd_basic_test, write_hmac_key)
@@ -450,6 +450,7 @@ TEST_CONDITION(atca_cmd_basic_test, write_data_zone_blocks)
            || (ATECC508A == dev_type)
            || (ATECC608A == dev_type)
            || (ECC204 == dev_type)
+           || (ECC206 == dev_type)
            || (TA010 == dev_type)
            || atcab_is_ta_device(dev_type)
     ;
@@ -694,9 +695,9 @@ TEST(atca_cmd_basic_test, write_config_zone)
     }
     else if (atcab_is_ca2_device(gCfg->devtype))
     {
-        if ((ECC204 == gCfg->devtype) || (TA010 == gCfg->devtype))
+        if ((ECC204 == gCfg->devtype) || (ECC206 == gCfg->devtype) || (TA010 == gCfg->devtype))
         {
-#if defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT)
+#if defined(ATCA_ECC204_SUPPORT) || defined(ATCA_ECC206_SUPPORT) || defined(ATCA_TA010_SUPPORT)
             status = atcab_write_config_zone(test_ecc204_configdata);
 #endif
         }
@@ -715,9 +716,6 @@ TEST(atca_cmd_basic_test, write_config_zone)
     }
     else if (atcab_is_ta_device(gCfg->devtype))
     {
-#if ATCA_TA_SUPPORT
-        status = atcab_write_config_zone(test_ta10x_configdata);
-#endif
     }
     else
     {

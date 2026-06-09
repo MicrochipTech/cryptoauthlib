@@ -2,7 +2,7 @@
  * \file
  * \brief PKCS11 Library Object Handling Base
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -472,10 +472,6 @@ CK_RV pkcs11_object_create(
     CK_ULONG i;
     pkcs11_lib_ctx_ptr pLibCtx = NULL;
     pkcs11_session_ctx_ptr pSession = NULL;
-#if ATCA_TA_SUPPORT
-    CK_BBOOL matched = false;
-    CK_ULONG keyTableIdx = 0;
-#endif
 
     rv = pkcs11_init_check(&pLibCtx, FALSE);
     if (CKR_OK != rv)
@@ -566,44 +562,6 @@ CK_RV pkcs11_object_create(
 
         if (NULL != pObject)
         {
-#if ATCA_TA_SUPPORT
-            ATCADeviceType dev_type = atcab_get_device_type_ext(pSession->slot->device_ctx);
-
-            if (atcab_is_ta_device(dev_type) && (CKO_PUBLIC_KEY == *pClass || CKO_PRIVATE_KEY == *pClass))
-            {
-                if (CKK_EC == *pKeyType)
-                { 
-                    CK_BYTE keyTableSz = (CK_BYTE)(sizeof(ec_key_data_table) / sizeof(ec_key_data_table[0]));
-                    for (i = 0; i < keyTableSz; i++)
-                    {
-                        /* coverity[misra_c_2012_rule_21_16_violation:FALSE] CK_VOID_PTR is a pointer type */
-                        if ((0 == memcmp(pEC_OID_Data->pValue, ec_key_data_table[i].curve_oid, pEC_OID_Data->ulValueLen)))
-                        {
-                            //Key OID matched and we got the private key type
-                            keyTableIdx = i;
-                            matched = true;
-                            break;
-                        }
-                    }
-                }
-#if PKCS11_RSA_SUPPORT_ENABLE
-                else
-                {
-                    CK_BYTE keyTableSz = (CK_BYTE)(sizeof(rsa_key_data_table) / sizeof(rsa_key_data_table[0]));
-                    for (i = 0; i < keyTableSz; i++)
-                    {
-                        if (pData->ulValueLen == rsa_key_data_table[i].pubkey_sz)
-                        {
-                            //Modulus size matched and we got the private key type
-                            keyTableIdx = i;
-                            matched = true;
-                            break;
-                        }
-                    }
-                }
-#endif
-            }
-#endif
 
             switch (*pClass)
             {
@@ -621,32 +579,6 @@ CK_RV pkcs11_object_create(
                 case CKO_PUBLIC_KEY:
                     pObject->class_id = CKO_PUBLIC_KEY;
                     pObject->class_type = (CKK_EC == *pKeyType) ? (CKK_EC) : (CKK_RSA);
-#if ATCA_TA_SUPPORT
-                    if(atcab_is_ta_device(dev_type))
-                    {
-                        if (false == matched)
-                        {
-                            return CKR_ARGUMENTS_BAD;
-                        }
-                        else
-                        {
-                            if (CKK_EC == *pKeyType)
-                            {
-                                (void)talib_handle_init_public_key(&pObject->handle_info, ec_key_data_table[keyTableIdx].ec_key_type, TA_ALG_MODE_ECC_ECDSA, TA_PROP_NO_SIGN_GENERATION, TA_PROP_NO_KEY_AGREEMENT);
-                            }
-#if PKCS11_RSA_SUPPORT_ENABLE
-                            else if (CKK_RSA == *pKeyType)
-                            {
-                                (void)talib_handle_init_public_key(&pObject->handle_info, rsa_key_data_table[keyTableIdx].rsa_key_type, TA_ALG_MODE_RSA_SSA_1_5, TA_PROP_NO_SIGN_GENERATION, TA_PROP_NO_KEY_AGREEMENT);
-                            }
-#endif
-                            else
-                            {
-                                return CKR_KEY_TYPE_INCONSISTENT;
-                            }
-                        }
-                    }
-#endif
                     if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
                     {
                         if (CKR_OK == (rv = pkcs11_config_key(pLibCtx, pSession->slot, pObject, pLabel)))
@@ -665,34 +597,6 @@ CK_RV pkcs11_object_create(
                 case CKO_PRIVATE_KEY:
                     pObject->class_id = CKO_PRIVATE_KEY;
                     pObject->class_type = (CKK_EC == *pKeyType) ? (CKK_EC) : (CKK_RSA);
-#if ATCA_TA_SUPPORT
-                    if(atcab_is_ta_device(dev_type))
-                    {
-                        if (false == matched)
-                        {
-                            return CKR_ARGUMENTS_BAD;
-                        }
-                        else
-                        {
-                            if (CKK_EC == *pKeyType)
-                            {
-                                (void)talib_handle_init_private_key(&pObject->handle_info, ec_key_data_table[keyTableIdx].ec_key_type, TA_ALG_MODE_ECC_ECDSA, TA_PROP_SIGN_INT_EXT_DIGEST, TA_PROP_NO_KEY_AGREEMENT);
-                            }
-#if PKCS11_RSA_SUPPORT_ENABLE
-                            else if (CKK_RSA == *pKeyType)
-                            {
-                                (void)talib_handle_init_private_key(&pObject->handle_info, rsa_key_data_table[keyTableIdx].rsa_key_type, TA_ALG_MODE_RSA_SSA_1_5, TA_PROP_SIGN_INT_EXT_DIGEST, TA_PROP_KEY_AGREEMENT_OUT_BUFF);
-                            }
-#endif
-                            else
-                            {
-                                return CKR_KEY_TYPE_INCONSISTENT;
-                            }
-                        }
-                        /* coverity[cert_int31_c_violation] signed to unsigned casting */
-                        pObject->handle_info.property &= (uint16_t)(~TA_PROP_EXECUTE_ONLY_KEY_GEN_MASK);              
-                    }
-#endif
                     if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
                     {
                         if (CKR_OK == (rv = pkcs11_config_key(pLibCtx, pSession->slot, pObject, pLabel)))
@@ -794,50 +698,6 @@ CK_RV pkcs11_object_deinit(pkcs11_lib_ctx_ptr pContext)
     return rv;
 }
 
-#if ATCA_TA_SUPPORT
-ATCA_STATUS pkcs11_object_load_handle_info(ATCADevice device, pkcs11_lib_ctx_ptr pContext)
-{
-    ATCA_STATUS status = ATCA_GEN_FAIL;
-    ta_handle_info handle_info;
-    bool bHandleinfosuccess = false;
-
-    ((void)pContext);
-
-    for (uint8_t i = 0; i < (CK_ULONG)PKCS11_MAX_OBJECTS_ALLOWED; i++)
-    {
-        pkcs11_object_ptr pObj = pkcs11_object_cache[i].object;
-        if (NULL != pObj)
-        {
-            if (pObj->slot > 15u)
-            {
-                pObj->flags |= PKCS11_OBJECT_FLAG_TA_TYPE;
-                if (ATCA_SUCCESS == talib_info_get_handle_info(device, pObj->slot, &handle_info))
-                {
-                    (void)memcpy(&pObj->handle_info, &handle_info.attributes, sizeof(ta_element_attributes_t));
-
-                    if (CKO_PRIVATE_KEY == pObj->class_id || CKO_PUBLIC_KEY == pObj->class_id)
-                    {
-                        (void)pkcs11_config_set_key_size(pObj);
-                    }
-                    bHandleinfosuccess = true;
-                }
-                else
-                {
-                    status = ATCA_GEN_FAIL;
-                    (void)memset(&pObj->handle_info, 0, sizeof(ta_element_attributes_t));
-                }
-            }
-        }
-    }
-
-    if (true == bHandleinfosuccess)
-    {
-        status = ATCA_SUCCESS;
-    }
-
-    return status;
-}
-#endif
 
 /** \brief Checks the attributes of the underlying cryptographic asset to
     determine if it is a private key - this changes the way the associated
@@ -867,10 +727,6 @@ CK_RV pkcs11_object_is_private(pkcs11_object_ptr pObject, CK_BBOOL *is_private, 
         }
         else if (atcab_is_ta_device(dev_type))
         {
-#if ATCA_TA_SUPPORT
-            *is_private = (TA_CLASS_PRIVATE_KEY == (pObject->handle_info.element_CKA & 0x7u));
-            rv = CKR_OK;
-#endif
         }
         else
         {

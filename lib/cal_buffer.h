@@ -2,7 +2,7 @@
  * \file
  * \brief Cryptoauthlib buffer management system
  *
- * \copyright (c) 2023 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *

@@ -8,7 +8,7 @@
  * \note List of devices that support this command - ATSHA204A, ATECC108A,
  *       ATECC508A, ATECC608A/B
  *
- * \copyright (c) 2024 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *

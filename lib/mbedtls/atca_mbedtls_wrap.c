@@ -3,7 +3,7 @@
  * \brief Wrapper functions to replace cryptoauthlib software crypto functions
  *        with the mbedTLS equivalent
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -853,17 +853,6 @@ ATCA_STATUS atcac_pk_init(
                 case ATCA_KEY_TYPE_ECCP256:
                     grp_id = MBEDTLS_ECP_DP_SECP256R1;
                     break;
-        #if ATCA_TA_SUPPORT
-                case TA_KEY_TYPE_ECCP224:
-                    grp_id = MBEDTLS_ECP_DP_SECP224R1;
-                    break;
-                case TA_KEY_TYPE_ECCP384:
-                    grp_id = MBEDTLS_ECP_DP_SECP384R1;
-                    break;
-                case TA_KEY_TYPE_ECCP521:
-                    grp_id = MBEDTLS_ECP_DP_SECP521R1;
-                    break;
-        #endif
                 default:
                     ret = ATCA_BAD_PARAM;
                     break;
@@ -1061,20 +1050,6 @@ ATCA_STATUS atcac_pk_sign(
                                                          atca_mbedtls_random_ctx, NULL);
                         *sig_len = ATCA_ECCP256_SIG_SIZE;
                     }
-            #if ATCA_TA_SUPPORT
-                    else if (grp->id == MBEDTLS_ECP_DP_SECP384R1 && dig_len == ATCA_SHA384_DIGEST_SIZE)
-                    {
-                        ret = mbedtls_ecdsa_sign_det_ext(grp, &r, &s, d, digest, dig_len, MBEDTLS_MD_SHA384,
-                                                         atca_mbedtls_random_ctx, NULL);
-                        *sig_len = ATCA_ECCP384_SIG_SIZE;
-                    }
-                    else if (grp->id == MBEDTLS_ECP_DP_SECP521R1 && dig_len == ATCA_SHA512_DIGEST_SIZE)
-                    {
-                        ret = mbedtls_ecdsa_sign_det_ext(grp, &r, &s, d, digest, dig_len, MBEDTLS_MD_SHA512,
-                                                         atca_mbedtls_random_ctx, NULL);
-                        *sig_len = ATCA_ECCP521_SIG_SIZE;
-                    }
-            #endif
                     else
                     {
                         ret = -1;
@@ -1572,12 +1547,6 @@ int atca_mbedtls_cert_add(struct mbedtls_x509_crt * cert, const struct atcacert_
                     ret = atcab_get_pubkey(ca_key_cfg->slot, ca_key);
                 }
 #endif
-#if ATCA_TA_SUPPORT
-                if (atcab_is_ta_device(dev_type))
-                {
-                    ret = talib_get_pubkey(atcab_get_device(), ca_key_cfg->slot, &ca_key_buf);
-                }
-#endif
             }
             else
             {
@@ -1585,12 +1554,6 @@ int atca_mbedtls_cert_add(struct mbedtls_x509_crt * cert, const struct atcacert_
                 if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
                 {
                     ret = atcab_read_pubkey(ca_key_cfg->slot, ca_key);
-                }
-#endif
-#if ATCA_TA_SUPPORT
-                if (atcab_is_ta_device(dev_type))
-                {
-                    ret = talib_read_element(atcab_get_device(), ca_key_cfg->slot, &ca_key_buf);
                 }
 #endif
             }

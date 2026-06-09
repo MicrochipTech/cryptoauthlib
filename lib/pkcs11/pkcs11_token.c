@@ -2,7 +2,7 @@
  * \file
  * \brief PKCS11 Library Token Handling
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -84,9 +84,9 @@ static const char * pkcs11_token_device(ATCADeviceType dev_type, uint8_t info[4]
 {
     const char * rv = "unknown";
 
+#if ATCA_CA_SUPPORT
     if (atcab_is_ca_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
         switch (info[DEVICE_PART_LOCATION])
         {
         case 0x00:
@@ -112,22 +112,8 @@ static const char * pkcs11_token_device(ATCADeviceType dev_type, uint8_t info[4]
             rv = "unknown";
             break;
         }
-#endif
     }
-
-    if (atcab_is_ta_device(dev_type))
-    {
-#if ATCA_TA_SUPPORT
-        if(0x01u == info[DEVICE_PRODUCT_ID_LOCATION])
-        {
-            rv = "TA101";
-        }
-        else
-        {
-            rv = "TA100";
-        }
 #endif
-    }
 
     return rv;
 }
@@ -143,6 +129,7 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
     bool lock = false;
     pkcs11_lib_ctx_ptr pLibCtx;
     pkcs11_slot_ctx_ptr pSlotCtx;
+    uint16_t private_key_handle;
 
     ((void)pLabel);
 
@@ -168,9 +155,9 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
         rv = pkcs11_util_convert_rv(atcab_is_config_locked_ext(pSlotCtx->device_ctx, &lock));
     }
 
+#if ATCA_CA_SUPPORT
     if (atcab_is_ca_device(pSlotCtx->interface_config.devtype))
     {
-#if ATCA_CA_SUPPORT
         if (ATCA_SUCCESS == rv)
         {
             /* Get the device type */
@@ -193,12 +180,13 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
             rv = CKR_TOKEN_NOT_RECOGNIZED;
             break;
         }
-#endif
     }
+#endif
 
     /* Program the configuration zone */
     if (!lock && ATCA_SUCCESS == rv)
     {
+#if ATCA_CA_SUPPORT
         if (atcab_is_ca_device(pSlotCtx->interface_config.devtype))
         {
 #ifdef ATCA_I2C_ECC_ADDRESS
@@ -214,6 +202,7 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
                 rv = atcab_write_config_zone_ext(pSlotCtx->device_ctx, pConfig);
             }
         }
+#endif
 
         if (ATCA_SUCCESS == rv)
         {
@@ -231,9 +220,9 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
     {
         size_t buflen = sizeof(buf);
 
+#if ATCA_CA_SUPPORT
         if (atcab_is_ca_device(pSlotCtx->interface_config.devtype))
         {
-#if ATCA_CA_SUPPORT
             /* Generate New Keys */
             for (int i = 0; (i < 16) && (ATCA_SUCCESS == rv); i++)
             {
@@ -242,18 +231,10 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
                     rv = atcab_genkey_ext(pSlotCtx->device_ctx, i, NULL);
                 }
             }
-#endif
         }
         else
-        {
-#if ATCA_TA_SUPPORT
-            const ta_element_attributes_t attr_ecc_private_deletable = { 1, 0x1700, 0, 0, 0, 0x41, 0 };
-            rv = talib_create_element_with_handle(pSlotCtx->device_ctx, 0x8102, &attr_ecc_private_deletable);
-            if (!rv)
-            {
-                rv = talib_genkey_compat(pSlotCtx->device_ctx, 0x8102, NULL);
-            }
 #endif
+        {
         }
 
         if (ulPinLen)
@@ -278,16 +259,16 @@ CK_RV pkcs11_token_init(CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinL
 
             if ((CKR_OK == rv) && (pSlotCtx->so_pin_handle != 0xFFFF))
             {
+#if ATCA_CA_SUPPORT
                 if (atcab_is_ca_device(pSlotCtx->interface_config.devtype))
                 {
-#if ATCA_CA_SUPPORT
                     /* Write the default pin */
                     if (CKR_OK == rv)
                     {
                         rv = atcab_write_zone_ext(pSlotCtx->device_ctx, ATCA_ZONE_DATA, pSlotCtx->so_pin_handle, 0, 0, buf, buflen);
                     }
-#endif
                 }
+#endif
             }
         }
 
@@ -335,9 +316,9 @@ CK_RV pkcs11_token_get_access_type(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttrib
 
     if (NULL != obj_ptr && NULL != pSession)
     {
+#if ATCA_CA_SUPPORT
         if (atcab_is_ca_device(atcab_get_device_type_ext(pSession->slot->device_ctx)))
         {
-#if ATCA_CA_SUPPORT
             atecc508a_config_t * pConfig = (atecc508a_config_t*)obj_ptr->config;
 
             if (1u == (ATCA_KEY_CONFIG_PRIVATE_MASK & pConfig->KeyConfig[obj_ptr->slot]))
@@ -348,20 +329,10 @@ CK_RV pkcs11_token_get_access_type(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttrib
             {
                 return pkcs11_attrib_false(pObject, pAttribute, NULL);
             }
-#endif
         }
         else
-        {
-#if ATCA_TA_SUPPORT
-            if (TA_PERM_READ(1u) == (obj_ptr->handle_info.permission & TA_PERM_READ_MASK))
-            {
-                return pkcs11_attrib_false(pObject, pAttribute, NULL);
-            }
-            else
-            {
-                return pkcs11_attrib_true(pObject, pAttribute, NULL);
-            }
 #endif
+        {
         }
 
     }
@@ -376,9 +347,9 @@ CK_RV pkcs11_token_get_writable(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute
 
     if (NULL != obj_ptr && NULL != pSession)
     {
+#if ATCA_CA_SUPPORT
         if (atcab_is_ca_device(atcab_get_device_type_ext(pSession->slot->device_ctx)))
         {
-        #if ATCA_CA_SUPPORT
             atecc508a_config_t * pConfig = (atecc508a_config_t*)obj_ptr->config;
 
             if ((ATCA_KEY_CONFIG_PRIVATE_MASK == (ATCA_KEY_CONFIG_PRIVATE_MASK & pConfig->KeyConfig[obj_ptr->slot])) ||
@@ -390,58 +361,10 @@ CK_RV pkcs11_token_get_writable(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute
             {
                 rv = pkcs11_attrib_true(pObject, pAttribute, NULL);
             }
-        #endif
         }
         else
+#endif
         {
-        #if ATCA_TA_SUPPORT
-            uint8_t perm = (obj_ptr->handle_info.permission & TA_PERM_WRITE_MASK >> TA_PERM_WRITE_SHIFT);
-
-            if (TA_PERM_ALWAYS == perm)
-            {
-                rv = pkcs11_attrib_true(pObject, pAttribute, NULL);
-            }
-            else if (TA_PERM_NEVER == perm)
-            {
-                rv = pkcs11_attrib_false(pObject, pAttribute, NULL);
-            }
-            else
-            {
-                CK_SLOT_ID slotid;
-                rv = pkcs11_object_get_owner(obj_ptr, &slotid);
-                if (CKR_OK == rv)
-                {
-                    rv = CKR_ARGUMENTS_BAD;
-                    pkcs11_slot_ctx_ptr slot_ctx = pkcs11_slot_get_context(NULL, slotid);
-                    if (NULL != slot_ctx && slot_ctx->logged_in != false && (slot_ctx->so_pin_handle != 0xFFFFu))
-                    {
-                        if (TA_PERM_AUTH == perm)
-                        {
-                            if ((slot_ctx->user_pin_handle & 0xFFu) == obj_ptr->handle_info.write_key)
-                            {
-                                rv = pkcs11_attrib_true(pObject, pAttribute, NULL);
-                            }
-                        }
-                        else
-                        {
-                            ta_handle_info user_pin_info;
-                            if (ATCA_SUCCESS == talib_info_get_handle_info(pSession->slot->device_ctx, obj_ptr->slot, &user_pin_info))
-                            {
-                                if (obj_ptr->handle_info.write_key == ((uint8_t)user_pin_info.attributes.property & obj_ptr->handle_info.write_key))
-                                {
-                                    rv = pkcs11_attrib_true(pObject, pAttribute, NULL);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (CKR_OK != rv)
-            {
-                rv = pkcs11_attrib_false(pObject, pAttribute, NULL);
-            }
-        #endif
         }
     }
 
@@ -772,7 +695,7 @@ CK_RV pkcs11_token_set_pin(CK_SESSION_HANDLE hSession, CK_UTF8CHAR_PTR pOldPin,
 
     is_ca_device = atcab_is_ca_device(atcab_get_device_type_ext(pSession->slot->device_ctx));
 
-    //For TA100/TA101, with AES 128 GCM generated key, 16 byte data of key is written to auth handle 
+    //For TA100/TA101, with AES 128 GCM generated key, 16 byte data of key is written to auth handle
     //For ECC, 32 bytes write possible
     key_len = (is_ca_device ? ATCA_SHA256_DIGEST_SIZE : (ATCA_SHA256_DIGEST_SIZE/2u));
 

@@ -1,6 +1,6 @@
 # coding: utf-8
 """*****************************************************************************
-* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2015-2026 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -193,6 +193,14 @@ def handleMessage(messageID, args):
         if isinstance(args, dict):
             updateswiBbList(**args)
 
+    if (messageID == 'DO_NOT_TEST_CERT_EN'):
+        calDoNotTestCert = Database.getComponentByID('cryptoauthlib').getSymbolByID('CAL_DO_NOT_TEST_CERT')
+        calDoNotTestCert.setValue(True)
+
+    if (messageID == 'DO_NOT_TEST_CERT_DIS'):
+        calDoNotTestCertDis = Database.getComponentByID('cryptoauthlib').getSymbolByID('CAL_DO_NOT_TEST_CERT')
+        calDoNotTestCertDis.setValue(False)
+
     return {}
 
 
@@ -342,7 +350,7 @@ def apply_false_to_symbols(srcComponent, data, parent_key=None):
 
 def reset_config_disconnect(srcComponent, targetComponentID):
     devices = ["atsha204a", "atsha206a", "atecc108a", "atecc508a", "atecc608",
-               "ecc204", "ta010", "sha104", "sha105", "ta100", "ta101"]
+               "ecc204", "ecc206", "ta010", "sha104", "sha105"]
 
     members = Database.getActiveComponentIDs()
     componentList = [item.strip() for item in list(members)]
@@ -421,15 +429,16 @@ def onAttachmentConnected(source, target):
     if srcConnectionID == 'CAL_LIB_CAP' and 'CRYPTOAUTHLIB' not in targetComponentID and '_' in targetComponentID:
         calDeviceList = srcComponent.getSymbolByID('CAL_DEVICE_LIST_ENTRIES')
         add_value_to_list(calDeviceList, targetComponentID.split('_')[0])
-        if ('TA10' in targetComponentID):
-            _ta_dev_cnt += 1
-            updateFileEnable(srcComponent, _TA_PATHS, True)
-            calTaConfig = srcComponent.getSymbolByID('TALIB_CONFIG_DATA')
-            calTaConfig.setEnabled(True)
-            if check_if_file_exists(srcComponent, 'talib_fce'):
-                calTaEnableFce = srcComponent.getSymbolByID('CAL_ENABLE_TA10x_FCE')
-                calTaEnableFce.setVisible(True)
-                calTaEnableFce.setValue(True)
+        if (('TA10' in targetComponentID) or ('TA07' in targetComponentID)):
+            if (os.path.exists(Module.getPath() + 'lib/talib/talib_basic.h')):
+                _ta_dev_cnt += 1
+                updateFileEnable(srcComponent, _TA_PATHS, True)
+                calTaConfig = srcComponent.getSymbolByID('TALIB_CONFIG_DATA')
+                calTaConfig.setEnabled(True)
+                if check_if_file_exists(srcComponent, 'talib_fce'):
+                    calTaEnableFce = srcComponent.getSymbolByID('CAL_ENABLE_TA10x_FCE')
+                    calTaEnableFce.setVisible(True)
+                    calTaEnableFce.setValue(True)
         else:
             _ca_dev_cnt += 1
             if 'SHA206' in targetComponentID:
@@ -480,18 +489,19 @@ def onAttachmentDisconnected(source, target):
     if srcConnectionID == 'CAL_LIB_CAP' and '_' in targetComponentID:
         calDeviceList = srcComponent.getSymbolByID('CAL_DEVICE_LIST_ENTRIES')
         del_value_from_list(calDeviceList, targetComponentID.split('_')[0])
-        if ('TA10' in targetComponentID):
-            _ta_dev_cnt -= 1
-            if 0 == _ta_dev_cnt:
-                updateFileEnable(srcComponent, _TA_PATHS, False)
-                calTaEnableFce = srcComponent.getSymbolByID('CAL_ENABLE_TA10x_FCE')
-                calTaEnableFce.setVisible(False)
-                calTaEnableFce.setValue(False)
-                calTaConfig = srcComponent.getSymbolByID('TALIB_CONFIG_DATA')
-                calTaConfig.setEnabled(False)
-                calTaEnableAesAuth = srcComponent.getSymbolByID('CAL_ENABLE_TA10x_AES_AUTH')
-                calTaEnableAesAuth.setVisible(True)
-                calTaEnableAesAuth.setValue(False)
+        if (('TA10' in targetComponentID) or ('TA07' in targetComponentID)):
+            if (os.path.exists(Module.getPath() + 'lib/talib/talib_basic.h')):
+                _ta_dev_cnt -= 1
+                if 0 == _ta_dev_cnt:
+                    updateFileEnable(srcComponent, _TA_PATHS, False)
+                    calTaEnableFce = srcComponent.getSymbolByID('CAL_ENABLE_TA10x_FCE')
+                    calTaEnableFce.setVisible(False)
+                    calTaEnableFce.setValue(False)
+                    calTaConfig = srcComponent.getSymbolByID('TALIB_CONFIG_DATA')
+                    calTaConfig.setEnabled(False)
+                    calTaEnableAesAuth = srcComponent.getSymbolByID('CAL_ENABLE_TA10x_AES_AUTH')
+                    calTaEnableAesAuth.setVisible(True)
+                    calTaEnableAesAuth.setValue(False)
         else:
             _ca_dev_cnt -= 1
             if 0 == _ca_dev_cnt:
@@ -1190,6 +1200,9 @@ def instantiateComponent(calComponent):
     calTaEnableFce = calComponent.createBooleanSymbol('CAL_ENABLE_TA10x_FCE', None)
     calTaEnableFce.setValue(False)
     calTaEnableFce.setVisible(False)
+
+    calDoNotTestCert = calComponent.createBooleanSymbol("CAL_DO_NOT_TEST_CERT", None)
+    calDoNotTestCert.setVisible(False)
 
     ################# Templated files to be included #######################
 

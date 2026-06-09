@@ -2,7 +2,7 @@
  * \file
  * \brief Software implementation of the SHA256, SHA384 and SHA512 algorithm.
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *

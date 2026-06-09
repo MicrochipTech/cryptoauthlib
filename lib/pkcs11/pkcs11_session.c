@@ -2,7 +2,7 @@
  * \file
  * \brief PKCS11 Library Session Handling
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -554,41 +554,6 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
             }
         }
 
-#if (ATCA_TA_SUPPORT && ATCA_HOSTLIB_EN && TALIB_AUTH_EN)
-        ATCA_STATUS status;
-        if (CKR_OK == rv && atcab_is_ta_device(atcab_get_device_type_ext(session_ctx->slot->device_ctx)))
-        {
-            uint8_t auth_i_nonce[16] = { 0 };
-            uint8_t auth_r_nonce[16] = { 0 };
-
-#if PKCS11_AUTH_TERMINATE_BEFORE_LOGIN
-            ATCADevice device = session_ctx->slot->device_ctx;
-            (void)talib_auth_terminate(device);
-#endif
-            (void)atcac_sw_random(auth_r_nonce, sizeof(auth_r_nonce));
-
-            if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
-            {
-                    status = talib_auth_generate_nonce(session_ctx->slot->device_ctx, (TA_HANDLE_AUTH_SESSION0 + auth_idx),
-                                                   TA_AUTH_GENERATE_OPT_NONCE_SRC_MASK | TA_AUTH_GENERATE_OPT_RANDOM_MASK, auth_i_nonce);
-
-                if (CKR_OK == (rv = pkcs11_util_convert_rv(status)))
-                {
-                    cal_buffer key = CAL_BUF_INIT(16U, session_ctx->slot->read_key);
-                    status = talib_auth_startup(session_ctx->slot->device_ctx, session_ctx->slot->user_pin_handle,
-                                                TA_AUTH_ALG_ID_GCM128, 0x1FFF, &key, auth_i_nonce, auth_r_nonce);
-                    rv = pkcs11_util_convert_rv(status);
-                }
-
-                if (CKR_OK != rv)
-                {
-                    PKCS11_DEBUG(" Login failed: Terminating auth session\r\n");
-                    (void)talib_auth_terminate(session_ctx->slot->device_ctx);
-                }
-                (void)pkcs11_unlock_device(pLibCtx);
-            }
-        }
-#endif
         (void)pkcs11_unlock_context(pLibCtx);
     }
 
@@ -628,16 +593,6 @@ CK_RV pkcs11_session_logout(CK_SESSION_HANDLE hSession)
         return CKR_SESSION_CLOSED;
     }
 
-#if (ATCA_TA_SUPPORT && TALIB_AUTH_EN)
-    if (session_ctx->slot->logged_in && atcab_is_ta_device(atcab_get_device_type_ext(session_ctx->slot->device_ctx)))
-    {
-        if (CKR_OK == (rv = pkcs11_lock_both(lib_ctx)))
-        {
-            (void)talib_auth_terminate(session_ctx->slot->device_ctx);
-            (void)pkcs11_unlock_both(lib_ctx);
-        }
-    }
-#endif
 
     (void)pkcs11_cert_clear_session_cache(session_ctx);
     (void)pkcs11_key_clear_session_cache(session_ctx);

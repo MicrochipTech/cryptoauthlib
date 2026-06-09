@@ -4,7 +4,7 @@
  *
  * Prerequisite: add SERCOM I2C Master Polled support to application in MHC
  *
- * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *

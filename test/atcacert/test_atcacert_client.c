@@ -2,7 +2,7 @@
  * \file
  * \brief cert client tests
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -47,6 +47,7 @@
 #include "test_cert_def_13_signer.h"
 #include "test_cert_def_14_device.h"
 #include "test_cert_def_15_device_csr.h"
+#include "test_atcacert_helpers.h"
 
 extern ATCAIfaceCfg *gCfg;
 
@@ -84,7 +85,7 @@ static void build_and_save_cert(
     atcacert_build_state_t build_state;
     uint8_t tbs_digest[32];
     uint8_t signature[64];
-    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature); 
+    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
     uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE];
     size_t max_cert_size = *cert_size;
     uint16_t config_count = atcab_is_ca2_device(atcab_get_device_type()) ? 16U : 32U;
@@ -711,7 +712,7 @@ TEST(atcacert_client, atcacert_get_subj)
 
     // Skip test if config zone is locked
     test_assert_config_is_unlocked();
-    
+
     if (atcab_is_ca_device(dev_type))
     {
 #if ATCA_CA_SUPPORT
@@ -738,32 +739,6 @@ TEST(atcacert_client, atcacert_get_subj)
     }
     else
     {
-#if ATCA_TA_SUPPORT
-    #if TALIB_CREATE_SHARED_DATA_EN || TALIB_DELETE_EN
-        uint16_t signer_cert_handle = 0x8800;
-    #endif
-
-    #if TALIB_CREATE_SHARED_DATA_EN
-        ta_element_attributes_t data_attr;
-        status = talib_handle_init_data(&data_attr, sizeof(g_test_ecc256_ca_cert));
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-        /* Creating data handle for storing the complete signer certificate */
-        status = talib_create_element_with_handle(atcab_get_device(), signer_cert_handle, &data_attr);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #endif
-        cert_sz = sizeof(g_test_ecc256_ca_cert);
-        status = (ATCA_STATUS)atcacert_write_cert(&g_test_cert_def_4_device, g_test_ecc256_ca_cert, cert_sz);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-        //Read cert to check the asn1 parse der api works fine
-        status = atcacert_read_cert(&g_test_cert_def_4_device, &pub_key_buf, cert_buffer, &cert_sz);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-        status = atcacert_get_subject(&g_test_cert_def_4_device, cert_buffer, cert_sz, &subject_data_buf);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #if TALIB_DELETE_EN
-        status = talib_delete_handle(atcab_get_device(), (uint32_t)signer_cert_handle);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #endif
-#endif
     }
 
 }
@@ -816,36 +791,6 @@ TEST(atcacert_client, atcacert_get_subj_pbkey)
     }
     else
     {
-#if ATCA_TA_SUPPORT
-        uint8_t ref_pubkey_ta[64] = { 0x62, 0xB4, 0xC4, 0xF9, 0x4E, 0xD0, 0xDB, 0x36, 0xFE, 0xEC, 0x9A, 0x4E, 0xC8, 0x2A, 0x93, 0x96, 0x47, 0x1D, 0x01, 0x0A, 0xA9, 0x37, 0x91, 0x98, 0xB4, 0xBD, 0xDB, 0x7E, 0xEB, 0xD3, 0x32, 0x65, 0x88, 0xAA, 0xA5, 0x53, 0xC1, 0x61, 0x63, 0x92, 0xC9, 0xE4, 0x2D, 0xD1, 0x88, 0x56, 0x9F, 0x9A, 0xC2, 0x54, 0x85, 0x4A, 0xAA, 0xF4, 0xEC, 0xB8, 0x12, 0xBC, 0x66, 0x5D, 0x76, 0xE2, 0x22, 0xC8 };
-        memcpy(ref_pubkey, ref_pubkey_ta, 64);
-        cert_sz = sizeof(g_test_ecc256_ca_cert);
-    #if TALIB_CREATE_SHARED_DATA_EN || TALIB_DELETE_EN
-        uint16_t signer_cert_handle = 0x8800;
-    #endif
-
-    #if TALIB_CREATE_SHARED_DATA_EN
-        ta_element_attributes_t data_attr;
-        status = talib_handle_init_data(&data_attr, sizeof(g_test_ecc256_ca_cert));
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-        /* Creating data handle for storing the complete signer certificate */
-        status = talib_create_element_with_handle(atcab_get_device(), signer_cert_handle, &data_attr);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #endif
-        status = (ATCA_STATUS)atcacert_write_cert(&g_test_cert_def_4_device, g_test_ecc256_ca_cert, cert_sz);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-        //Read cert to check the asn1 parse der api works fine
-        status = atcacert_read_cert(&g_test_cert_def_4_device, &pubkey, cert_buffer, &cert_sz);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-        status = atcacert_get_subj_public_key(&g_test_cert_def_4_device, cert_buffer, cert_sz, &pubkey);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #if TALIB_DELETE_EN
-        status = talib_delete_handle(atcab_get_device(), (uint32_t)signer_cert_handle);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #endif
-#endif
     }
     TEST_ASSERT_EQUAL(0, memcmp(ref_pubkey, public_key, sizeof(ref_pubkey)));
 }
@@ -900,36 +845,6 @@ TEST(atcacert_client, atcacert_get_subj_pbkey_id)
     }
     else
     {
-#if ATCA_TA_SUPPORT
-        uint8_t ref_key_id_ta[20] = { 0x00, 0xD8, 0xDE, 0xEC, 0x59, 0x5C, 0xE6, 0x3E, 0x43, 0x44, 0x77, 0xEA, 0xDA, 0x57, 0xE4, 0xEB, 0x6C, 0x22, 0xD6, 0x15 };
-        memcpy(ref_key_id, ref_key_id_ta, sizeof(ref_key_id_ta));
-        cert_sz = sizeof(g_test_ecc256_ca_cert);
-    #if TALIB_CREATE_SHARED_DATA_EN || TALIB_DELETE_EN
-        uint16_t signer_cert_handle = 0x8800;
-    #endif
-
-    #if TALIB_CREATE_SHARED_DATA_EN
-        ta_element_attributes_t data_attr;
-        status = talib_handle_init_data(&data_attr, sizeof(g_test_ecc256_ca_cert));
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-        /* Creating data handle for storing the complete signer certificate */
-        status = talib_create_element_with_handle(atcab_get_device(), signer_cert_handle, &data_attr);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #endif
-        status = (ATCA_STATUS)atcacert_write_cert(&g_test_cert_def_4_device, g_test_ecc256_ca_cert, cert_sz);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-        //Read cert to check the asn1 parse der api works fine
-        status = atcacert_read_cert(&g_test_cert_def_4_device, &pub_key_buf, cert_buffer, &cert_sz);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-        status = atcacert_get_subj_key_id(&g_test_cert_def_4_device, cert_buffer, cert_sz, key_id);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #if TALIB_DELETE_EN
-        status = talib_delete_handle(atcab_get_device(), (uint32_t)signer_cert_handle);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #endif
-#endif
     }
     TEST_ASSERT_EQUAL(0, memcmp(ref_key_id, key_id, key_id_sz));
 }
@@ -1009,44 +924,6 @@ TEST(atcacert_client, atcacert_get_issue_date_test)
     }
     else
     {
-#if ATCA_TA_SUPPORT
-        static const atcacert_tm_utc_t issue_date_ref_ta = {
-            .tm_year = 122,
-            .tm_mon = 11, //Actual month as per the test certificate (g_test_ecc256_ca_cert) is December. CAL takes 0 as Jan and Dec as 11
-            .tm_mday = 24,
-            .tm_hour = 18,
-            .tm_min = 26,
-            .tm_sec = 04
-        };
-        memcpy(&issue_date_ref, &issue_date_ref_ta, sizeof(issue_date_ref_ta));
-    #if TALIB_CREATE_SHARED_DATA_EN || TALIB_DELETE_EN
-        uint16_t signer_cert_handle = 0x8800;
-    #endif
-
-    #if TALIB_CREATE_SHARED_DATA_EN
-        ta_element_attributes_t data_attr;
-        status = talib_handle_init_data(&data_attr, sizeof(g_test_ecc256_ca_cert));
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-        /* Creating data handle for storing the complete signer certificate */
-        status = talib_create_element_with_handle(atcab_get_device(), signer_cert_handle, &data_attr);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #endif
-        cert_sz = sizeof(g_test_ecc256_ca_cert);
-        status = (ATCA_STATUS)atcacert_write_cert(&g_test_cert_def_4_device, g_test_ecc256_ca_cert, cert_sz);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-        //Read cert to check the asn1 parse der api works fine
-        status = atcacert_read_cert(&g_test_cert_def_4_device, &pub_key_buf, cert_buffer, &cert_sz);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-        //Not Before : Dec 24 18 : 26 : 04 2022 GMT
-        //221224182604Z (from asn1 editor)
-        status = atcacert_get_issue_date(&g_test_cert_def_4_device, cert_buffer, cert_sz, &issue_date);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #if TALIB_DELETE_EN
-        status = talib_delete_handle(atcab_get_device(), (uint32_t)signer_cert_handle);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #endif
-#endif
     }
     TEST_ASSERT_EQUAL(0, memcmp(&issue_date_ref, &issue_date, sizeof(atcacert_tm_utc_t)));
 }
@@ -1123,41 +1000,6 @@ TEST(atcacert_client, atcacert_get_expiry_date)
     }
     else
     {
-#if ATCA_TA_SUPPORT
-        static const atcacert_tm_utc_t expiry_date_ref_ta = {
-            .tm_year = 123,
-            .tm_mon = 11,
-            .tm_mday = 24,
-            .tm_hour = 18,
-            .tm_min = 26,
-            .tm_sec = 04,
-        };
-        memcpy(&expiry_date_ref, &expiry_date_ref_ta, sizeof(expiry_date_ref_ta));
-    #if TALIB_CREATE_SHARED_DATA_EN || TALIB_DELETE_EN
-        uint16_t signer_cert_handle = 0x8800;
-    #endif
-
-    #if TALIB_CREATE_SHARED_DATA_EN
-        ta_element_attributes_t data_attr;
-        status = talib_handle_init_data(&data_attr, sizeof(g_test_ecc256_ca_cert));
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-        /* Creating data handle for storing the complete signer certificate */
-        status = talib_create_element_with_handle(atcab_get_device(), signer_cert_handle, &data_attr);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #endif
-        cert_sz = sizeof(g_test_ecc256_ca_cert);
-        status = (ATCA_STATUS)atcacert_write_cert(&g_test_cert_def_4_device, g_test_ecc256_ca_cert, cert_sz);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-        //Read cert to check the asn1 parse der api works fine
-        status = atcacert_read_cert(&g_test_cert_def_4_device, &pub_key_buf, cert_buffer, &cert_sz);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-        status = atcacert_get_expire_date(&g_test_cert_def_4_device, cert_buffer, cert_sz, &expiry_date);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #if TALIB_DELETE_EN
-        status = talib_delete_handle(atcab_get_device(), (uint32_t)signer_cert_handle);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #endif
-#endif
     }
 
     TEST_ASSERT_EQUAL(0, memcmp(&expiry_date_ref, &expiry_date, sizeof(atcacert_tm_utc_t)));
@@ -1216,36 +1058,6 @@ TEST(atcacert_client, atcacert_get_serial_num)
     }
     else
     {
-#if ATCA_TA_SUPPORT
-        uint8_t ref_cert_sn_ta[32] = { 0x01 };
-        memcpy(ref_cert_sn, ref_cert_sn_ta, sizeof(ref_cert_sn_ta));
-        cert_sz = sizeof(g_test_ecc256_ca_cert);
-    #if TALIB_CREATE_SHARED_DATA_EN || TALIB_DELETE_EN
-        uint16_t signer_cert_handle = 0x8800;
-    #endif
-
-    #if TALIB_CREATE_SHARED_DATA_EN
-        ta_element_attributes_t data_attr;
-        status = talib_handle_init_data(&data_attr, sizeof(g_test_ecc256_ca_cert));
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-        /* Creating data handle for storing the complete signer certificate */
-        status = talib_create_element_with_handle(atcab_get_device(), signer_cert_handle, &data_attr);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #endif
-        status = (ATCA_STATUS)atcacert_write_cert(&g_test_cert_def_4_device, g_test_ecc256_ca_cert, cert_sz);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-        //Read cert to check the asn1 parse der api works fine
-        status = atcacert_read_cert(&g_test_cert_def_4_device, &pub_key_buf, cert_buffer, &cert_sz);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-        status = atcacert_get_cert_sn(&g_test_cert_def_4_device, cert_buffer, cert_sz, cert_sn, &cert_sn_size);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #if TALIB_DELETE_EN
-        status = talib_delete_handle(atcab_get_device(), (uint32_t)signer_cert_handle);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #endif
-#endif
     }
     TEST_ASSERT_EQUAL(0, memcmp(ref_cert_sn, cert_sn, cert_sn_size));
 }
@@ -1302,36 +1114,6 @@ TEST(atcacert_client, atcacert_get_auth_key_id_test)
     }
     else
     {
-#if ATCA_TA_SUPPORT
-        uint8_t ref_auth_key_id_ta[20] = { 0xA8,0xC1,0x09,0x1C,0x2C,0x82,0xF6,0xE7,0x36,0xB9,0x40,0x2D,0xAB,0x7B,0x27,0xC8,0x08,0x5D,0x18,0xBF };
-        memcpy(ref_auth_key_id, ref_auth_key_id_ta, sizeof(ref_auth_key_id_ta));
-        cert_sz = sizeof(g_test_ecc256_ca_cert);
-    #if TALIB_CREATE_SHARED_DATA_EN || TALIB_DELETE_EN
-        uint16_t signer_cert_handle = 0x8800;
-    #endif
-
-    #if TALIB_CREATE_SHARED_DATA_EN
-        ta_element_attributes_t data_attr;
-        status = talib_handle_init_data(&data_attr, sizeof(g_test_ecc256_ca_cert));
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-        /* Creating data handle for storing the complete signer certificate */
-        status = talib_create_element_with_handle(atcab_get_device(), signer_cert_handle, &data_attr);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #endif
-        status = (ATCA_STATUS)atcacert_write_cert(&g_test_cert_def_4_device, g_test_ecc256_ca_cert, cert_sz);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-        //Read cert to check the asn1 parse der api works fine
-        status = atcacert_read_cert(&g_test_cert_def_4_device, &pub_key_buf, cert_buffer, &cert_sz);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-        status = atcacert_get_auth_key_id(&g_test_cert_def_4_device, cert_buffer, cert_sz, auth_key_id);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #if TALIB_DELETE_EN
-        status = talib_delete_handle(atcab_get_device(), (uint32_t)signer_cert_handle);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #endif
-#endif
     }
     TEST_ASSERT_EQUAL(0, memcmp(ref_auth_key_id, auth_key_id, sizeof(ref_auth_key_id)));
 }
@@ -1385,34 +1167,6 @@ TEST(atcacert_client, atcacert_get_issuer_test)
     }
     else
     {
-#if ATCA_TA_SUPPORT
-        cert_sz = sizeof(g_test_ecc256_ca_cert);
-    #if TALIB_CREATE_SHARED_DATA_EN || TALIB_DELETE_EN
-        uint16_t signer_cert_handle = 0x8800;
-    #endif
-
-    #if TALIB_CREATE_SHARED_DATA_EN
-        ta_element_attributes_t data_attr;
-        status = talib_handle_init_data(&data_attr, sizeof(g_test_ecc256_ca_cert));
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-        /* Creating data handle for storing the complete signer certificate */
-        status = talib_create_element_with_handle(atcab_get_device(), signer_cert_handle, &data_attr);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #endif
-        status = (ATCA_STATUS)atcacert_write_cert(&g_test_cert_def_4_device, g_test_ecc256_ca_cert, cert_sz);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-        //Read cert to check the asn1 parse der api works fine
-        status = atcacert_read_cert(&g_test_cert_def_4_device, &pub_key_buf, cert_buffer, &cert_sz);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-        status = atcacert_get_issuer(&g_test_cert_def_4_device, cert_buffer, cert_sz, issuer_data);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #if TALIB_DELETE_EN
-        status = talib_delete_handle(atcab_get_device(), (uint32_t)signer_cert_handle);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    #endif
-#endif
     }
 }
 #endif
@@ -1868,433 +1622,6 @@ TEST(atcacert_client_ca2, cert_element_atcacert_read_cert_device)
 }
 #endif
 
-#if ATCA_TA_SUPPORT
-TEST_GROUP(atcacert_client_ta);
-
-TEST_SETUP(atcacert_client_ta)
-{
-    int ret = 0;
-    bool lockstate = 0;
-    bool is_ta_device = false;
-
-    ret = atcab_init(gCfg);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-
-    is_ta_device = atcab_is_ta_device(atcab_get_device_type());
-    if(false == is_ta_device)
-    {
-        TEST_IGNORE_MESSAGE("This Test group can be run on TA devices only");
-    }
-
-    ret = atcab_is_config_locked(&lockstate);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-    if (!lockstate)
-    {
-        TEST_IGNORE_MESSAGE("Config zone must be locked for this test.");
-    }
-}
-
-TEST_TEAR_DOWN(atcacert_client_ta)
-{
-    ATCA_STATUS status;
-
-    status = atcab_release();
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-}
-
-/** \brief Execute write and read command to create handle for large certificate element on shared data memory of odd size
- */
-TEST(atcacert_client_ta, atcacert_write_rsa_signed_cert)
-{
-    ATCA_STATUS status;
-
-    // Skip test if data zone isn't locked
-    test_assert_data_is_locked();
-
-    // Skip test if config zone isn't locked
-    test_assert_config_is_locked();
-
-    uint16_t cert_handle;
-    status = atca_test_config_get_id(TEST_TYPE_RSA3072_CERT, &cert_handle);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-    uint8_t cert_rd[1431] = {0x00};
-    size_t cert_rd_sz = 0x00;
-
-//Flag to select which api to use for writing the certificate in the atcacert_write_rsa_signed_cert test
-#if TALIB_API_WRITE_RSACERT == FEATURE_ENABLED
-    cal_buffer cert_data_buf = CAL_BUF_INIT(sizeof(g_test_cert_rsa3072), g_test_cert_rsa3072);
-    status = talib_write_X509_cert(atcab_get_device(), cert_handle, &cert_data_buf);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-    cal_buffer cert_rddata_buf = CAL_BUF_INIT(cert_rd_sz, NULL);
-    //Read cert get the length of the certificate stored; pass null output buffer
-    status = talib_read_X509_cert(atcab_get_device(), cert_handle, &cert_rddata_buf);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    TEST_ASSERT_EQUAL(cert_rddata_buf.len, g_test_cert_def_10_device.cert_template_size);
-    //Read full certificate stored
-    cert_rddata_buf.buf = cert_rd;
-    status = talib_read_X509_cert(atcab_get_device(), cert_handle, &cert_rddata_buf);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-#else
-    status = atcacert_write_cert(&g_test_cert_def_10_device, g_test_cert_rsa3072, g_test_cert_def_10_device.cert_template_size);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    //Read cert get the length of the certificate stored; pass null output buffer
-    status = atcacert_read_cert(&g_test_cert_def_10_device, NULL, NULL, &cert_rd_sz);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    TEST_ASSERT_EQUAL(cert_rd_sz, g_test_cert_def_10_device.cert_template_size);
-    //Read cert to check the asn1 parse der api works fine
-    status = atcacert_read_cert(&g_test_cert_def_10_device, NULL, cert_rd, &cert_rd_sz);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-    TEST_ASSERT_EQUAL(cert_rd_sz, g_test_cert_def_10_device.cert_template_size);
-#endif
-    TEST_ASSERT_EQUAL_MEMORY(&g_test_cert_rsa3072, cert_rd, g_test_cert_def_10_device.cert_template_size);
-}
-
-#if ATCACERT_COMPCERT_EN && ATCAC_SHA384_EN && ATCAC_SHA512_EN
-//! #warning "For demonstration purposes, we're storing the Root private key and Signer private key inside a protected part of the device.
-//!           However, for production setup, these secure keys should not be kept in the device,
-//!           and the process to create a verification certificate should be performed off-chip."
-TEST(atcacert_client_ta, init)
-{
-    int ret = 0;
-    uint8_t signer_id[2] = { 0xC4, 0x8B };
-    const atcacert_tm_utc_t signer_issue_date = {
-        .tm_year    = 2025 - 1900,
-        .tm_mon     = 1 - 1,
-        .tm_mday    = 18,
-        .tm_hour    = 20,
-        .tm_min     = 0,
-        .tm_sec     = 0
-    };
-    const atcacert_tm_utc_t device_issue_date = {
-        .tm_year    = 2025 - 1900,
-        .tm_mon     = 1 - 1,
-        .tm_mday    = 20,
-        .tm_hour    = 20,
-        .tm_min     = 0,
-        .tm_sec     = 0
-    };
-    uint8_t sn[8];
-    cal_buffer signer_p521_ca_public_key = CAL_BUF_INIT(sizeof(g_signer_p521_ca_public_key), g_signer_p521_ca_public_key);
-    cal_buffer signer_p521_public_key = CAL_BUF_INIT(sizeof(g_signer_p521_public_key), g_signer_p521_public_key);
-    cal_buffer device_p384_public_key = CAL_BUF_INIT(sizeof(g_device_p384_public_key), g_device_p384_public_key);
-#if TALIB_CREATE_SHARED_DATA_EN
-    ta_element_attributes_t attr_priv_key_handle;
-    ta_element_attributes_t data_attr;
-    uint16_t compressed_signer_cert_handle = 0x8800;
-    uint16_t compressed_device_cert_handle = 0x8801;
-#endif
-    uint16_t signer_p521_private_key_slot = 0;
-    uint16_t device_p384_private_key_slot = 0;
-    char disp_str[2048];
-    size_t disp_size = sizeof(disp_str);
-
-    // Create the p521 private key handle for the Root CA
-#if TALIB_CREATE_SHARED_DATA_EN
-    ret = talib_handle_init_private_key(&attr_priv_key_handle, TA_KEY_TYPE_ECCP521, TA_ALG_MODE_ECC_ECDSA,
-                                        TA_PROP_SIGN_INT_EXT_DIGEST, TA_PROP_NO_KEY_AGREEMENT);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-
-    ret = talib_create_element(atcab_get_device(), &attr_priv_key_handle, &g_signer_ca_p521_private_key_slot);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-#endif
-    // Generate the private and public keypair for the eccp521 Root CA
-    ret = atca_test_genkey(atcab_get_device(), g_signer_ca_p521_private_key_slot, &signer_p521_ca_public_key);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-    disp_size = sizeof(disp_str);
-    ret = atcab_bin2hex(g_signer_p521_ca_public_key, ATCA_ECCP521_PUBKEY_SIZE, disp_str, &disp_size);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-    (void)printf("Signer CA Public Key:\r\n%s\r\n", disp_str);
-
-    // Get the p521 private key handle for the Signer Cert
-    ret = atca_test_config_get_id(TEST_TYPE_EC_P521_SIGN, &signer_p521_private_key_slot);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-
-    // Generate the private and public keypair for the eccp521 Signer Cert
-    ret = atca_test_genkey(atcab_get_device(), signer_p521_private_key_slot, &signer_p521_public_key);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-    disp_size = sizeof(disp_str);
-    ret = atcab_bin2hex(g_signer_p521_public_key, ATCA_ECCP521_PUBKEY_SIZE, disp_str, &disp_size);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-    (void)printf("Signer Public Key:\r\n%s\r\n", disp_str);
-
-    // Get the p384 private key handle for the Device Cert
-    ret = atca_test_config_get_id(TEST_TYPE_EC_P384_SIGN, &device_p384_private_key_slot);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-
-    // Generate the private and public keypair for the eccp384 Device Cert
-    ret = atca_test_genkey(atcab_get_device(), device_p384_private_key_slot, &device_p384_public_key);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-    disp_size = sizeof(disp_str);
-    ret = atcab_bin2hex(g_device_p384_public_key, ATCA_ECCP384_PUBKEY_SIZE, disp_str, &disp_size);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-    (void)printf("Device Public Key:\r\n%s\r\n", disp_str);
-
-    // Create data handle to store compressed certificate
-#if TALIB_CREATE_SHARED_DATA_EN
-    ret = talib_handle_init_data(&data_attr, ATCACERT_COMP_CERT_MAX_SIZE);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-
-    ret = talib_create_element_with_handle(atcab_get_device(), compressed_signer_cert_handle, &data_attr);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-
-    ret = talib_create_element_with_handle(atcab_get_device(), compressed_device_cert_handle, &data_attr);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-#endif
-
-    // Read the serial number from the device
-    ret = talib_info_serial_number(atcab_get_device(), sn);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-
-    // Build signer cert
-    g_signer_cert_ref_size = sizeof(g_signer_cert_ref);
-    build_and_save_cert_ta(
-        &g_test_p521_cert_def_13_signer,
-        g_signer_cert_ref,
-        &g_signer_cert_ref_size,
-        &signer_p521_ca_public_key,
-        &signer_p521_public_key,
-        signer_id,
-        &signer_issue_date,
-        sn,
-        g_signer_ca_p521_private_key_slot);
-    disp_size = sizeof(disp_str);
-    ret = atcab_bin2hex(g_signer_cert_ref, g_signer_cert_ref_size, disp_str, &disp_size);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-    (void)printf("Signer Certificate:\r\n%s\r\n", disp_str);
-
-    // Build Device cert
-    g_device_cert_ref_size = sizeof(g_device_cert_ref);
-    build_and_save_cert_ta(
-        &g_test_p384_cert_def_14_device,
-        g_device_cert_ref,
-        &g_device_cert_ref_size,
-        &signer_p521_public_key,
-        &device_p384_public_key,
-        signer_id,
-        &device_issue_date,
-        sn,
-        signer_p521_private_key_slot);
-    disp_size = sizeof(disp_str);
-    ret = atcab_bin2hex(g_device_cert_ref, g_device_cert_ref_size, disp_str, &disp_size);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-    (void)printf("Device Certificate:\r\n%s\r\n", disp_str);
-}
-
-TEST_CONDITION(atcacert_client_ta, comp_cert_test_condn)
-{
-    ATCADeviceType dev_type = atca_test_get_device_type();
-
-    return (TA101 == dev_type);
-}
-
-TEST(atcacert_client_ta, atcacert_eccp521_read_cert_signer)
-{
-    int ret = 0;
-    uint8_t cert[612];
-    size_t cert_size = sizeof(cert);
-    cal_buffer signer_ca_public_key_buf = CAL_BUF_INIT(sizeof(g_signer_p521_ca_public_key), g_signer_p521_ca_public_key);
-
-    ret = atcacert_read_cert(&g_test_p521_cert_def_13_signer, &signer_ca_public_key_buf, cert, &cert_size);
-    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
-    TEST_ASSERT_EQUAL(g_signer_cert_ref_size, cert_size);
-    TEST_ASSERT_EQUAL_MEMORY(g_signer_cert_ref, cert, cert_size);
-}
-
-TEST(atcacert_client_ta, atcacert_eccp384_read_cert_device)
-{
-    int ret = 0;
-    uint8_t cert[612];
-    size_t cert_size = sizeof(cert);
-    cal_buffer signer_public_key_buf = CAL_BUF_INIT(sizeof(g_signer_p521_public_key), g_signer_p521_public_key);
-
-    ret = atcacert_read_cert(&g_test_p384_cert_def_14_device, &signer_public_key_buf, cert, &cert_size);
-    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
-    TEST_ASSERT_EQUAL(g_device_cert_ref_size, cert_size);
-    TEST_ASSERT_EQUAL_MEMORY(g_device_cert_ref, cert, cert_size);
-}
-
-TEST(atcacert_client_ta, atcacert_p384_read_device_loc_gen_key)
-{
-    int ret;
-    uint8_t public_key[ATCA_ECCP384_PUBKEY_SIZE];
-    cal_buffer pubkey = CAL_BUF_INIT(sizeof(public_key), public_key);
-    uint8_t data[sizeof(public_key)];
-
-    atcacert_device_loc_t device_loc = { DEVZONE_DATA, 0, TRUE, 0, ATCA_ECCP384_PUBKEY_SIZE};
-
-    ret = atca_test_config_get_id(TEST_TYPE_EC_P384_SIGN, &device_loc.slot);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-
-    ret = talib_get_pubkey(atcab_get_device(), device_loc.slot, &pubkey);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-
-    ret = atcacert_read_device_loc(&device_loc, data);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-    TEST_ASSERT_EQUAL_MEMORY(&public_key[device_loc.offset], data, device_loc.count);
-}
-
-TEST(atcacert_client_ta, atcacert_read_device_loc_data_partial)
-{
-    int ret;
-    uint8_t data_full[ATCACERT_COMP_CERT_MAX_SIZE];
-    uint8_t data[sizeof(data_full)];
-    atcacert_device_loc_t device_loc = { DEVZONE_DATA, 0x8800, FALSE, 5, 55 };
-
-    ret = atcab_read_bytes_zone(device_loc.zone, device_loc.slot, 0, data_full, ATCACERT_COMP_CERT_MAX_SIZE);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-
-    ret = atcacert_read_device_loc(&device_loc, data);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-    TEST_ASSERT_EQUAL_MEMORY(&data_full[device_loc.offset], data, device_loc.count);
-}
-
-TEST(atcacert_client_ta, atcacert_read_subj_key_id)
-{
-    int ret = 0;
-    uint8_t cert[612];
-    size_t cert_size = sizeof(cert);
-    uint8_t key_id_ref[20];
-    uint8_t key_id[20];
-    cal_buffer signer_ca_public_key_buf = CAL_BUF_INIT(sizeof(g_signer_p521_ca_public_key), g_signer_p521_ca_public_key);
-
-    ret = atcacert_read_cert(&g_test_p521_cert_def_13_signer, &signer_ca_public_key_buf, cert, &cert_size);
-    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
-    TEST_ASSERT_EQUAL(g_signer_cert_ref_size, cert_size);
-    TEST_ASSERT_EQUAL_MEMORY(g_signer_cert_ref, cert, cert_size);
-
-    ret = atcacert_get_subj_key_id(&g_test_p521_cert_def_13_signer, cert, cert_size, key_id_ref);
-    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
-
-    ret = atcacert_read_subj_key_id(&g_test_p521_cert_def_13_signer, key_id);
-    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
-    TEST_ASSERT_EQUAL_MEMORY(key_id_ref, key_id, sizeof(key_id));
-}
-
-TEST(atcacert_client_ta, atcacert_get_response)
-{
-    int ret = 0;
-    uint8_t response[ATCA_ECCP384_SIG_SIZE];
-    bool is_verified = false;
-    const uint8_t challenge[ATCA_SHA2_384_DIGEST_SIZE] = {
-        0x0c, 0xa6, 0x34, 0xc8, 0x37, 0x2f, 0x87, 0x99, 0x99, 0x7e, 0x9e, 0xe9, 0xd5, 0xbc, 0x72, 0x71,
-        0x84, 0xd1, 0x97, 0x0a, 0xea, 0xfe, 0xac, 0x60, 0x7e, 0xd1, 0x3e, 0x12, 0xb7, 0x32, 0x25, 0xf1,
-        0x67, 0x20, 0x34, 0x96, 0x67, 0x55, 0x49, 0x72, 0x83, 0x14, 0x5d, 0x13, 0xa1, 0xc2, 0xde, 0x88
-    };
-    cal_buffer response_buf = CAL_BUF_INIT(sizeof(response), response);
-    cal_buffer challenge_buf = CAL_BUF_INIT(sizeof(challenge), challenge);
-    cal_buffer pubkey_buf = CAL_BUF_INIT(sizeof(g_device_p384_public_key), g_device_p384_public_key);
-    uint16_t device_privkey_handle = 0;
-    char disp_str[512];
-    size_t disp_size = sizeof(disp_str);
-
-    ret = atca_test_config_get_id(TEST_TYPE_EC_P384_SIGN, &device_privkey_handle);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-
-    ret = atcacert_get_response(device_privkey_handle, &challenge_buf, &response_buf);
-    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
-
-    ret = talib_verify_extern(atcab_get_device(), TA_KEY_TYPE_ECCP384, TA_HANDLE_INPUT_BUFFER, 
-                              &pubkey_buf, &response_buf, &challenge_buf, &is_verified);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-    TEST_ASSERT(is_verified);
-
-    disp_size = sizeof(disp_str);
-    ret = atcab_bin2hex(challenge, sizeof(challenge), disp_str, &disp_size);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-    (void)printf("Challenge:\r\n%s\r\n", disp_str);
-    disp_size = sizeof(disp_str);
-    ret = atcab_bin2hex(response, sizeof(response), disp_str, &disp_size);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-    (void)printf("Response:\r\n%s\r\n", disp_str);
-    disp_size = sizeof(disp_str);
-    ret = atcab_bin2hex(g_device_p384_public_key, sizeof(g_device_p384_public_key), disp_str, &disp_size);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-    (void)printf("Public Key:\r\n%s\r\n", disp_str);
-}
-
-TEST(atcacert_client_ta, atcacert_generate_p384_device_csr_pem)
-{
-    uint8_t csr_der_buffer[612];
-    char csr_pem_buffer[612];
-    uint8_t signature[ATCA_ECCP384_SIG_SIZE];
-    cal_buffer sig = CAL_BUF_INIT(sizeof(signature), signature);
-    uint8_t pub_key[ATCA_ECCP384_PUBKEY_SIZE];
-    cal_buffer pubkey_buf = CAL_BUF_INIT(sizeof(pub_key), pub_key);
-    size_t csr_der_buffer_length = 0;
-    size_t csr_pem_buffer_length = 0;
-    bool is_verified = false;
-    uint8_t csr_digest[ATCA_SHA384_DIGEST_SIZE] = { 0 };
-    cal_buffer csr_dig_buf = CAL_BUF_INIT(sizeof(csr_digest), csr_digest);
-    const atcacert_cert_loc_t* pub_loc = NULL;
-    int ret = 0;
-
-    memset(csr_pem_buffer, 0, sizeof(csr_pem_buffer));
-    memset(csr_der_buffer, 0, sizeof(csr_der_buffer));
-
-    //Generate the CSR certificate in PEM
-    csr_pem_buffer_length = sizeof(csr_pem_buffer);
-    ret = atcacert_create_csr_pem(&g_csr_def_15_device, (char*)&csr_pem_buffer, &csr_pem_buffer_length);
-    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
-
-    (void)printf("Device CSR :\r\n%s", csr_pem_buffer);
-
-    // Convert the CSR certificate to DER
-    csr_der_buffer_length = sizeof(csr_der_buffer);
-    ret = atcacert_decode_pem_csr(csr_pem_buffer, csr_pem_buffer_length, csr_der_buffer, &csr_der_buffer_length);
-    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
-
-    // Get the public key from CSR
-    pub_loc = &(g_csr_def_15_device.std_cert_elements[STDCERT_PUBLIC_KEY]);
-    ret = atcacert_get_cert_element(&g_csr_def_15_device, pub_loc, csr_der_buffer, csr_der_buffer_length, pub_key, ATCA_ECCP384_PUBKEY_SIZE);
-    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
-
-    // Get the digest of the CSR
-    ret = atcacert_get_tbs_digest(&g_csr_def_15_device, csr_der_buffer, csr_der_buffer_length, &csr_dig_buf);
-    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
-
-    //Get the signature from the CSR
-    ret = atcacert_get_signature(&g_csr_def_15_device, csr_der_buffer, csr_der_buffer_length, &sig);
-    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
-
-    ret = talib_verify_extern(atcab_get_device(), TA_KEY_TYPE_ECCP384, TA_HANDLE_INPUT_BUFFER, 
-                              &pubkey_buf, &sig, &csr_dig_buf, &is_verified);
-    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
-    TEST_ASSERT(is_verified);
-}
-
-TEST(atcacert_client_ta, atcacert_read_signer_cert_size)
-{
-    int ret = 0;
-    size_t cert_size = 0;
-
-    ret = atcacert_read_cert_size_ext(atcab_get_device(), &g_test_p521_cert_def_13_signer, &cert_size);
-    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
-    TEST_ASSERT_EQUAL(g_signer_cert_ref_size, cert_size);
-}
-
-TEST(atcacert_client_ta, deinit)
-{
-    // Deletes the created handles
-#if TALIB_DELETE_EN
-    int ret = 0;
-    uint16_t compressed_signer_cert_handle = 0x8800;
-    uint16_t compressed_device_cert_handle = 0x8801;
-
-    ret = talib_delete_handle(atcab_get_device(), g_signer_ca_p521_private_key_slot);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-
-    ret = talib_delete_handle(atcab_get_device(), compressed_signer_cert_handle);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-
-    ret = talib_delete_handle(atcab_get_device(), compressed_device_cert_handle);
-    TEST_ASSERT_EQUAL(ATCA_SUCCESS, ret);
-#endif
-}
-#endif
-#endif
 
 // *INDENT-OFF* - Preserve formatting
 t_test_case_info atcacert_client_tests[] =
@@ -2319,7 +1646,7 @@ t_test_case_info atcacert_client_tests[] =
     { REGISTER_TEST_CASE(atcacert_client, atcacert_generate_device_csr_pem),         atca_test_cond_ecc608 },
 #endif
 #endif
-    
+
 #if ATCACERT_INTEGRATION_EN
     { REGISTER_TEST_CASE(atcacert_client, atcacert_get_subj),                        REGISTER_TEST_CONDITION(atcacert_client, get_cert_fields) },
     { REGISTER_TEST_CASE(atcacert_client, atcacert_get_subj_pbkey),                  REGISTER_TEST_CONDITION(atcacert_client, get_cert_fields) },
@@ -2357,21 +1684,6 @@ t_test_case_info atcacert_client_ca2_tests[] =
 
 t_test_case_info atcacert_client_ta_tests[] =
 {
-#if ATCA_TA_SUPPORT
-    { REGISTER_TEST_CASE(atcacert_client_ta, atcacert_write_rsa_signed_cert),             atca_test_cond_ta },
-#if ATCACERT_COMPCERT_EN && ATCAC_SHA384_EN && ATCAC_SHA512_EN
-    { REGISTER_TEST_CASE(atcacert_client_ta, init),                                       REGISTER_TEST_CONDITION(atcacert_client_ta, comp_cert_test_condn) },
-    { REGISTER_TEST_CASE(atcacert_client_ta, atcacert_eccp521_read_cert_signer),          REGISTER_TEST_CONDITION(atcacert_client_ta, comp_cert_test_condn) },
-    { REGISTER_TEST_CASE(atcacert_client_ta, atcacert_eccp384_read_cert_device),          REGISTER_TEST_CONDITION(atcacert_client_ta, comp_cert_test_condn) },
-    { REGISTER_TEST_CASE(atcacert_client_ta, atcacert_p384_read_device_loc_gen_key),      REGISTER_TEST_CONDITION(atcacert_client_ta, comp_cert_test_condn) },
-    { REGISTER_TEST_CASE(atcacert_client_ta, atcacert_read_device_loc_data_partial),      REGISTER_TEST_CONDITION(atcacert_client_ta, comp_cert_test_condn) },
-    { REGISTER_TEST_CASE(atcacert_client_ta, atcacert_read_subj_key_id),                  REGISTER_TEST_CONDITION(atcacert_client_ta, comp_cert_test_condn) },
-    { REGISTER_TEST_CASE(atcacert_client_ta, atcacert_get_response),                      REGISTER_TEST_CONDITION(atcacert_client_ta, comp_cert_test_condn) },
-    { REGISTER_TEST_CASE(atcacert_client_ta, atcacert_generate_p384_device_csr_pem),      REGISTER_TEST_CONDITION(atcacert_client_ta, comp_cert_test_condn) },
-    { REGISTER_TEST_CASE(atcacert_client_ta, atcacert_read_signer_cert_size),             REGISTER_TEST_CONDITION(atcacert_client_ta, comp_cert_test_condn) },
-    { REGISTER_TEST_CASE(atcacert_client_ta, deinit),                                     REGISTER_TEST_CONDITION(atcacert_client_ta, comp_cert_test_condn) },
-#endif
-#endif
     /* Array Termination element*/
     { (fp_test_case)NULL, NULL },
 };

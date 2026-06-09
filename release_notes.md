@@ -1,6 +1,39 @@
 
 # Microchip Cryptoauthlib Release Notes
 
+## Release v3.8.0 (05/05/2026)
+
+### New Features
+  - ECC206 device support added
+  - Restructured cmake build system for modular, device-specific configurations
+    - Moved device enablement options into per-module cmake files (calib, talib, pkcs11, jwt, atcacert)
+    - Removed devices.cmake; added device-specific cmake checks per module
+    - Added separate CMakeLists.txt for calib, atcacert, jwt, and pkcs11 modules
+  - Restructured test build system to align with modular cmake changes
+    - Added device-specific cmake checks for test modules (api_calib, api_talib, atcacert)
+    - Test sources are now conditionally compiled based on device selection
+  - See [talib/CHANGES.md] for details on talib module changes
+
+### Fixes
+  - License header copyright year updated for all files
+  - PKCS#11 layer fixes/updates
+    - Implemented thread-safety enhancements for the find-template cache with
+      per-session cache slots for multi-threaded robustness
+    - Updated pkcs11_config.c config parsing for device-specific selection
+    - Updated pkcs11_signature.c with proper ATCA_CA_SUPPORT and ATCA_TA_SUPPORT macro guards
+    - Updated pkcs11_token.c for volatile register usage and device-specific token identification
+    - Fixed pkcs11_cert.c x509 cert write to use volatile register when
+      TALIB_CREATE_SHARED_DATA_EN is not enabled
+  - Device-specific configuration updates
+    - Updated calib_device.h to enable device-specific config on device selection
+    - Updated calib_execution.c to enable device-specific execution time on device selection
+    - Updated kit_protocol.c to enable device-specific selection for kit protocol
+  - Build and macro protection fixes
+    - Fixed atcab_mac() to use correct macro guard CALIB_MAC_EN
+    - Added CALIB_AES_GCM_EN macro protection in cryptoauthlib.h for feature-specific inclusions
+    - Resolved ATCA_HAL_CUSTOM build issues, restoring compatibility across custom HAL configurations
+  - Fixed PyCAL bytearray handling for cal_buffer usage
+
 ## Release v3.7.9 (09/05/2025)
 
 ### New Features

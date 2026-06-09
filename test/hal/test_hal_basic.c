@@ -2,7 +2,7 @@
  * \file
  * \brief Hal functionality Tests for ECC and TrustAnchor Devices
  *
- * \copyright (c) 2015-2023 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -97,75 +97,6 @@ TEST(hal, random)
 }
 #endif
 
-#if ATCA_TA_SUPPORT
-TEST_CONDITION(hal, ta_single_and_multi_part_write_read)
-{
-    ATCADeviceType dev_type = atca_test_get_device_type();
-
-    return (atcab_is_ta_device(dev_type));
-}
-
-/** \brief This test case creates a handle and checks whether data written is same when read for TA devices
- *         Supports both single part and multipart buffers
- */
-TEST(hal, ta_single_and_multi_part_write_read)
-{
-    ATCA_STATUS status;
-    ta_element_attributes_t attr_data_handle;
-    uint16_t data_handle;
-    uint16_t test_element_size[] = { 200, 1021, 1024, 2048 };
-    uint8_t write_data_buffer[2048]; //! taking max buffer size for test
-    uint8_t read_data_buffer[2048];  //! taking max buffer size for test
-    uint16_t write_element_size, read_element_size;
-    uint8_t index;
-    uint8_t stir_data[16] = { 0 };
-    cal_buffer stir_data_buf = CAL_BUF_INIT(sizeof(stir_data), stir_data);
-    cal_buffer write_data_buf = { 0 };
-    cal_buffer read_data_buf = { 0 };
-
-    // Skip test if setup isn't locked
-    test_assert_data_is_locked();
-
-
-    for (index = 0; index < sizeof(test_element_size) / sizeof(test_element_size[0]); index++)
-    {
-        write_element_size = test_element_size[index];
-        read_element_size = test_element_size[index];
-
-        write_data_buf.len = write_element_size;
-        write_data_buf.buf = write_data_buffer;
-
-        read_data_buf.len = read_element_size;
-        read_data_buf.buf = read_data_buffer;
-
-        status = talib_handle_init_data(&attr_data_handle, write_element_size);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-#if TALIB_CREATE_SHARED_DATA_EN
-        status = talib_create_element(atcab_get_device(), &attr_data_handle, &data_handle);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-#endif
-
-        //Reset data buffers... Read buffer with 0's and Write buffer with random data
-        memset(read_data_buf.buf, 0x0, read_data_buf.len);
-
-        status = talib_random(atcab_get_device(), &stir_data_buf, &write_data_buf);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-        status = talib_write_element(atcab_get_device(), data_handle, &write_data_buf);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-
-        status = talib_read_element(atcab_get_device(), data_handle, &read_data_buf);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-        TEST_ASSERT_EQUAL_MEMORY(write_data_buf.buf, read_data_buf.buf, write_element_size);
-
-#if TALIB_DELETE_EN
-        status = talib_delete_handle(atcab_get_device(), (uint32_t)data_handle);
-        TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
-#endif
-    }
-}
-#endif
 
 /** \brief This test case checks whether data written is same when read for CA or TA devices
  */
@@ -233,9 +164,6 @@ t_test_case_info hal_basic_tests[] =
     { REGISTER_TEST_CASE(hal, read_serial_number),                   REGISTER_TEST_CONDITION(hal, hal_test_condn) },
 #if TEST_HAL_RANDOM_EN
     { REGISTER_TEST_CASE(hal, random),                               REGISTER_TEST_CONDITION(hal, random) },
-#endif
-#if ATCA_TA_SUPPORT
-    { REGISTER_TEST_CASE(hal, ta_single_and_multi_part_write_read),  REGISTER_TEST_CONDITION(hal, ta_single_and_multi_part_write_read) },
 #endif
     { REGISTER_TEST_CASE(hal, single_part_write_read),               REGISTER_TEST_CONDITION(hal, hal_test_condn) },
     /* Array Termination element*/

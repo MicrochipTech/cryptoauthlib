@@ -14,7 +14,6 @@ option(ATCA_HAL_SWI_UART "Include the SWI using UART Driver")
 
 # Library Options
 option(ATCA_PRINTF "Enable Debug print statements in library")
-option(ATCA_JWT_EN "Enable jwt functionality")
 option(ATCA_PKCS11 "Build PKCS11 Library")
 option(ATCA_BUILD_SHARED_LIBS "Build CryptoAuthLib as shared library" ON)
 option(ATCA_NO_HEAP "Do not use dynamic (heap) allocation functions" OFF)
@@ -42,24 +41,6 @@ option(ATCA_WPC_SUPPORT "Include WPC Certificates")
 option(ATCAC_SHA384_EN "Include SHA384 support" OFF)
 option(ATCAC_SHA512_EN "Include SHA512 support" OFF)
 
-# Certificate Options
-option(ATCACERT_COMPCERT_EN       "Include Compressed Certificate support" ON)
-option(ATCACERT_FULLSTOREDCERT_EN "Include Full Certificate support" ON)
-
-# Device enablement
-option(ATCA_ATSHA204A_SUPPORT "Include support for ATSHA204A device" ON)
-option(ATCA_ATSHA206A_SUPPORT "Include support for ATSHA206A device" ON)
-option(ATCA_ATECC108A_SUPPORT "Include support for ATECC108A device" ON)
-option(ATCA_ATECC508A_SUPPORT "Include support for ATECC508A device" ON)
-option(ATCA_ATECC608_SUPPORT "Include support for ATECC608 device" ON)
-option(ATCA_ECC204_SUPPORT "Include support for ECC204 device" ON)
-option(ATCA_TA010_SUPPORT "Include support for TA010 device" ON)
-option(ATCA_SHA104_SUPPORT "Include support for SHA104 device" ON)
-option(ATCA_SHA105_SUPPORT "Include support for SHA105 device" ON)
-
-# This does various device checks
-include(cmake/devices.cmake)
-
 # Preprocessor Warning option
 if (NOT MSVC)
 option(ATCA_PREPROCESSOR_WARNING "Enable preprocessor warning statements in library" OFF)
@@ -79,9 +60,9 @@ elseif (ATCA_WOLFSSL AND (ATCA_MBEDTLS OR ATCA_OPENSSL))
 message(FATAL_ERROR "Only one external SSL/TLS library can be supported")
 endif()
 
-# Full certificate integration option
-if (ATCA_MBEDTLS OR ATCA_WOLFSSL OR ATCA_OPENSSL)
-option(ATCACERT_INTEGRATION_EN "Enable ATCACERT full certificate integration" ON)
+# Atcacert checks and options
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/atcacert" AND IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/atcacert")
+    include(atcacert/cmake/atcacert.cmake)
 endif()
 
 # Check Platform Information
@@ -95,17 +76,9 @@ set(BUILD_SHARED_LIBS ${ATCA_BUILD_SHARED_LIBS})
 # Collect Library Sources
 file(GLOB LIB_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.c")
 file(GLOB LIB_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.h")
-file(GLOB ATCACERT_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "atcacert/*.c")
-file(GLOB ATCACERT_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "atcacert/*.h")
-file(GLOB CALIB_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "calib/*.c")
-file(GLOB CALIB_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "calib/*.h")
 file(GLOB_RECURSE CRYPTO_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "crypto/*.c")
 file(GLOB CRYPTO_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "crypto/*.h")
 file(GLOB CRYPTO_HASHES_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "crypto/hashes/*.h")
-file(GLOB HOST_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "host/*.c")
-file(GLOB HOST_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "host/*.h")
-file(GLOB JWT_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "jwt/*.c")
-file(GLOB JWT_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "jwt/*.h")
 file(GLOB TNG_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../app/tng/*.c")
 file(GLOB TNG_INC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../app/tng/*.h")
 file(GLOB WPC_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../app/wpc/*.c")
@@ -118,21 +91,28 @@ SET(TNG_SRC ${TNG_SRC} ../app/pkcs11/trust_pkcs11_config.c)
 endif()
 
 if(${CMAKE_VERSION} VERSION_GREATER "3.8.0")
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${ATCACERT_SRC})
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${CALIB_SRC})
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${CRYPTO_SRC})
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${HOST_SRC})
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${JWT_SRC})
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${PKCS11_SRC})
 if(ATCA_TNGTLS_SUPPORT OR ATCA_TNGLORA_SUPPORT OR ATCA_TFLEX_SUPPORT)
 source_group("App/Tng" FILES ${TNG_SRC})
 endif()
 source_group("App/Wpc" FILES ${WPC_SRC})
 endif()
 
+# This does various CA device checks
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/calib" AND IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/calib")
+    set(CALIB_DEVICES_CMAKE ${CMAKE_CURRENT_SOURCE_DIR}/calib/cmake)
+    include(calib/cmake/checks.cmake)
+endif()
+
+# This does various TA device checks
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/talib" AND IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/talib")
     # Include supporting option checks first
     include(talib/cmake/checks.cmake)
+endif()
+
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/jwt" AND IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/jwt")
+    # Include supporting option checks first
+    include(jwt/cmake/checks.cmake)
 endif()
 
 if (ATCA_MBEDTLS)
@@ -151,12 +131,6 @@ if (ATCA_OPENSSL)
     endif()
 endif(ATCA_OPENSSL)
 
-if (ATCA_ATSHA204A_SUPPORT OR ATCA_ATSHA206A_SUPPORT OR
-    ATCA_ATECC108A_SUPPORT OR ATCA_ATECC508A_SUPPORT OR
-    ATCA_ATECC608_SUPPORT OR ATCA_ECC204_SUPPORT OR ATCA_TA010_SUPPORT OR ATCA_SHA104_SUPPORT OR ATCA_SHA105_SUPPORT)
-set(LIB_SRC ${LIB_SRC} ${CALIB_SRC} ${HOST_SRC})
-endif()
-
 if (ATCA_ATSHA206A_SUPPORT)
 set(LIB_SRC ${LIB_SRC} ${SHA206_API_SRC})
 endif()
@@ -167,9 +141,7 @@ endif()
 
 # Add the basic sources to the library
 set(CRYPTOAUTH_SRC ${LIB_SRC}
-                   ${ATCACERT_SRC}
                    ${CRYPTO_SRC}
-                   ${JWT_SRC}
                    ${MBEDTLS_SRC}
                    ${WOLFSSL_SRC}
                    ${OPENSSL_SRC}
@@ -275,14 +247,10 @@ if(ATCA_MBEDTLS)
 set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${MBEDTLS_SRC})
 endif()
 
-if(ATCA_PKCS11)
-    if(LINUX OR ATCA_ZEPHYR_SUPPORT)
-        include(cmake/pkcs11.cmake)
-        set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} ${PKCS11_SRC})
-        set(ATCA_LIBRARY_CONF ${DEFAULT_CONF_PATH}/${DEFAULT_CONF_FILE_NAME} CACHE STRING "" FORCE)
-    else()
-        message(FATAL_ERROR "PKCS11 Interface is only available for linux systems - if the target is linux check cross-compilation configuration")
-    endif()
+# This does various pkcs11 device checks
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/pkcs11" AND IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/pkcs11")
+     # Include supporting option checks first
+    include(pkcs11/cmake/pkcs11.cmake)
 endif()
 
 if(ATCA_BUILD_SHARED_LIBS)
@@ -291,8 +259,38 @@ set(CRYPTOAUTH_SRC ${CRYPTOAUTH_SRC} atca_utils_sizes.c)
 endif(ATCA_BUILD_SHARED_LIBS)
 
 add_library(cryptoauth ${CRYPTOAUTH_SRC} ${ATCACERT_DEF_SRC})
+
+#Add Subdirectories
+if (ATCA_JWT_SUPPORT)
+    add_subdirectory(jwt)
+    file(GLOB JWT_SRC_GRP RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "jwt/*.c")
+    source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${JWT_SRC_GRP})
+endif()
+
+if (ATCA_CA_SUPPORT)
+    add_subdirectory(calib)
+    file(GLOB CALIB_SRC_GRP RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "calib/*.c")
+    file(GLOB HOST_SRC_GRP RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "host/*.c")
+    source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${CALIB_SRC_GRP})
+    source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${HOST_SRC_GRP})
+endif()
+
 if (ATCA_TA_SUPPORT)
-add_subdirectory(talib)
+    add_subdirectory(talib)
+    file(GLOB TALIB_SRC_GRP RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "talib/*.c")
+    source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${TALIB_SRC_GRP})
+endif()
+
+if (ATCACERT_COMPCERT_EN OR ATCACERT_FULLSTOREDCERT_EN)
+    add_subdirectory(atcacert)
+    file(GLOB ATCACERT_SRC_GRP RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "atcacert/*.c")
+    source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${ATCACERT_SRC_GRP})
+endif()
+
+if (ATCA_PKCS11_SUPPORT)
+    add_subdirectory(pkcs11)
+    file(GLOB PKCS11_SRC_GRP RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "pkcs11/*.c")
+    source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${PKCS11_SRC_GRP})
 endif()
 
 set_target_properties(cryptoauth PROPERTIES C_STANDARD 99 VERSION ${VERSION} SOVERSION ${VERSION_MAJOR})
@@ -402,12 +400,8 @@ endif(DEFAULT_LIB_PATH)
 if(DEFAULT_INC_PATH)
 install(FILES ${LIB_INC} DESTINATION ${DEFAULT_INC_PATH} COMPONENT Development)
 install(FILES ${HAL_INC} DESTINATION ${DEFAULT_INC_PATH}/hal COMPONENT Development)
-install(FILES ${ATCACERT_INC} DESTINATION ${DEFAULT_INC_PATH}/atcacert COMPONENT Development)
-install(FILES ${CALIB_INC} DESTINATION ${DEFAULT_INC_PATH}/calib COMPONENT Development)
 install(FILES ${CRYPTO_INC} DESTINATION ${DEFAULT_INC_PATH}/crypto COMPONENT Development)
 install(FILES ${CRYPTO_HASHES_INC} DESTINATION ${DEFAULT_INC_PATH}/crypto/hashes COMPONENT Development)
-install(FILES ${HOST_INC} DESTINATION ${DEFAULT_INC_PATH}/host COMPONENT Development)
-install(FILES ${JWT_INC} DESTINATION ${DEFAULT_INC_PATH}/jwt COMPONENT Development)
 install(FILES ${TNG_INC} DESTINATION ${DEFAULT_INC_PATH}/app/tng COMPONENT Development)
 install(FILES ${WPC_INC} DESTINATION ${DEFAULT_INC_PATH}/app/wpc COMPONENT Development)
 install(FILES ${SHA206_API_INC} DESTINATION ${DEFAULT_INC_PATH}/app/api_206a COMPONENT Development)

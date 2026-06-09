@@ -1,7 +1,7 @@
 """
 Cryptoauthlib Device Configuration
 """
-# (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+# Copyright (C) 2015-2026 Microchip Technology Inc. and its subsidiaries.
 #
 # Subject to your compliance with these terms, you may use Microchip software
 # and any derivatives exclusively with Microchip products. It is your
@@ -20,7 +20,6 @@ Cryptoauthlib Device Configuration
 # LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
 # THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
 # THIS SOFTWARE.
-
 
 from ctypes import Structure, c_uint16, c_uint8
 from .library import AtcaStructure

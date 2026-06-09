@@ -2,7 +2,7 @@
  * \file
  * \brief host side methods using software implementations
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -29,7 +29,7 @@
 #include "crypto/atca_crypto_sw.h"
 #include "cal_internal.h"
 
-#if ATCACERT_EN 
+#if ATCACERT_EN
 
 #if ATCAC_VERIFY_EN && ATCACERT_COMPCERT_EN
 ATCA_STATUS atcacert_verify_cert_sw(const atcacert_def_t* cert_def,
@@ -57,16 +57,6 @@ ATCA_STATUS atcacert_verify_cert_sw(const atcacert_def_t* cert_def,
         case ATCA_ECCP256_PUBKEY_SIZE:
             dig.len = ATCA_SHA2_256_DIGEST_SIZE;
             break;
-#if ATCA_TA_SUPPORT
-        case ATCA_ECCP384_PUBKEY_SIZE:
-            dig.len = ATCA_SHA2_384_DIGEST_SIZE;
-            key_type = TA_KEY_TYPE_ECCP384;
-            break;
-        case ATCA_ECCP521_PUBKEY_SIZE:
-            dig.len = ATCA_SHA2_512_DIGEST_SIZE;
-            key_type = TA_KEY_TYPE_ECCP521;
-            break;
-#endif
         default:
             ret = ATCACERT_E_BAD_PARAMS;
             break;
@@ -143,14 +133,6 @@ ATCA_STATUS atcacert_verify_response_sw(const cal_buffer* device_public_key,
         case ATCA_ECCP256_PUBKEY_SIZE:
             key_type = ATCA_KEY_TYPE_ECCP256;
             break;
-#if ATCA_TA_SUPPORT
-        case ATCA_ECCP384_PUBKEY_SIZE:
-            key_type = TA_KEY_TYPE_ECCP384;
-            break;
-        case ATCA_ECCP521_PUBKEY_SIZE:
-            key_type = TA_KEY_TYPE_ECCP521;
-            break;
-#endif
         default:
             ret = ATCACERT_E_BAD_PARAMS;
             break;

@@ -2,7 +2,7 @@
  * \file
  * \brief host side methods using CryptoAuth hardware
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -45,9 +45,6 @@ ATCA_STATUS atcacert_verify_cert_hw(ATCADevice            device,
     cal_buffer sig = CAL_BUF_INIT(0u, signature);
     bool is_verified = false;
     ATCADeviceType dev_type = atcab_get_device_type_ext(device);
-#if ATCA_TA_SUPPORT
-    uint8_t key_type = ATCA_KEY_TYPE_ECCP256;
-#endif
 
 #if ATCA_CHECK_PARAMS_EN
     if (device == NULL || cert_def == NULL || ca_public_key == NULL || cert == NULL)
@@ -61,16 +58,6 @@ ATCA_STATUS atcacert_verify_cert_hw(ATCADevice            device,
         case ATCA_ECCP256_PUBKEY_SIZE:
             dig.len = ATCA_SHA2_256_DIGEST_SIZE;
             break;
-#if ATCA_TA_SUPPORT
-        case ATCA_ECCP384_PUBKEY_SIZE:
-            key_type = TA_KEY_TYPE_ECCP384;
-            dig.len = ATCA_SHA2_384_DIGEST_SIZE;
-            break;
-        case ATCA_ECCP521_PUBKEY_SIZE:
-            key_type = TA_KEY_TYPE_ECCP521;
-            dig.len = ATCA_SHA2_512_DIGEST_SIZE;
-            break;
-#endif
         default:
             ret = ATCACERT_E_BAD_PARAMS;
             break;
@@ -97,13 +84,6 @@ ATCA_STATUS atcacert_verify_cert_hw(ATCADevice            device,
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
         ret = atcab_verify_extern(tbs_digest, signature, ca_public_key->buf, &is_verified);
-    }
-#endif
-#if ATCA_TA_SUPPORT
-    if (atcab_is_ta_device(dev_type))
-    {
-        ret = talib_verify_extern(device, key_type, TA_HANDLE_INPUT_BUFFER, ca_public_key, &sig,
-                                  &dig, &is_verified);                 
     }
 #endif
     if (ret != ATCA_SUCCESS)
@@ -134,12 +114,6 @@ ATCA_STATUS atcacert_gen_challenge_hw(ATCADevice device, cal_buffer* challenge)
        ret = atcab_random(challenge->buf);
     }
 #endif
-#if ATCA_TA_SUPPORT
-    if (atcab_is_ta_device(dev_type))
-    {
-        ret = talib_random(device, NULL, challenge);
-    }
-#endif
     return ret;
 }
 #endif
@@ -153,9 +127,6 @@ ATCA_STATUS atcacert_verify_response_hw(ATCADevice  device,
     ATCA_STATUS ret = 0;
     bool is_verified = false;
     ATCADeviceType dev_type = atcab_get_device_type_ext(device);
-#if ATCA_TA_SUPPORT
-    uint8_t key_type = 0u;
-#endif
 
 #if ATCA_CHECK_PARAMS_EN
     if (device == NULL || device_public_key == NULL || challenge == NULL || response == NULL)
@@ -168,32 +139,6 @@ ATCA_STATUS atcacert_verify_response_hw(ATCADevice  device,
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
         ret = atcab_verify_extern(challenge->buf, response->buf, device_public_key->buf, &is_verified);
-    }
-#endif
-#if ATCA_TA_SUPPORT
-    if (atcab_is_ta_device(dev_type))
-    {
-        switch(device_public_key->len)
-        {
-            case ATCA_ECCP256_PUBKEY_SIZE:
-                key_type = TA_KEY_TYPE_ECCP256;
-                break;
-            case ATCA_ECCP384_PUBKEY_SIZE:
-                key_type = TA_KEY_TYPE_ECCP384;
-                break;
-            case ATCA_ECCP521_PUBKEY_SIZE:
-                key_type = TA_KEY_TYPE_ECCP521;
-                break;
-            default:
-                ret = ATCA_BAD_PARAM;
-                break;
-        }
-
-        if (ret == ATCA_SUCCESS)
-        {
-            ret = talib_verify_extern(device, key_type, TA_HANDLE_INPUT_BUFFER, device_public_key,
-                                      response, challenge, &is_verified);
-        }
     }
 #endif
     if (ret != ATCA_SUCCESS)

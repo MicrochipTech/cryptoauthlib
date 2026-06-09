@@ -2,7 +2,7 @@
  * \file
  * \brief Consistency checks for configuration options
  *
- * \copyright (c) 2015-2021 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -36,18 +36,7 @@
 
 /** Library Configuration File - All build attributes should be included in
     atca_config.h */
-#if defined(LIBRARY_BUILD_EN)
-    #define LIBRARY_BUILD_EN_CHECK 1
-#else
-    #define LIBRARY_BUILD_EN_CHECK 0
-    #include "atca_config.h"
-#endif
-
-#if defined(LIBRARY_USAGE_EN)
-    #define LIBRARY_USAGE_EN_CHECK 1
-#else
-    #define LIBRARY_USAGE_EN_CHECK 0
-#endif
+#include "atca_config.h"
 
 /* Configuration Macros to detect device classes */
 #if defined(ATCA_ATSHA204A_SUPPORT) || defined(ATCA_ATSHA206A_SUPPORT) || defined(ATCA_SHA104_SUPPORT) || defined(ATCA_SHA105_SUPPORT)
@@ -68,14 +57,14 @@
 #endif
 
 /* Support for a second generation of cryptoauth parts */
-#if defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT) || defined(ATCA_SHA104_SUPPORT) || defined(ATCA_SHA105_SUPPORT)
+#if defined(ATCA_ECC204_SUPPORT) || defined(ATCA_ECC206_SUPPORT) || defined(ATCA_TA010_SUPPORT) || defined(ATCA_SHA104_SUPPORT) || defined(ATCA_SHA105_SUPPORT)
 #define ATCA_CA2_SUPPORT    DEFAULT_ENABLED
 #else
 #define ATCA_CA2_SUPPORT    DEFAULT_DISABLED
 #endif
 
 /* Support for cert feature in second generation of cryptoauth parts */
-#if defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT)
+#if defined(ATCA_ECC204_SUPPORT) || defined(ATCA_ECC206_SUPPORT) || defined(ATCA_TA010_SUPPORT)
 #define ATCA_CA2_CERT_SUPPORT    DEFAULT_ENABLED
 #else
 #define ATCA_CA2_CERT_SUPPORT    DEFAULT_DISABLED
@@ -89,13 +78,7 @@
 #endif
 
 /* New Trust Anchor Devices */
-#ifndef ATCA_TA_SUPPORT
-#if defined(ATCA_TA100_SUPPORT) || defined(ATCA_TA101_SUPPORT)
-#define ATCA_TA_SUPPORT     DEFAULT_ENABLED
-#else
 #define ATCA_TA_SUPPORT     DEFAULT_DISABLED
-#endif
-#endif /* ATCA_TA_SUPPORT */
 
 /* Check for external crypto libraries for host side operations */
 #ifndef ATCA_HOSTLIB_EN
@@ -108,9 +91,6 @@
 
 /** Does the atcab_ API layer need to be instantiated (adds a layer of abstraction) */
 #ifndef ATCA_USE_ATCAB_FUNCTIONS
-#if (ATCA_TA_SUPPORT && ATCA_CA_SUPPORT)
-#define ATCA_USE_ATCAB_FUNCTIONS
-#endif
 #endif
 
 #ifndef ATCA_CHECK_PARAMS_EN
@@ -123,7 +103,7 @@
 /* Continues when the condition is true - emits message if the condition is false */
 #define ATCA_CHECK_VALID_MSG(c, m)          if (!ATCA_TRACE(!(c), m))
 #else
-#define ATCA_CHECK_INVALID_MSG(c, s, m)     
+#define ATCA_CHECK_INVALID_MSG(c, s, m)
 #define ATCA_CHECK_VALID_MSG(c, m)          if (1)
 #endif
 

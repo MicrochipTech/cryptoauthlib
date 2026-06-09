@@ -5,33 +5,42 @@ option (ATCA_TEST_LOCK_ENABLE "Enable device locking functions and tests" OFF)
 option (ATCA_TEST_DELETE_ENABLE "Enable device wiping functions and tests" OFF)
 option (DO_NOT_TEST_CERT "Disable certificate tests" OFF)
 
-file(GLOB TEST_ATCACERT_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "atcacert/*.c")
+# This does various CA device checks
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/api_calib" AND IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/api_calib")
+    # Include supporting option checks first
+    include(api_calib/cmake/checks.cmake)
+endif()
+
+# This does various TA device checks
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/api_talib" AND IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/api_talib")
+    # Include supporting option checks first
+    include(api_talib/cmake/checks.cmake)
+endif()
+
+# This does various CA device checks
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/atcacert" AND IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/atcacert")
+    # Include supporting option checks first
+    include(atcacert/cmake/atcacert.cmake)
+endif()
+
 file(GLOB TEST_JWT_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "jwt/*.c")
 file(GLOB TEST_TNG_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "tng/*.c")
 file(GLOB TEST_WPC_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "wpc/*.c")
 file(GLOB TEST_API_ATCAB RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "api_atcab/*.c")
-file(GLOB TEST_API_CALIB RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "api_calib/*.c")
 file(GLOB TEST_API_CRYPTO RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "api_crypto/*.c")
-file(GLOB TEST_API_TALIB RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "api_talib/*.c")
 file(GLOB TEST_HAL_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "hal/*.c")
 file(GLOB TEST_VECTORS_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "vectors/*.c")
 file(GLOB TEST_INTEGRATION_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "integration/*.c")
 file(GLOB TEST_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.c")
 file(GLOB UNITY_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "../third_party/unity/*.c")
 
-set(CRYPTOAUTH_TEST_SRC ${TEST_SRC} 
+set(CRYPTOAUTH_TEST_SRC ${TEST_SRC}
                         ${TEST_TNG_SRC}
                         ${TEST_JWT_SRC}
-                        ${TEST_ATCACERT_SRC}
                         ${TEST_API_ATCAB}
-                        ${TEST_API_CALIB}
                         ${TEST_API_CRYPTO}
                         ${TEST_HAL_SRC}
                         ${TEST_VECTORS_SRC})
-
-if(ATCA_TA100_SUPPORT OR ATCA_TA101_SUPPORT)
-set(CRYPTOAUTH_TEST_SRC ${CRYPTOAUTH_TEST_SRC} ${TEST_API_TALIB})
-endif(ATCA_TA100_SUPPORT OR ATCA_TA101_SUPPORT)
 
 if(ATCA_WPC_SUPPORT)
 set(CRYPTOAUTH_TEST_SRC ${CRYPTOAUTH_TEST_SRC} ${TEST_WPC_SRC})
@@ -60,8 +69,6 @@ target_include_directories(cryptoauth_test PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../
     ${CMAKE_CURRENT_SOURCE_DIR}/api_atcab
     ${CMAKE_CURRENT_SOURCE_DIR}/api_calib
-    ${CMAKE_CURRENT_SOURCE_DIR}/api_crypto
-    ${CMAKE_CURRENT_SOURCE_DIR}/api_talib
     ${CMAKE_CURRENT_SOURCE_DIR}/hal
     ${CMAKE_CURRENT_SOURCE_DIR}/integration
     ${CMAKE_CURRENT_SOURCE_DIR}/../lib
@@ -69,6 +76,24 @@ target_include_directories(cryptoauth_test PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/mbedtls/include
     ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/wolfssl
     ${CMAKE_CURRENT_BINARY_DIR}/../lib)
+
+if (ATCA_TEST_CA_SUPPORT)
+add_subdirectory(api_calib)
+file(GLOB TEST_API_CALIB_GRP RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "api_calib/*.c")
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${TEST_API_CALIB_GRP})
+endif()
+
+if (ATCA_TEST_TA_SUPPORT)
+add_subdirectory(api_talib)
+file(GLOB TEST_API_TALIB_GRP RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "api_talib/*.c")
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${TEST_API_TALIB_GRP})
+endif()
+
+if(ATCA_TEST_ATCACERT_SUPPORT)
+add_subdirectory(atcacert)
+file(GLOB TEST_ATCACERT_SRC_GRP RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "atcacert/*.c")
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${TEST_ATCACERT_SRC_GRP})
+endif()
 
 target_link_libraries(cryptoauth_test cryptoauth)
 
@@ -105,6 +130,10 @@ if(DO_NOT_TEST_CERT)
 target_compile_definitions(cryptoauth_test PUBLIC -DDO_NOT_TEST_CERT)
 endif(DO_NOT_TEST_CERT)
 
+if(ATCA_TA101TFLX_CONFIG)
+target_compile_definitions(cryptoauth_test PUBLIC -DATCA_TA101TFLX_CONFIG)
+endif(ATCA_TA101TFLX_CONFIG)
+
 set_property(TARGET cryptoauth_test PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "$(OutputPath)")
 
 add_custom_command(TARGET cryptoauth_test POST_BUILD
@@ -131,7 +160,7 @@ add_custom_command(TARGET cryptoauth_test POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
                 ${CMAKE_CURRENT_SOURCE_DIR}/vectors/aesmmt_cbc_cavp_vectors
                 $<TARGET_FILE_DIR:${PROJECT_NAME}>/aesmmt_cbc_cavp_vectors )
-				
+
 add_custom_command(TARGET cryptoauth_test POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
                 ${CMAKE_CURRENT_SOURCE_DIR}/vectors/aes_ccm_vectors

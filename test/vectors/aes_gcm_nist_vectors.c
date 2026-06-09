@@ -2,7 +2,7 @@
  * \file
  * \brief Embedded NIST vectors for the AES-GCM algorithm
  *
- * \copyright (c) 2020-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *

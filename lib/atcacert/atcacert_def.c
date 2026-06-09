@@ -2,7 +2,7 @@
  * \file
  * \brief Main certificate definition implementation.
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -72,15 +72,6 @@ ATCA_STATUS atcacert_merge_device_loc(ATCADevice                    device,
 
     }
 
-#if ATCA_TA_SUPPORT
-    if (true == atcab_is_ta_device(devtype) && (0u != device_loc->slot))
-    {
-        if (ATCACERT_E_SUCCESS != (atcab_get_zone_size_ext(atcab_get_device(), (uint8_t)device_loc->zone, device_loc->slot, &block_size)))
-        {
-            return ATCACERT_E_BAD_PARAMS;
-        }
-    }
-#endif
 
     new_offset =  (false == atcab_is_ta_device(devtype)) ? ((device_loc->offset / block_size) * block_size) : (device_loc->offset);                                                // Round down to block_size
     new_end = (size_t)device_loc->offset + (size_t)device_loc->count;
@@ -109,12 +100,6 @@ ATCA_STATUS atcacert_merge_device_loc(ATCADevice                    device,
             continue;   // Same zone, but non-continuous areas
         }
 
-#if ATCA_TA_SUPPORT
-        if ((true == atcab_is_ta_device(devtype)) && ((block_size < cur_end) || (block_size < new_end)))
-        {
-            return ATCACERT_E_ELEM_OUT_OF_BOUNDS; // Available block size is less than the requested size
-        }
-#endif
 
         if (device_loc->offset < cur_device_loc->offset)
         {
@@ -166,9 +151,6 @@ ATCA_STATUS atcacert_get_device_locs(ATCADevice             device,
     size_t rd_size = ATCA_BLOCK_SIZE;
 #if ATCA_CA2_SUPPORT
     bool is_ca2_device = atcab_is_ca2_device(atcab_get_device_type_ext(device));
-#endif
-#if ATCA_TA_SUPPORT
-    bool is_ta_device = atcab_is_ta_device(atcab_get_device_type_ext(device));
 #endif
 
     if (cert_def == NULL || device_locs == NULL || device_locs_count == NULL)
@@ -256,14 +238,6 @@ ATCA_STATUS atcacert_get_device_locs(ATCADevice             device,
             .count      = 13
         };
 
-#if ATCA_TA_SUPPORT
-        if (true == is_ta_device)
-        {
-            device_sn_loc.zone = DEVZONE_DEDICATED_DATA;
-            device_sn_loc.count = TA_SERIAL_NUMBER_SIZE;
-            rd_size = ATCA_DEDICATED_DATA_SIZE;
-        }
-#endif
 
 #if ATCA_CA2_SUPPORT
         if (true == is_ca2_device)
@@ -575,13 +549,6 @@ ATCA_STATUS atcacert_cert_build_process(atcacert_build_state_t*         build_st
         }
     }
 
-#if ATCA_TA_SUPPORT
-    if (true == atcab_is_ta_device(build_state->devtype))
-    {
-        device_sn_dev_loc.zone = DEVZONE_DEDICATED_DATA;
-        device_sn_dev_loc.count = TA_SERIAL_NUMBER_SIZE;
-    }
-#endif
 
     data = atcacert_is_device_loc_match(&device_sn_dev_loc, device_loc, device_data);
     if (data != NULL)
@@ -596,11 +563,6 @@ ATCA_STATUS atcacert_cert_build_process(atcacert_build_state_t*         build_st
         }
         else if (true == (atcab_is_ta_device(build_state->devtype)))
         {
-#if ATCA_TA_SUPPORT
-            // Get the device SN for ca2 device
-            build_state->is_device_sn = (uint8_t)TRUE;
-            (void)memcpy(&build_state->device_sn[0], &data[TA_DEV_SN_DEDICATED_DATA_ZONE_OFFSET], TA_SERIAL_NUMBER_SIZE);
-#endif
         }
         else
         {
@@ -2059,13 +2021,6 @@ ATCA_STATUS atcacert_set_comp_cert(const atcacert_def_t*    cert_def,
     {
         (void)memcpy(&signature_buf.buf[0], &comp_cert[0], signature_buf.len);
     }
-#if ATCA_TA_SUPPORT
-    else
-    {
-        (void)memcpy(&signature_buf.buf[0], &comp_cert[0], ATCA_ECCP256_SIG_SIZE);
-        (void)memcpy(&signature_buf.buf[ATCA_ECCP256_SIG_SIZE], &comp_cert[72], (signature_buf.len - ATCA_ECCP256_SIG_SIZE));
-    }
-#endif
 
     ret = atcacert_set_signature(
         cert_def,
@@ -2161,16 +2116,6 @@ ATCA_STATUS atcacert_get_comp_cert_ext(const atcacert_def_t*    cert_def,
         {
             break;
         }
-#if ATCA_TA_SUPPORT
-        else
-        {
-            // Adjust the signature according to the compressed certificate format if the keytype is other than ECCP256
-            if (signature_buf.len > ATCA_ECCP256_SIG_SIZE)
-            {
-                (void)memmove(&signature_buf.buf[72], &signature_buf.buf[64], (signature_buf.len - ATCA_ECCP256_SIG_SIZE));
-            }
-        }
-#endif
 
         ret = atcacert_get_issue_date(cert_def, cert, cert_size, &issue_date);
         is_issue_date = (ret == ATCACERT_E_SUCCESS);

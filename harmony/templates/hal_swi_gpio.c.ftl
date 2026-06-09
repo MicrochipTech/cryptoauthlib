@@ -2,7 +2,7 @@
  * \file
  * \brief ATCA Hardware abstraction layer for 1WIRE or SWI over GPIO.
  *
- * \copyright (c) 2015-2025 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -32,7 +32,7 @@
 #define ATCA_HAL_SWI
 #endif
 
-#if (defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT) || defined(ATCA_SHA104_SUPPORT)) && (defined(ATCA_HAL_SWI_GPIO) || defined(ATCA_HAL_SWI_BB))
+#if (defined(ATCA_ECC204_SUPPORT) || defined(ATCA_ECC206_SUPPORT) || defined(ATCA_TA010_SUPPORT) || defined(ATCA_SHA104_SUPPORT)) && (defined(ATCA_HAL_SWI_GPIO) || defined(ATCA_HAL_SWI_BB))
 #define ATCA_HAL_1WIRE
 #endif
 

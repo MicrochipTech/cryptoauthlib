@@ -2,7 +2,7 @@
  * \file
  * \brief PKCS11 Library Encrypt Support
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -123,27 +123,6 @@ CK_RV pkcs11_encrypt_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanis
                             rv = CKR_MECHANISM_INVALID;
 #endif
                         }
-#if ATCA_TA_SUPPORT
-                        if (atcab_is_ta_device(atcab_get_device_type_ext(pSession->slot->device_ctx)))
-                        {
-                            if (pParams->ulIvLen > sizeof(pSession->active_mech_data.gcm_single.iv))
-                            {
-                                rv = CKR_ARGUMENTS_BAD;
-                            }
-                            else
-                            {
-                                (void)memcpy(pSession->active_mech_data.gcm_single.iv, pParams->pIv, pParams->ulIvLen);
-                            }
-                            if (pParams->ulAADLen > sizeof(pSession->active_mech_data.gcm_single.aad))
-                            {
-                                rv = CKR_ARGUMENTS_BAD;
-                            }
-                            else
-                            {
-                                (void)memcpy(pSession->active_mech_data.gcm_single.aad, pParams->pAAD, pParams->ulAADLen);
-                            }
-                        }
-#endif
                     }
                     else
                     {
@@ -156,19 +135,6 @@ CK_RV pkcs11_encrypt_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanis
                 }
 
                 break;
-#if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
-            case CKM_RSA_PKCS_OAEP:
-                // pMechanism->pParameter should point to CK_RSA_PKCS_OAEP_PARAMS
-                if ((NULL != pMechanism->pParameter) && sizeof(CK_RSA_PKCS_OAEP_PARAMS) == pMechanism->ulParameterLen)
-                {
-                    rv = CKR_OK;
-                }
-                else
-                {
-                    rv = CKR_ARGUMENTS_BAD;
-                }
-                break;
-#endif
             default:
                 rv = CKR_MECHANISM_INVALID;
                 break;
@@ -203,9 +169,6 @@ CK_RV pkcs11_encrypt(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulD
     pkcs11_object_ptr pKey;
     CK_RV rv;
     ATCA_STATUS status = ATCA_SUCCESS;
-#if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
-    CK_BBOOL is_private = false;
-#endif
 
     rv = pkcs11_init_check(&pLibCtx, FALSE);
     if (CKR_OK != rv)
@@ -296,72 +259,7 @@ CK_RV pkcs11_encrypt(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULONG ulD
                 rv = CKR_GENERAL_ERROR;
 #endif
             }
-#if ATCA_TA_SUPPORT
-            if (atcab_is_ta_device(atcab_get_device_type()))
-            {
-                if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
-                {
-                    if (ATCA_SUCCESS == (status = talib_aes128_gcm_keyload(pSession->slot->device_ctx, pKey->slot, 0)))
-                    {
-                        cal_buffer aad_buf = CAL_BUF_INIT(pSession->active_mech_data.gcm_single.aad_len, pSession->active_mech_data.gcm_single.aad);
-                        cal_buffer iv_buf = CAL_BUF_INIT(TA_AES_GCM_IV_LENGTH, pSession->active_mech_data.gcm_single.iv);
-                        cal_buffer data_buf = CAL_BUF_INIT(ulDataLen, pData);
-                        cal_buffer ciphertext_buf = CAL_BUF_INIT(*pulEncryptedDataLen, pEncryptedData);
-                        cal_buffer tag_buf = CAL_BUF_INIT(TA_AES_GCM_TAG_LENGTH, &pEncryptedData[ulDataLen]);
-                        if (ATCA_SUCCESS == (status = talib_aes_gcm_encrypt(pSession->slot->device_ctx, &aad_buf, &iv_buf,
-                                                                            &data_buf, &ciphertext_buf, &tag_buf)))
-                        {
-                            *pulEncryptedDataLen = ulDataLen + TA_AES_GCM_TAG_LENGTH;
-                        }
-                        else
-                        {
-                            rv = CKR_DATA_LEN_RANGE;
-                        }
-                    }
-                    (void)pkcs11_unlock_device(pLibCtx);
-                }
-            }
-#endif
             break;
-#if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
-        case CKM_RSA_PKCS_OAEP:
-            if (CKR_OK == (rv = pkcs11_object_is_private(pKey, &is_private, pSession)))
-            {
-                if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
-                {
-                    ATCADeviceType dev_type = atcab_get_device_type_ext(pSession->slot->device_ctx);
-                    if (atcab_is_ta_device(dev_type))
-                    {
-                        cal_buffer plaintext_buf = CAL_BUF_INIT(ulDataLen, pData);
-                        cal_buffer ciphertext_buf = CAL_BUF_INIT(*pulEncryptedDataLen, pEncryptedData);
-                        const pkcs11_key_info_t* key_data = pkcs11_get_object_key_type(pSession->slot->device_ctx, pKey);
-
-                        if (NULL != key_data && NULL != key_data->rsa_key_info)
-                        {
-                            if (true == is_private)
-                            {
-                                uint8_t pub_key[PKCS11_MAX_RSA_PB_KEY_SIZE];
-                                cal_buffer rsa_pubkey_buf = CAL_BUF_INIT(key_data->rsa_key_info->pubkey_sz, pub_key);
-
-                                if (CKR_OK == (rv = pkcs11_ta_get_pubkey(pKey, &rsa_pubkey_buf, pSession)))
-                                {
-                                    rv = pkcs11_util_convert_rv(talib_rsaenc_encrypt(pSession->slot->device_ctx, key_data->rsa_key_info->rsa_encrypt_mode, TA_HANDLE_INPUT_BUFFER,
-                                                                                     &plaintext_buf, &rsa_pubkey_buf, &ciphertext_buf));
-                                }
-                            }
-                            else
-                            {
-                                /* Assume Public Key has been stored properly and encrypt against whatever is stored */
-                                rv = pkcs11_util_convert_rv(talib_rsaenc_encrypt(pSession->slot->device_ctx, key_data->rsa_key_info->rsa_encrypt_mode, pKey->slot,
-                                                                                 &plaintext_buf, NULL, &ciphertext_buf));
-                            }
-                        }
-                    }
-                    (void)pkcs11_unlock_device(pLibCtx);
-                }
-            }
-            break;
-#endif
         default:
             rv = CKR_MECHANISM_INVALID;
             break;
@@ -463,12 +361,6 @@ CK_RV pkcs11_encrypt_update(
                 }
 #endif
             }
-#if ATCA_TA_SUPPORT
-            if (atcab_is_ta_device(atcab_get_device_type()))
-            {
-                rv = CKR_FUNCTION_NOT_SUPPORTED;
-            }
-#endif
             break;
         default:
             rv = CKR_MECHANISM_INVALID;
@@ -553,12 +445,6 @@ CK_RV pkcs11_encrypt_final(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pEncryptedDat
                 *pulEncryptedDataLen = pSession->active_mech_data.gcm.tag_len;
 #endif
             }
-#if ATCA_TA_SUPPORT
-            if (atcab_is_ta_device(atcab_get_device_type()))
-            {
-                rv = CKR_FUNCTION_NOT_SUPPORTED;
-            }
-#endif
             break;
         default:
             rv = CKR_MECHANISM_INVALID;
@@ -657,27 +543,6 @@ CK_RV pkcs11_decrypt_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanis
                             rv = CKR_MECHANISM_INVALID;
 #endif
                         }
-#if ATCA_TA_SUPPORT
-                        if (atcab_is_ta_device(atcab_get_device_type()))
-                        {
-                            if (pParams->ulIvLen > sizeof(pSession->active_mech_data.gcm_single.iv))
-                            {
-                                rv = CKR_ARGUMENTS_BAD;
-                            }
-                            else
-                            {
-                                (void)memcpy(pSession->active_mech_data.gcm_single.iv, pParams->pIv, pParams->ulIvLen);
-                            }
-                            if (pParams->ulAADLen > sizeof(pSession->active_mech_data.gcm_single.aad))
-                            {
-                                rv = CKR_ARGUMENTS_BAD;
-                            }
-                            else
-                            {
-                                (void)memcpy(pSession->active_mech_data.gcm_single.aad, pParams->pAAD, pParams->ulAADLen);
-                            }
-                        }
-#endif
 
                         else
                         {
@@ -690,15 +555,6 @@ CK_RV pkcs11_decrypt_init(CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanis
                     }
                 }
                 break;
-#if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
-            case CKM_RSA_PKCS_OAEP:
-                // pMechanism->pParameter should point to CK_RSA_PKCS_OAEP_PARAMS
-                if ((NULL != pMechanism->pParameter) && sizeof(CK_RSA_PKCS_OAEP_PARAMS) == pMechanism->ulParameterLen)
-                {
-                    rv = CKR_OK;
-                }
-                break;
-#endif
             default:
                 rv = CKR_MECHANISM_INVALID;
                 break;
@@ -832,50 +688,7 @@ CK_RV pkcs11_decrypt(
                 }
 #endif
             }
-#if ATCA_TA_SUPPORT
-            if (atcab_is_ta_device(atcab_get_device_type()))
-            {
-                if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
-                {
-                    if (ATCA_SUCCESS == (status = talib_aes128_gcm_keyload(pSession->slot->device_ctx, pKey->slot, 0)))
-                    {
-                        *pulDataLen = ulEncryptedDataLen - TA_AES_GCM_TAG_LENGTH;
-                        cal_buffer aad_buf = CAL_BUF_INIT(pSession->active_mech_data.gcm_single.aad_len, pSession->active_mech_data.gcm_single.aad);
-                        cal_buffer iv_buf = CAL_BUF_INIT(TA_AES_GCM_IV_LENGTH, pSession->active_mech_data.gcm_single.iv);
-                        cal_buffer ciphertext_buf = CAL_BUF_INIT(*pulDataLen, pEncryptedData);
-                        cal_buffer data_buf = CAL_BUF_INIT(ulEncryptedDataLen, pData);
-                        cal_buffer tag_buf = CAL_BUF_INIT(TA_AES_GCM_TAG_LENGTH, &pEncryptedData[*pulDataLen]);
-                        if (ATCA_SUCCESS != (status = talib_aes_gcm_decrypt(pSession->slot->device_ctx, &aad_buf, &iv_buf, &tag_buf,
-                                                                            &ciphertext_buf, &data_buf)))
-                        {
-                            rv = CKR_ENCRYPTED_DATA_INVALID;
-                        }
-                    }
-                }
-                (void)pkcs11_unlock_device(pLibCtx);
-            }
-#endif
             break;
-#if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
-        case CKM_RSA_PKCS_OAEP:
-            if (atcab_is_ta_device(atcab_get_device_type_ext(pSession->slot->device_ctx)))
-            {   
-                if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
-                {
-                    cal_buffer ciphertext_buf = CAL_BUF_INIT(ulEncryptedDataLen, pEncryptedData);
-                    cal_buffer plaintext_buf = CAL_BUF_INIT(*pulDataLen, pData);
-                    const pkcs11_key_info_t* key_data = pkcs11_get_object_key_type(pSession->slot->device_ctx, pKey);
-
-                    if (NULL != key_data && NULL != key_data->rsa_key_info)
-                    {
-                        rv = pkcs11_util_convert_rv(talib_rsaenc_decrypt(pSession->slot->device_ctx, key_data->rsa_key_info->rsa_decrypt_mode, pKey->slot,
-                                                                         &ciphertext_buf, &plaintext_buf));
-                    }
-                    (void)pkcs11_unlock_device(pLibCtx);
-                }
-            }
-            break;  
-#endif
         default:
             rv = CKR_MECHANISM_INVALID;
             break;
@@ -982,12 +795,6 @@ CK_RV pkcs11_decrypt_update(
                 }
 #endif
             }
-#if ATCA_TA_SUPPORT
-            if (atcab_is_ta_device(atcab_get_device_type()))
-            {
-                rv = CKR_FUNCTION_NOT_SUPPORTED;
-            }
-#endif
             break;
         default:
             rv = CKR_MECHANISM_INVALID;
@@ -1077,12 +884,6 @@ CK_RV pkcs11_decrypt_final(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_ULO
 
 #endif
             }
-#if ATCA_TA_SUPPORT
-            if (atcab_is_ta_device(atcab_get_device_type_ext(pSession->slot->device_ctx)))
-            {
-                rv = CKR_FUNCTION_NOT_SUPPORTED;
-            }
-#endif
             break;
         default:
             rv = CKR_MECHANISM_INVALID;

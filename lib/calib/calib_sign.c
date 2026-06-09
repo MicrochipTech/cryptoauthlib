@@ -9,7 +9,7 @@
  *       ATECC608A/B. There are differences in the modes that they support. Refer
  *       to device datasheets for full details.
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -185,6 +185,8 @@ ATCA_STATUS calib_sign_ext(ATCADevice device, uint16_t key_id, const uint8_t *ms
 #endif
 
 #if CALIB_SIGN_CA2_EN
+    case ECC206:
+    /* fallthrough */
     case ECC204:
     /* fallthrough */
     case TA010:

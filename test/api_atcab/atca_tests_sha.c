@@ -2,7 +2,7 @@
  * \file
  * \brief Unity tests for the cryptoauthlib Basic API
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -563,6 +563,7 @@ TEST_CONDITION(atca_cmd_basic_test, sha_hmac)
            || (ATECC508A == dev_type)
            || (ATECC608 == dev_type)
            || (ECC204 == dev_type)
+           || (ECC206 == dev_type)
            || (TA010 == dev_type)
            || atcab_is_ta_device(dev_type);
 }

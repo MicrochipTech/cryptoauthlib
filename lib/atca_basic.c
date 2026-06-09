@@ -3,7 +3,7 @@
  * \brief CryptoAuthLib Basic API methods. These methods provide a simpler way
  *        to access the core crypto methods.
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -299,9 +299,6 @@ ATCA_STATUS atcab_wakeup(void)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = ATCA_SUCCESS;
-#endif
     }
     else
     {
@@ -326,9 +323,6 @@ ATCA_STATUS atcab_idle(void)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = ATCA_SUCCESS;
-#endif
     }
     else
     {
@@ -353,9 +347,6 @@ ATCA_STATUS atcab_sleep(void)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = ATCA_SUCCESS;
-#endif
     }
     else
     {
@@ -388,9 +379,6 @@ ATCA_STATUS atcab_get_zone_size_ext(ATCADevice device, uint8_t zone, uint16_t sl
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_get_zone_size(device, zone, slot, size);
-#endif
     }
     else
     {
@@ -472,9 +460,6 @@ ATCA_STATUS atcab_aes_encrypt_ext(ATCADevice device, uint16_t key_id, uint8_t ke
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_aes_encrypt(device, key_id, key_block, plaintext, ciphertext);
-#endif
     }
     else
     {
@@ -524,9 +509,6 @@ ATCA_STATUS atcab_aes_decrypt_ext(ATCADevice device, uint16_t key_id, uint8_t ke
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_aes_decrypt(device, key_id, key_block, ciphertext, plaintext);
-#endif
     }
     else
     {
@@ -1021,9 +1003,6 @@ ATCA_STATUS atcab_counter(uint8_t mode, uint16_t counter_id, uint32_t* counter_v
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_counter(g_atcab_device_ptr, mode, counter_id, counter_value);
-#endif
     }
     else
     {
@@ -1051,9 +1030,6 @@ ATCA_STATUS atcab_counter_increment(uint16_t counter_id, uint32_t* counter_value
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_counter_increment(g_atcab_device_ptr, counter_id, counter_value);
-#endif
     }
     else
     {
@@ -1080,9 +1056,6 @@ ATCA_STATUS atcab_counter_read(uint16_t counter_id, uint32_t* counter_value)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_counter_read(g_atcab_device_ptr, counter_id, counter_value);
-#endif
     }
     else
     {
@@ -1207,9 +1180,6 @@ ATCA_STATUS atcab_ecdh(uint16_t key_id, const uint8_t* public_key, uint8_t* pms)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_ecdh_compat(g_atcab_device_ptr, key_id, public_key, pms);
-#endif
     }
     else
     {
@@ -1507,9 +1477,6 @@ ATCA_STATUS atcab_genkey_ext(ATCADevice device, uint16_t key_id, uint8_t* public
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_genkey_compat(device, key_id, public_key);
-#endif
     }
     else
     {
@@ -1559,9 +1526,6 @@ ATCA_STATUS atcab_get_pubkey_ext(ATCADevice device, uint16_t key_id, uint8_t* pu
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_get_pubkey_compat(device, key_id, public_key);
-#endif
     }
     else
     {
@@ -1679,9 +1643,6 @@ ATCA_STATUS atcab_info_ext(ATCADevice device, uint8_t* revision)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_info_compat(device, revision);
-#endif
     }
     else
     {
@@ -1919,9 +1880,6 @@ ATCA_STATUS atcab_lock_config_zone_ext(ATCADevice device)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_lock_config(device);
-#endif
     }
     else
     {
@@ -1941,7 +1899,7 @@ ATCA_STATUS atcab_lock_config_zone(void)
 
 /** \brief Lock the config zone with summary CRC.
  *
- *  The CRC is calculated over the entire config zone contents. 48 bytes for TA100,
+ *  The CRC is calculated over the entire config zone contents. 48 bytes for TA,
  *  88 bytes for ATSHA devices, 128 bytes for ATECC devices. Lock will fail if the provided
  *  CRC doesn't match the internally calculated one.
  *
@@ -1962,9 +1920,6 @@ ATCA_STATUS atcab_lock_config_zone_crc(uint16_t summary_crc)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_lock_config_with_crc(g_atcab_device_ptr, summary_crc);
-#endif
     }
     else
     {
@@ -1994,9 +1949,6 @@ ATCA_STATUS atcab_lock_data_zone_ext(ATCADevice device)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_lock_setup(device);
-#endif
     }
     else
     {
@@ -2073,9 +2025,6 @@ ATCA_STATUS atcab_lock_data_slot_ext(ATCADevice device, uint16_t slot)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_lock_handle(device, slot);
-#endif
     }
     else
     {
@@ -2123,7 +2072,7 @@ ATCA_STATUS atcab_mac(uint8_t mode, uint16_t key_id, const uint8_t* challenge, u
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_MAC_EN
         status = calib_mac(g_atcab_device_ptr, mode, key_id, challenge, digest);
 #endif
     }
@@ -2436,9 +2385,6 @@ ATCA_STATUS atcab_random_ext(ATCADevice device, uint8_t* rand_out)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_random_compat(device, rand_out);
-#endif
     }
     else
     {
@@ -2548,20 +2494,6 @@ ATCA_STATUS atcab_is_locked(uint8_t zone, bool* is_locked)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        if (LOCK_ZONE_CONFIG == zone)
-        {
-            status = talib_is_config_locked(g_atcab_device_ptr, is_locked);
-        }
-        else if (LOCK_ZONE_DATA == zone)
-        {
-            status = talib_is_setup_locked(g_atcab_device_ptr, is_locked);
-        }
-        else
-        {
-            status = ATCA_TRACE(ATCA_BAD_PARAM, "");
-        }
-#endif
     }
     else
     {
@@ -2589,9 +2521,6 @@ ATCA_STATUS atcab_is_config_locked_ext(ATCADevice device, bool* is_locked)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_is_config_locked(device, is_locked);
-#endif
     }
     else
     {
@@ -2632,9 +2561,6 @@ ATCA_STATUS atcab_is_data_locked_ext(ATCADevice device, bool* is_locked)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_is_setup_locked(device, is_locked);
-#endif
     }
     else
     {
@@ -2673,9 +2599,6 @@ ATCA_STATUS atcab_is_slot_locked_ext(ATCADevice device, uint16_t slot, bool* is_
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_is_handle_locked(device, slot, is_locked);
-#endif
     }
     else
     {
@@ -2719,9 +2642,6 @@ ATCA_STATUS atcab_is_private_ext(ATCADevice device, uint16_t slot, bool* is_priv
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_is_private(g_atcab_device_ptr, slot, is_private);
-#endif
     }
     else
     {
@@ -2751,9 +2671,6 @@ ATCA_STATUS atcab_read_bytes_zone_ext(ATCADevice device, uint8_t zone, uint16_t 
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_read_bytes_zone(device, zone, slot, offset, data, length);
-#endif
     }
     else
     {
@@ -2803,9 +2720,6 @@ ATCA_STATUS atcab_read_serial_number_ext(ATCADevice device, uint8_t* serial_numb
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_info_serial_number_compat(device, serial_number);
-#endif
     }
     else
     {
@@ -2855,9 +2769,6 @@ ATCA_STATUS atcab_read_pubkey_ext(ATCADevice device, uint16_t slot, uint8_t* pub
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_read_pubkey_compat(device, slot, public_key);
-#endif
     }
     else
     {
@@ -2908,9 +2819,6 @@ ATCA_STATUS atcab_read_sig(uint16_t slot, uint8_t* sig)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_read_sig_compat(g_atcab_device_ptr, slot, sig);
-#endif
     }
     else
     {
@@ -2944,9 +2852,6 @@ ATCA_STATUS atcab_read_config_zone_ext(ATCADevice device, uint8_t* config_data)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_read_config_zone(device, config_data);
-#endif
     }
     else
     {
@@ -2996,9 +2901,6 @@ ATCA_STATUS atcab_cmp_config_zone(uint8_t* config_data, bool* same_config)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_cmp_config_zone(g_atcab_device_ptr, config_data, same_config);
-#endif
     }
     else
     {
@@ -3211,9 +3113,6 @@ ATCA_STATUS atcab_sha_base(uint8_t mode, uint16_t length, const uint8_t* data_in
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_sha_base_compat(g_atcab_device_ptr, mode, length, data_in, data_out, data_out_size);
-#endif
     }
     else
     {
@@ -3238,9 +3137,6 @@ ATCA_STATUS atcab_sha_start(void)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_sha_base_compat(g_atcab_device_ptr, TA_SHA_MODE_START, 0U, NULL, NULL, NULL);
-#endif
     }
     else
     {
@@ -3269,9 +3165,6 @@ ATCA_STATUS atcab_sha_update(const uint8_t* message)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_sha_base_compat(g_atcab_device_ptr, TA_SHA_MODE_UPDATE, 64U, message, NULL, NULL);
-#endif
     }
     else
     {
@@ -3303,9 +3196,6 @@ ATCA_STATUS atcab_sha_end(uint8_t* digest, uint16_t length, const uint8_t* messa
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_sha_base_compat(g_atcab_device_ptr, TA_SHA_MODE_END, length, message, digest, NULL);
-#endif
     }
     else
     {
@@ -3339,17 +3229,6 @@ ATCA_STATUS atcab_sha_read_context(uint8_t* context, uint16_t* context_size)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        if (NULL != context_size)
-        {
-            cal_buffer ctx_buf = CAL_BUF_INIT(*context_size, context);
-            status = talib_sha_read_context(g_atcab_device_ptr, TA_HANDLE_SHA_CONTEXT0, &ctx_buf);
-        }
-        else
-        {
-            status = ATCA_BAD_PARAM;
-        }
-#endif
     }
     else
     {
@@ -3379,10 +3258,6 @@ ATCA_STATUS atcab_sha_write_context(const uint8_t* context, uint16_t context_siz
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        cal_buffer ctx_buf = cal_buf_init_const_ptr(context_size, context);
-        status = talib_sha_write_context(g_atcab_device_ptr, TA_HANDLE_SHA_CONTEXT0, &ctx_buf);
-#endif
     }
     else
     {
@@ -3414,9 +3289,6 @@ ATCA_STATUS atcab_sha(uint16_t length, const uint8_t* message, uint8_t* digest)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_sha_compat(g_atcab_device_ptr, length, message, digest);
-#endif
     }
     else
     {
@@ -3446,16 +3318,6 @@ ATCA_STATUS atcab_hw_sha2_256(const uint8_t* data, size_t data_size, uint8_t* di
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        if (UINT16_MAX >= data_size)
-        {
-            status = talib_sha_compat(g_atcab_device_ptr, (uint16_t)data_size, data, digest);
-        }
-        else
-        {
-            status = ATCA_TRACE(ATCA_BAD_PARAM, "data_size is too large");
-        }
-#endif
     }
     else
     {
@@ -3484,9 +3346,6 @@ ATCA_STATUS atcab_hw_sha2_256_init(atca_sha256_ctx_t* ctx)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_sha_base_compat(g_atcab_device_ptr, TA_SHA_MODE_START, 0U, NULL, NULL, NULL);
-#endif
     }
     else
     {
@@ -3517,10 +3376,6 @@ ATCA_STATUS atcab_hw_sha2_256_update(atca_sha256_ctx_t* ctx, const uint8_t* data
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        /* coverity[cert_int31_c_violation] data_size < UINT16_MAX is a known documented limitation of the API */
-        status = talib_sha_base_compat(g_atcab_device_ptr, TA_SHA_MODE_UPDATE, (uint16_t)data_size, data, NULL, NULL);
-#endif
     }
     else
     {
@@ -3550,9 +3405,6 @@ ATCA_STATUS atcab_hw_sha2_256_finish(atca_sha256_ctx_t* ctx, uint8_t* digest)
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_sha_base_compat(g_atcab_device_ptr, TA_SHA_MODE_END, 0U, NULL, digest, NULL);
-#endif
     }
     else
     {
@@ -3685,9 +3537,6 @@ ATCA_STATUS atcab_sha_hmac_ext(ATCADevice device, const uint8_t* data, size_t da
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_hmac_compat(device, data, data_size, key_slot, digest, target);
-#endif
     }
     else
     {
@@ -3774,15 +3623,12 @@ ATCA_STATUS atcab_sign_ext(ATCADevice device, uint16_t key_id, const uint8_t* ms
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_ECC_SUPPORT || defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT)
+#if ATCA_ECC_SUPPORT || defined(ATCA_ECC204_SUPPORT) || defined(ATCA_ECC206_SUPPORT) || defined(ATCA_TA010_SUPPORT)
         status = calib_sign_ext(device, key_id, msg, signature);
 #endif
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_sign_compat(device, key_id, msg, signature);
-#endif
     }
     else
     {
@@ -3977,9 +3823,6 @@ ATCA_STATUS atcab_verify_extern_ext(ATCADevice device, const uint8_t* message, c
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_verify_extern_compat(device, message, signature, public_key, is_verified);
-#endif
     }
     else
     {
@@ -4091,9 +3934,6 @@ ATCA_STATUS atcab_verify_stored_ext(ATCADevice device, const uint8_t* message, c
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_verify_stored_compat(device, message, signature, key_id, is_verified);
-#endif
     }
     else
     {
@@ -4357,9 +4197,6 @@ ATCA_STATUS atcab_write_zone_ext(ATCADevice device, uint8_t zone, uint16_t slot,
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_write_zone(device, zone, slot, block, offset, data, len);
-#endif
     }
     else
     {
@@ -4400,9 +4237,6 @@ ATCA_STATUS atcab_write_bytes_zone_ext(ATCADevice device, uint8_t zone, uint16_t
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_write_bytes_zone(device, zone, slot, offset_bytes, data, length);
-#endif
     }
     else
     {
@@ -4461,9 +4295,6 @@ ATCA_STATUS atcab_write_pubkey_ext(ATCADevice device, uint16_t slot, const uint8
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_write_pubkey_compat(device, slot, public_key);
-#endif
     }
     else
     {
@@ -4517,9 +4348,6 @@ ATCA_STATUS atcab_write_config_zone_ext(ATCADevice device, const uint8_t* config
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        status = talib_write_config_zone(device, config_data);
-#endif
     }
     else
     {

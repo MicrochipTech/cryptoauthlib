@@ -2,7 +2,7 @@
  * \file
  * \brief Consistency checks for configuration options
  *
- * \copyright (c) 2015-2021 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -67,6 +67,12 @@
 #define CALIB_ECC204_EN             DEFAULT_DISABLED
 #endif
 
+#ifdef ATCA_ECC206_SUPPORT
+#define CALIB_ECC206_EN             DEFAULT_ENABLED
+#else
+#define CALIB_ECC206_EN             DEFAULT_DISABLED
+#endif
+
 #ifdef ATCA_TA010_SUPPORT
 #define CALIB_TA010_EN              DEFAULT_ENABLED
 #else
@@ -87,9 +93,9 @@
 
 /* Helper macros */
 #define CALIB_FULL_FEATURE          (CALIB_SHA204_EN || CALIB_ECC108_EN || CALIB_ECC508_EN || CALIB_ECC608_EN)
-#define CALIB_ECC_SUPPORT           (CALIB_ECC108_EN || CALIB_ECC508_EN || CALIB_ECC608_EN || CALIB_ECC204_EN || CALIB_TA010_EN)
-#define CALIB_CA2_SUPPORT           (CALIB_ECC204_EN || CALIB_TA010_EN || CALIB_SHA104_EN || CALIB_SHA105_EN)
-#define CALIB_CA2_CERT_SUPPORT      (CALIB_ECC204_EN || CALIB_TA010_EN)
+#define CALIB_ECC_SUPPORT           (CALIB_ECC108_EN || CALIB_ECC508_EN || CALIB_ECC608_EN || CALIB_ECC204_EN || CALIB_ECC206_EN || CALIB_TA010_EN)
+#define CALIB_CA2_SUPPORT           (CALIB_ECC204_EN || CALIB_ECC206_EN || CALIB_TA010_EN || CALIB_SHA104_EN || CALIB_SHA105_EN)
+#define CALIB_CA2_CERT_SUPPORT      (CALIB_ECC204_EN || CALIB_ECC206_EN || CALIB_TA010_EN)
 #define CALIB_SHA206_ONLY           (CALIB_SHA206_EN && !(CALIB_FULL_FEATURE || ATCA_CA2_SUPPORT))
 
 
@@ -556,7 +562,7 @@
  *
  **/
 #ifndef CALIB_SIGN_CA2_EN
-#define CALIB_SIGN_CA2_EN          (ATCAB_SIGN_EN && (CALIB_ECC204_EN || CALIB_TA010_EN))
+#define CALIB_SIGN_CA2_EN          (ATCAB_SIGN_EN && (CALIB_ECC204_EN || CALIB_ECC206_EN || CALIB_TA010_EN))
 #endif
 
 /** \def CALIB_SIGN_MODE_ENCODING

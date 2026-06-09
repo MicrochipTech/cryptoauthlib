@@ -4,7 +4,7 @@
  *        non-Microchip architectures and compiler environments. This file is
  *        for isolating compiler specific macros.
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *

@@ -1,7 +1,7 @@
 """
 SHA206 API: classes and functions for interacting with SHA206A device
 """
-# (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+# Copyright (C) 2015-2026 Microchip Technology Inc. and its subsidiaries.
 #
 # Subject to your compliance with these terms, you may use Microchip software
 # and any derivatives exclusively with Microchip products. It is your

@@ -9,7 +9,7 @@
  *       ATECC508A, and ATECC608A/B. There are differences in the modes that they
  *       support. Refer to device datasheets for full details.
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -524,6 +524,8 @@ ATCA_STATUS calib_sha_hmac_finish(ATCADevice device, atca_hmac_sha256_ctx_t *ctx
             mode = SHA_MODE_608_HMAC_END;
             break;
 #if ATCA_CA2_SUPPORT
+        case ECC206:
+        /* fallthrough */
         case ECC204:
         /* fallthrough */
         case TA010:

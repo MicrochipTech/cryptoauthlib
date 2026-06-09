@@ -2,7 +2,7 @@
  * \file
  * \brief  Cryptoauthlib Testing: Suite Runtime Configuration
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -40,6 +40,7 @@ extern int select_508_custom(int argc, char* argv[]);
 extern int select_608_custom(int argc, char* argv[]);
 extern int select_ta100_custom(int argc, char* argv[]);
 extern int select_ecc204_custom(int argc, char* argv[]);
+extern int select_ecc206_custom(int argc, char* argv[]);
 extern int select_ta010_custom(int argc, char* argv[]);
 extern int select_sha104_custom(int argc, char* argv[]);
 extern int select_sha105_custom(int argc, char* argv[]);
@@ -150,6 +151,7 @@ bool atca_test_cond_p256_sign(void)
            || (ATECC508A == dev_type)
            || (ATECC608 == dev_type)
            || (ECC204 == dev_type)
+           || (ECC206 == dev_type)
            || (TA010 == dev_type)
            || atcab_is_ta_device(dev_type);
 }
@@ -233,6 +235,11 @@ static int select_custom(int argc, char* argv[])
         ret = select_ecc204_custom(argc, argv);
         break;
 #endif
+#ifdef ATCA_ECC206_SUPPORT
+    case ECC206:
+        ret = select_ecc206_custom(argc, argv);
+        break;
+#endif
 #ifdef ATCA_TA010_SUPPORT
     case TA010:
         ret = select_ta010_custom(argc, argv);
@@ -246,16 +253,6 @@ static int select_custom(int argc, char* argv[])
 #ifdef ATCA_SHA105_SUPPORT
     case SHA105:
         ret = select_sha105_custom(argc, argv);
-        break;
-#endif
-#ifdef ATCA_TA100_SUPPORT
-    case TA100:
-        ret = select_ta100_custom(argc, argv);
-        break;
-#endif
-#ifdef ATCA_TA101_SUPPORT
-    case TA101:
-        ret = select_ta101_custom(argc, argv);
         break;
 #endif
     default:

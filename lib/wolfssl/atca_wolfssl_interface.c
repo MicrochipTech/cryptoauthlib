@@ -2,7 +2,7 @@
  * \file
  * \brief Crypto abstraction functions for external host side cryptography
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -662,20 +662,6 @@ ATCA_STATUS atcac_pk_init(
                 curve_id = (int)ECC_SECP256R1;
                 key_size = (int)ATCA_ECCP256_PUBKEY_SIZE / 2;
                 break;
-    #if ATCA_TA_SUPPORT
-            case TA_KEY_TYPE_ECCP224:
-                curve_id = (int)ECC_SECP224R1;
-                key_size = (int)ATCA_ECCP224_PUBKEY_SIZE / 2;
-                break;
-            case TA_KEY_TYPE_ECCP384:
-                curve_id = (int)ECC_SECP384R1;
-                key_size = (int)ATCA_ECCP384_PUBKEY_SIZE / 2;
-                break;
-            case TA_KEY_TYPE_ECCP521:
-                curve_id = (int)ECC_SECP521R1;
-                key_size = (int)ATCA_ECCP521_PUBKEY_SIZE / 2;
-                break;
-    #endif
             default:
                 status = ATCA_BAD_PARAM;
                 break;
@@ -789,17 +775,6 @@ ATCA_STATUS atcac_pk_init_pem(
                             case ATCA_ECCP256_PUBKEY_SIZE + 1u:
                                 ctx->key_type = ATCA_KEY_TYPE_ECCP256;
                                 break;
-                        #if ATCA_TA_SUPPORT
-                            case ATCA_ECCP224_PUBKEY_SIZE + 1u:
-                                ctx->key_type = TA_KEY_TYPE_ECCP224;
-                                break;
-                            case ATCA_ECCP384_PUBKEY_SIZE + 1u:
-                                ctx->key_type = TA_KEY_TYPE_ECCP384;
-                                break;
-                            case ATCA_ECCP521_PUBKEY_SIZE + 1u:
-                                ctx->key_type = TA_KEY_TYPE_ECCP521;
-                                break;
-                        #endif
                             default:
                                 ret = -1;
                                 break;
@@ -842,17 +817,6 @@ ATCA_STATUS atcac_pk_public(
             case ATCA_KEY_TYPE_ECCP256:
                 xlen = ylen = ATCA_ECCP256_PUBKEY_SIZE / 2u;
                 break;
-        #if ATCA_TA_SUPPORT
-            case TA_KEY_TYPE_ECCP224:
-                xlen = ylen = ATCA_ECCP224_PUBKEY_SIZE / 2u;
-                break;
-            case TA_KEY_TYPE_ECCP384:
-                xlen = ylen = ATCA_ECCP384_PUBKEY_SIZE / 2u;
-                break;
-            case TA_KEY_TYPE_ECCP521:
-                xlen = ylen = ATCA_ECCP521_PUBKEY_SIZE / 2u;
-                break;
-        #endif
             default:
                 status = ATCA_BAD_PARAM;
                 break;
@@ -933,36 +897,6 @@ ATCA_STATUS atcac_pk_sign(
                         *sig_len = ATCA_ECCP256_SIG_SIZE;
                     }
                     break;
-            #if ATCA_TA_SUPPORT
-                case TA_KEY_TYPE_ECCP384:
-                    rlen = ATCA_ECCP384_SIG_SIZE / 2u;
-                    slen = ATCA_ECCP384_SIG_SIZE / 2u;
-                    siglen = rlen + slen + ATCA_ECC_SIG_OVERHEAD_SIZE;
-                    ret = wc_ecc_sign_hash((const byte*)digest, (word32)(dig_len & UINT32_MAX), (byte*)sig, &siglen, &rng, (ecc_key*)ctx->ptr);
-                    if (0 == ret)
-                    {
-                        ret = wc_ecc_sig_to_rs((byte*)sig, siglen, (byte*)signature, &rlen, (byte*)&signature[rlen], &slen);
-                    }
-                    if (0 == ret)
-                    {
-                        *sig_len = ATCA_ECCP384_SIG_SIZE;
-                    }
-                    break;
-                case TA_KEY_TYPE_ECCP521:
-                    rlen = ATCA_ECCP521_SIG_SIZE / 2u;
-                    slen = ATCA_ECCP521_SIG_SIZE / 2u;
-                    siglen = rlen + slen + ATCA_ECC_SIG_OVERHEAD_SIZE;
-                    ret = wc_ecc_sign_hash((const byte*)digest, (word32)(dig_len & UINT32_MAX), (byte*)sig, &siglen, &rng, (ecc_key*)ctx->ptr);
-                    if (0 == ret)
-                    {
-                        ret = wc_ecc_sig_to_rs((byte*)sig, siglen, (byte*)signature, &rlen, (byte*)&signature[rlen], &slen);
-                    }
-                    if (0 == ret)
-                    {
-                        *sig_len = ATCA_ECCP521_SIG_SIZE;
-                    }
-                    break;
-            #endif
                 default:
                     ret = -1;
                     break;

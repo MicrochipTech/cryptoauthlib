@@ -2,7 +2,7 @@
  * \file
  * \brief Unit Tests for buffer handling utilities
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *

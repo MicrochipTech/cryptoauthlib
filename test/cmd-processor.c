@@ -1,7 +1,7 @@
 /** \file
  * \brief simple command processor for test console
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -45,14 +45,10 @@
 #include "atcacert/test_atcacert.h"
 #endif
 
-#if ATCA_TA_SUPPORT && !LIBRARY_USAGE_EN_CHECK
-#include "api_talib/test_talib.h"
-#endif
 
 /* Host side Cryptographic API Testing */
 #include "api_crypto/test_crypto.h"
 
-#ifndef LIBRARY_USAGE_EN
 /* Common API Testing - atcab_ is the classic Cryptoauthlib API */
 #include "api_atcab/test_atcab.h"
 
@@ -61,7 +57,6 @@
 
 /* Hal layer testing */
 #include "hal/test_hal.h"
-#endif
 
 /* JWT Support */
 #include "jwt/test_jwt.h"
@@ -88,6 +83,9 @@ static t_menu_info mas_menu_info[] =
 #ifdef ATCA_ECC204_SUPPORT
     { "ecc204",    "Set Target Device to ECC204",                   select_device                        },
 #endif
+#ifdef ATCA_ECC206_SUPPORT
+    { "ecc206",    "Set Target Device to ECC206",                   select_device                        },
+#endif
 #ifdef ATCA_TA010_SUPPORT
     { "ta010",     "Set Target Device to TA010",                    select_device                        },
 #endif
@@ -103,18 +101,10 @@ static t_menu_info mas_menu_info[] =
 #ifdef ATCA_ATECC608_SUPPORT
     { "ecc608",      "Set Target Device to ATECC608",               select_device                        },
 #endif
-#ifdef ATCA_TA100_SUPPORT
-    { "ta100",    "Set Target Device to TA100",                     select_device                        },
-#endif
-#ifdef ATCA_TA101_SUPPORT
-    { "ta101",    "Set Target Device to TA101",                     select_device                        },
-#endif
-#ifndef LIBRARY_USAGE_EN
     { "info",     "Get the Chip Revision",                          info                                 },
     { "sernum",   "Get the Chip Serial Number",                     read_sernum                          },
     { "readcfg",  "Read the Config Zone",                           read_config                          },
     { "hal",      "Tests hal drivers functionality",                hal_tests                            },
-#endif
     { "rand",     "Generate Some Random Numbers",                   do_randoms                           },
     { "lockstat", "Zone Lock Status",                               lock_status                          },
 #ifdef ATCA_TEST_LOCK_ENABLE
@@ -151,16 +141,6 @@ static t_menu_info mas_menu_info[] =
 #endif
 #if ATCA_CA_SUPPORT
     { "calib",      "Run calib api tests",                          run_calib_tests                      },
-#endif
-#if ATCA_TA_SUPPORT
-    { "config",    "Create testing handles in TA100 device",        talib_configure_device               },
-    { "handles",   "Print info for stored handles in TA100 device", talib_config_print_handles           },
-    { "clear",     "Delete Handles",                                talib_config_clear_handles           },
-    { "talib",     "Run talib tests",                               run_talib_tests                      },
-#ifdef TALIB_FCE_SUPPORT
-    { "fce",       "Run FCE test",                                  talib_fce_cmd                        },
-#endif
-    { "power",     "Change device power state",                     talib_power_cmd                      },
 #endif
 #if defined(_WIN32) || defined(__linux__) || defined(__APPLE__)
     { "exit",     "Exit the test application",                      call_exit                            },

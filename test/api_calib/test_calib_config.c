@@ -2,7 +2,7 @@
  * \file
  * \brief Cryptoauthlib API (cablib) Test Configuration
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -26,13 +26,6 @@
  */
 
 #include "atca_test.h"
-
-const uint8_t g_slot4_key[] = {
-    0x37, 0x80, 0xe6, 0x3d, 0x49, 0x68, 0xad, 0xe5,
-    0xd8, 0x22, 0xc0, 0x13, 0xfc, 0xc3, 0x23, 0x84,
-    0x5d, 0x1b, 0x56, 0x9f, 0xe7, 0x05, 0xb6, 0x00,
-    0x06, 0xfe, 0xec, 0x14, 0x5a, 0x0d, 0xb1, 0xe3
-};
 
 #if ATCA_CA_SUPPORT
 
@@ -101,7 +94,7 @@ ATCA_STATUS calib_config_get_slot_by_test(uint8_t test_type, uint16_t* handle)
 }
 #endif
 
-#if defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT)
+#if defined(ATCA_ECC204_SUPPORT) || defined(ATCA_ECC206_SUPPORT) || defined(ATCA_TA010_SUPPORT)
 
 const uint8_t test_ecc204_configdata[ATCA_CA2_CONFIG_SIZE] = {
     0xB9, 0xFA, 0x3C, 0x1A, 0xAA, 0xD4, 0x91, 0x7C, 0x03, 0x3C, 0x00, 0x00, 0x3E, 0xAF, 0x81, 0x80,

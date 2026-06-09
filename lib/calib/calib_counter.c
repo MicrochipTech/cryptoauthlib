@@ -5,11 +5,11 @@
  * The Counter command reads or increments the binary count value for one of the
  * two monotonic counters
  *
- * \note List of devices that support this command -  ATECC508A and ATECC608A/B.
+ * \note List of devices that support this command -  CA devices.
  *       There are differences in the modes that they support. Refer to device
  *       datasheets for full details.
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *

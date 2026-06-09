@@ -2,7 +2,7 @@
  * \file
  * \brief Utilities to create and verify a JSON Web Token (JWT)
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -194,7 +194,7 @@ ATCA_STATUS atca_jwt_finalize(
     }
 
     /* Create ECSDA signature of the digest and store it back in the buffer */
-#if CALIB_SIGN_EN || CALIB_SIGN_ECC204_EN || TALIB_SIGN_EN
+#if CALIB_SIGN_EN || CALIB_SIGN_CA2_EN || TALIB_SIGN_EN
     status = atcab_sign(key_id, (const uint8_t*)(jwt->buf + jwt->buflen - ATCA_SHA256_DIGEST_SIZE),
                         (uint8_t*)(jwt->buf + jwt->buflen - 64u));
     if (ATCA_SUCCESS != status)

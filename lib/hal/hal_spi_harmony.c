@@ -7,7 +7,7 @@
  *
  * Prerequisite: add SERCOM SPI Master Interrupt support to application in Mplab Harmony 3
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -38,15 +38,10 @@
 #include "atca_device.h"
 #include "definitions.h"
 
-#ifndef LIBRARY_USAGE_EN
-#include "talib/talib_defines.h"
-#include "talib/talib_fce.h"
-#endif
-
 /** \defgroup hal_ Hardware abstraction layer (hal_)
  *
  * \brief
- * These methods define the hardware abstraction layer for communicating with a TA10x device
+ * These methods define the hardware abstraction layer for SPI Communication
  *
    @{ */
 

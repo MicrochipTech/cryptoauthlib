@@ -19,6 +19,7 @@
 #cmakedefine ATCA_ATECC508A_SUPPORT
 #cmakedefine ATCA_ATECC608_SUPPORT
 #cmakedefine ATCA_ECC204_SUPPORT
+#cmakedefine ATCA_ECC206_SUPPORT
 #cmakedefine ATCA_TA010_SUPPORT
 #cmakedefine ATCA_SHA104_SUPPORT
 #cmakedefine ATCA_SHA105_SUPPORT

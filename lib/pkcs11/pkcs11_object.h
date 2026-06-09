@@ -2,7 +2,7 @@
  * \file
  * \brief PKCS11 Library Object Handling
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -56,9 +56,6 @@ typedef struct pkcs11_object_s
     CK_VOID_PTR config;
 #endif
     CK_VOID_PTR data;
-#if ATCA_TA_SUPPORT
-    ta_element_attributes_t handle_info;
-#endif
 } pkcs11_object;
 
 typedef struct pkcs11_object_cache_s
@@ -96,9 +93,6 @@ CK_RV pkcs11_object_is_private(pkcs11_object_ptr pObject, CK_BBOOL* is_private, 
 CK_RV pkcs11_object_deinit(pkcs11_lib_ctx_ptr pContext);
 CK_RV pkcs11_object_get_owner(pkcs11_object_ptr pObject, CK_SLOT_ID_PTR pSlotId);
 
-#if ATCA_TA_SUPPORT
-ATCA_STATUS pkcs11_object_load_handle_info(ATCADevice device, pkcs11_lib_ctx_ptr pContext);
-#endif
 
 /* Object Attributes */
 CK_RV pkcs11_object_get_class(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr pSession);

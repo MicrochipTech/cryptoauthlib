@@ -2,7 +2,7 @@
  * \file
  * \brief Tests for the Cryptoauthlib Basic API
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -88,12 +88,9 @@ typedef struct
 #include "host/atca_host.h"
 #endif
 
-#if ATCA_TA_SUPPORT && !LIBRARY_USAGE_EN_CHECK
-#include "api_talib/test_talib.h"
-#endif
 
-#ifdef ATCA_HAL_KIT_SUPPORT
-    extern ATCA_STATUS hal_kit_bridge_connect(ATCAIfaceCfg * cfg);
+#ifdef ATCA_HAL_KIT_BRIDGE
+    extern ATCA_STATUS hal_kit_bridge_connect(ATCAIfaceCfg * cfg, int argc, char * argv[]);
 #endif
 
     extern bool g_atca_test_quiet_mode;
@@ -101,7 +98,7 @@ typedef struct
 /* Cryptoauthlib Test Api */
 void RunAllTests(t_test_case_info** tests_list);
 int run_test(int argc, char* argv[], void (*fptest)(void));
-void run_all_talib_tests(void);
+
 
 extern t_test_case_info buffer_test_info[];
 extern t_test_case_info helper_basic_test_info[];
@@ -127,7 +124,7 @@ extern const uint8_t test_ecc_configdata[ATCA_ECC_CONFIG_SIZE];
 #ifdef ATCA_ATSHA204A_SUPPORT
 extern const uint8_t sha204_default_config[ATCA_SHA_CONFIG_SIZE];
 #endif
-#if defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT)
+#if defined(ATCA_ECC204_SUPPORT) || defined(ATCA_ECC206_SUPPORT) || defined(ATCA_TA010_SUPPORT)
 extern const uint8_t test_ecc204_configdata[ATCA_CA2_CONFIG_SIZE];
 #endif
 #ifdef ATCA_SHA104_SUPPORT
@@ -135,9 +132,6 @@ extern const uint8_t test_sha104_configdata[ATCA_CA2_CONFIG_SIZE];
 #endif
 #ifdef ATCA_SHA105_SUPPORT
 extern const uint8_t test_sha105_configdata[ATCA_CA2_CONFIG_SIZE];
-#endif
-#if ATCA_TA_SUPPORT
-extern const uint8_t test_ta10x_configdata[TA_CONFIG_SIZE];
 #endif
 
 bool atca_test_already_exiting(void);
@@ -149,15 +143,6 @@ void atca_test_assert_data_is_unlocked(UNITY_LINE_TYPE from_line);
 void atca_test_assert_data_is_locked(UNITY_LINE_TYPE from_line);
 void atca_test_assert_random_buffer(UNITY_LINE_TYPE from_line, uint8_t * buf, size_t buflen);
 void atca_test_assert_aes_enabled(UNITY_LINE_TYPE from_line);
-#if ATCA_TA_SUPPORT && !LIBRARY_USAGE_EN_CHECK
-void atca_test_assert_ta_sboot_enabled(UNITY_LINE_TYPE from_line, uint8_t mode);
-void atca_test_assert_ta_sboot_preboot_enabled(UNITY_LINE_TYPE from_line);
-void atca_test_assert_ta_sboot_preboot_digest_type_enabled(UNITY_LINE_TYPE from_line, uint8_t mode);
-void atca_test_assert_ta_sboot_digest_type_enabled(UNITY_LINE_TYPE from_line, uint8_t mode);
-#endif
-#if ATCA_TA_SUPPORT
-void atca_test_assert_ta_check_handle_validity(UNITY_LINE_TYPE from_line, uint16_t handle);
-#endif
 
 #define unit_test_assert_config_is_locked()     atca_test_assert_config_is_locked(__LINE__)
 #define unit_test_assert_config_is_unlocked()   atca_test_assert_config_is_unlocked(__LINE__)
@@ -203,6 +188,8 @@ void atca_test_assert_ta_check_handle_validity(UNITY_LINE_TYPE from_line, uint16
 #define TEST_TYPE_PVT_KEY_HANDLE         (24)
 #define TEST_TYPE_EC_P384_SIGN           (25)
 #define TEST_TYPE_EC_P521_SIGN           (26)
+#define TEST_TYPE_SIGNER_CERT            (27)
+#define TEST_TYPE_DEVICE_CERT            (28)
 
 typedef struct
 {
@@ -224,7 +211,7 @@ void RunPbkdf2Tests(void);
 
 /* Setup & Configuration */
 void atca_test_config_set_ifacecfg(ATCAIfaceCfg * ifacecfg);
-#if ATCA_ECC_SUPPORT || defined(ATCA_ECC204_SUPPORT) || defined(ATCA_TA010_SUPPORT) || ATCA_TA_SUPPORT
+#if ATCA_ECC_SUPPORT || defined(ATCA_ECC204_SUPPORT) || defined(ATCA_ECC206_SUPPORT) || defined(ATCA_TA010_SUPPORT) || ATCA_TA_SUPPORT
 ATCA_STATUS atca_test_genkey(ATCADevice device, uint16_t key_id, cal_buffer *public_key);
 #endif
 ATCADeviceType atca_test_get_device_type(void);

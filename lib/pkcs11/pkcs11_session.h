@@ -2,7 +2,7 @@
  * \file
  * \brief PKCS11 Library Session Management & Context
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -63,14 +63,6 @@ typedef struct pkcs11_session_mech_ctx_s
         atca_aes_gcm_ctx_t  context;
         CK_BYTE             tag_len;
     } gcm;
-#endif
-#if ATCA_TA_SUPPORT
-    struct
-    {
-        uint8_t iv[TA_AES_GCM_IV_LENGTH];
-        uint8_t aad[ATCA_AES128_BLOCK_SIZE];
-        CK_BYTE aad_len;
-    } gcm_single;
 #endif
 } pkcs11_session_mech_ctx, *pkcs11_session_mech_ctx_ptr;
 

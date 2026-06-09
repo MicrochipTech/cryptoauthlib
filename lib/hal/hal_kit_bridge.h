@@ -5,7 +5,7 @@
  * requirements: a) will accept an arbitrary number of bytes and packetize it if
  * necessary for transmission, b) will block for the duration of the transmit.
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *

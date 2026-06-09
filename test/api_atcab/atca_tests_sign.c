@@ -2,7 +2,7 @@
  * \file
  * \brief Unity tests for the cryptoauthlib Verify Command
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -28,7 +28,7 @@
 #include "test_atcab.h"
 
 #ifndef TEST_ATCAB_SIGN_EN
-#define TEST_ATCAB_SIGN_EN         (CALIB_SIGN_EN || CALIB_SIGN_ECC204_EN || TALIB_SIGN_EN)
+#define TEST_ATCAB_SIGN_EN         (CALIB_SIGN_EN || CALIB_SIGN_CA2_EN || TALIB_SIGN_EN)
 #endif
 
 #if TEST_ATCAB_SIGN_EN
@@ -105,6 +105,7 @@ TEST(atca_cmd_basic_test, sign_sw_verify)
 }
 #endif
 
+#if !ATCA_HOSTLIB_EN && (ATCA_ECC_SUPPORT || ATCA_TA_SUPPORT)
 TEST(atca_cmd_basic_test, sign_hw_verify)
 {
     ATCA_STATUS status = ATCA_SUCCESS;
@@ -138,6 +139,7 @@ TEST(atca_cmd_basic_test, sign_hw_verify)
     TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
     TEST_ASSERT_EQUAL(true, is_verified);
 }
+#endif
 
 #if ATCA_ECC_SUPPORT
 TEST_CONDITION(atca_cmd_basic_test, sign_internal_ecc)

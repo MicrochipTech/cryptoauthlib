@@ -2,7 +2,7 @@
  * \file
  * \brief PKCS11 Library Certificate Handling
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -249,46 +249,6 @@ static CK_RV pkcs11_cert_load_ca(pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pAt
 }
 #endif
 
-#if ATCA_TA_SUPPORT
-static CK_RV pkcs11_cert_load_ta(pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pAttribute, ATCADevice device)
-{
-    ATCA_STATUS status = ATCA_BAD_PARAM;
-
-    if (NULL != pObject->data)
-    {
-        atcacert_def_t * cert_def = (atcacert_def_t*)pObject->data;
-        if ((NULL == pAttribute->pValue) && (0u == pAttribute->ulValueLen))
-        {
-            size_t cert_size = 0x00;
-            if (ATCACERT_E_SUCCESS != (status = atcacert_read_cert_ext(device, cert_def, NULL, NULL, &cert_size)))
-            {
-                return pkcs11_util_convert_rv(status);
-            }
-            //Full certificate size
-            pAttribute->ulValueLen = cert_size;
-        }
-        else if ((NULL != pAttribute->pValue) && (0u != pAttribute->ulValueLen))
-        {
-            uint8_t* cert = (uint8_t*)pAttribute->pValue;
-            size_t cert_size = pAttribute->ulValueLen;
-            if (ATCACERT_E_SUCCESS != (status = atcacert_read_cert_ext(device, cert_def, NULL, cert, &cert_size)))
-            {
-                return pkcs11_util_convert_rv(status);
-            }
-        }
-        else
-        {
-            status = ATCA_SUCCESS;
-        }
-    }
-    else
-    {
-        (void)pkcs11_attrib_empty(NULL, pAttribute, NULL);
-    }
-
-    return pkcs11_util_convert_rv(status);
-}
-#endif
 
 CK_RV pkcs11_cert_load(pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pAttribute, ATCADevice device)
 {
@@ -303,9 +263,6 @@ CK_RV pkcs11_cert_load(pkcs11_object_ptr pObject, CK_ATTRIBUTE_PTR pAttribute, A
     }
     else if (atcab_is_ta_device(dev_type))
     {
-#if ATCA_TA_SUPPORT
-        ret = pkcs11_cert_load_ta(pObject, pAttribute, device);
-#endif
     }
     else
     {
@@ -860,11 +817,7 @@ static CK_RV pkcs11_cert_get_subj_key(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAtt
 
             if (CKR_OK == read_cache)
             {
-#if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
-                uint8_t subj_public_key[PKCS11_MAX_ECC_RSA_PB_KEY_SIZE] = { 0 };
-#else
                 uint8_t subj_public_key[PKCS11_MAX_ECC_PB_KEY_SIZE] = { 0 };
-#endif
 
                 cal_buffer subj_pubkey = CAL_BUF_INIT(sizeof(subj_public_key), subj_public_key);
 
@@ -1100,26 +1053,7 @@ CK_RV pkcs11_cert_x509_write(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, p
     }
     else
     {
-#if ATCA_TA_SUPPORT
-        ATCADevice device = pSession->slot->device_ctx;
-        ta_handle_info handle_info;
-        status = talib_info_get_handle_info(device, obj_ptr->slot, &handle_info);
-
-        if ((ATCA_STATUS)TA_HANDLE_EXIST_ERROR == status)
-        {
-            /* Create a new handle */
-            (void)talib_handle_init_data(&handle_info.attributes, (uint16_t)(pAttribute->ulValueLen & UINT16_MAX));
-            status = talib_create_element_with_handle(device, obj_ptr->slot, &handle_info.attributes);
-        }
-
-        if (ATCA_SUCCESS == status)
-        {
-            cal_buffer sAttribute = CAL_BUF_INIT(pAttribute->ulValueLen, pAttribute->pValue);
-            status = talib_write_X509_cert(device, obj_ptr->slot, &sAttribute);
-        }
-#else
         status = ATCA_NO_DEVICES;
-#endif
     }
 
     if (ATCA_SUCCESS == status)

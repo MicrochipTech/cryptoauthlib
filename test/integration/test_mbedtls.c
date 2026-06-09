@@ -3,7 +3,7 @@
  * \brief Validation test of the mbedtls integration of hardware accelerated
  * ECDSA operations
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *

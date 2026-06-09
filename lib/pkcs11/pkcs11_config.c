@@ -2,7 +2,7 @@
  * \file
  * \brief PKCS11 Library Configuration
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -56,62 +56,6 @@ typedef struct pkcs11_conf_filedata_s
 
 typedef struct pkcs11_conf_filedata_s *pkcs11_conf_filedata_ptr;
 
-#if ATCA_TA_SUPPORT
-void pkcs11_config_set_key_size(pkcs11_object_ptr pObject)
-{
-    CK_BYTE key_type = ((pObject->handle_info.element_CKA & TA_HANDLE_INFO_KEY_TYPE_MASK) >> TA_HANDLE_INFO_KEY_TYPE_SHIFT);
-    CK_ULONG private_key_size = 0u;
-    CK_ULONG public_key_size = 0u;
-
-    switch (key_type)
-    {
-        case TA_KEY_TYPE_ECCP224:
-            pObject->class_type = CKK_EC;
-            private_key_size = TA_ECC224_PVT_KEY_SIZE;
-            public_key_size = TA_ECC224_PUB_KEY_SIZE;
-            break;
-        case TA_KEY_TYPE_ECCP384:
-            pObject->class_type = CKK_EC;
-            private_key_size = TA_ECC384_PVT_KEY_SIZE;
-            public_key_size = TA_ECC384_PUB_KEY_SIZE;
-            break;
-        case TA_KEY_TYPE_ECCP521:
-            pObject->class_type = CKK_EC;
-            private_key_size = TA_ECC521_PVT_KEY_SIZE;
-            public_key_size = TA_ECC521_PUB_KEY_SIZE;
-            break;
-#if PKCS11_RSA_SUPPORT_ENABLE
-        case TA_KEY_TYPE_RSA1024:
-            pObject->class_type = CKK_RSA;
-            private_key_size = TA_RSAENC_PVT_KEY_SIZE1024;
-            public_key_size = TA_RSAENC_PUB_KEY_SIZE1024;
-            break;
-        case TA_KEY_TYPE_RSA2048:
-            pObject->class_type = CKK_RSA;
-            private_key_size = TA_RSAENC_PVT_KEY_SIZE2048;
-            public_key_size = TA_RSAENC_PUB_KEY_SIZE2048;
-            break;
-        case TA_KEY_TYPE_RSA3072:
-            pObject->class_type = CKK_RSA;
-            private_key_size = TA_RSAENC_PVT_KEY_SIZE3072;
-            public_key_size = TA_RSAENC_PUB_KEY_SIZE3072;
-            break;
-        case TA_KEY_TYPE_RSA4096:
-            pObject->class_type = CKK_RSA;
-            private_key_size = TA_RSAENC_PVT_KEY_SIZE4096;
-            public_key_size = TA_RSAENC_PUB_KEY_SIZE4096;
-            break;
-#endif
-        default:
-            pObject->class_type = CKK_EC;
-            private_key_size = TA_ECC256_PVT_KEY_SIZE;
-            public_key_size = TA_ECC256_PUB_KEY_SIZE;
-            break;
-    }
-
-    pObject->size = (CKO_PRIVATE_KEY == pObject->class_id) ? (private_key_size) : (public_key_size);
-}
-#endif
 
 void pkcs11_config_init_private(pkcs11_object_ptr pObject, const char * label, size_t len)
 {
@@ -131,13 +75,6 @@ void pkcs11_config_init_private(pkcs11_object_ptr pObject, const char * label, s
     pObject->class_type = CKK_EC;
     pObject->size = ATCA_ECCP256_PVTKEY_SIZE;
 
-#if ATCA_TA_SUPPORT
-    // Update the class type and size based on the keytype
-    if (0u != pObject->handle_info.element_CKA)
-    {
-        (void)pkcs11_config_set_key_size(pObject);
-    }
-#endif
 }
 
 void pkcs11_config_init_public(pkcs11_object_ptr pObject, const char * label, size_t len)
@@ -158,13 +95,6 @@ void pkcs11_config_init_public(pkcs11_object_ptr pObject, const char * label, si
     pObject->class_type = CKK_EC;
     pObject->size = ATCA_ECCP256_PVTKEY_SIZE;
 
-#if ATCA_TA_SUPPORT
-    // Update the class type and size based on the keytype
-    if (0u != pObject->handle_info.element_CKA)
-    {
-        (void)pkcs11_config_set_key_size(pObject);
-    }
-#endif
 }
 
 void pkcs11_config_init_secret(pkcs11_object_ptr pObject, const char * label, size_t len, size_t keylen)
@@ -388,6 +318,7 @@ static CK_RV pkcs11_config_parse_device(pkcs11_slot_ctx_ptr slot_ctx, char* cfgs
         slot_ctx->interface_config.devtype = ATECC508A;
         rv = CKR_OK;
     }
+#ifdef ATCA_ATECC608_SUPPORT
     else if (0 == strncmp(argv[0], "ATECC608", 8))
     {
         slot_ctx->interface_config.devtype = ATECC608;
@@ -403,16 +334,7 @@ static CK_RV pkcs11_config_parse_device(pkcs11_slot_ctx_ptr slot_ctx, char* cfgs
 #endif
         }
     }
-    else if (0 == strcmp(argv[0], "TA100"))
-    {
-        slot_ctx->interface_config.devtype = TA100;
-        rv = CKR_OK;
-    }
-    else if (0 == strcmp(argv[0], "TA101"))
-    {
-        slot_ctx->interface_config.devtype = TA101;
-        rv = CKR_OK;
-    }
+#endif
     else
     {
         PKCS11_DEBUG("Unrecognized device: %s", argv[0]);
@@ -839,29 +761,6 @@ static CK_RV pkcs11_config_parse_object(pkcs11_slot_ctx_ptr slot_ctx, char* cfgs
     return rv;
 }
 
-#if ATCA_TA_SUPPORT
-static CK_RV pkcs11_config_parse_handle(uint16_t * handle, char* cfgstr)
-{
-    int argc = 4;
-    char * argv[4];
-    CK_RV rv = CKR_GENERAL_ERROR;
-
-    pkcs11_config_split_string(cfgstr, ',', &argc, argv);
-
-    if (argc == 1)
-    {
-        errno = 0;
-        long l_tmp = strtol(argv[0], NULL, 16);
-        if ((0 == errno) && (l_tmp >= 0) && (l_tmp <= PKCS11_CONFIG_U16_MAX))
-        {
-            *handle = (uint16_t)l_tmp;
-            rv = CKR_OK;
-        }
-    }
-
-    return rv;
-}
-#endif
 
 static CK_RV pkcs11_config_parse_slot_file(pkcs11_slot_ctx_ptr slot_ctx, int argc, char * argv[])
 {
@@ -888,16 +787,6 @@ static CK_RV pkcs11_config_parse_slot_file(pkcs11_slot_ctx_ptr slot_ctx, int arg
         {
             rv = pkcs11_config_parse_freeslots(slot_ctx, argv[i + 1]);
         }
-#if ATCA_TA_SUPPORT
-        else if (0 == strcmp(argv[i], "user_pin_handle"))
-        {
-            rv = pkcs11_config_parse_handle(&slot_ctx->user_pin_handle, argv[i + 1]);
-        }
-        else if (0 == strcmp(argv[i], "so_pin_handle"))
-        {
-            rv = pkcs11_config_parse_handle(&slot_ctx->so_pin_handle, argv[i + 1]);
-        }
-#endif
         else if (0 == strcmp(argv[i], "object"))
         {
             rv = pkcs11_config_parse_object(slot_ctx, argv[i + 1], NULL);
@@ -1015,10 +904,6 @@ CK_RV pkcs11_config_key(pkcs11_lib_ctx_ptr pLibCtx, pkcs11_slot_ctx_ptr pSlot, p
     }
     else
     {
-#if ATCA_TA_SUPPORT && TALIB_CREATE_SHARED_DATA_EN
-        ATCA_STATUS status = talib_create_element(pSlot->device_ctx, &pObject->handle_info, &handle);
-        rv = pkcs11_util_convert_rv(status);
-#endif
     }
 
     if (UINT16_MAX != handle)

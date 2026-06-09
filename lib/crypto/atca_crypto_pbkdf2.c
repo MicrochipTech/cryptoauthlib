@@ -3,7 +3,7 @@
  * \brief Implementation of the PBKDF2 algorithm for use in generating password
  * hashes.
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -127,7 +127,7 @@ ATCA_STATUS atcac_pbkdf2_sha256(
 
 #if ATCAB_PBKDF2_SHA256_EN
 /** \brief Calculate a PBKDF2 password hash using a stored key inside a device. The key length is
- *  determined by the device being used. ECCx08: 32 bytes, TA100: 16-64 bytes
+ *  determined by the device being used. ECCx08: 32 bytes, TA: 16-64 bytes
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */
@@ -201,7 +201,7 @@ ATCA_STATUS atcab_pbkdf2_sha256_ext(
 }
 
 /** \brief Calculate a PBKDF2 password hash using a stored key inside a device. The key length is
- *  determined by the device being used. ECCx08: 32 bytes, TA100: 16-64 bytes
+ *  determined by the device being used. ECCx08: 32 bytes, TA: 16-64 bytes
  *
  *  \return ATCA_SUCCESS on success, otherwise an error code.
  */

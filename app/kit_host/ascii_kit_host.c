@@ -3,7 +3,7 @@
  *
  * \brief  KIT protocol intepreter
  *
- * \copyright (c) 2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2018-2026 Microchip Technology Inc. and its subsidiaries.
  *            You may use this software and any derivatives exclusively with
  *            Microchip products.
  *

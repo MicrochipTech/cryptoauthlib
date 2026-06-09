@@ -3,7 +3,7 @@
  *
  * \brief  Microchip CryptoAuthLib hardware interface object
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -654,6 +654,9 @@ static const devtype_names_t devtype_names[] = {
 #ifdef ATCA_ECC204_SUPPORT
     { ECC204,           "ecc204"  },
 #endif
+#ifdef ATCA_ECC206_SUPPORT
+    { ECC206,           "ecc206"  },
+#endif
 #ifdef ATCA_TA010_SUPPORT
     { TA010,            "ta010"   },
 #endif
@@ -662,12 +665,6 @@ static const devtype_names_t devtype_names[] = {
 #endif
 #ifdef ATCA_SHA105_SUPPORT
     { SHA105,           "sha105"  },
-#endif
-#ifdef ATCA_TA100_SUPPORT
-    { TA100,            "ta100"   },
-#endif
-#ifdef ATCA_TA101_SUPPORT
-    { TA101,            "ta101"   },
 #endif
     { ATCA_DEV_UNKNOWN, "unknown" }
 };

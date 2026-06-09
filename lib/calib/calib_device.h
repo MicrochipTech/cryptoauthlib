@@ -3,7 +3,7 @@
  *
  * \brief  Microchip Crypto Auth Device Data
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -47,6 +47,7 @@ extern "C" {
 #pragma pack(push, 1)
 #endif
 
+#ifdef ATCA_ATSHA204A_SUPPORT
 typedef struct ATCA_PACKED atsha204a_config_s
 {
     uint32_t SN03;
@@ -68,7 +69,9 @@ typedef struct ATCA_PACKED atsha204a_config_s
     uint8_t  LockValue;
     uint8_t  LockConfig;
 } atsha204a_config_t;
+#endif
 
+#ifdef ATCA_ATECC508A_SUPPORT
 typedef struct ATCA_PACKED atecc508a_config_s
 {
     uint32_t SN03;
@@ -95,7 +98,9 @@ typedef struct ATCA_PACKED atecc508a_config_s
     uint32_t X509format;
     uint16_t KeyConfig[16];
 } atecc508a_config_t;
+#endif
 
+#ifdef ATCA_ATECC608_SUPPORT
 typedef struct ATCA_PACKED atecc608_config_s
 {
     uint32_t SN03;
@@ -127,6 +132,7 @@ typedef struct ATCA_PACKED atecc608_config_s
     uint32_t X509format;
     uint16_t KeyConfig[16];
 } atecc608_config_t;
+#endif
 
 #ifndef ATCA_NO_PRAGMA_PACK
 #pragma pack(pop)

@@ -240,6 +240,49 @@
             }
         }
     },
+    "ECC206": {
+        "cal_asymmetric_commands": {
+            "cal_genkey": {
+            "cal_genkey_mac": true
+            },
+            "cal_sign": {
+            "cal_sign_internal": true
+            }
+        },
+        "cal_device_commands": {
+            "cal_counter": true,
+            "cal_delete": true,
+            "cal_derivekey": true,
+            "cal_info": true,
+            "cal_lock": true,
+            "cal_nonce": true,
+            "cal_read": {
+            "cal_read_enc": true
+            },
+            "cal_selftest": true,
+            "cal_sha": {
+            "cal_sha_hmac": true,
+            "cal_sha_context": true
+            },
+            "cal_write": {
+            "cal_write_enc": true
+            }
+        },
+        "cal_atcacert_config": {
+            "cal_atcacert_compressed": true
+        },
+        "cal_crypto_config": {
+            "cal_sw_sha": {
+            "cal_sw_sha1": true,
+            "cal_sw_sha256": true,
+            "cal_sw_sha384": true,
+            "cal_sw_sha512": true,
+            "cal_sw_sha2_hmac": true,
+            "cal_sw_sha2_hmac_ctr": true,
+            "cal_sw_pbkdf2_sha2": true
+            }
+        }
+    },
     "ATSHA204A": {
         "cal_symmetric_commands": {
             "cal_checkmac": true,
@@ -459,6 +502,9 @@
             }
         }
     },
+    
+    
+    
     "TA010": {
         "cal_asymmetric_commands": {
             "cal_genkey": {
@@ -498,169 +544,5 @@
             "cal_sw_pbkdf2_sha2": true
             }
         }
-    },
-    "TA101": {
-        "cal_symmetric_commands": {
-            "cal_aes": {
-            "cal_aes_ecb": true,
-            "cal_aes_gfm": true,
-            "cal_aes_gcm": true
-            },
-            "cal_kdf": true,
-            "cal_mac": true
-        },
-        "cal_asymmetric_commands": {
-            "cal_ecdh": {
-            "cal_ecdh_enc": true
-            },
-            "cal_genkey": {
-            "cal_genkey_mac": true
-            },
-            "cal_sign": {
-            "cal_sign_internal": true
-            },
-            "cal_verify": {
-            "cal_verify_stored": true,
-            "cal_verify_extern": true,
-            "cal_verify_validate": true,
-            "cal_verify_mac": true
-            }
-        },
-        "cal_device_commands": {
-            "cal_counter": true,
-            "cal_delete": true,
-            "cal_info": true,
-            "cal_lock": true,
-            "cal_random": true,
-            "cal_read": {
-            "cal_read_enc": true
-            },
-            "cal_secureboot": {
-            "cal_secureboot_mac": true
-            },
-            "cal_selftest": true,
-            "cal_sha": {
-            "cal_sha_hmac": true,
-            "cal_sha_context": true
-            },
-            "cal_write": {
-            "cal_write_enc": true
-            }
-        },
-        "cal_atcacert_config": {
-            "cal_atcacert_full_stored": true,
-            "cal_atcacert_compressed": true
-        },
-        "cal_crypto_config": {
-            "cal_hw_aes": {
-            "cal_crypto_aes_cbc": true,
-            "cal_crypto_aes_cbcmac": true,
-            "cal_crypto_aes_ctr": true,
-            "cal_crypto_aes_ccm": true,
-            "cal_crypto_aes_cmac": true
-            },
-            "cal_crypto_aes_cbc": {
-            "cal_crypto_aes_cbc_encrypt": true,
-            "cal_crypto_aes_cbc_decrypt": true
-            },
-            "cal_crypto_aes_ctr": {
-            "cal_crypto_aes_ctr_rand_iv": true
-            },
-            "cal_crypto_aes_ccm": {
-            "cal_crypto_aes_ccm_rand_iv": true
-            },
-            "cal_sw_sha": {
-            "cal_sw_sha1": true,
-            "cal_sw_sha256": true,
-            "cal_sw_sha384": true,
-            "cal_sw_sha512": true,
-            "cal_sw_sha2_hmac": true,
-            "cal_sw_sha2_hmac_ctr": true,
-            "cal_sw_pbkdf2_sha2": true
-            }
-        },
-        "CAL_ENABLE_TA10x_FCE": true
-    },
-    "TA100": {
-        "cal_symmetric_commands": {
-            "cal_aes": {
-            "cal_aes_ecb": true,
-            "cal_aes_gfm": true,
-            "cal_aes_gcm": true
-            },
-            "cal_kdf": true,
-            "cal_mac": true
-        },
-        "cal_asymmetric_commands": {
-            "cal_ecdh": {
-            "cal_ecdh_enc": true
-            },
-            "cal_genkey": {
-            "cal_genkey_mac": true
-            },
-            "cal_sign": {
-            "cal_sign_internal": true
-            },
-            "cal_verify": {
-            "cal_verify_stored": true,
-            "cal_verify_extern": true,
-            "cal_verify_validate": true,
-            "cal_verify_mac": true
-            }
-        },
-        "cal_device_commands": {
-            "cal_counter": true,
-            "cal_delete": true,
-            "cal_info": true,
-            "cal_lock": true,
-            "cal_random": true,
-            "cal_read": {
-            "cal_read_enc": true
-            },
-            "cal_secureboot": {
-            "cal_secureboot_mac": true
-            },
-            "cal_selftest": true,
-            "cal_sha": {
-            "cal_sha_hmac": true,
-            "cal_sha_context": true
-            },
-            "cal_write": {
-            "cal_write_enc": true
-            }
-        },
-        "cal_atcacert_config": {
-            "cal_atcacert_full_stored": true,
-            "cal_atcacert_compressed": true
-        },
-        "cal_crypto_config": {
-            "cal_hw_aes": {
-            "cal_crypto_aes_cbc": true,
-            "cal_crypto_aes_cbcmac": true,
-            "cal_crypto_aes_ctr": true,
-            "cal_crypto_aes_ccm": true,
-            "cal_crypto_aes_cmac": true
-            },
-            "cal_crypto_aes_cbc": {
-            "cal_crypto_aes_cbc_encrypt": true,
-            "cal_crypto_aes_cbc_decrypt": true
-            },
-            "cal_crypto_aes_ctr": {
-            "cal_crypto_aes_ctr_rand_iv": true
-            },
-            "cal_crypto_aes_ccm": {
-            "cal_crypto_aes_ccm_rand_iv": true
-            },
-            "cal_sw_sha": {
-            "cal_sw_sha1": true,
-            "cal_sw_sha256": true,
-            "cal_sw_sha384": true,
-            "cal_sw_sha512": true,
-            "cal_sw_sha2_hmac": true,
-            "cal_sw_sha2_hmac_ctr": true,
-            "cal_sw_pbkdf2_sha2": true
-            }
-        },
-        "CAL_ENABLE_TA10x_FCE": true
     }
 }

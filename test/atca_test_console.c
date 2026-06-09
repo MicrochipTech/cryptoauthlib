@@ -2,7 +2,7 @@
  * \file
  * \brief  Cryptoauthlib Testing: Configuration Management
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -30,9 +30,7 @@
 #include "api_crypto/test_crypto.h"
 #include "atcacert/test_atcacert.h"
 
-#ifndef LIBRARY_USAGE_EN
 #include "api_atcab/test_atcab.h"
-#endif
 
 #ifndef ATCA_SERIAL_NUM_SIZE
 #define ATCA_SERIAL_NUM_SIZE        (9)
@@ -52,7 +50,6 @@ int run_helper_tests(int argc, char* argv[])
     return run_test(argc, argv, RunAllHelperTests);
 }
 
-#ifndef LIBRARY_USAGE_EN
 int read_config(int argc, char* argv[])
 {
     ATCA_STATUS status;
@@ -111,7 +108,6 @@ int read_config(int argc, char* argv[])
 
     return 0;
 }
-#endif
 
 int lock_status(int argc, char* argv[])
 {
@@ -137,8 +133,6 @@ int lock_status(int argc, char* argv[])
 
     return (int)status;
 }
-
-#ifndef LIBRARY_USAGE_EN
 int lock_config(int argc, char* argv[])
 {
     int ret = lock_config_zone(argc, argv);
@@ -160,7 +154,6 @@ int lock_data(int argc, char* argv[])
     }
     return ret;
 }
-#endif
 
 int do_randoms(int argc, char* argv[])
 {
@@ -211,7 +204,6 @@ int do_randoms(int argc, char* argv[])
 
     return status;
 }
-
 
 int info(int argc, char* argv[])
 {
@@ -307,7 +299,6 @@ ATCA_STATUS is_data_locked(bool* isLocked)
     return status;
 }
 
-#ifndef LIBRARY_USAGE_EN
 int lock_config_zone(int argc, char* argv[])
 {
     ATCA_STATUS status;
@@ -445,7 +436,6 @@ ATCA_STATUS get_serial_no(uint8_t* sernum)
 
     return status;
 }
-#endif
 
 int run_all_tests(int argc, char* argv[])
 {
@@ -485,14 +475,8 @@ int run_all_tests(int argc, char* argv[])
         return status;
     }
 
-#if ATCA_TA_SUPPORT
-    if (atcab_is_ta_device(gCfg->devtype))
-    {
-        (void)talib_configure_device(0, NULL);
-    }
-#endif
 
-#ifndef DO_NOT_TEST_BASIC_UNIT
+#if !defined(DO_NOT_TEST_BASIC_UNIT)
     if (!config_locked)
     {
         fails += run_test(argc, argv, RunAllBasicTests);

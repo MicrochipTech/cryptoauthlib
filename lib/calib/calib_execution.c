@@ -8,7 +8,7 @@
  * however, by defining the ATCA_NO_POLL symbol the code will instead wait an
  * estimated max execution time before requesting the result.
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -42,6 +42,7 @@
 #ifdef ATCA_NO_POLL
 // *INDENT-OFF* - Preserve time formatting from the code formatter
 /*Execution times for ATSHA204A supported commands...*/
+#ifdef ATCA_ATSHA204A_SUPPORT
 static const device_execution_time_t device_execution_time_204[] = {
     { ATCA_CHECKMAC,     38},
     { ATCA_DERIVE_KEY,   62},
@@ -58,7 +59,9 @@ static const device_execution_time_t device_execution_time_204[] = {
     { ATCA_UPDATE_EXTRA, 12},
     { ATCA_WRITE,        42}
 };
+#endif
 
+#ifdef ATCA_ATSHA206A_SUPPORT
 /*Execution times for ATSHA206A supported commands...*/
 static const device_execution_time_t device_execution_time_206[] = {
     { ATCA_DERIVE_KEY,   62},
@@ -67,7 +70,9 @@ static const device_execution_time_t device_execution_time_206[] = {
     { ATCA_READ,         5},
     { ATCA_WRITE,        42}
 };
+#endif
 
+#if ATCA_ECC_SUPPORT
 /*Execution times for ATECC108A supported commands...*/
 static const device_execution_time_t device_execution_time_108[] = {
     { ATCA_CHECKMAC,     13},
@@ -193,7 +198,9 @@ static const device_execution_time_t device_execution_time_608_m2[] = {
     { ATCA_WRITE,        45}
 };
 #endif
+#endif
 
+#if defined(ATCA_TA010_SUPPORT) || defined(ATCA_ECC204_SUPPORT) || defined(ATCA_ECC206_SUPPORT)
 /*Execution times for ECC204 supported commands...*/
 static const device_execution_time_t device_execution_time_ecc204[] = {
     { ATCA_COUNTER,      20},
@@ -208,7 +215,9 @@ static const device_execution_time_t device_execution_time_ecc204[] = {
     { ATCA_SIGN,         500},
     { ATCA_WRITE,        80}
 };
+#endif
 
+#if defined(ATCA_SHA104_SUPPORT) || defined(ATCA_SHA105_SUPPORT)
 /*Execution times for SHA10x supported commands...*/
 static const device_execution_time_t device_execution_time_sha10x[] = {
     { ATCA_CHECKMAC,     100},
@@ -224,6 +233,7 @@ static const device_execution_time_t device_execution_time_sha10x[] = {
     { ATCA_SHA,          80},
     { ATCA_WRITE,        80}
 };
+#endif
 // *INDENT-ON*
 
 /** \brief return the typical execution time for the given command
@@ -241,26 +251,31 @@ ATCA_STATUS calib_get_execution_time(uint8_t opcode, ATCADevice device)
     switch (device->mIface.mIfaceCFG->devtype)
     {
 #ifdef ATCA_NO_POLL
+#ifdef ATCA_ATSHA204A_SUPPORT
     case ATSHA204A:
         execution_times = device_execution_time_204;
         no_of_commands = sizeof(device_execution_time_204) / sizeof(device_execution_time_t);
         break;
-
+#endif
+#ifdef ATCA_ATSHA206A_SUPPORT
     case ATSHA206A:
         execution_times = device_execution_time_206;
         no_of_commands = sizeof(device_execution_time_206) / sizeof(device_execution_time_t);
         break;
-
+#endif
+#ifdef ATCA_ATECC108A_SUPPORT
     case ATECC108A:
         execution_times = device_execution_time_108;
         no_of_commands = sizeof(device_execution_time_108) / sizeof(device_execution_time_t);
         break;
-
+#endif
+#ifdef ATCA_ATECC508A_SUPPORT
     case ATECC508A:
         execution_times = device_execution_time_508;
         no_of_commands = sizeof(device_execution_time_508) / sizeof(device_execution_time_t);
         break;
-
+#endif
+#if ATCA_ATECC608_SUPPORT
     case ATECC608:
         if (device->clock_divider == ATCA_CHIPMODE_CLOCK_DIV_M1)
         {
@@ -280,21 +295,25 @@ ATCA_STATUS calib_get_execution_time(uint8_t opcode, ATCADevice device)
         }
         break;
 #endif
-
+#endif
+#if defined(ATCA_TA010_SUPPORT) || defined(ATCA_ECC204_SUPPORT) || defined(ATCA_ECC206_SUPPORT)
     case TA010:
+    /* fallthrough */
+    case ECC206:
     /* fallthrough */
     case ECC204:
         execution_times = device_execution_time_ecc204;
         no_of_commands = (uint8_t)(sizeof(device_execution_time_ecc204) / sizeof(device_execution_time_t));
         break;
-
+#endif
+#if defined(ATCA_SHA104_SUPPORT) || defined(ATCA_SHA105_SUPPORT)
     case SHA104:
     /* fallthrough */
     case SHA105:
         execution_times = device_execution_time_sha10x;
         no_of_commands = (uint8_t)(sizeof(device_execution_time_sha10x) / sizeof(device_execution_time_t));
         break;
-
+#endif
     default:
         no_of_commands = 0;
         execution_times = NULL;

@@ -1,6 +1,6 @@
 # coding: utf-8
 """*****************************************************************************
-* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2015-2026 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -30,7 +30,7 @@ numFileCntr = 0
 _TEST_PATHS = ['atcacert/*', 'integration/*', 'jwt/*', 'api_atcab/*', 'api_calib/*', 'api_crypto/*', 'api_talib/*', 'hal/*', 'vectors/*', 'tng/*']
 _TEST_SOURCES = ['atca_test.c', 'atca_test_config.c', 'atca_test_console.c', 'atca_utils_atecc608.c', 'cmd-processor.c']
 _TEST_HEADERS = ['atca_test.h', 'cbuf.h', 'cmd-processor.h']
-
+_LIB_TEST_PATHS = ['atcacert/*', 'jwt/*', 'api_crypto/*', 'api_talib/*', 'vectors/*']
 
 def CALSecFileUpdate(symbol, event):
     symObj = event['symbol']
@@ -130,9 +130,14 @@ def instantiateComponent(calTestingApplication):
 
 
     # Add core library files
-    for search_path in _TEST_PATHS:
-        AddFilesDir(calTestingApplication, 'test', search_path, 'library/cryptoauthlib/test',
-            'config/{}/library/cryptoauthlib/test'.format(configName))
+    if os.path.exists(Module.getPath() + 'lib/talib'):
+        for search_path in _TEST_PATHS:
+            AddFilesDir(calTestingApplication, 'test', search_path, 'library/cryptoauthlib/test',
+                'config/{}/library/cryptoauthlib/test'.format(configName))
+    else:
+        for search_path in _LIB_TEST_PATHS:
+            AddFilesDir(calTestingApplication, 'test', search_path, 'library/cryptoauthlib/test',
+                'config/{}/library/cryptoauthlib/test'.format(configName))
     for fname in _TEST_SOURCES:
         AddFile(calTestingApplication, 'test' + os.path.sep + fname, 'library/cryptoauthlib/test',
                 'config/{}/library/cryptoauthlib/test'.format(configName))
@@ -160,3 +165,8 @@ def instantiateComponent(calTestingApplication):
     calTesterCmnt = calTestingApplication.createCommentSymbol("MULTIPLE_IFACE_COMMENT", calTester)
     calTesterCmnt.setLabel("!! Set if Multiple devices and interfaces are selected !! ")
     calTesterCmnt.setVisible(True)
+
+    Database.sendMessage("cryptoauthlib", 'DO_NOT_TEST_CERT_EN', None)
+
+def destroyComponent(calTestingApplication):
+    Database.sendMessage("cryptoauthlib", 'DO_NOT_TEST_CERT_DIS', None)

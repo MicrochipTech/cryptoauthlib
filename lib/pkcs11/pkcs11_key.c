@@ -2,7 +2,7 @@
  * \file
  * \brief PKCS11 Library Key Object Handling
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -75,180 +75,6 @@ CK_BYTE pkcs11_x962_asn1_hdr_ec256[] = {
 
 CK_BYTE pkcs11_key_ec_params_p256[] = { 0x06, 0x08, 0x2a, 0x86, 0x48, 0xce, 0x3d, 0x03, 0x01, 0x07 };
 
-#if ATCA_TA_SUPPORT
-/** ASN.1 Header for SECP224R1 public keys */
-CK_BYTE pkcs11_ec_pbkey_asn1_hdr_p224[] = {
-    0x30, 0x4e,                                 // a SEQUENCE of 78 bytes follows
-    0x30, 0x10,                                 // a SEQUENCE of 16 bytes follows
-    0x06, 0x07,                                 // an OBJECT IDENTIFIER of 7 bytes follows
-    0x2a, 0x86, 0x48, 0xce, 0x3d, 0x02, 0x01,   //ID algorithm: 1.2.840.10045.2.1 ECC (ecPublicKey)
-    0x06, 0x05, 0x2b, 0x81, 0x04, 0x00, 0x21,   //ID algorithm: 1.3.132.0.33 secp224r1
-    0x03, 0x3a, 0x00,                           // a BIT STRING of 58 bytes follows (including the 0x00 padding byte)
-    0x04                                        // Uncompressed indicator
-};
-
-/** X.962 ASN.1 Header for EC224 public keys */
-CK_BYTE pkcs11_x962_asn1_hdr_ec224[] = {
-    0x04, 0x39, 0x04
-};
-
-CK_BYTE pkcs11_key_ec_params_p224[] = { 0x06, 0x05, 0x2B, 0x81, 0x04, 0x00, 0x21 };
-
-/** ASN.1 Header for SECP384R1 public keys */
-CK_BYTE pkcs11_ec_pbkey_asn1_hdr_p384[] = {
-    0x30, 0x76,                                 // a SEQUENCE of 118 bytes follows
-    0x30, 0x10,                                 // a SEQUENCE of 16 bytes follows
-    0x06, 0x07,                                 // an OBJECT IDENTIFIER of 7 bytes follows
-    0x2a, 0x86, 0x48, 0xce, 0x3d, 0x02, 0x01,   // OID 1.2.840.10045.2.1 (ecPublicKey)
-    0x06, 0x05,                                 // an OBJECT IDENTIFIER of 5 bytes follows
-    0x2b, 0x81, 0x04, 0x00, 0x22,               // OID 1.3.132.0.34 (secp384r1)
-    0x03, 0x62, 0x00,                           // a BIT STRING of 98 bytes follows (including the 0x00 padding byte)
-    0x04                                        // Uncompressed indicator
-};
-
-CK_BYTE pkcs11_key_ec_params_p384[] = { 0x06, 0x05, 0x2B, 0x81, 0x04, 0x00, 0x22 };
-
-/** X.962 ASN.1 Header for EC384 public keys */
-CK_BYTE pkcs11_x962_asn1_hdr_ec384[] = {
-    0x04, 0x61, 0x04
-};
-
-/** ASN.1 Header for SECP521R1 public keys */
-CK_BYTE pkcs11_ec_pbkey_asn1_hdr_p521[] = {
-    0x30, 0x81, 0x9b,                           // a SEQUENCE of 155 bytes follows
-    0x30, 0x10,                                 // a SEQUENCE of 16 bytes follows
-    0x06, 0x07,                                 // an OBJECT IDENTIFIER of 7 bytes follows
-    0x2a, 0x86, 0x48, 0xce, 0x3d, 0x02, 0x01,   // OID 1.2.840.10045.2.1 (ecPublicKey)
-    0x06, 0x05,                                 // an OBJECT IDENTIFIER of 5 bytes follows
-    0x2b, 0x81, 0x04, 0x00, 0x23,               // OID 1.3.132.0.35 (secp521r1)
-    0x03, 0x81, 0x86, 0x00,                     // a BIT STRING of 134 bytes follows (including the 0x00 padding byte)
-    0x04                                        //Uncompressed indicator
-};
-
-/** X.962 ASN.1 Header for EC521 public keys */
-CK_BYTE pkcs11_x962_asn1_hdr_ec521[] = {
-    0x04, 0x85, 0x04
-};
-
-CK_BYTE pkcs11_key_ec_params_p521[] = { 0x06, 0x05, 0x2B, 0x81, 0x04, 0x00, 0x23 };
-
-#if PKCS11_RSA_SUPPORT_ENABLE
-/* ASN.1 header for RSA-1024 public keys */
-CK_BYTE pkcs11_pbkey_asn1_hdr_rsa1024[] = {
-    0x30, 0x81, 0x9F,                                          // a SEQUENCE of 159 bytes follows
-    0x30, 0x0D,                                                // a SEQUENCE of 13 bytes follows
-    0x06, 0x09,                                                // an OBJECT IDENTIFIER of 9 bytes follows
-    0x2a, 0x86, 0x48, 0x86, 0xF7, 0x0D, 0x01, 0x01, 0x01,      // ID algorithm: 1.2.840.113549.1.1.1 (RSA)
-    0x05, 0x00,                                                // No paramters for this algorithm
-    0x03, 0x81, 0x8D, 0x00,                                    // a BIT STRING of 141 bytes follows (including the 0x00 padding byte)
-    0x30, 0x81, 0x89,                                          // a SEQUENCE of 137 bytes follows
-    0x02, 0x81, 0x81,                                          // a INTEGER VALUE of 129 bytes follows
-    0x00                                                       // Leading zero for MODULUS
-};
-
-/* ASN.1 header for RSASSA_PSS-1024 public keys */
-CK_BYTE pkcs11_pbkey_asn1_hdr_rsapss1024[] = {
-    0x30, 0x81, 0x9D,                                          // a SEQUENCE of 157 bytes follows
-    0x30, 0x0B,                                                // a SEQUENCE of 11 bytes follows
-    0x06, 0x09,                                                // an OBJECT IDENTIFIER of 9 bytes follows
-    0x2a, 0x86, 0x48, 0x86, 0xF7, 0x0D, 0x01, 0x01, 0x0A,      // ID algorithm: 1.2.840.113549.1.1.10 (RSASSA-PSS)
-    0x03, 0x81, 0x8D, 0x00,                                    // a BIT STRING of 141 bytes follows (including the 0x00 padding byte)
-    0x30, 0x81, 0x89,                                          // a SEQUENCE of 137 bytes follows
-    0x02, 0x81, 0x81,                                          // a INTEGER VALUE of 129 bytes follows
-    0x00                                                       // Leading zero for MODULUS
-};
-
-/* ASN.1 header for RSA-2048 public keys */
-CK_BYTE pkcs11_pbkey_asn1_hdr_rsa2048[] = {
-    0x30, 0x82, 0x01, 0x22,                                    // a SEQUENCE of 290 bytes follows
-    0x30, 0x0D,                                                // a SEQUENCE of 13 bytes follows
-    0x06, 0x09,                                                // an OBJECT IDENTIFIER of 9 bytes follows
-    0x2a, 0x86, 0x48, 0x86, 0xF7, 0x0D, 0x01, 0x01, 0x01,      // ID algorithm: 1.2.840.113549.1.1.1 (RSA)
-    0x05, 0x00,                                                // No paramters for this algorithm
-    0x03, 0x82, 0x01, 0x0F, 0x00,                              // a BIT STRING of 271 bytes follows (including the 0x00 padding byte)
-    0x30, 0x82, 0x01, 0x0A,                                    // a SEQUENCE of 266 bytes follows
-    0x02, 0x82, 0x01, 0x01,                                    // a INTEGER VALUE of 257 bytes follows
-    0x00                                                       // Leading zero for MODULUS
-};
-
-/* ASN.1 header for RSASSA_PSS-2048  public keys */
-CK_BYTE pkcs11_pbkey_asn1_hdr_rsapss2048[] = {
-    0x30, 0x82, 0x01, 0x20,                                    // a SEQUENCE of 288 bytes follows
-    0x30, 0x0B,                                                // a SEQUENCE of 11 bytes follows
-    0x06, 0x09,                                                // an OBJECT IDENTIFIER of 9 bytes follows
-    0x2a, 0x86, 0x48, 0x86, 0xF7, 0x0D, 0x01, 0x01, 0x0A,      // ID algorithm: 1.2.840.113549.1.1.10 (RSASSA-PSS)
-    0x03, 0x82, 0x01, 0x0F, 0x00,                              // a BIT STRING of 271 bytes follows (including the 0x00 padding byte)
-    0x30, 0x82, 0x01, 0x0A,                                    // a SEQUENCE of 266 bytes follows
-    0x02, 0x82, 0x01, 0x01,                                    // a INTEGER VALUE of 257 bytes follows
-    0x00                                                       // Leading zero for MODULUS
-};
-
-/* ASN.1 header for RSA-3072 public keys */
-CK_BYTE pkcs11_pbkey_asn1_hdr_rsa3072[] = {
-    0x30, 0x82, 0x01, 0xA2,                                    // a SEQUENCE of 418 bytes follows
-    0x30, 0x0D,                                                // a SEQUENCE of 13 bytes follows
-    0x06, 0x09,                                                // an OBJECT IDENTIFIER of 9 bytes follows
-    0x2a, 0x86, 0x48, 0x86, 0xF7, 0x0D, 0x01, 0x01, 0x01,      // ID algorithm: 1.2.840.113549.1.1.1 (RSA)
-    0x05, 0x00,                                                // No paramters for this algorithm
-    0x03, 0x82, 0x01, 0x8F, 0x00,                              // a BIT STRING of 399 bytes follows (including the 0x00 padding byte)
-    0x30, 0x82, 0x01, 0x8A,                                    // a SEQUENCE of 394 bytes follows
-    0x02, 0x82, 0x01, 0x81,                                    // a INTEGER VALUE of 385 bytes follows
-    0x00                                                       // Leading zero for MODULUS
-};
-
-/* ASN.1 header for RSASSA_PSS-3072 public keys */
-CK_BYTE pkcs11_pbkey_asn1_hdr_rsapss3072[] = {
-    0x30, 0x82, 0x01, 0xA0,                                    // a SEQUENCE of 416 bytes follows
-    0x30, 0x0B,                                                // a SEQUENCE of 11 bytes follows
-    0x06, 0x09,                                                // an OBJECT IDENTIFIER of 9 bytes follows
-    0x2a, 0x86, 0x48, 0x86, 0xF7, 0x0D, 0x01, 0x01, 0x0A,      // ID algorithm: 1.2.840.113549.1.1.10 (RSASSA-PSS)
-    0x03, 0x82, 0x01, 0x8F, 0x00,                              // a BIT STRING of 399 bytes follows (including the 0x00 padding byte)
-    0x30, 0x82, 0x01, 0x8A,                                    // a SEQUENCE of 394 bytes follows
-    0x02, 0x82, 0x01, 0x81,                                    // a INTEGER VALUE of 385 bytes follows
-    0x00                                                       // Leading zero for MODULUS
-};
-
-/* ASN.1 header for RSA-4096 public keys */
-CK_BYTE pkcs11_pbkey_asn1_hdr_rsa4096[] = {
-    0x30, 0x82, 0x02, 0x22,                                    // a SEQUENCE of 546 bytes follows
-    0x30, 0x0D,                                                // a SEQUENCE of 13 bytes follows
-    0x06, 0x09,                                                // an OBJECT IDENTIFIER of 9 bytes follows
-    0x2a, 0x86, 0x48, 0x86, 0xF7, 0x0D, 0x01, 0x01, 0x01,      // ID algorithm: 1.2.840.113549.1.1.1 (RSA)
-    0x05, 0x00,                                                // No paramters for this algorithm
-    0x03, 0x82, 0x02, 0x0F, 0x00,                              // a BIT STRING of 527 bytes follows (including the 0x00 padding byte)
-    0x30, 0x82, 0x02, 0x0A,                                    // a SEQUENCE of 522 bytes follows
-    0x02, 0x82, 0x02, 0x01,                                    // a INTEGER VALUE of 513 bytes follows
-    0x00                                                       // Leading zero for MODULUS
-};
-
-/* ASN.1 header for RSASSA_PSS-4096 public keys */
-CK_BYTE pkcs11_pbkey_asn1_hdr_rsapss4096[] = {
-    0x30, 0x82, 0x02, 0x20,                                    // a SEQUENCE of 544 bytes follows
-    0x30, 0x0B,                                                // a SEQUENCE of 11 bytes follows
-    0x06, 0x09,                                                // an OBJECT IDENTIFIER of 9 bytes follows
-    0x2a, 0x86, 0x48, 0x86, 0xF7, 0x0D, 0x01, 0x01, 0x0A,      // ID algorithm: 1.2.840.113549.1.1.10 (RSASSA-PSS)
-    0x03, 0x82, 0x02, 0x0F, 0x00,                              // a BIT STRING of 527 bytes follows (including the 0x00 padding byte)
-    0x30, 0x82, 0x02, 0x0A,                                    // a SEQUENCE of 522 bytes follows
-    0x02, 0x82, 0x02, 0x01,                                    // a INTEGER VALUE of 513 bytes follows
-    0x00                                                       // Leading zero for MODULUS
-};
-
-/* ASN.1 header for SHA-256 Hash */
-CK_BYTE pkcs11_sha256_asn1_hdr[19] = {
-    0x30, 0x31,                                                // a SEQUENCE of 49 bytes follows
-    0x30, 0x0D,                                                // a SEQUENCE of 13 bytes follows
-    0x06, 0x09, 0x60, 0x86, 0x48, 0x01, 0x65, 0x03, 0x04, 0x02, 0x01,  // ID algorithm: 2.16.840.1.101.3.4.2.1 (SHA-256)
-    0x05, 0x00,                                                // No paramters for this algorithm
-    0x04, 0x20                                                 // a OCTET STRING of 32 bytes follows
-};
-
-/* ASN.1 Header for rsa public exponent */
-CK_BYTE pkcs11_rsa_public_exp_asn1_hdr[] = {0x02, 0x03};       // an INTEGER VALUE of 3 bytes follows
-
-/* Public Exponent for RSA Private and Public Keys */
-CK_BYTE pkcs11_rsa_public_exp[] = {0x01, 0x00, 0x01};          // Default value of 65537
-#endif
-#endif
 
 //Fixing the lookup table size to support max of 4 ECC curves
 //Note: Add more ECC key type info based on support required
@@ -256,53 +82,14 @@ CK_BYTE pkcs11_rsa_public_exp[] = {0x01, 0x00, 0x01};          // Default value 
 const pkcs11_ecc_key_info_t ec_key_data_table[4] = {
     { ATCA_KEY_TYPE_ECCP256, (CK_BYTE)ATCA_ECCP256_OID_SIZE, pkcs11_key_ec_params_p256, pkcs11_ec_pbkey_asn1_hdr_p256,
       pkcs11_x962_asn1_hdr_ec256, (uint16_t)ATCA_ECCP256_ASN1_HDR_SIZE, ATCA_ECCP256_PUBKEY_SIZE, ATCA_ECCP256_MSG_SIZE, ATCA_ECCP256_SIG_SIZE }
-#if ATCA_TA_SUPPORT
-    ,{ TA_KEY_TYPE_ECCP224, (CK_BYTE)TA_ECC224_OID_SIZE, pkcs11_key_ec_params_p224, pkcs11_ec_pbkey_asn1_hdr_p224,
-      pkcs11_x962_asn1_hdr_ec224, (uint16_t)TA_ECC224_ASN1_HDR_SIZE, TA_ECC224_PUB_KEY_SIZE, TA_SIGN_P224_MSG_SIZE, TA_SIGN_P224_SIG_SIZE },
-
-    { TA_KEY_TYPE_ECCP384, (CK_BYTE)TA_ECC384_OID_SIZE, pkcs11_key_ec_params_p384, pkcs11_ec_pbkey_asn1_hdr_p384,
-      pkcs11_x962_asn1_hdr_ec384, (uint16_t)TA_ECC384_ASN1_HDR_SIZE, TA_ECC384_PUB_KEY_SIZE, TA_SIGN_P384_MSG_SIZE, TA_SIGN_P384_SIG_SIZE },
-
-    { TA_KEY_TYPE_ECCP521, (CK_BYTE)TA_ECC521_OID_SIZE, pkcs11_key_ec_params_p521, pkcs11_ec_pbkey_asn1_hdr_p521,
-      pkcs11_x962_asn1_hdr_ec521, (uint16_t)TA_ECC521_ASN1_HDR_SIZE, TA_ECC521_PUB_KEY_SIZE, TA_SIGN_P521_MSG_SIZE, TA_SIGN_P521_SIG_SIZE },
-#endif
 };
 
 const pkcs11_rsa_key_info_t rsa_key_data_table[4] = {
-#if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
-    { TA_KEY_TYPE_RSA1024, TA_RSAENC_MODE_ENCRYPT1024, TA_RSAENC_MODE_DECRYPT1024, TA_RSA1024_ASN1_HDR_SIZE, TA_RSA1024_PSS_ASN1_HDR_SIZE,
-      pkcs11_pbkey_asn1_hdr_rsa1024, pkcs11_pbkey_asn1_hdr_rsapss1024, pkcs11_rsa_public_exp_asn1_hdr, pkcs11_rsa_public_exp,
-      TA_RSAENC_PUB_KEY_SIZE1024_BITS, TA_RSAENC_PUB_KEY_SIZE1024, TA_SIGN_OTHER_KEY_TYPE_MSG_SIZE, TA_SIGN_RSA1024_SIG_SIZE },
-
-    { TA_KEY_TYPE_RSA2048, TA_RSAENC_MODE_ENCRYPT2048, TA_RSAENC_MODE_DECRYPT2048, TA_RSA2048_ASN1_HDR_SIZE, TA_RSA2048_PSS_ASN1_HDR_SIZE,
-      pkcs11_pbkey_asn1_hdr_rsa2048, pkcs11_pbkey_asn1_hdr_rsapss2048, pkcs11_rsa_public_exp_asn1_hdr, pkcs11_rsa_public_exp,
-      TA_RSAENC_PUB_KEY_SIZE2048_BITS, TA_RSAENC_PUB_KEY_SIZE2048, TA_SIGN_OTHER_KEY_TYPE_MSG_SIZE, TA_SIGN_RSA2048_SIG_SIZE },
-
-    { TA_KEY_TYPE_RSA3072, TA_RSAENC_MODE_ENCRYPT3072, TA_RSAENC_MODE_DECRYPT3072, TA_RSA3072_ASN1_HDR_SIZE, TA_RSA3072_PSS_ASN1_HDR_SIZE,
-      pkcs11_pbkey_asn1_hdr_rsa3072, pkcs11_pbkey_asn1_hdr_rsapss3072,pkcs11_rsa_public_exp_asn1_hdr, pkcs11_rsa_public_exp,
-      TA_RSAENC_PUB_KEY_SIZE3072_BITS, TA_RSAENC_PUB_KEY_SIZE3072, TA_SIGN_OTHER_KEY_TYPE_MSG_SIZE, TA_SIGN_RSA3072_SIG_SIZE },
-
-    { TA_KEY_TYPE_RSA4096, TA_RSAENC_MODE_ENCRYPT4096, TA_RSAENC_MODE_DECRYPT4096, TA_RSA4096_ASN1_HDR_SIZE, TA_RSA4096_PSS_ASN1_HDR_SIZE,
-      pkcs11_pbkey_asn1_hdr_rsa4096, pkcs11_pbkey_asn1_hdr_rsapss4096, pkcs11_rsa_public_exp_asn1_hdr, pkcs11_rsa_public_exp,
-      TA_RSAENC_PUB_KEY_SIZE4096_BITS, TA_RSAENC_PUB_KEY_SIZE4096, TA_SIGN_OTHER_KEY_TYPE_MSG_SIZE, TA_SIGN_RSA4096_SIG_SIZE },
-#endif
 };
 
 const pkcs11_key_info_t key_data_table[] = {
     // ECC keys
     { &ec_key_data_table[0], NULL },
-#if ATCA_TA_SUPPORT
-    { &ec_key_data_table[1], NULL },
-    { &ec_key_data_table[2], NULL },
-    { &ec_key_data_table[3], NULL },
-#if PKCS11_RSA_SUPPORT_ENABLE
-    // RSA keys
-    { NULL, &rsa_key_data_table[0] },
-    { NULL, &rsa_key_data_table[1] },
-    { NULL, &rsa_key_data_table[2] },
-    { NULL, &rsa_key_data_table[3] },
-#endif
-#endif
 };
 
 const pkcs11_key_info_t* pkcs11_get_object_key_type(ATCADevice device_ctx, pkcs11_object_ptr obj_ptr)
@@ -322,14 +109,6 @@ const pkcs11_key_info_t* pkcs11_get_object_key_type(ATCADevice device_ctx, pkcs1
         }
         else if (atcab_is_ta_device(dev_type))
         {
-#if ATCA_TA_SUPPORT
-            key_type = ((obj_ptr->handle_info.element_CKA & TA_HANDLE_INFO_KEY_TYPE_MASK) >> TA_HANDLE_INFO_KEY_TYPE_SHIFT);
-            if (key_type >= (sizeof(key_data_table) / sizeof(key_data_table[0])))
-            {
-                return NULL;
-            }
-            return &key_data_table[key_type];
-#endif
         }
         else
         {
@@ -376,83 +155,6 @@ static CK_RV pkcs11_key_get_derivekey_flag(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR
     return CKR_ARGUMENTS_BAD;
 }
 
-#if ATCA_TA_SUPPORT
-CK_RV pkcs11_ta_get_pubkey(CK_VOID_PTR pObject, cal_buffer *key_buffer, pkcs11_session_ctx_ptr session_ctx)
-{
-    pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
-    pkcs11_slot_ctx_ptr slot_ctx;
-    CK_SLOT_ID owner_id;
-    uint16_t auth_handle;
-    uint16_t publickey_slot = 0;
-    ATCA_STATUS status = ATCA_GEN_FAIL;
-    ta_handle_info pubkey_field_handle_info;
-    bool allowed = false;
-
-    if (CKR_OK != pkcs11_object_get_owner(obj_ptr, &owner_id))
-    {
-        return CKR_FUNCTION_FAILED;
-    }
-
-    if (NULL == (slot_ctx = pkcs11_slot_get_context(NULL, owner_id)))
-    {
-        return CKR_FUNCTION_FAILED;
-    }
-
-    if (NULL == session_ctx || NULL == session_ctx->slot)
-    {
-        return CKR_FUNCTION_FAILED;
-    }
-
-    ATCADevice device = session_ctx->slot->device_ctx;
-
-    /* Get the handle that is expected to be used for logging in */
-    auth_handle = slot_ctx->user_pin_handle;
-
-    /* Get the pubkey slot value from property of handleinfo */
-    publickey_slot = TA_HANDLE_LINKED_SHARED_DATA | (obj_ptr->handle_info.property & TA_PROP_PUB_KEY_MASK);
-
-    status = talib_info_get_handle_info(device, publickey_slot, &pubkey_field_handle_info);
-
-    if (ATCA_SUCCESS == status)
-    {
-        /* If the Pub_Key field of the handleinfo references a valid public key, read the public key
-           from the referenced handle */
-        if (((pubkey_field_handle_info.attributes.element_CKA & TA_HANDLE_INFO_CLASS_MASK) == TA_CLASS_PUBLIC_KEY)
-            && ((pubkey_field_handle_info.attributes.property & TA_PROP_ROOT_MASK) != TA_PROP_ROOT_MASK))
-        {
-            (void)talib_handle_can_read(device, auth_handle, &pubkey_field_handle_info.attributes, &allowed);
-            if (allowed)
-            {
-                status = talib_read_element(device, publickey_slot, key_buffer);
-            }
-            else
-            {
-                status = ATCA_GEN_FAIL;
-            }
-        }
-        else
-        {
-            status = TA_HANDLE_EXIST_ERROR;
-        }
-    }
-
-    /* Use the genkey feature to get the public key if handle does not exist or is not a valid public key */
-    if (TA_HANDLE_EXIST_ERROR == status)
-    {
-        (void)talib_handle_can_use(device, auth_handle, &obj_ptr->handle_info, &allowed);
-        if (allowed)
-        {
-            status = talib_get_pubkey(device, obj_ptr->slot, key_buffer);
-        }
-        else
-        {
-            status = ATCA_GEN_FAIL;
-        }
-    }
-
-    return pkcs11_util_convert_rv(status);
-}
-#endif
 
 static CK_RV pkcs11_key_get_local_flag(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr session_ctx)
 {
@@ -505,17 +207,6 @@ static const CK_MECHANISM_TYPE pkcs11_key_508_public_mech[] = {
 };
 #endif
 
-#if ATCA_TA_SUPPORT
-static const CK_MECHANISM_TYPE pkcs11_key_ta_public_mech[] = {
-    CKM_ECDSA,
-    CKM_ECDSA_SHA256,
-    CKM_ECDSA_SHA384,
-    CKM_ECDSA_SHA512,
-    CKM_RSA_PKCS,
-    CKM_RSA_PKCS_PSS,
-    CKM_RSA_PKCS_OAEP
-};
-#endif
 
 #if ATCA_CA_SUPPORT
 static const CK_MECHANISM_TYPE pkcs11_key_508_private_mech[] = {
@@ -525,19 +216,6 @@ static const CK_MECHANISM_TYPE pkcs11_key_508_private_mech[] = {
 };
 #endif
 
-#if ATCA_TA_SUPPORT
-static const CK_MECHANISM_TYPE pkcs11_key_ta_private_mech[] = {
-    CKM_EC_KEY_PAIR_GEN,
-    CKM_ECDSA,
-    CKM_ECDSA_SHA256,
-    CKM_ECDSA_SHA384,
-    CKM_ECDSA_SHA512,
-    CKM_RSA_PKCS_KEY_PAIR_GEN,
-    CKM_RSA_PKCS,
-    CKM_RSA_PKCS_PSS,
-    CKM_RSA_PKCS_OAEP
-};
-#endif
 
 #if ATCA_CA_SUPPORT
 static const CK_MECHANISM_TYPE pkcs11_key_508_secret_mech[] = {
@@ -603,32 +281,6 @@ static CK_RV pkcs11_key_fill_ca_mech(atecc508a_config_t* pConfig, uint16_t slot,
 }
 #endif
 
-#if ATCA_TA_SUPPORT
-static CK_RV pkcs11_key_fill_ta_mech(pkcs11_object_ptr obj_ptr, CK_ATTRIBUTE_PTR pAttribute)
-{
-    CK_RV rv = CKR_GENERAL_ERROR;
-
-    switch (obj_ptr->class_id)
-    {
-    case CKO_PRIVATE_KEY:
-        rv = pkcs11_attrib_fill(pAttribute, pkcs11_key_ta_private_mech,
-                                (CK_ULONG)sizeof(pkcs11_key_ta_private_mech));
-        break;
-    case CKO_PUBLIC_KEY:
-        rv = pkcs11_attrib_fill(pAttribute, pkcs11_key_ta_public_mech,
-                                (CK_ULONG)sizeof(pkcs11_key_ta_public_mech));
-        break;
-    case CKO_SECRET_KEY:
-        rv = pkcs11_attrib_fill(pAttribute, pkcs11_key_608_secret_mech,
-                                (CK_ULONG)sizeof(pkcs11_key_608_secret_mech));
-        break;
-    default:
-        /* Do nothing */
-        break;
-    }
-    return rv;
-}
-#endif
 
 
 static CK_RV pkcs11_key_get_allowed_mechanisms(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr session_ctx)
@@ -644,12 +296,6 @@ static CK_RV pkcs11_key_get_allowed_mechanisms(CK_VOID_PTR pObject, CK_ATTRIBUTE
         if (atcab_is_ca_device(devtype))
         {
             rv = pkcs11_key_fill_ca_mech((atecc508a_config_t*)obj_ptr->config, obj_ptr->slot, pAttribute);
-        }
-#endif
-#if ATCA_TA_SUPPORT
-        if (atcab_is_ta_device(devtype))
-        {
-            rv = pkcs11_key_fill_ta_mech(obj_ptr, pAttribute);
         }
 #endif
     }
@@ -681,11 +327,7 @@ static CK_RV pkcs11_key_get_public_key(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAt
             CK_ULONG asn1_key_size = 0u;
             CK_ULONG asn1_header_size = (CKK_EC == obj_ptr->class_type) ? key_data->ecc_key_info->asn1_header_sz : 0u;
             //Keeping to max size
-#if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
-            CK_UTF8CHAR asn1_key[PKCS11_MAX_ECC_RSA_ASN1_HDR_SIZE + PKCS11_MAX_ECC_RSA_PB_KEY_SIZE] = { 0 };
-#else
             CK_UTF8CHAR asn1_key[PKCS11_MAX_ECC_ASN1_HDR_SIZE + PKCS11_MAX_ECC_PB_KEY_SIZE] = { 0 };
-#endif
             CK_ULONG pubkey_size = PKCS11_MAX_ECC_RSA_PB_KEY_SIZE;
 
             if (CKK_EC == obj_ptr->class_type)
@@ -697,30 +339,6 @@ static CK_RV pkcs11_key_get_public_key(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAt
                 pubkey_size = key_data->ecc_key_info->pubkey_sz;
                 (void)memcpy(asn1_key, key_data->ecc_key_info->ec_asn1_header, key_data->ecc_key_info->asn1_header_sz);
             }
-#if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
-            else
-            {
-                CK_BYTE_PTR asn1_rsa_header = NULL;
-                ta_handle_info handle_info;
-                CK_BYTE alg_mode = 0u;
-
-                if (NULL == key_data->rsa_key_info)
-                {
-                    return rv;
-                }
-                // Update the public key size for RSA curves
-                pubkey_size = key_data->rsa_key_info->pubkey_sz;
-                if (CKR_OK == (rv = pkcs11_util_convert_rv(talib_info_get_handle_info(session_ctx->slot->device_ctx, obj_ptr->slot, &handle_info))))
-                {
-                    alg_mode = handle_info.attributes.element_CKA & TA_HANDLE_INFO_ALG_MODE_MASK;
-                    asn1_rsa_header = ((CK_BYTE)TA_ALG_MODE_RSA_SSA_1_5 == alg_mode) ? (key_data->rsa_key_info->rsa_asn1_header)
-                                                                                     : (key_data->rsa_key_info->rsa_pss_asn1_header);
-                    asn1_header_size = ((CK_BYTE)TA_ALG_MODE_RSA_SSA_1_5 == alg_mode) ? (key_data->rsa_key_info->rsa_asn1_header_size)
-                                                                                      : (key_data->rsa_key_info->rsa_pss_asn1_header_size);
-                    (void)memcpy(asn1_key, asn1_rsa_header, asn1_header_size);
-                }
-            }
-#endif
 
             if (true == is_private)
             {
@@ -734,20 +352,6 @@ static CK_RV pkcs11_key_get_public_key(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAt
                 }
                 else if (atcab_is_ta_device(dev_type))
                 {
-#if ATCA_TA_SUPPORT
-#if PKCS11_RSA_SUPPORT_ENABLE
-                    CK_UTF8CHAR pubkey_gen[PKCS11_MAX_RSA_PB_KEY_SIZE] = { 0 };
-#else
-                    CK_UTF8CHAR pubkey_gen[PKCS11_MAX_ECC_PB_KEY_SIZE] = { 0 };
-#endif
-                    cal_buffer pubkey_buf = CAL_BUF_INIT(pubkey_size, pubkey_gen);
-
-                    if (CKR_OK == (rv = pkcs11_ta_get_pubkey(pObject, &pubkey_buf, session_ctx)))
-                    {
-                        (void)memcpy(&asn1_key[asn1_header_size], pubkey_gen, pubkey_size);
-                    }
-                    PKCS11_DEBUG("pkcs11_ta_get_pubkey: %x\r\n", rv);
-#endif
                 }
                 else
                 {
@@ -766,19 +370,6 @@ static CK_RV pkcs11_key_get_public_key(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAt
                 }
                 else if (atcab_is_ta_device(dev_type))
                 {
-#if ATCA_TA_SUPPORT
-#if PKCS11_RSA_SUPPORT_ENABLE
-                    CK_UTF8CHAR pubkey_rd[PKCS11_MAX_RSA_PB_KEY_SIZE] = { 0 };
-#else
-                    CK_UTF8CHAR pubkey_rd[PKCS11_MAX_ECC_PB_KEY_SIZE] = { 0 };
-#endif
-                    cal_buffer pubkey_buf = CAL_BUF_INIT(pubkey_size, pubkey_rd);
-                    if (CKR_OK == (rv = pkcs11_util_convert_rv(talib_read_element(session_ctx->slot->device_ctx, obj_ptr->slot, &pubkey_buf))))
-                    {
-                        (void)memcpy(&asn1_key[asn1_header_size], pubkey_rd, pubkey_size);
-                    }
-                    PKCS11_DEBUG("talib_read_element: %x\r\n", rv);
-#endif
                 }
                 else
                 {
@@ -791,17 +382,6 @@ static CK_RV pkcs11_key_get_public_key(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAt
                 {
                     asn1_key_size = asn1_header_size + pubkey_size;
                 }
-            #if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
-                else
-                {
-                    CK_BYTE rsa_pubexp_hdr_size = (CK_BYTE)sizeof(pkcs11_rsa_public_exp_asn1_hdr);
-                    CK_BYTE rsa_pubkey_exp_size = (CK_BYTE)sizeof(pkcs11_rsa_public_exp);
-
-                    (void)memcpy(&asn1_key[asn1_header_size + pubkey_size], pkcs11_rsa_public_exp_asn1_hdr, rsa_pubexp_hdr_size);
-                    (void)memcpy(&asn1_key[asn1_header_size + pubkey_size + rsa_pubexp_hdr_size], pkcs11_rsa_public_exp, rsa_pubkey_exp_size);
-                    asn1_key_size = asn1_header_size + pubkey_size + rsa_pubexp_hdr_size + rsa_pubkey_exp_size;
-                }
-            #endif
 
                 rv = pkcs11_attrib_fill(pAttribute, asn1_key, asn1_key_size);
             }
@@ -888,15 +468,6 @@ static CK_RV pkcs11_key_get_ec_point(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttr
                         }
                         else if (atcab_is_ta_device(dev_type))
                         {
-#if ATCA_TA_SUPPORT
-                            CK_UTF8CHAR ec_pubkey_gen[PKCS11_MAX_ECC_PB_KEY_SIZE];
-                            cal_buffer ec_pubkey_buf = CAL_BUF_INIT(ec_key_data->ecc_key_info->pubkey_sz, ec_pubkey_gen);
-                            if (CKR_OK == (rv = pkcs11_ta_get_pubkey(pObject, &ec_pubkey_buf, psession)))
-                            {
-                                (void)memcpy(&ec_asn1_key[PKCS11_X962_ASN1_HEADER_SZ], ec_pubkey_gen, ec_key_data->ecc_key_info->pubkey_sz);
-                            }
-                            PKCS11_DEBUG("pkcs11_ta_get_pubkey: %x\r\n", rv);
-#endif
                         }
                         else
                         {
@@ -914,15 +485,6 @@ static CK_RV pkcs11_key_get_ec_point(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttr
                         }
                         else if (atcab_is_ta_device(dev_type))
                         {
-#if ATCA_TA_SUPPORT
-                            CK_UTF8CHAR ec_pubkey_rd[PKCS11_MAX_ECC_PB_KEY_SIZE];
-                            cal_buffer ec_pubkey_buf = CAL_BUF_INIT(ec_key_data->ecc_key_info->pubkey_sz, ec_pubkey_rd);
-                            if (CKR_OK == (rv = pkcs11_util_convert_rv(talib_read_element(psession->slot->device_ctx, obj_ptr->slot, &ec_pubkey_buf))))
-                            {
-                                (void)memcpy(&ec_asn1_key[PKCS11_X962_ASN1_HEADER_SZ], ec_pubkey_rd, ec_key_data->ecc_key_info->pubkey_sz);
-                            }
-                            PKCS11_DEBUG("talib_read_element: %x\r\n", rv);
-#endif
                         }
                         else
                         {
@@ -957,112 +519,6 @@ static CK_RV pkcs11_key_get_ec_point(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttr
     return rv;
 }
 
-#if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
-static CK_RV pkcs11_key_get_public_exponent(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr psession)
-{
-    ((void)psession);
-    pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
-    CK_RV rv = CKR_ARGUMENTS_BAD;
-
-    if (NULL != obj_ptr && NULL != psession)
-    {
-        if (CKK_RSA == obj_ptr->class_type)
-        {
-            rv = pkcs11_attrib_fill(pAttribute, pkcs11_rsa_public_exp, (CK_ULONG)(sizeof(pkcs11_rsa_public_exp)));
-        }
-        else
-        {
-            (void)pkcs11_attrib_empty(pObject, pAttribute, NULL);
-        }
-    }
-    else
-    {
-        return CKR_ARGUMENTS_BAD;
-    }
-
-    return rv;
-}
-
-static CK_RV pkcs11_key_get_modulus_bits(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr psession)
-{
-    ((void)psession);
-    pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
-    CK_RV rv = CKR_ARGUMENTS_BAD;
-
-    if (NULL != obj_ptr && NULL != psession)
-    {
-        if (CKK_RSA == obj_ptr->class_type)
-        {
-            const pkcs11_key_info_t *rsa_key_data = pkcs11_get_object_key_type(psession->slot->device_ctx, obj_ptr);
-
-            if (NULL == rsa_key_data)
-            {
-                return rv;
-            }
-            rv = pkcs11_attrib_fill(pAttribute, &rsa_key_data->rsa_key_info->rsa_modulus_bits, sizeof(CK_ULONG));
-        }
-        else
-        {
-            (void)pkcs11_attrib_empty(pObject, pAttribute, NULL);
-        }
-    }
-    else
-    {
-        return CKR_ARGUMENTS_BAD;
-    }
-
-    return rv;
-}
-
-static CK_RV pkcs11_key_get_modulus(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr psession)
-{
-    ((void)psession);
-    pkcs11_object_ptr obj_ptr = (pkcs11_object_ptr)pObject;
-    CK_RV rv = CKR_ARGUMENTS_BAD;
-
-    if (NULL != obj_ptr && NULL != psession)
-    {
-        if (CKK_RSA == obj_ptr->class_type)
-        {
-            CK_BBOOL is_private;
-            CK_BYTE pubkey_buffer[PKCS11_MAX_RSA_PB_KEY_SIZE];
-            const pkcs11_key_info_t *rsa_key_data = pkcs11_get_object_key_type(psession->slot->device_ctx, obj_ptr);
-
-            if (NULL == rsa_key_data || NULL == rsa_key_data->rsa_key_info)
-            {
-                return rv;
-            }
-
-            if (CKR_OK == (rv = pkcs11_object_is_private(obj_ptr, &is_private, psession)))
-            {
-                cal_buffer rsa_pubkey_buf = CAL_BUF_INIT(rsa_key_data->rsa_key_info->pubkey_sz, pubkey_buffer);
-
-                if (is_private)
-                {
-                    rv = pkcs11_ta_get_pubkey(pObject, &rsa_pubkey_buf, psession);
-                    PKCS11_DEBUG("pkcs11_ta_get_pubkey: %x\r\n", rv);
-                }
-                else
-                {
-                    rv = pkcs11_util_convert_rv(talib_read_element(psession->slot->device_ctx, obj_ptr->slot, &rsa_pubkey_buf));
-                    PKCS11_DEBUG("talib_read_element: %x\r\n", rv);
-                }
-            }
-
-            if (CKR_OK == rv)
-            {
-                rv = pkcs11_attrib_fill(pAttribute, pubkey_buffer, rsa_key_data->rsa_key_info->pubkey_sz);
-            }
-        }
-        else
-        {
-            (void)pkcs11_attrib_empty(pObject, pAttribute, NULL);
-        }
-    }
-
-    return rv;
-}
-#endif
 
 static CK_RV pkcs11_key_get_secret(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr pSession)
 {
@@ -1140,16 +596,6 @@ static CK_RV pkcs11_key_auth_required(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAtt
         }
         else
         {
-#if ATCA_TA_SUPPORT
-            if (TA_PERM_ALWAYS != (obj_ptr->handle_info.permission & TA_PERM_USAGE_MASK) >> TA_PERM_USAGE_SHIFT)
-            {
-                rv = pkcs11_attrib_true(pObject, pAttribute, NULL);
-            }
-            else
-            {
-                rv = pkcs11_attrib_false(pObject, pAttribute, NULL);
-            }
-#endif
         }
     }
     return rv;
@@ -1172,11 +618,7 @@ static CK_RV pkcs11_key_calc_key_id(const pkcs11_session_ctx_ptr pSession, const
 
         if (CKR_OK == (rv = pkcs11_object_is_private(pObject, &is_private, pSession)))
         {
-#if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
-            CK_UTF8CHAR pubkey_buffer[PKCS11_MAX_ECC_RSA_PB_KEY_SIZE] = { 0 };
-#else
             CK_UTF8CHAR pubkey_buffer[ATCA_ECC_UNCOMPRESSED_TYPE_OFFSET + PKCS11_MAX_ECC_PB_KEY_SIZE] = { 0 };
-#endif
             CK_ULONG pubkey_size = sizeof(pubkey_buffer);
             ATCADeviceType dev_type = atcab_get_device_type_ext(pSession->slot->device_ctx);
 
@@ -1189,16 +631,6 @@ static CK_RV pkcs11_key_calc_key_id(const pkcs11_session_ctx_ptr pSession, const
                 pubkey_size = key_data->ecc_key_info->pubkey_sz;
                 pubkey_buffer[0] = ATCA_ECC_UNCOMPRESSED_TYPE;
             }
-#if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
-            else
-            {
-                if (NULL == key_data->rsa_key_info)
-                {
-                    return rv;
-                }
-                pubkey_size = key_data->rsa_key_info->pubkey_sz;
-            }
-#endif
 
             if (TRUE == is_private)
             {
@@ -1210,21 +642,6 @@ static CK_RV pkcs11_key_calc_key_id(const pkcs11_session_ctx_ptr pSession, const
                 }
                 else if (atcab_is_ta_device(dev_type))
                 {
-#if ATCA_TA_SUPPORT
-#if PKCS11_RSA_SUPPORT_ENABLE
-                    CK_UTF8CHAR pubkey_gen[PKCS11_MAX_RSA_PB_KEY_SIZE] = { 0 };
-#else
-                    CK_UTF8CHAR pubkey_gen[PKCS11_MAX_ECC_PB_KEY_SIZE] = { 0 };
-#endif
-                    cal_buffer pubkey_buf = CAL_BUF_INIT(pubkey_size, pubkey_gen);
-                    CK_BYTE_PTR pubkey_buf_ptr = (CKK_EC == obj_ptr->class_type) ? &pubkey_buffer[1] : &pubkey_buffer[0];
-
-                    if (CKR_OK == (rv = pkcs11_ta_get_pubkey(pObject, &pubkey_buf, pSession)))
-                    {
-                        (void)memcpy(pubkey_buf_ptr, pubkey_gen, pubkey_size);
-                    }
-                    PKCS11_DEBUG("pkcs11_ta_get_pubkey: %x\r\n", rv);
-#endif
                 }
                 else
                 {
@@ -1242,21 +659,6 @@ static CK_RV pkcs11_key_calc_key_id(const pkcs11_session_ctx_ptr pSession, const
                 }
                 else if (atcab_is_ta_device(dev_type))
                 {
-#if ATCA_TA_SUPPORT
-#if PKCS11_RSA_SUPPORT_ENABLE
-                    CK_UTF8CHAR pubkey_rd[PKCS11_MAX_RSA_PB_KEY_SIZE] = { 0 };
-#else
-                    CK_UTF8CHAR pubkey_rd[PKCS11_MAX_ECC_PB_KEY_SIZE] = { 0 };
-#endif
-                    cal_buffer pubkey_buf = CAL_BUF_INIT(pubkey_size, pubkey_rd);
-                    CK_BYTE_PTR pubkey_buf_ptr = (CKK_EC == obj_ptr->class_type) ? &pubkey_buffer[1] : &pubkey_buffer[0];
-
-                    if (CKR_OK == (rv = pkcs11_util_convert_rv(talib_read_element(pSession->slot->device_ctx, obj_ptr->slot, &pubkey_buf))))
-                    {
-                        (void)memcpy(pubkey_buf_ptr, pubkey_rd, pubkey_size);
-                    }
-                    PKCS11_DEBUG("talib_read_element: %x\r\n", rv);
-#endif
                 }
                 else
                 {
@@ -1470,14 +872,6 @@ const pkcs11_attrib_model pkcs11_key_public_attributes[] = {
     { CKA_EC_PARAMS,          pkcs11_key_get_ec_params                                          },
     /** DER - encoding of ANSI X9.62 ECPoint value Q */
     { CKA_EC_POINT,           pkcs11_key_get_ec_point                                           },
-#if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
-    /** Big integer - Modulus n */
-    { CKA_MODULUS,            pkcs11_key_get_modulus                                            },
-    /** CK_ULONG - Length in bits of modulus n */
-    { CKA_MODULUS_BITS,       pkcs11_key_get_modulus_bits                                       },
-    /** Big integer - Public exponent e */
-    { CKA_PUBLIC_EXPONENT,    pkcs11_key_get_public_exponent                                    },
-#endif
 };
 
 const CK_ULONG pkcs11_key_public_attributes_count = (CK_ULONG)(PKCS11_UTIL_ARRAY_SIZE(pkcs11_key_public_attributes));
@@ -1577,24 +971,6 @@ const pkcs11_attrib_model pkcs11_key_private_attributes[] = {
     { CKA_EC_POINT,            pkcs11_key_get_ec_point                                             },
     /** The value of the private key should remain private.  A NULL function pointer is interpreted as a sensitive attribute. */
     { CKA_VALUE,               NULL_PTR                                                            },
-#if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
-    /** Big integer - Modulus n */
-    { CKA_MODULUS,             pkcs11_key_get_modulus                                              },
-    /** Big integer - Public exponent e */
-    { CKA_PUBLIC_EXPONENT,     pkcs11_key_get_public_exponent                                      },
-    /** Big integer - Private exponent d */
-    { CKA_PRIVATE_EXPONENT,    NULL_PTR                                                            },
-    /** Big integer - Prime p */
-    { CKA_PRIME_1,             NULL_PTR                                                            },
-    /** Big integer - Prime q */
-    { CKA_PRIME_2,             NULL_PTR                                                            },
-    /** Big integer - Private exponent d modulo p-1 */
-    { CKA_EXPONENT_1,          NULL_PTR                                                            },
-    /** Big integer - Private exponent d modulo q-1 */
-    { CKA_EXPONENT_2,          NULL_PTR                                                            },
-    /** Big integer -  CRT coefficient q-1 mod p */
-    { CKA_COEFFICIENT,         NULL_PTR                                                            },
-#endif
 };
 
 const CK_ULONG pkcs11_key_private_attributes_count = (CK_ULONG)(PKCS11_UTIL_ARRAY_SIZE(pkcs11_key_private_attributes));
@@ -1764,28 +1140,6 @@ CK_RV pkcs11_key_write(CK_VOID_PTR pSession, CK_VOID_PTR pObject, CK_ATTRIBUTE_P
                         }
                         else if (atcab_is_ta_device(device_type))
                         {
-#if ATCA_TA_SUPPORT
-#if PKCS11_RSA_SUPPORT_ENABLE
-                            CK_UTF8CHAR pubkey[PKCS11_MAX_RSA_PB_KEY_SIZE] = { 0 };
-#else
-                            CK_UTF8CHAR pubkey[PKCS11_MAX_ECC_PB_KEY_SIZE] = { 0 };
-#endif
-
-                            cal_buffer pbkey_buf = {0u, pubkey};
-
-                            if (CKK_EC == obj_ptr->class_type)
-                            {
-                                pbkey_buf.len = key_data->ecc_key_info->pubkey_sz;
-                            }
-#if PKCS11_RSA_SUPPORT_ENABLE
-                            else
-                            {
-                                pbkey_buf.len = key_data->rsa_key_info->pubkey_sz;
-                            }
-#endif
-                            (void)memcpy(pubkey, &(((CK_BYTE_PTR)pAttribute->pValue)[0]), pAttribute->ulValueLen);
-                            rv = pkcs11_util_convert_rv(talib_write_element(session_ctx->slot->device_ctx, obj_ptr->slot, &pbkey_buf));
-#endif
                         }
                         else
                         {
@@ -1903,9 +1257,6 @@ CK_RV pkcs11_key_generate
     if (CKR_OK == rv)
     {
         pKey->class_id = CKO_SECRET_KEY;
-        #if ATCA_TA_SUPPORT
-        status = talib_handle_init_symmetric_key(&pKey->handle_info, TA_KEY_TYPE_AES128, TA_PROP_SYMM_KEY_USAGE_ANY);
-        #endif
         rv = pkcs11_config_key(pLibCtx, pSession->slot, pKey, pName);
     }
 
@@ -1940,9 +1291,6 @@ CK_RV pkcs11_key_generate
             }
             else
             {
-#if ATCA_TA_SUPPORT
-                status = talib_genkey_symmetric_key(pSession->slot->device_ctx, pKey->slot);
-#endif
             }
             (void)pkcs11_unlock_both(pLibCtx);
         }
@@ -2042,19 +1390,6 @@ CK_RV pkcs11_key_generate_pair
         }
     }
 
-#if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
-    if (true == isRsa)
-    {
-        for (i = 0; i < ulPublicKeyAttributeCount; i++)
-        {
-            if (CKA_MODULUS_BITS == pPublicKeyTemplate[i].type)
-            {
-                pData = &pPublicKeyTemplate[i];
-                break;
-            }
-        }
-    }
-#endif
 
     if (NULL == pLabel || pLabel->ulValueLen > (CK_ULONG)PKCS11_MAX_LABEL_SIZE)
     {
@@ -2108,49 +1443,11 @@ CK_RV pkcs11_key_generate_pair
                 }
             }
         }
-#if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
-        else
-        {
-            CK_BYTE keyTableSz = (CK_BYTE)(sizeof(rsa_key_data_table) / sizeof(rsa_key_data_table[0]));
-            for (i = 0; i < keyTableSz; i++)
-            {
-                if (rsa_key_data_table[i].rsa_modulus_bits == *((CK_ULONG_PTR)pData->pValue))
-                {
-                    //Modulus size in bits matched and we got the private key type
-                    keyTableIdx = i;
-                    matched = true;
-                    break;
-                }
-            }
-        }
-#endif
 
         if (false == matched)
         {
             rv = CKR_TEMPLATE_INCONSISTENT;
         }
-#if ATCA_TA_SUPPORT
-        else
-        {
-#if PKCS11_RSA_SUPPORT_ENABLE
-            if (true == isRsa)
-            {
-                if (TA_KEY_TYPE_RSA1024 == rsa_key_data_table[keyTableIdx].rsa_key_type)
-                {
-                    rv = CKR_DEVICE_ERROR;
-                }
-                else
-                {
-                    (void)talib_handle_init_private_key(&pPrivate->handle_info, rsa_key_data_table[keyTableIdx].rsa_key_type, TA_ALG_MODE_RSA_SSA_1_5, TA_PROP_SIGN_INT_EXT_DIGEST, TA_PROP_KEY_AGREEMENT_OUT_BUFF);
-                }
-            }
-            else
-#endif
-            {
-                (void)talib_handle_init_private_key(&pPrivate->handle_info, ec_key_data_table[keyTableIdx].ec_key_type, TA_ALG_MODE_ECC_ECDSA, TA_PROP_SIGN_INT_EXT_DIGEST, TA_PROP_KEY_AGREEMENT_OUT_BUFF);
-            }
-        }
-#endif
         if (CKR_OK == rv)
         {
             rv = pkcs11_config_key(pLibCtx, pSession->slot, pPrivate, pLabel);
@@ -2168,14 +1465,6 @@ CK_RV pkcs11_key_generate_pair
 #if ATCA_CA_SUPPORT
         pPublic->config = &((pkcs11_slot_ctx_ptr)pSession->slot)->cfg_zone;
 #endif
-#if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
-        if (true == isRsa)
-        {
-            pPublic->class_type = CKK_RSA;
-            pPublic->size = rsa_key_data_table[keyTableIdx].pubkey_sz;
-        }
-        else
-#endif
         {
             pPublic->class_type = CKK_EC;
             pPublic->size = ec_key_data_table[keyTableIdx].pubkey_sz;
@@ -2192,9 +1481,6 @@ CK_RV pkcs11_key_generate_pair
             }
             else if (atcab_is_ta_device(dev_type))
             {
-#if ATCA_TA_SUPPORT
-                rv = pkcs11_util_convert_rv(talib_genkey(pSession->slot->device_ctx, pPrivate->slot, NULL));
-#endif
             }
             else
             {
@@ -2344,49 +1630,6 @@ static CK_RV pkcs11_key_derive_ca(pkcs11_session_ctx_ptr pSession, pkcs11_object
 }
 #endif
 
-#if ATCA_TA_SUPPORT
-static CK_RV pkcs11_key_derive_ta(pkcs11_session_ctx_ptr pSession, pkcs11_object_ptr pBaseKey, pkcs11_object_ptr pSecretKey,
-                                  CK_ECDH1_DERIVE_PARAMS_PTR pEcdhParameters)
-{
-    CK_RV rv = CKR_ARGUMENTS_BAD;
-
-    if ((NULL != pSession) && (NULL != pBaseKey) && (NULL != pSecretKey) && (NULL != pEcdhParameters))
-    {
-        pSecretKey->attributes = pkcs11_key_secret_attributes;
-        pSecretKey->count = pkcs11_key_secret_attributes_count;
-        pSecretKey->size = 32;
-        pSecretKey->flags = PKCS11_OBJECT_FLAG_DESTROYABLE | PKCS11_OBJECT_FLAG_SENSITIVE;
-#ifdef ATCA_NO_HEAP
-        if (!pkcs11_key_used(pkcs11_key_cache, sizeof(pkcs11_key_cache)))
-        {
-            pSecretKey->data = pkcs11_key_cache;
-        }
-#else
-        pSecretKey->data = pkcs11_os_malloc(pSecretKey->size);
-#endif
-        if (NULL == pSecretKey->data)
-        {
-            rv = CKR_HOST_MEMORY;
-        }
-        else
-        {
-            ATCA_STATUS status = ATCA_SUCCESS;
-            pkcs11_lib_ctx_ptr pLibCtx = pkcs11_get_context();
-            if (atcab_is_ta_device(atcab_get_device_type_ext(pSession->slot->device_ctx)))
-            {
-                if (CKR_OK == (rv = pkcs11_lock_both(pLibCtx)))
-                {
-                    status = talib_ecdh_compat(pSession->slot->device_ctx, pBaseKey->slot, &pEcdhParameters->pPublicData[1], (uint8_t*)pSecretKey->data);
-                    (void)pkcs11_unlock_both(pLibCtx);
-                }
-            }
-            rv = pkcs11_util_convert_rv(status);
-        }
-    }
-
-    return rv;
-}
-#endif
 
 CK_RV pkcs11_key_derive
 (
@@ -2518,9 +1761,6 @@ CK_RV pkcs11_key_derive
         }
         else
         {
-#if ATCA_TA_SUPPORT
-            rv = pkcs11_key_derive_ta(pSession, pBaseKey, pSecretKey, pEcdhParameters);
-#endif
         }
     }
 

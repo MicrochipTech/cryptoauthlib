@@ -12,10 +12,11 @@ The previous API version is maintained for a year after a new version is release
 
 | Version | Supported          | Notes |
 | ------- | ------------------ | ----- |
-| 3.7.x   | :heavy_check_mark: |       |
-| 3.6.x   | :heavy_check_mark: | Support Ends September 8 2024  |
-| 3.5.x   | :heavy_check_mark: | Support Ends April 4 2024  |
-| 3.4.x   | :heavy_check_mark: | Support Ends March 14 2024 |
+| 3.8.x   | :heavy_check_mark: |       |
+| 3.7.x   | :xeavy_check_mark: | Support Ends June 30 2026  |
+| 3.6.x   | :x:                |       |
+| 3.5.x   | :x:                |       |
+| 3.4.x   | :x:                |       |
 | 3.3.x   | :x:                |       |
 | 3.2.x   | :x:                |       |
 | < 3.2   | :x:                |       |

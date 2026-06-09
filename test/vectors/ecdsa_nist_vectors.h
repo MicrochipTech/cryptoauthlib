@@ -2,7 +2,7 @@
  * \file
  * \brief Embedded NIST vectors for the ECDSA algorithm
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -81,10 +81,6 @@ typedef struct ATCA_PACKED
     char*   ResultText;
 } ecdsa_p384_test_vector;
 
-#ifdef ATCA_TA100_SUPPORT
-extern const ecdsa_p384_test_vector ecdsa_p384_s256_test_vectors[];
-extern const size_t ecdsa_p384_s256_test_vectors_count;
-#endif
 
 #if TEST_VECTOR_SHA2_384_EN
 extern const ecdsa_p384_test_vector ecdsa_p384_test_vectors[];

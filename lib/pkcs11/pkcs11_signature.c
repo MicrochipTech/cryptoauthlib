@@ -2,7 +2,7 @@
  * \file
  * \brief PKCS11 Library Sign/Verify Handling
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -66,9 +66,6 @@ static CK_RV pkcs11_signature_check_key(
             rv = CKR_OK;
         }
         break;
-#if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
-    case CKM_RSA_PKCS:
-#endif
     case CKM_ECDSA:
         if (CKO_PRIVATE_KEY == pKey->class_id)
         {
@@ -83,26 +80,6 @@ static CK_RV pkcs11_signature_check_key(
             /* do nothing */
         }
         break;
-#if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
-    case CKM_RSA_PKCS_PSS:
-        // pMechanism->pParameter should point to CK_RSA_PKCS_PSS_PARAMS
-        if ((NULL != pMechanism->pParameter) && (sizeof(CK_RSA_PKCS_PSS_PARAMS) == pMechanism->ulParameterLen))
-        {
-            if (CKO_PRIVATE_KEY == pKey->class_id)
-            {
-                rv = CKR_OK;
-            }
-            else if (verify && (CKO_PUBLIC_KEY == pKey->class_id))
-            {
-                rv = CKR_OK;
-            }
-            else
-            {
-                /* do nothing */
-            }
-        }
-        break;
-#endif
     default:
         rv = CKR_MECHANISM_INVALID;
         break;
@@ -120,10 +97,10 @@ static CK_ULONG pkcs11_signature_get_len(
     ATCADeviceType dev_type, /**<[in] Device type */
     pkcs11_object_ptr pKey   /**< [in] Key object */
     )
-{   
+{
     CK_ULONG ulSiglen = 0u;
     if (NULL != pKey)
-    {   
+    {
         if (atcab_is_ca_device(dev_type))
         {
 #if ATCA_CA_SUPPORT
@@ -132,19 +109,6 @@ static CK_ULONG pkcs11_signature_get_len(
         }
         else if (atcab_is_ta_device(dev_type))
         {
-#if ATCA_TA_SUPPORT
-            uint8_t key_type = ((pKey->handle_info.element_CKA & TA_HANDLE_INFO_KEY_TYPE_MASK) >> TA_HANDLE_INFO_KEY_TYPE_SHIFT);
-            if (key_type < TA_KEY_TYPE_ECC_COUNT)
-            {
-                ulSiglen = key_data_table[key_type].ecc_key_info->sig_sz;
-            }
-#if PKCS11_RSA_SUPPORT_ENABLE
-            else
-            {
-                ulSiglen = key_data_table[key_type].rsa_key_info->sig_sz;
-            }
-#endif
-#endif
         }
         else
         {
@@ -277,7 +241,7 @@ CK_RV pkcs11_signature_sign(
     }
 
     if (CKR_OK == (rv = pkcs11_lock_context(pLibCtx)))
-    {   
+    {
         ATCADeviceType dev_type = atcab_get_device_type_ext(pSession->slot->device_ctx);
 
         switch (pSession->active_mech)
@@ -298,73 +262,20 @@ CK_RV pkcs11_signature_sign(
             break;
         case CKM_ECDSA:
             if (CKR_OK == (rv = pkcs11_signature_check_params(pSignature, pulSignatureLen, pkcs11_signature_get_len(dev_type, pKey))))
-            {   
+            {
+#if ATCA_CA_SUPPORT
                 if (atcab_is_ca_device(dev_type))
                 {
                     if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
                     {
-#if ATCA_CA_SUPPORT
                         rv = pkcs11_util_convert_rv(atcab_sign_ext(pSession->slot->device_ctx, pKey->slot, pData, pSignature));
-#endif              
-                        (void)pkcs11_unlock_device(pLibCtx);
-                    }
-                }
-                else if (atcab_is_ta_device(dev_type))
-                {   
-                    if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
-                    {
-#if ATCA_TA_SUPPORT     
-                        uint8_t key_type = ((pKey->handle_info.element_CKA & TA_HANDLE_INFO_KEY_TYPE_MASK) >> TA_HANDLE_INFO_KEY_TYPE_SHIFT);
-                        cal_buffer msg_buf = CAL_BUF_INIT(ulDataLen, pData);
-                        cal_buffer sign_buf = CAL_BUF_INIT(*pulSignatureLen, pSignature);
-                        //EC CURVE type depend on minium message size constraints for signing external messages in TA devices
-                        rv = pkcs11_util_convert_rv(talib_sign_external(pSession->slot->device_ctx, key_type, pKey->slot, TA_HANDLE_INPUT_BUFFER, &msg_buf,
-                                                                        &sign_buf));
-#endif              
-                        (void)pkcs11_unlock_device(pLibCtx);
-                    }
-                }
-                else
-                {
-                    /* do nothing */
-                }
-            }
-            break;
-#if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
-        case CKM_RSA_PKCS:
-        case CKM_RSA_PKCS_PSS:
-            if (CKR_OK == (rv = pkcs11_signature_check_params(pSignature, pulSignatureLen, pkcs11_signature_get_len(dev_type, pKey))))
-            {
-                if (atcab_is_ta_device(dev_type))
-                {   
-                    if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
-                    {     
-                        uint8_t key_type = ((pKey->handle_info.element_CKA & TA_HANDLE_INFO_KEY_TYPE_MASK) >> TA_HANDLE_INFO_KEY_TYPE_SHIFT);
-                        uint8_t mode = (CKM_RSA_PKCS == pSession->active_mech) ? (key_type) : (uint8_t)(key_type | (uint8_t)(TA_ALG_MODE_RSA_SSA_PSS << TA_ALG_MODE_SHIFT));
-                        cal_buffer msg_buf = CAL_BUF_INIT(ulDataLen, pData);
-                        cal_buffer sign_buf = CAL_BUF_INIT(*pulSignatureLen, pSignature);
 
-                        if (TA_KEY_TYPE_RSA1024 == key_type)
-                        {
-                            rv = CKR_DEVICE_ERROR;
-                        }
-                        else
-                        {
-                            // Data to be signed should not include encoded data(asn1 header) of SHA256
-                            if (0 == memcmp(pData, pkcs11_sha256_asn1_hdr, sizeof(pkcs11_sha256_asn1_hdr)))
-                            {
-                                (void)memmove(pData, &pData[sizeof(pkcs11_sha256_asn1_hdr)], TA_SHA256_DIGEST_SIZE);
-                                msg_buf.len = TA_SHA256_DIGEST_SIZE;
-                            }
-                            rv = pkcs11_util_convert_rv(talib_sign_external(pSession->slot->device_ctx, mode, pKey->slot, TA_HANDLE_INPUT_BUFFER, &msg_buf,
-                                                                           &sign_buf));
-                        }           
                         (void)pkcs11_unlock_device(pLibCtx);
                     }
-                }   
+                }
+#endif
             }
             break;
-#endif 
         default:
             /* An irrationality occured */
             rv = CKR_GENERAL_ERROR;
@@ -549,7 +460,7 @@ CK_RV pkcs11_signature_verify(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_
         {
             return CKR_ARGUMENTS_BAD;
         }
-        
+
         /* Checking data length */
         if (ulDataLen < key_data->ecc_key_info->min_msg_sz)
         {
@@ -586,21 +497,6 @@ CK_RV pkcs11_signature_verify(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_
                     }
                     else if ((atcab_is_ta_device(dev_type)) && (NULL != key_data->ecc_key_info))
                     {
-#if ATCA_TA_SUPPORT
-                        cal_buffer ec_pubkey_buf = CAL_BUF_INIT(key_data->ecc_key_info->pubkey_sz, pub_key);
-                        if (CKR_OK == (rv = pkcs11_ta_get_pubkey(pKey, &ec_pubkey_buf, pSession)))
-                        {
-#if TALIB_VERIFY_EXTERN_EN
-                            uint8_t key_type = ((pKey->handle_info.element_CKA & TA_HANDLE_INFO_KEY_TYPE_MASK) >> TA_HANDLE_INFO_KEY_TYPE_SHIFT);
-                            cal_buffer sign_buf = CAL_BUF_INIT(ulSignatureLen, pSignature);
-                            cal_buffer pbkey_buf = CAL_BUF_INIT(key_data->ecc_key_info->pubkey_sz, pub_key);
-                            cal_buffer msg_buf = CAL_BUF_INIT(ulDataLen, pData);
-
-                            rv = pkcs11_util_convert_rv(talib_verify_extern(pSession->slot->device_ctx, key_type, TA_HANDLE_INPUT_BUFFER, &pbkey_buf, &sign_buf,
-                                                                           &msg_buf, &verified));
-#endif
-                        }
-#endif
                     }
                     else
                     {
@@ -619,16 +515,6 @@ CK_RV pkcs11_signature_verify(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_
                     }
                     else if (atcab_is_ta_device(dev_type))
                     {
-#if ATCA_TA_SUPPORT
-#if TALIB_VERIFY_STORED_EN
-                        uint8_t key_type = ((pKey->handle_info.element_CKA & TA_HANDLE_INFO_KEY_TYPE_MASK) >> TA_HANDLE_INFO_KEY_TYPE_SHIFT);
-                        cal_buffer sign_buf = CAL_BUF_INIT(ulSignatureLen, pSignature);
-                        cal_buffer msg_buf = CAL_BUF_INIT(ulDataLen, pData);
-
-                        rv = pkcs11_util_convert_rv(talib_verify_stored(pSession->slot->device_ctx, key_type, TA_HANDLE_INPUT_BUFFER, pKey->slot, &sign_buf,
-                                                                       &msg_buf, &verified));
-#endif
-#endif
                     }
                     else
                     {
@@ -640,77 +526,6 @@ CK_RV pkcs11_signature_verify(CK_SESSION_HANDLE hSession, CK_BYTE_PTR pData, CK_
             }
         }
         break;
-#if ATCA_TA_SUPPORT && PKCS11_RSA_SUPPORT_ENABLE
-    case CKM_RSA_PKCS:
-    case CKM_RSA_PKCS_PSS:
-        if (NULL == key_data || NULL == key_data->rsa_key_info)
-        {
-            return CKR_ARGUMENTS_BAD;
-        }
-        
-        /* Checking data length */
-        if (ulDataLen < key_data->rsa_key_info->sig_min_msg_sz)
-        {
-            (void)pkcs11_unlock_context(pLibCtx);
-            return CKR_DATA_LEN_RANGE;
-        }
-
-        /* Checking Signature length */
-        if (ulSignatureLen < key_data->rsa_key_info->sig_sz)
-        {
-            (void)pkcs11_unlock_context(pLibCtx);
-            return CKR_SIGNATURE_LEN_RANGE;
-        }
-
-        if (CKR_OK == (rv = pkcs11_object_is_private(pKey, &is_private, pSession)))
-        {
-            if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
-            {
-                ATCADeviceType dev_type = atcab_get_device_type_ext(pSession->slot->device_ctx);
-
-                if (atcab_is_ta_device(dev_type))
-                {
-                    uint8_t key_type = ((pKey->handle_info.element_CKA & TA_HANDLE_INFO_KEY_TYPE_MASK) >> TA_HANDLE_INFO_KEY_TYPE_SHIFT);
-                    uint8_t mode = (CKM_RSA_PKCS == pSession->active_mech) ? (key_type) : (uint8_t)(key_type | (uint8_t)(TA_ALG_MODE_RSA_SSA_PSS << TA_ALG_MODE_SHIFT));
-                    cal_buffer sign_buf = CAL_BUF_INIT(ulSignatureLen, pSignature);
-                    cal_buffer msg_buf = CAL_BUF_INIT(ulDataLen, pData);
-
-                    // Data to be verified should not include encoded data(asn1 header) of SHA256
-                    if (0 == memcmp(pData, pkcs11_sha256_asn1_hdr, sizeof(pkcs11_sha256_asn1_hdr)))
-                    {
-                        (void)memmove(pData, &pData[sizeof(pkcs11_sha256_asn1_hdr)], TA_SHA256_DIGEST_SIZE);
-                        msg_buf.len = TA_SHA256_DIGEST_SIZE;
-                    }
-
-                    if (true == is_private)
-                    {
-                        /* Device can't verify against a private key so ask the device for the public key
-                        first then perform an external verify */
-                        uint8_t pub_key[PKCS11_MAX_RSA_PB_KEY_SIZE];
-                        cal_buffer rsa_pubkey_buf = CAL_BUF_INIT(key_data->rsa_key_info->pubkey_sz, pub_key);
-                        
-                        if (CKR_OK == (rv = pkcs11_ta_get_pubkey(pKey, &rsa_pubkey_buf, pSession)))
-                        {
-#if TALIB_VERIFY_EXTERN_EN
-                            rv = pkcs11_util_convert_rv(talib_verify_extern(pSession->slot->device_ctx, mode, TA_HANDLE_INPUT_BUFFER, &rsa_pubkey_buf, &sign_buf,
-                                                                           &msg_buf, &verified));
-#endif
-                        }
-                    }
-                    else
-                    {
-                        /* Assume Public Key has been stored properly and verify against whatever is stored */              
-#if TALIB_VERIFY_STORED_EN
-                        rv = pkcs11_util_convert_rv(talib_verify_stored(pSession->slot->device_ctx, mode, TA_HANDLE_INPUT_BUFFER, pKey->slot, &sign_buf,
-                                                                       &msg_buf, &verified));
-#endif
-                    }
-                }
-                (void)pkcs11_unlock_device(pLibCtx);
-            }
-        }
-        break;
-#endif
     default:
         /* Do nothing */
         break;

@@ -4,7 +4,7 @@
  *
  * Copyright (c) 2017 Microchip Technology Inc. All rights reserved.
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -447,27 +447,6 @@ CK_RV pkcs11_deinit(CK_VOID_PTR pReserved)
     {
         if (CKR_OK == pkcs11_lock_device(lib_ctx))
         {
-#if (ATCA_TA_SUPPORT && TALIB_AUTH_EN)
-
-            /* Terminate auth session*/
-            pkcs11_slot_ctx_ptr pslot_ctx = (pkcs11_slot_ctx_ptr)lib_ctx->slots;
-
-            for (i = 0; i < lib_ctx->slot_cnt; i++)
-            {
-                if ((NULL != pslot_ctx) && (NULL != pslot_ctx->device_ctx))
-                {
-                    if (atcab_is_ta_device(atcab_get_device_type_ext(pslot_ctx->device_ctx)))
-                    {
-                        (void)talib_auth_terminate(pslot_ctx->device_ctx);
-                    }
-                }
-                else
-                {
-                    break;
-                }
-                pslot_ctx++;
-            }
-#endif
 
             /* Release the crypto devices */
             pkcs11_slot_ctx_ptr pslot_ctx_release = (pkcs11_slot_ctx_ptr)lib_ctx->slots;

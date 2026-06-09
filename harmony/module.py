@@ -1,5 +1,5 @@
 """*****************************************************************************
-* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2015-2026 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -23,8 +23,7 @@
 
 import os
 
-_CALIB_SUPPORTED_DEVICES = ['ATECC108A', 'ATECC508A', 'ATECC608', 'ATSHA204A', 'ATSHA206A', 'ECC204', 'TA010', 'SHA104', 'SHA105']
-_TALIB_SUPPORTED_DEVICES = ['TA100', 'TA101']
+_CALIB_SUPPORTED_DEVICES = ['ATECC108A', 'ATECC508A', 'ATECC608', 'ATSHA204A', 'ATSHA206A', 'ECC204', 'ECC206', 'TA010', 'SHA104', 'SHA105']
 
 def loadModule():
     cryptoAuthLib = Module.CreateSharedComponent("cryptoauthlib", "Core", "/Libraries/Cryptoauthlib", "/harmony/config/cryptoauthlib.py")
@@ -62,16 +61,13 @@ def loadModule():
     for dev in _CALIB_SUPPORTED_DEVICES:
         comp = Module.CreateGeneratorComponent(dev.lower(), dev, "/Harmony/Drivers/Crypto", "/harmony/config/device_common.py", "/harmony/config/device_instance.py")
         comp.addDependency("cryptoauthlib", "CA_LIB", True, False)
-        if 'ATSHA206A' not in dev:
+        if dev not in ['ATSHA206A', 'ECC206']:
             comp.addMultiDependency('{}_DEP_PLIB_I2C'.format(dev.upper()), 'I2C', 'I2C', False)
-        if 'SHA105' not in dev:
+        if dev not in ['ECC206', 'SHA105']:
             comp.addMultiDependency('{}_DEP_PLIB_SWI'.format(dev.upper()), 'UART', 'SWI', False)
 
-    if os.path.exists(Module.getPath() + 'lib/talib/talib_basic.h'):
-        for dev in _TALIB_SUPPORTED_DEVICES:
-            comp = Module.CreateGeneratorComponent(dev.lower(), dev, "/Harmony/Drivers/Crypto", "/harmony/config/device_common.py", "/harmony/config/device_instance.py")
-            comp.addDependency("cryptoauthlib", "CA_LIB", True, False)
-            comp.addMultiDependency('{}_DEP_PLIB_I2C'.format(dev.upper()), 'I2C', 'I2C', False)
-            comp.addMultiDependency('{}_DEP_PLIB_SPI'.format(dev.upper()), 'SPI', 'SPI', False)
-
-
+    for dev in devices:
+        comp = Module.CreateGeneratorComponent(dev.lower(), dev, "/Harmony/Drivers/Crypto", "/harmony/config/device_common.py", "/harmony/config/device_instance.py")
+        comp.addDependency("cryptoauthlib", "CA_LIB", True, False)
+        comp.addMultiDependency('{}_DEP_PLIB_I2C'.format(dev.upper()), 'I2C', 'I2C', False)
+        comp.addMultiDependency('{}_DEP_PLIB_SPI'.format(dev.upper()), 'SPI', 'SPI', False)

@@ -2,7 +2,7 @@
  * \file
  * \brief PKCS11 Library Object Find/Searching
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -38,13 +38,90 @@
 #include "pkcs11_cert.h"
 
 /**
- * \defgroup pkcs11 Find (pkcs11_find_)
-   @{ */
+ * \brief Per-session template cache entry for thread-safe find operations
+ */
+typedef struct pkcs11_find_cache_fields_s
+{
+    CK_BBOOL          in_use;          /**< \brief Flag indicating if this cache slot is in use */
+    CK_SESSION_HANDLE hSession_use;    /**< \brief Session handle owning this cache slot */
+#ifdef ATCA_HEAP
+    CK_BYTE*           template_cache; /**< \brief Dynamically allocated template cache buffer */
+#else
+    CK_BYTE            template_cache[PKCS11_FIND_TEMPLATE_CACHE_SIZE]; /**< \brief Static template cache buffer */
+#endif
+} pkcs11_find_cache_fields_t;
 
-// #ifdef ATCA_NO_HEAP
-static CK_BYTE pkcs11_find_template_cache[PKCS11_SEARCH_CACHE_SIZE];
-// #endif
+static pkcs11_find_cache_fields_t pkcs11_find_cache_list[PKCS11_FIND_TEMPLATE_CACHE_COUNT];
 
+/**
+ * \brief Acquire a free template cache slot for the given session
+ * \param[in] hSession  Session handle requesting the cache slot
+ * \return Pointer to acquired cache entry, or NULL if no slots available
+ */
+static pkcs11_find_cache_fields_t* pkcs11_find_cache_acquire(CK_SESSION_HANDLE hSession)
+{
+    CK_ULONG i;
+
+    for (i = 0; i < PKCS11_FIND_TEMPLATE_CACHE_COUNT; i++)
+    {
+        if (pkcs11_find_cache_list[i].in_use == CK_FALSE)
+        {
+            pkcs11_find_cache_list[i].in_use = CK_TRUE;
+            pkcs11_find_cache_list[i].hSession_use = hSession;
+
+#ifdef ATCA_HEAP
+            if (NULL == pkcs11_find_cache_list[i].template_cache)
+            {
+                pkcs11_find_cache_list[i].template_cache =
+                    (CK_BYTE*)pkcs11_os_malloc(PKCS11_FIND_TEMPLATE_CACHE_SIZE);
+
+                if (NULL == pkcs11_find_cache_list[i].template_cache)
+                {
+                    pkcs11_find_cache_list[i].in_use = CK_FALSE;
+                    pkcs11_find_cache_list[i].hSession_use = CK_INVALID_HANDLE;
+                    return NULL;
+                }
+            }
+#else
+            (void)memset(pkcs11_find_cache_list[i].template_cache, 0, PKCS11_FIND_TEMPLATE_CACHE_SIZE);
+#endif
+            return &pkcs11_find_cache_list[i];
+        }
+    }
+
+    return NULL;
+}
+
+/**
+ * \brief Release a template cache slot for the given session
+ * \param[in] hSession  Session handle requesting the cache slot release
+ */
+static void pkcs11_find_cache_release(CK_SESSION_HANDLE hSession)
+{
+    CK_ULONG i;
+
+    for (i = 0; i < PKCS11_FIND_TEMPLATE_CACHE_COUNT; i++)
+    {
+        if ((pkcs11_find_cache_list[i].in_use == CK_TRUE) &&
+            (pkcs11_find_cache_list[i].hSession_use == hSession))
+        {
+            pkcs11_find_cache_list[i].in_use = CK_FALSE;
+            pkcs11_find_cache_list[i].hSession_use = CK_INVALID_HANDLE;
+
+#ifdef ATCA_HEAP
+            if (NULL != pkcs11_find_cache_list[i].template_cache)
+            {
+                (void)memset(pkcs11_find_cache_list[i].template_cache, 0, PKCS11_FIND_TEMPLATE_CACHE_SIZE);
+                pkcs11_os_free(pkcs11_find_cache_list[i].template_cache);
+                pkcs11_find_cache_list[i].template_cache = NULL;
+            }
+#else
+            (void)memset(pkcs11_find_cache_list[i].template_cache, 0, PKCS11_FIND_TEMPLATE_CACHE_SIZE);
+#endif
+            return;
+        }
+    }
+}
 
 /**
  * \brief Copy an array of CK_ATTRIBUTE structures
@@ -292,6 +369,11 @@ CK_RV pkcs11_find_init(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pTemplate, C
     {
         return rv;
     }
+    else if (pSession == NULL)
+    {
+        rv = CKR_SESSION_HANDLE_INVALID;
+        return rv;
+    }
 
     pkcs11_debug_attributes(pTemplate, ulCount);
 
@@ -305,10 +387,27 @@ CK_RV pkcs11_find_init(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pTemplate, C
         {
             if (ulCount != 0u)
             {
-                if (CKR_OK == (rv = pkcs11_find_copy_template(pkcs11_find_template_cache, PKCS11_SEARCH_CACHE_SIZE, pTemplate, ulCount)))
+                pkcs11_find_cache_fields_t* pCache = pkcs11_find_cache_acquire(hSession);
+#ifdef ATCA_HEAP
+                if ((NULL == pCache) || (NULL == pCache->template_cache))
+#else
+                if (NULL == pCache)
+#endif
                 {
-                    /* coverity[misra_c_2012_rule_11_3_violation] pkcs11_find manages its own memory cache with a raw buffer */
-                    pSession->attrib_list = (CK_ATTRIBUTE_PTR)pkcs11_find_template_cache;
+                    rv = CKR_HOST_MEMORY;
+                }
+                else
+                {
+                    rv = pkcs11_find_copy_template(pCache->template_cache,
+                                                PKCS11_FIND_TEMPLATE_CACHE_SIZE,
+                                                pTemplate,
+                                                ulCount);
+
+                    if (CKR_OK == rv)
+                    {
+                        /* coverity[misra_c_2012_rule_11_3_violation] pkcs11_find manages its own memory cache with a raw buffer */
+                        pSession->attrib_list = (CK_ATTRIBUTE_PTR)pCache->template_cache;
+                    }
                 }
             }
             else
@@ -327,6 +426,11 @@ CK_RV pkcs11_find_init(CK_SESSION_HANDLE hSession, CK_ATTRIBUTE_PTR pTemplate, C
                     index++;
                 }
             }
+        }
+        if (CKR_OK != rv)
+        {
+            pkcs11_find_cache_release(hSession);
+            pSession->attrib_list = NULL;
         }
         (void)pkcs11_unlock_both(pLibCtx);
     }
@@ -408,13 +512,14 @@ CK_RV pkcs11_find_finish(CK_SESSION_HANDLE hSession)
         return rv;
     }
 
+    pkcs11_find_cache_release(hSession);
+
     pSession->attrib_list = NULL;
     pSession->attrib_count = 0;
     pSession->object_count = 0;
 
     return CKR_OK;
 }
-
 
 CK_RV pkcs11_find_get_attribute(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)
 {

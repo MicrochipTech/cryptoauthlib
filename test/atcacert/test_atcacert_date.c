@@ -2,7 +2,7 @@
  * \file
  * \brief cert date tests
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -2040,12 +2040,12 @@ TEST(atcacert_date_dec_compcert, expiry_date_extended_gen)
     atcacert_tm_utc_t issue_date, issue_date_ref;
     atcacert_tm_utc_t expire_date, expire_date_ref;
 
-    //Compressed format version with 1 has 4 bytes encoded date 
+    //Compressed format version with 1 has 4 bytes encoded date
     uint8_t comp_cert[72] = {0};
 
     //Issue date = 2024
     set_tm(&issue_date_ref,  2024,      3, 7, 10, 0, 0);
-    
+
     //Expiry date with expiry year = 2056
     set_tm(&expire_date_ref, 2024 + 32, 3, 7, 10, 0, 0);
 
@@ -2059,7 +2059,7 @@ TEST(atcacert_date_dec_compcert, expiry_date_extended_gen)
 
     //Encoded data for reference:{ 0xC1, 0x9D, 0x40, 0x10 };
 
-    //Decode the compressed certificate encoded date value 
+    //Decode the compressed certificate encoded date value
     ret = atcacert_date_dec_compcert_ext(comp_cert, DATEFMT_RFC5280_GEN, &issue_date, &expire_date);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
@@ -2079,7 +2079,7 @@ TEST(atcacert_date_dec_compcert, expiry_date_utc)
 
     //Issue date = 2024
     set_tm(&issue_date_ref,  2024,      3, 7, 10, 0, 0);
-    
+
     //Expiry date with expiry year = 2030
     set_tm(&expire_date_ref, 2024 + 6, 3, 7, 10, 0, 0);
 
@@ -2091,7 +2091,7 @@ TEST(atcacert_date_dec_compcert, expiry_date_utc)
 
     //Encoded date data for reference: uint8_t enc_dates[4] = { 0xC1, 0x9D, 0x46 };
 
-    //Decode the compressed certificate encoded date value 
+    //Decode the compressed certificate encoded date value
     ret = atcacert_date_dec_compcert(enc_dates, DATEFMT_RFC5280_UTC, &issue_date, &expire_date);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
@@ -2106,12 +2106,12 @@ TEST(atcacert_date_dec_compcert, issue_date_extended_gen)
     atcacert_tm_utc_t issue_date, issue_date_ref;
     atcacert_tm_utc_t expire_date, expire_date_ref;
 
-    //Compressed format version with 1 has 4 bytes encoded date 
+    //Compressed format version with 1 has 4 bytes encoded date
     uint8_t comp_cert[72] = {0};
 
     //Issue date = 2050
     set_tm(&issue_date_ref,  2050, 3, 7, 10, 0, 0);
-    
+
     //Expiry date with expiry year = 2082
     set_tm(&expire_date_ref, 2050 + 32, 3, 7, 10, 0, 0);
 
@@ -2125,7 +2125,7 @@ TEST(atcacert_date_dec_compcert, issue_date_extended_gen)
 
     //Encoded data for reference: { 0x91, 0x9D, 0x40, 0x50 };
 
-    //Decode the compressed certificate encoded date value 
+    //Decode the compressed certificate encoded date value
     ret = atcacert_date_dec_compcert_ext(comp_cert, DATEFMT_RFC5280_GEN, &issue_date, &expire_date);
     TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
 
@@ -2337,7 +2337,7 @@ t_test_case_info atcacert_date_enc_rfc5280_gen_tests[] =
 {
     { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_gen, good),           NULL },
     { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_gen, min),            NULL },
-    { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_gen, max),            NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_gen, max),            NULL },
     { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_gen, bad_year),       NULL },
     { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_gen, bad_month),      NULL },
     { REGISTER_TEST_CASE(atcacert_date_enc_rfc5280_gen, bad_day),        NULL },
@@ -2353,7 +2353,7 @@ t_test_case_info atcacert_date_enc_compcert_tests[] =
 {
     { REGISTER_TEST_CASE(atcacert_date_enc_compcert, good),                 NULL },
     { REGISTER_TEST_CASE(atcacert_date_enc_compcert, min),                  NULL },
-    { REGISTER_TEST_CASE(atcacert_date_enc_compcert, max),                  NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_enc_compcert, max),                  NULL },
     { REGISTER_TEST_CASE(atcacert_date_enc_compcert, min_ext_issue_year),   NULL },
     { REGISTER_TEST_CASE(atcacert_date_enc_compcert, max_ext_issue_year),   NULL },
     { REGISTER_TEST_CASE(atcacert_date_enc_compcert, min_ext_expire_years), NULL },
@@ -2376,7 +2376,7 @@ t_test_case_info atcacert_date_enc_tests[] =
 #endif
     { REGISTER_TEST_CASE(atcacert_date_enc, rfc5280_utc),                NULL },
 #if ATCACERT_DATEFMT_POSIX_EN
-    { REGISTER_TEST_CASE(atcacert_date_enc, posix_uint32_be),            NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_enc, posix_uint32_be),            NULL },
     { REGISTER_TEST_CASE(atcacert_date_enc, posix_uint32_le),            NULL },
 #endif
     { REGISTER_TEST_CASE(atcacert_date_enc, rfc5280_gen),                NULL },
@@ -2392,7 +2392,7 @@ t_test_case_info atcacert_date_dec_iso8601_sep_tests[] =
 #if ATCACERT_DATEFMT_ISO_EN
     { REGISTER_TEST_CASE(atcacert_date_dec_iso8601_sep, good),           NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec_iso8601_sep, min),            NULL },
-    { REGISTER_TEST_CASE(atcacert_date_dec_iso8601_sep, max),            NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_dec_iso8601_sep, max),            NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec_iso8601_sep, bad_int),        NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec_iso8601_sep, bad_params),     NULL },
 #endif
@@ -2404,7 +2404,7 @@ t_test_case_info atcacert_date_dec_rfc5280_utc_tests[] =
 {
     { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_utc, good),           NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_utc, min),            NULL },
-    { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_utc, max),            NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_utc, max),            NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_utc, y2k),            NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_utc, bad_int),        NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_utc, bad_params),     NULL },
@@ -2417,7 +2417,7 @@ t_test_case_info atcacert_date_dec_posix_uint32_be_tests[] =
 #if ATCACERT_DATEFMT_POSIX_EN
     { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_be, good),       NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_be, min),        NULL },
-    { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_be, int32_max),  NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_be, int32_max),  NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_be, large),      NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_be, max),        NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_be, bad_params), NULL },
@@ -2431,7 +2431,7 @@ t_test_case_info atcacert_date_dec_posix_uint32_le_tests[] =
 #if ATCACERT_DATEFMT_POSIX_EN
     { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_le, good),       NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_le, min),        NULL },
-    { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_le, int32_max),  NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_le, int32_max),  NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_le, large),      NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_le, max),        NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec_posix_uint32_le, bad_params), NULL },
@@ -2444,7 +2444,7 @@ t_test_case_info atcacert_date_dec_rfc5280_gen_tests[] =
 {
     { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_gen, good),           NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_gen, min),            NULL },
-    { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_gen, max),            NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_gen, max),            NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_gen, bad_int),        NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec_rfc5280_gen, bad_params),     NULL },
     /* Array Termination element*/
@@ -2458,7 +2458,7 @@ t_test_case_info atcacert_date_get_max_date_tests[] =
 #endif
     { REGISTER_TEST_CASE(atcacert_date_get_max_date, rfc5280_utc),       NULL },
 #if ATCACERT_DATEFMT_POSIX_EN
-    { REGISTER_TEST_CASE(atcacert_date_get_max_date, posix_uint32_be),   NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_get_max_date, posix_uint32_be),   NULL },
     { REGISTER_TEST_CASE(atcacert_date_get_max_date, posix_uint32_le),   NULL },
 #endif
     { REGISTER_TEST_CASE(atcacert_date_get_max_date, rfc5280_gen),       NULL },
@@ -2472,10 +2472,10 @@ t_test_case_info atcacert_date_dec_compcert_tests[] =
 {
     { REGISTER_TEST_CASE(atcacert_date_dec_compcert, good),                      NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec_compcert, min),                       NULL },
-    { REGISTER_TEST_CASE(atcacert_date_dec_compcert, max),                       NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_dec_compcert, max),                       NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec_compcert, posix_uint32_be),           NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec_compcert, bad_params),                NULL },
-    { REGISTER_TEST_CASE(atcacert_date_dec_compcert, expiry_date_extended_gen),  NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_dec_compcert, expiry_date_extended_gen),  NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec_compcert, expiry_date_utc),           NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec_compcert, issue_date_extended_gen),   NULL },
     /* Array Termination element*/
@@ -2489,11 +2489,11 @@ t_test_case_info atcacert_date_dec_tests[] =
 #endif
     { REGISTER_TEST_CASE(atcacert_date_dec, rfc5280_utc),                NULL },
 #if ATCACERT_DATEFMT_POSIX_EN
-    { REGISTER_TEST_CASE(atcacert_date_dec, posix_uint32_be),            NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_dec, posix_uint32_be),            NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec, posix_uint32_le),            NULL },
 #endif
     { REGISTER_TEST_CASE(atcacert_date_dec, rfc5280_gen),                NULL },
-    { REGISTER_TEST_CASE(atcacert_date_dec, small_buf),                  NULL },    
+    { REGISTER_TEST_CASE(atcacert_date_dec, small_buf),                  NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec, bad_format),                 NULL },
     { REGISTER_TEST_CASE(atcacert_date_dec, bad_params),                 NULL },
     /* Array Termination element*/
@@ -2501,3 +2501,4 @@ t_test_case_info atcacert_date_dec_tests[] =
 };
 
 #endif
+

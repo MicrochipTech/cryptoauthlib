@@ -2,7 +2,7 @@
  * \file
  * \brief Single aggregation point for all CryptoAuthLib header files
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -86,26 +86,14 @@
 #define ATCA_ECC_SIG_OVERHEAD_SIZE          (8u)
 #define ATCA_MAX_SLOT_NUM                   (16)
 
-#if ATCA_TA_SUPPORT
-#define ATCA_MAX_ECC_PB_KEY_SIZE            (132u)
-#define ATCA_MAX_ECC_SIG_SIZE               (132u)
-#define ATCA_MAX_DATA_SIZE                  (512u)
-#define ATCA_KEY_TYPE_ECC_COUNT             (4u)
-#define ATCA_SERNUM_OFFSET                  (0u)
-#define ATCACERT_COMP_CERT_MAX_SIZE         (140u) //64 bytes signature, 3 bytes encoded dates, 2 bytes signer id, 1 byte template id and chain id, 1 byte sn source and format version, 1 byte encoded years, remaining signature for ecc higher curves
-#define ATCACERT_MAX_SIG_OVERHEAD           (19u)  //30 82 xx xx 00 30 82 xx xx 02 82 xx xx 00 02 82 xx xx 00
-#define ATCACERT_MAX_R_SIG_OFFSET           (14u)  //30 82 xx xx 00 30 82 xx xx 02 82 xx xx 00
-#define ATCACERT_COMPCERT_OVERHEAD          (9u)
-#else
 #define ATCA_MAX_ECC_PB_KEY_SIZE            (72u)
 #define ATCA_MAX_ECC_SIG_SIZE               (64u)
 #define ATCA_MAX_DATA_SIZE                  (416)
 #define ATCA_KEY_TYPE_ECC_COUNT             (1u)
 #define ATCACERT_COMP_CERT_MAX_SIZE         (72u)  //64 bytes signature, 3 bytes encoded dates, 2 bytes signer id, 1 byte template id and chain id, 1 byte sn source and format version, 1 byte encoded years
-#define ATCACERT_MAX_SIG_OVERHEAD           (11u)  //30 xx 00 30 xx 02 rlen 00 02 slen 00  
+#define ATCACERT_MAX_SIG_OVERHEAD           (11u)  //30 xx 00 30 xx 02 rlen 00 02 slen 00
 #define ATCACERT_MAX_R_SIG_OFFSET           (8u)   //30 xx 00 30 xx 02 rlen 00
 #define ATCACERT_COMPCERT_OVERHEAD          (0u)
-#endif
 
 #ifndef ATCA_BLOCK_SIZE
 #define ATCA_BLOCK_SIZE                     (32u)
@@ -137,6 +125,7 @@
 #define ATCA_TA010_DEVICE_ID                ((uint8_t)0x6A)
 #define ATCA_SHA104_DEVICE_ID               ((uint8_t)0x35)
 #define ATCA_SHA105_DEVICE_ID               ((uint8_t)0x3B)
+#define ATCA_ECC206_DEVICE_ID               ((uint8_t)0x7A)
 #endif
 
 /** Place resulting digest both in Output buffer and TempKey */
@@ -150,18 +139,12 @@
 #include "atca_cfgs.h"
 #include "calib/calib_basic.h"
 #include "calib/calib_command.h"
+#if CALIB_AES_GCM_EN
 #include "calib/calib_aes_gcm.h"
+#endif
 #include "calib/calib_packet.h"
 #endif
 
-#if ATCA_TA_SUPPORT
-#ifndef LIBRARY_USAGE_EN
-#include "talib/talib_status.h"
-#include "talib/talib_basic.h"
-#else
-#include "ta_app.h"
-#endif
-#endif
 
 /* Common Library Functions */
 #include "atca_basic.h"

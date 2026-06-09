@@ -1,6 +1,6 @@
 /**
  * \file
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -173,12 +173,6 @@ t_test_case_info* atcacert_io_test_list[] = {
 #if ATCACERT_COMPCERT_EN
     atcacert_host_hw_tests, 
     atcacert_client_ca2_tests,
-#endif
-#if ATCA_TA_SUPPORT
-    atcacert_client_ta_tests,
-#if ATCACERT_COMPCERT_EN
-    atcacert_host_hw_ta_tests, 
-#endif
 #endif
     atcacert_host_sw_tests,
     /* Array Termination element*/

@@ -2,7 +2,7 @@
  * \file
  * \brief Unity tests for the cryptoauthlib Verify Command
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -74,6 +74,7 @@ TEST_CONDITION(atca_cmd_basic_test, selftest_ecc204_ta010)
     ATCADeviceType dev_type = atca_test_get_device_type();
 
     return (ECC204 == dev_type)
+           || (ECC206 == dev_type)
            || (TA010 == dev_type);
 }
 

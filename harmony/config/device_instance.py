@@ -1,6 +1,6 @@
 # coding: utf-8
 """*****************************************************************************
-* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2015-2026 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -21,11 +21,17 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *****************************************************************************"""
+import os
 
-_DEFAULT_I2C_ADDRESS = {'ecc': 0xC0, 'sha': 0xC8, 'ecc204': 0x66, 'ta100': 0x2e, 'sha104': 0x62, 'sha105': 0x64}
-_SWI_DEVICES = ['ATSHA204A', 'ATSHA206A', 'ATECC108A', 'ATECC508A', 'ATECC608', 'ECC204', 'TA010', 'SHA104']
-_I2C_DEVICES = ['ATSHA204A', 'ATECC108A', 'ATECC508A', 'ATECC608', 'TA100', 'TA101', 'ECC204', 'TA010', 'SHA104', 'SHA105']
-_SPI_DEVICES = ['TA100', 'TA101']
+# Legacy symbol name: these defaults feed Harmony's shared address field, which
+# is used for both true I2C devices and CA2 SWI/1-wire devices in generated
+# configs. The 'ecc204' entry is the shared CA2 default bus address byte
+# (0x66 write, from the default 7-bit device address 0x33) and is reused by
+# ECC204, ECC206 and TA010.
+_DEFAULT_I2C_ADDRESS = {'ecc': 0xC0, 'sha': 0xC8, 'ecc204': 0x66,  'sha104': 0x62, 'sha105': 0x64}
+_SWI_DEVICES = ['ATSHA204A', 'ATSHA206A', 'ATECC108A', 'ATECC508A', 'ATECC608', 'ECC204', 'ECC206', 'TA010', 'SHA104']
+_I2C_DEVICES = ['ATSHA204A', 'ATECC108A', 'ATECC508A', 'ATECC608', 'ECC204', 'TA010', 'SHA104', 'SHA105']
+_SPI_DEVICES = []
 
 caldevcfglist = []
 
@@ -60,6 +66,7 @@ def updateSercomPlibList(plib, inc):
 
 def updateTngCapability(id, src):
     Database.sendMessage('cryptoauthlib_tng', 'UPDATE_TNG_TYPE', {'id': id, 'src': src})
+
 
 def updateWpcCapability(id, src):
     Database.sendMessage('cryptoauthlib_wpc', 'UPDATE_WPC_TYPE', {'id': id, 'src': src})
@@ -139,9 +146,14 @@ def updatePartInterfaceSettings(symbol, event):
             i2c_addr = 0xB2
         else:
             i2c_addr = 0xC0
+        
+    elif updateId == 'TA_PART_TYPE':
+        
+        i2c_addr = 0x2E
 
         symbol.getComponent().getSymbolByID('I2C_ADDR').setValue(i2c_addr)
         updateTngCapability(selected_key, event['namespace'])
+        updateTflxCapability(selected_key, event['namespace'])
         updateWpcCapability(selected_key, event['namespace'])
 
 
@@ -192,7 +204,12 @@ def instantiateComponent(deviceComponent, index):
     deviceAddress = deviceComponent.createHexSymbol("I2C_ADDR", interfaceType)
     deviceAddress.setLabel("I2C Address")
 
-    if (('ECC204' in deviceID) or ('TA010' in deviceID)):
+    # "I2C_ADDR" is a legacy Harmony symbol name that is also reused for the
+    # CA2 SWI/1-wire device address in generated configs. ECC204, ECC206 and
+    # TA010 all share the same default CA2 bus address byte (0x66 write, from
+    # the default 7-bit device address 0x33), so ECC206 intentionally reuses
+    # the existing 'ecc204' default instead of requiring a separate table entry.
+    if (('ECC204' in deviceID) or ('ECC206' in deviceID) or ('TA010' in deviceID)):
         deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['ecc204'])
     elif 'ECC' in deviceID:
         deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['ecc'])
@@ -202,8 +219,6 @@ def instantiateComponent(deviceComponent, index):
         deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['sha105'])
     elif 'SHA' in deviceID:
         deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['sha'])
-    elif 'TA' in deviceID:
-        deviceAddress.setDefaultValue(_DEFAULT_I2C_ADDRESS['ta100'])
 
     deviceAddress.setDependencies(updatePartInterfaceSettings, ["INTERFACE"])
     deviceAddress.setVisible(True)

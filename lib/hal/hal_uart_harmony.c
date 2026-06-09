@@ -5,7 +5,7 @@
  * This code is structured in two parts.  Part 1 is the connection of the ATCA HAL API to the physical I2C
  * implementation. Part 2 is the Harmony UART (ring buffer mode) primitives to set up the interface.
  *
- * \copyright (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -26,7 +26,6 @@
  * LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED
  * THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR
  * THIS SOFTWARE.
- *
  */
 
 #include "atca_config.h"

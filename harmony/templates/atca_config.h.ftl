@@ -225,7 +225,7 @@
 </#if>
 
 /* Nonce Command */
-<#if cal_derivekey == false>
+<#if cal_nonce == false>
         <#lt>#define ATCAB_NONCE_EN                     (FEATURE_DISABLED)
 <#else>
         <#lt>#define ATCAB_NONCE_EN                     (FEATURE_ENABLED)
@@ -337,7 +337,7 @@
 <#if cal_hw_aes == false>
         <#lt>#define ATCAB_AES_EXTRAS_EN                (FEATURE_DISABLED)
 <#else>
-        <#lt>#define ATCAB_AES_EXTRAS_EN                (CALIB_AES_EN || TALIB_AES_EN || LIBRARY_USAGE_EN_CHECK)
+        <#lt>#define ATCAB_AES_EXTRAS_EN                (CALIB_AES_EN || TALIB_AES_EN)
 
         <#if cal_crypto_aes_cbc_encrypt == false>
             <#lt>#define ATCAB_AES_CBC_ENCRYPT_EN       (FEATURE_DISABLED)
@@ -504,6 +504,12 @@
 #ifndef ATCA_PREPROCESSOR_WARNING
 #define ATCA_PREPROCESSOR_WARNING     ${CAL_ENABLE_PREPROCESSOR_WARNING?c}
 #endif
+
+<#if CAL_DO_NOT_TEST_CERT>
+#ifndef DO_NOT_TEST_CERT
+#define DO_NOT_TEST_CERT
+#endif
+</#if>
 
 /* Define generic interfaces to the processor libraries */
 <#assign is_atca_plib_i2c_exists = "False">

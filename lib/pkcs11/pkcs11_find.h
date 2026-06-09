@@ -2,7 +2,7 @@
  * \file
  * \brief PKCS11 Library Object Find/Searching
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -33,6 +33,17 @@
 
 #ifdef __cplusplus
 extern "C" {
+#endif
+
+#ifndef PKCS11_FIND_TEMPLATE_CACHE_COUNT
+#define PKCS11_FIND_TEMPLATE_CACHE_COUNT   (5u)   /* configurable: 3 or 5 */
+#endif
+
+#ifndef PKCS11_FIND_TEMPLATE_CACHE_SIZE
+#ifndef PKCS11_SEARCH_CACHE_SIZE
+#define PKCS11_SEARCH_CACHE_SIZE        128u
+#endif
+#define PKCS11_FIND_TEMPLATE_CACHE_SIZE    (PKCS11_SEARCH_CACHE_SIZE)
 #endif
 
 #ifdef __cplusplus

@@ -2,7 +2,7 @@
  * \file
  * \brief CryptoAuthLib Basic API - Helper Functions to
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -290,6 +290,8 @@ ATCA_STATUS calib_is_private(ATCADevice device, uint16_t slot, bool* is_private)
         }
 #endif
 #if ATCA_CA2_SUPPORT
+        case ECC206:
+        /* fallthrough */
         case ECC204:
         /* fallthrough */
         case TA010:
@@ -367,6 +369,9 @@ ATCADeviceType calib_get_devicetype_with_device_id(uint8_t device_id, uint8_t de
             break;
         case ATCA_SHA105_DEVICE_ID:
             device_type = SHA105;
+            break;
+        case ATCA_ECC206_DEVICE_ID:
+            device_type = ECC206;
             break;
         default:
             device_type = ATCA_DEV_UNKNOWN;

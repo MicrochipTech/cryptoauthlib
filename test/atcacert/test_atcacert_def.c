@@ -2,7 +2,7 @@
  * \file
  * \brief cert definition tests
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -5032,46 +5032,6 @@ TEST(atcacert_get_comp_cert, gen_comp_with_issue_date_beyond_2031)
     TEST_ASSERT_EQUAL_MEMORY(cert_signer_ref, cert, cert_size);
 }
 
-#if ATCA_TA_SUPPORT
-TEST(atcacert_get_comp_cert, same_size_p521)
-{
-    useCert(&g_test_p521_cert_def_13_signer);
-    int ret = 0;
-    uint8_t comp_cert[ATCACERT_COMP_CERT_MAX_SIZE];
-    atcacert_tm_utc_t date;
-    static const uint8_t comp_cert_ref[] = {
-        0x01, 0xF4, 0x4A, 0x5B, 0xA4, 0xD9, 0x29, 0xC7, 0x97, 0x90, 0x44, 0x17, 0x30, 0xDB, 0xF0, 0x0A,
-        0x48, 0xDE, 0xFA, 0x77, 0x3D, 0xDF, 0xC6, 0x03, 0x41, 0x65, 0xBE, 0x9D, 0x2F, 0xC2, 0xB6, 0x77,
-        0x2B, 0xC3, 0xEB, 0x04, 0xFA, 0x54, 0x29, 0x08, 0x4A, 0x44, 0x71, 0x9C, 0x88, 0x4B, 0x27, 0x44,
-        0xBB, 0x90, 0xAE, 0x43, 0x12, 0xA1, 0x05, 0xF3, 0x39, 0x1B, 0x40, 0x16, 0xB7, 0x15, 0x61, 0x91,
-        0xC8, 0xC9, 0x2A, 0xc4, 0x8b, 0x14, 0x92, 0x00, 0x53, 0xDB, 0x01, 0x6B, 0x1F, 0x31, 0x29, 0x03,
-        0xEA, 0x94, 0xEA, 0x8F, 0xDB, 0x46, 0x80, 0x6A, 0x6C, 0x19, 0x38, 0x94, 0x68, 0xF0, 0x08, 0xC6,
-        0x28, 0x9C, 0x53, 0x0D, 0x58, 0xEE, 0x03, 0x73, 0x1E, 0x0B, 0xDE, 0x36, 0x24, 0x88, 0x13, 0x94,
-        0xA7, 0x76, 0xCD, 0xAB, 0xE7, 0x26, 0x16, 0x2A, 0x8F, 0xB6, 0xD1, 0x41, 0x64, 0x85, 0xDA, 0x68,
-        0x90, 0x23, 0x05, 0xF7, 0xC9, 0xE6, 0xC0, 0x26, 0xF7, 0x5B, 0x06, 0x52
-    };
-    static const uint8_t signer_id[2] = { 0xC4, 0x8B };
-
-    g_cert_def.chain_id = 4;
-
-    // Template signer id is XXXX, so we need to set it to a real hex value so it can be parsed
-    ret = atcacert_set_signer_id(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, signer_id);
-    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
-
-    // Make sure the expire_years in the cert matches the cert_def, so there's no mismatch
-    memset(&date, 0, sizeof(date));
-    ret = atcacert_get_issue_date(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, &date);
-    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
-    date.tm_year += g_cert_def.expire_years;
-    ret = atcacert_set_expire_date(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, &date);
-    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
-
-    (void)memset(comp_cert, 0, sizeof(comp_cert));
-    ret = atcacert_get_comp_cert(&g_cert_def, g_cert_def_cert_template, g_cert_def.cert_template_size, comp_cert);
-    TEST_ASSERT_EQUAL(ATCACERT_E_SUCCESS, ret);
-    TEST_ASSERT_EQUAL_MEMORY(comp_cert_ref, comp_cert, sizeof(comp_cert));
-}
-#endif
 
 
 TEST_GROUP(atcacert_get_tbs);
@@ -9398,9 +9358,6 @@ t_test_case_info atcacert_get_comp_cert_tests[] =
     { REGISTER_TEST_CASE(atcacert_get_comp_cert, gen_comp_expiry_date_beyond_2049_src_certdef),                 NULL },
     { REGISTER_TEST_CASE(atcacert_get_comp_cert, gen_comp_expiry_date_beyond_2049_src_cert),                    NULL },
     { REGISTER_TEST_CASE(atcacert_get_comp_cert, gen_comp_with_issue_date_beyond_2031),                         NULL },
-#if ATCA_TA_SUPPORT
-    { REGISTER_TEST_CASE(atcacert_get_comp_cert, same_size_p521),                        atca_test_cond_ta },
-#endif
     /* Array Termination element*/
     { (fp_test_case)NULL, NULL },
 };

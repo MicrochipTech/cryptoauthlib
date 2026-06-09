@@ -3,7 +3,7 @@
  *
  * \brief  Microchip Crypto Auth hardware interface object
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -45,10 +45,7 @@ extern "C" {
 
 #include "atca_devtypes.h"
 #include "atca_status.h"
-
-#ifndef LIBRARY_BUILD_EN
 #include "atca_config.h"
-#endif
 
 #ifdef ATCA_STRICT_C99
 #define ATCA_IFACECFG_NAME(x)  (x)

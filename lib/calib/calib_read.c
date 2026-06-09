@@ -10,7 +10,7 @@
  *       ATECC508A, ATECC608A/B. There are differences in the modes that they
  *       support. Refer to device datasheets for full details.
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -856,6 +856,8 @@ ATCA_STATUS calib_read_config_zone(ATCADevice device, uint8_t* config_data)
             break;
 #endif
 #if ATCA_CA2_SUPPORT
+        case ECC206:
+        /* fallthrough */
         case ECC204:
         /* fallthrough */
         case TA010:
@@ -933,6 +935,8 @@ ATCA_STATUS calib_cmp_config_zone(ATCADevice device, uint8_t* config_data, bool*
             break;
 #endif
 #if ATCA_CA2_SUPPORT
+        case ECC206:
+        /* fallthrough */
         case ECC204:
         /* fallthrough */
         case TA010:

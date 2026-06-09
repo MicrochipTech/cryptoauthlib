@@ -2,7 +2,7 @@
  * \file
  * \brief Implementation of PKCS7 Padding for block encryption
  *
- * \copyright (c) 2022 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *

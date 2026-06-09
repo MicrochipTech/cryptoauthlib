@@ -4,7 +4,7 @@
  *        of the authentication process. It is assumed the client has an ECC CryptoAuthentication device
  *        (e.g. ATECC508A) and the certificates are stored on that device.
  *
- * \copyright (c) 2015-2020 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -38,10 +38,6 @@
 #include "calib/calib_basic.h"
 #endif
 
-#if ATCA_TA_SUPPORT && !LIBRARY_USAGE_EN_CHECK
-#include "talib/talib_basic.h"
-#include "talib/talib_internal.h"
-#endif
 
 #if ATCACERT_EN
 
@@ -81,11 +77,6 @@ ATCA_STATUS atcacert_get_response(uint16_t          device_private_key_slot,
 {
     ATCA_STATUS status = ATCA_BAD_PARAM;
     ATCADeviceType dev_type = atcab_get_device_type();
-#if ATCA_TA_SUPPORT
-    ta_handle_info handle_info;
-    uint8_t key_type = 0u;
-    uint8_t alg_mode = 0u;
-#endif
 
 #if ATCA_CHECK_PARAMS_EN
     if ((false == atcab_is_ta_device(dev_type)) && device_private_key_slot > 15U)
@@ -105,18 +96,6 @@ ATCA_STATUS atcacert_get_response(uint16_t          device_private_key_slot,
         status = atcab_sign(device_private_key_slot, challenge->buf, response->buf);
     }
 #endif
-#if ATCA_TA_SUPPORT
-    if (atcab_is_ta_device(dev_type))
-    {
-        if (ATCA_SUCCESS == (status = talib_info_get_handle_info(atcab_get_device(), device_private_key_slot, &handle_info)))
-        {
-            key_type = (handle_info.attributes.element_CKA & TA_HANDLE_INFO_KEY_TYPE_MASK) >> TA_HANDLE_INFO_KEY_TYPE_SHIFT;
-            alg_mode = handle_info.attributes.element_CKA & TA_HANDLE_INFO_ALG_MODE_MASK;
-            status = talib_sign_external(atcab_get_device(), key_type | (uint8_t)(alg_mode << TA_ALG_MODE_SHIFT), device_private_key_slot,
-                                         TA_HANDLE_INPUT_BUFFER, challenge, response);                 
-        }
-    }
-#endif
     return status;
 }
 
@@ -130,9 +109,6 @@ ATCA_STATUS atcacert_read_device_loc_ext(ATCADevice                     device,
     if (device_loc->zone == DEVZONE_DATA && (0U != device_loc->is_genkey))
     {
         uint8_t public_key[ATCA_MAX_ECC_PB_KEY_SIZE];
-#if ATCA_TA_SUPPORT
-        cal_buffer pub_key = CAL_BUF_INIT(device_loc->count, public_key);
-#endif
 
 #if ATCA_CHECK_PARAMS_EN
         if (device_loc->offset + device_loc->count > ATCA_MAX_ECC_PB_KEY_SIZE) // sizeof public_key, in bytes
@@ -147,12 +123,6 @@ ATCA_STATUS atcacert_read_device_loc_ext(ATCADevice                     device,
             ret = atcab_get_pubkey_ext(device, device_loc->slot, public_key);
         }
 #endif
-#if ATCA_TA_SUPPORT
-        if (atcab_is_ta_device(dev_type))
-        {
-            ret = talib_get_pubkey(device, device_loc->slot, &pub_key);
-        }
-#endif
         if (ret != ATCA_SUCCESS)
         {
             return ret;
@@ -161,13 +131,6 @@ ATCA_STATUS atcacert_read_device_loc_ext(ATCADevice                     device,
     }
     else if (device_loc->zone == DEVZONE_DEDICATED_DATA)
     {
-#if ATCA_TA_SUPPORT
-        ret = talib_info_serial_number(device, data);
-        if (ret != ATCA_SUCCESS)
-        {
-            return ret;
-        }
-#endif
     }
     else
     {
@@ -244,24 +207,10 @@ ATCA_STATUS atcacert_read_cert_ext(ATCADevice               device,
 #if ATCACERT_FULLSTOREDCERT_EN
         if (ATCACERT_E_SUCCESS == (ret = atcab_read_bytes_zone_ext(device, (uint8_t)cert_def->comp_cert_dev_loc.zone,
                                                                    cert_def->comp_cert_dev_loc.slot, 0u, cert, *cert_size)))
-        {   
+        {
             ATCADeviceType dev_type = atcab_get_device_type_ext(device);
             if (atcab_is_ta_device(dev_type))
             {
-    #if ATCA_TA_SUPPORT
-                size_t actual_cert_len = 0x00;
-                if (ATCACERT_E_SUCCESS == (ret = talib_get_x509_cert_size(device, cert_def->comp_cert_dev_loc.slot, cert, &actual_cert_len)))
-                {
-                    if (*cert_size > actual_cert_len)
-                    {
-                        *cert_size = actual_cert_len;
-                    }
-                }
-                else
-                {
-                    return ret;
-                }
-    #endif
             }
     #if ATCACERT_INTEGRATION_EN
             cal_buffer buf = CAL_BUF_INIT(*cert_size, cert);
@@ -350,9 +299,6 @@ ATCA_STATUS atcacert_write_cert_ext(ATCADevice              device,
     atcacert_device_loc_t device_locs[ATCA_MAX_SLOT_NUM];
     size_t device_locs_count = 0;
     size_t i = 0;
-#if ATCA_TA_SUPPORT
-    size_t handle_size = 0u;
-#endif
 #endif
 
 #if ATCA_CHECK_PARAMS_EN
@@ -368,10 +314,6 @@ ATCA_STATUS atcacert_write_cert_ext(ATCADevice              device,
         ATCADeviceType dev_type = atcab_get_device_type_ext(device);
         if (atcab_is_ta_device(dev_type))
         {
-    #if ATCA_TA_SUPPORT
-            cal_buffer cert_data_buf = cal_buf_init_const_ptr(cert_size, cert);
-            ret = talib_write_X509_cert(device, cert_def->comp_cert_dev_loc.slot, &cert_data_buf);
-    #endif
         }
         else
         {
@@ -407,7 +349,7 @@ ATCA_STATUS atcacert_write_cert_ext(ATCADevice              device,
             static uint8_t data[ATCA_MAX_DATA_SIZE];
 #if ATCA_CA_SUPPORT || ATCA_CA2_SUPPORT
             int end_block;
-            int start_block; 
+            int start_block;
             int block;
 #endif
 
@@ -428,24 +370,6 @@ ATCA_STATUS atcacert_write_cert_ext(ATCADevice              device,
 
             if (true == atcab_is_ta_device(devtype))
             {
-    #if ATCA_TA_SUPPORT
-                if (ATCA_SUCCESS == (ret = atcab_get_zone_size_ext(device, (uint8_t)device_locs[i].zone, device_locs[i].slot, &handle_size)))
-                {
-                    if (handle_size >= ((size_t)device_locs[i].offset + (size_t)device_locs[i].count))
-                    {
-                        ret = talib_write_bytes_zone(device, (const uint8_t)device_locs[i].zone, device_locs[i].slot, device_locs[i].offset, 
-                                                     data, device_locs[i].count);
-                    }
-                    else
-                    {
-                        return ATCACERT_E_ELEM_OUT_OF_BOUNDS;
-                    }
-                }
-                else
-                {
-                    return ret;
-                }
-    #endif
             }
             else
             {
@@ -537,12 +461,6 @@ ATCA_STATUS atcacert_create_csr(const atcacert_def_t* csr_def, uint8_t* csr, siz
     uint8_t tbs_digest[ATCA_SHA512_DIGEST_SIZE] = { 0 };
     cal_buffer tbs_dig_buf = CAL_BUF_INIT(sizeof(tbs_digest), tbs_digest);
     size_t csr_max_size = 0;
-#if ATCA_TA_SUPPORT
-    cal_buffer pub_key_buf = CAL_BUF_INIT(0u, pub_key);
-    ta_handle_info handle_info;
-    uint8_t key_type = 0u;
-    uint8_t alg_mode = 0u;
-#endif
 
     do
     {
@@ -581,13 +499,6 @@ ATCA_STATUS atcacert_create_csr(const atcacert_def_t* csr_def, uint8_t* csr, siz
                 status = atcab_get_pubkey(key_slot, pub_key);
             }
 #endif
-#if ATCA_TA_SUPPORT
-            if (atcab_is_ta_device(dev_type))
-            {
-                pub_key_buf.len = pub_dev_loc->count;
-                status = talib_get_pubkey(atcab_get_device(), key_slot, &pub_key_buf);
-            }
-#endif   
             if (status != ATCA_SUCCESS)
             {
                 (void)ATCA_TRACE(status, "Could not generate public key"); break;
@@ -602,13 +513,6 @@ ATCA_STATUS atcacert_create_csr(const atcacert_def_t* csr_def, uint8_t* csr, siz
                 status = atcab_read_pubkey(key_slot, pub_key);
             }
 #endif
-#if ATCA_TA_SUPPORT
-            if (atcab_is_ta_device(dev_type))
-            {
-                pub_key_buf.len = pub_dev_loc->count;
-                status = talib_read_element(atcab_get_device(), key_slot, &pub_key_buf);
-            }
-#endif
             if (status != ATCA_SUCCESS)
             {
                 (void)ATCA_TRACE(status, "Could not read public key"); break;
@@ -621,19 +525,6 @@ ATCA_STATUS atcacert_create_csr(const atcacert_def_t* csr_def, uint8_t* csr, siz
             (void)ATCA_TRACE(status, "Setting CSR public key failed"); break;
         }
 
-#if ATCA_TA_SUPPORT
-        if (ATCA_ECCP384_SIG_SIZE == csr_def->std_sig_size)
-        {
-            tbs_dig_buf.len = ATCA_SHA2_384_DIGEST_SIZE;
-            signature.len = ATCA_ECCP384_SIG_SIZE;
-        }
-        else if (ATCA_ECCP521_SIG_SIZE == csr_def->std_sig_size)
-        {
-            tbs_dig_buf.len = ATCA_SHA2_512_DIGEST_SIZE;
-            signature.len = ATCA_ECCP521_SIG_SIZE;
-        }
-        else
-#endif
         {
             tbs_dig_buf.len = ATCA_SHA2_256_DIGEST_SIZE;
             signature.len = ATCA_ECCP256_SIG_SIZE;
@@ -651,18 +542,6 @@ ATCA_STATUS atcacert_create_csr(const atcacert_def_t* csr_def, uint8_t* csr, siz
         if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
         {
             status = atcab_sign(priv_key_slot, tbs_digest, sig);
-        }
-#endif
-#if ATCA_TA_SUPPORT
-        if (atcab_is_ta_device(dev_type))
-        {
-            if (ATCA_SUCCESS == (status = talib_info_get_handle_info(atcab_get_device(), priv_key_slot, &handle_info)))
-            {
-                key_type = (handle_info.attributes.element_CKA & TA_HANDLE_INFO_KEY_TYPE_MASK) >> TA_HANDLE_INFO_KEY_TYPE_SHIFT;
-                alg_mode = handle_info.attributes.element_CKA & TA_HANDLE_INFO_ALG_MODE_MASK;
-                status = talib_sign_external(atcab_get_device(), key_type | (uint8_t)(alg_mode << TA_ALG_MODE_SHIFT), priv_key_slot,
-                                             TA_HANDLE_INPUT_BUFFER, &tbs_dig_buf, &signature);                 
-            }
         }
 #endif
         if (status != ATCA_SUCCESS)
@@ -709,12 +588,6 @@ ATCA_STATUS atcacert_read_subj_key_id_ext(ATCADevice device, const atcacert_def_
             if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
             {
                 ret = atcab_get_pubkey_ext(device, cert_def->public_key_dev_loc.slot, subj_public_key);
-            }
-#endif
-#if ATCA_TA_SUPPORT
-            if (atcab_is_ta_device(dev_type))
-            {
-                ret = talib_get_pubkey(device, cert_def->public_key_dev_loc.slot, &subj_pub_key);
             }
 #endif
         }
@@ -771,14 +644,11 @@ ATCA_STATUS atcacert_read_cert_size_ext(ATCADevice              device,
 #endif
 
     if (CERTTYPE_X509_FULL_STORED == cert_def->type)
-    {   
+    {
 #if ATCACERT_FULLSTOREDCERT_EN
         ATCADeviceType dev_type = atcab_get_device_type_ext(device);
         if (atcab_is_ta_device(dev_type))
         {
-    #if ATCA_TA_SUPPORT
-            ret = talib_get_x509_cert_size(device, cert_def->comp_cert_dev_loc.slot, NULL, cert_size);
-    #endif
         }
         else
         {
@@ -801,17 +671,9 @@ ATCA_STATUS atcacert_read_cert_size_ext(ATCADevice              device,
                                         cert_def->comp_cert_dev_loc.offset,
                                         &buf[ATCACERT_MAX_R_SIG_OFFSET], length);
 
-    #if ATCA_TA_SUPPORT
-        if (sig_buf.len > ATCA_ECCP256_SIG_SIZE)
-        {
-            (void)memmove(&buf[ATCACERT_MAX_R_SIG_OFFSET + ATCA_ECCP256_SIG_SIZE], 
-                          &buf[ATCACERT_MAX_R_SIG_OFFSET + ATCA_ECCP256_SIG_SIZE + ATCACERT_COMPCERT_OVERHEAD], 
-                          (sig_buf.len - ATCA_ECCP256_SIG_SIZE));
-        }    
-    #endif
 
         if (ATCACERT_E_SUCCESS == ret)
-        { 
+        {
             ret = atcacert_der_enc_ecdsa_sig_value(&sig_buf, buf, &buflen);
         }
 

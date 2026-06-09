@@ -1,7 +1,7 @@
 """
 Interface Configuration
 """
-# (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+# Copyright (C) 2015-2026 Microchip Technology Inc. and its subsidiaries.
 #
 # Subject to your compliance with these terms, you may use Microchip software
 # and any derivatives exclusively with Microchip products. It is your
@@ -69,8 +69,6 @@ class ATCADeviceType(AtcaEnum):
     ATECC608B = 3
     ATECC608  = 3
     ATSHA206A = 4
-    TA100 = 0x10
-    TA101 = 0x11
     ECC204 = 0x20
     TA010 = 0x21
     ECC206 = 0x22

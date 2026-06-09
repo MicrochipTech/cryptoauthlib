@@ -1,7 +1,7 @@
 """
 Cryptoauthlib Library Management
 """
-# (c) 2015-2018 Microchip Technology Inc. and its subsidiaries.
+# Copyright (C) 2015-2026 Microchip Technology Inc. and its subsidiaries.
 #
 # Subject to your compliance with these terms, you may use Microchip software
 # and any derivatives exclusively with Microchip products. It is your
@@ -155,7 +155,8 @@ def get_device_name_with_device_id(revision):
                0x5A: 'ECC204',
                0x6A: 'TA010',
                0x35: 'SHA104',
-               0x3B: 'SHA105'}
+               0x3B: 'SHA105',
+               0x7A: 'ECC206'}
     
     device_name = devices.get(revision[1], 'UNKNOWN')
     return device_name
@@ -171,8 +172,6 @@ def get_device_type_id(name):
                 'ATECC608B': 3,
                 'ATECC608': 3,
                 'ATSHA206A': 4,
-                'TA100': 0x10,
-                'TA101': 0x11,
                 'ECC204': 0x20,
                 'TA010': 0x21,
                 'ECC206': 0x22,
@@ -707,9 +706,12 @@ class cal_buffer(Structure):
     ]
     _pack_ = 1
 
-    def __init__(self, length, data):
+    def __init__(self, length, data: bytes|bytearray):
         self.len = c_size_t(length)
-        self.buf = cast(bytes(data), POINTER(c_uint8))
+        if isinstance(data, bytearray):
+            self.buf = cast((c_uint8 * length).from_buffer(data),POINTER(c_uint8))
+        else:
+            self.buf = cast(data, POINTER(c_uint8)) 
 
 def ctypes_to_bytes(obj):
     """

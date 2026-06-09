@@ -2,7 +2,7 @@
  * \file
  * \brief Test for the Cryptoauthlib Compressed Certficiate API
  *
- * \copyright (c) 2020-2025 Microchip Technology Inc. and its subsidiaries.
+ * \copyright (c) 2015-2026 Microchip Technology Inc. and its subsidiaries.
  *
  * \page License
  *
@@ -35,18 +35,6 @@ extern "C" {
 #include "atca_test.h"
 #include "atcacert/atcacert_client.h"
 
-#if ATCACERT_COMPCERT_EN && ATCAC_SHA384_EN && ATCAC_SHA512_EN && ATCA_TA_SUPPORT
-void build_and_save_cert_ta(
-    const atcacert_def_t* cert_def,
-    uint8_t* cert,
-    size_t* cert_size,
-    const cal_buffer* ca_public_key,
-    const cal_buffer* public_key,
-    const uint8_t            signer_id[2],
-    const atcacert_tm_utc_t* issue_date,
-    const uint8_t* sn,
-    uint16_t                 ca_slot);
-#endif
 
 #ifdef __cplusplus
 }
