@@ -153,6 +153,11 @@ typedef struct
 } atca_hal_list_entry_t;
 
 
+#if defined(ATCA_NO_HEAP) && defined(ATCA_HAL_CUSTOM)
+    static ATCAHAL_t g_atcahal_custom_iface;
+#endif
+
+
 static atca_hal_list_entry_t atca_registered_hal_list[ATCA_MAX_HAL_CACHE] = {
 #ifdef ATCA_HAL_I2C
     { (uint8_t)ATCA_I2C_IFACE,      &hal_i2c,        NULL      },
@@ -305,7 +310,12 @@ ATCA_STATUS hal_iface_init(ATCAIfaceCfg *cfg, ATCAHAL_t **hal, ATCAHAL_t **phy)
 #ifdef ATCA_HAL_CUSTOM
         if (ATCA_CUSTOM_IFACE == cfg->iface_type)
         {
+#ifdef ATCA_NO_HEAP
+            (void)memset(&g_atcahal_custom_iface, 0, sizeof(g_atcahal_custom_iface));
+            *hal = &g_atcahal_custom_iface;
+#else
             *hal = hal_malloc(sizeof(ATCAHAL_t));
+#endif
             if (NULL != *hal)
             {
                 (*hal)->halinit = ATCA_IFACECFG_VALUE(cfg, atcacustom.halinit);
