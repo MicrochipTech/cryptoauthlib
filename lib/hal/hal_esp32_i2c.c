@@ -250,6 +250,7 @@ ATCA_STATUS hal_i2c_send(ATCAIface iface, uint8_t word_address, uint8_t *txdata,
     }
 
     (void)i2c_master_bus_rm_device(i2c_hal_data[bus].dev_handle);
+    i2c_hal_data[bus].dev_handle = NULL;
     
 #endif
 
@@ -317,6 +318,7 @@ ATCA_STATUS hal_i2c_receive(ATCAIface iface, uint8_t address, uint8_t *rxdata, u
     }
 
     (void)i2c_master_bus_rm_device(i2c_hal_data[bus].dev_handle);
+    i2c_hal_data[bus].dev_handle = NULL;
 
 #endif
 
@@ -341,6 +343,7 @@ ATCA_STATUS hal_i2c_release(void *hal_data)
 
     if (hal->dev_handle) {
         rc = i2c_master_bus_rm_device(hal->dev_handle);
+        hal->dev_handle = NULL;
     }
 
     if (hal && --(hal->ref_ct) <= 0)
