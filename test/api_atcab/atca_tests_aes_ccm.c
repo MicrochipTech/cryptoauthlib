@@ -597,8 +597,10 @@ static ATCA_STATUS aes_ccm_nist_vector_test(ccm_nist_vt_types_t ccm_nist_type)
             status = atcab_aes_ccm_encrypt_update(&ctx, plaintext, ptlen, ciphertext);
             TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-            status = atcab_aes_ccm_encrypt_finish(&ctx, tag, &taglen);
+            uint8_t tag_size_u8 = (uint8_t)taglen;
+            status = atcab_aes_ccm_encrypt_finish(&ctx, tag, &tag_size_u8);
             TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+            taglen = tag_size_u8;
 
             if(0 != cipherlen)
             {
