@@ -1078,21 +1078,32 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
                     /* Configuration files must end with ".conf" */
                     if (0 == strcmp(&de->d_name[fn_len - 5u], ".conf"))
                     {
-                        /* coverity[misra_c_2012_directive_4_12_violation] Standard library functions are required */
-                        /* coverity[misra_c_2012_rule_21_3_violation] Standard library functions are required */
-                        updateConfFileData[i] = (pkcs11_conf_filedata*)malloc(sizeof(pkcs11_conf_filedata));
-
-                        if (NULL != updateConfFileData[i])
+                        if (MAX_CONF_FILES <= i)
                         {
-                            (void)strcpy(updateConfFileData[i]->filename, de->d_name);
-                            updateConfFileData[i]->initialized = false;
+                            /* More configuration files than updateConfFileData
+                               can hold. Report it rather than silently ignoring
+                               the remainder, which files get ignored would
+                               otherwise depend on readdir() order. */
+                            rv = CKR_HOST_MEMORY;
+                        }
+                        else
+                        {
+                            /* coverity[misra_c_2012_directive_4_12_violation] Standard library functions are required */
+                            /* coverity[misra_c_2012_rule_21_3_violation] Standard library functions are required */
+                            updateConfFileData[i] = (pkcs11_conf_filedata*)malloc(sizeof(pkcs11_conf_filedata));
 
-                            if (UINT8_MAX > totalConfFileCount)
+                            if (NULL != updateConfFileData[i])
                             {
-                                totalConfFileCount++;
+                                (void)strcpy(updateConfFileData[i]->filename, de->d_name);
+                                updateConfFileData[i]->initialized = false;
+
+                                if (UINT8_MAX > totalConfFileCount)
+                                {
+                                    totalConfFileCount++;
+                                }
+                                i++;
                             }
                         }
-                        i++;
                     }
                 }
             }
@@ -1111,7 +1122,7 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
 
     argc = sizeof(argv) / sizeof(argv[0]);
     /* First parse base file and then parse handle files if present*/
-    while (NULL != updateConfFileData[i])
+    while ((totalConfFileCount > i) && (NULL != updateConfFileData[i]))
     {
         size_t fileName_len = strlen(updateConfFileData[i]->filename);
         (void)memcpy((void*)fileName_tmp, (const void*)updateConfFileData[i]->filename, sizeof(updateConfFileData[i]->filename));
@@ -1362,7 +1373,7 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
         i++;
     }
 
-    for (i = 0; NULL != updateConfFileData[i]; i++)
+    for (i = 0; (totalConfFileCount > i) && (NULL != updateConfFileData[i]); i++)
     {
         pkcs11_os_free(updateConfFileData[i]);
     }
