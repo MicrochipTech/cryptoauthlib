@@ -1,13 +1,10 @@
 var a00683 =
 [
-    [ "hal_spi_control", "a01590.html#gac7f3951634faf0a7c16c234d471c3660", null ],
-    [ "hal_spi_deselect", "a01590.html#ga6bcb25e01ba6242973eedb32fa9dac2a", null ],
-    [ "hal_spi_discover_buses", "a01590.html#ga92cecc8e30a88dee1cbedd49141bc209", null ],
-    [ "hal_spi_discover_devices", "a01590.html#ga6cf45c115bcb721e951e8792e0feb3f0", null ],
-    [ "hal_spi_init", "a01590.html#ga24b3ca4076a0e4093644d4f58cd80a69", null ],
-    [ "hal_spi_post_init", "a01590.html#gaeb831d9894ce11146bd00c79a98b7f0f", null ],
-    [ "hal_spi_receive", "a01590.html#ga410c24762579358a576a58610a877e63", null ],
-    [ "hal_spi_release", "a01590.html#ga8c3f1c6c20d939c4ca976fdda6279359", null ],
-    [ "hal_spi_select", "a01590.html#ga237aa1d0ee551a61991b52dc7812ff64", null ],
-    [ "hal_spi_send", "a01590.html#ga16661176757d0ef155155b07267a44ed", null ]
+    [ "atca_uart_host_s", "a01780.html", null ],
+    [ "hal_uart_control", "a00683.html#a41ed83bbc8e0fd3abea7beb513fbdb96", null ],
+    [ "hal_uart_init", "a00683.html#afb6d836af248aed1afe715ae2f2f7c2b", null ],
+    [ "hal_uart_post_init", "a00683.html#a1c5f894db539ea5cb0d5ae0fa38449d7", null ],
+    [ "hal_uart_receive", "a00683.html#a1a0256b61c3579519f8cc6d6157bc126", null ],
+    [ "hal_uart_release", "a00683.html#a1e0c17bf7342c21ca69d066eefa1f1eb", null ],
+    [ "hal_uart_send", "a00683.html#aae0b332270c1e8df223b430d8e8ddbbc", null ]
 ];

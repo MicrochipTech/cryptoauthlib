@@ -1,12 +1,7 @@
 var a00830 =
 [
-    [ "pkcs11_dev_ctx", "a01977.html", null ],
-    [ "pkcs11_dev_res", "a01981.html", null ],
-    [ "pkcs11_dev_state", "a01985.html", "a01985" ],
-    [ "pkcs11_lib_ctx_s", "a01989.html", "a01989" ],
-    [ "pkcs11_lib_ctx", "a00830.html#a829124de0deebf29734cd6390a232292", null ],
-    [ "pkcs11_deinit", "a01594.html#gabff89fd0af2e75ee2db858f9fe934ac4", null ],
-    [ "pkcs11_get_context", "a01594.html#gae0e3060e6ae0dfc17a35881c223d8123", null ],
-    [ "pkcs11_init", "a01594.html#gaab9ef494fdc21911e700f2b9d62547ec", null ],
-    [ "pkcs11_init_check", "a01594.html#gadd899ffeae0146c08b249e3f551e21f8", null ]
+    [ "pkcs11_session_check", "a01561.html#ga7eb04614661e0cedf6cb926787f5ff9b", null ],
+    [ "pkcs11_session_closeall", "a01561.html#ga43525e77f9049b545fa09129cacf9c9a", null ],
+    [ "pkcs11_session_get_info", "a01561.html#ga236a002e179ed36a0b81399a3e11fcb8", null ],
+    [ "pkcs11_session_login", "a01561.html#ga4d70fd7e9799d0428c308a3e1ed146df", null ]
 ];

@@ -1,6 +1,5 @@
 var a00785 =
 [
-    [ "pkcs11_cert_wtlspublic_attributes", "a01594.html#gabc10a1f1b90bc7d2fb047db0af539e80", null ],
-    [ "pkcs11_cert_x509_attributes", "a01594.html#gafa471eb33699e2cba5dc3cc50a2d8df7", null ],
-    [ "pkcs11_cert_x509public_attributes", "a01594.html#ga8de4193ede04a12ab4e44b8df9eec478", null ]
+    [ "pkcs11_find_cache_fields_s", "a01940.html", "a01940" ],
+    [ "pkcs11_find_cache_fields_t", "a00785.html#ac46b49027c291bad1e82c40209f9211d", null ]
 ];

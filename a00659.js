@@ -1,9 +1,9 @@
 var a00659 =
 [
-    [ "hal_i2c_control", "a01590.html#ga4f82572f05b8587d98bc38601453863e", null ],
-    [ "hal_i2c_init", "a01590.html#ga17df8d983df73e2e8f62f1236f157909", null ],
-    [ "hal_i2c_post_init", "a01590.html#gafbe53519362f18c2688d10da6f7c618f", null ],
-    [ "hal_i2c_receive", "a01590.html#gac1baf65047dc3efe1f14f1b79b62c04f", null ],
-    [ "hal_i2c_release", "a01590.html#gac382cc4431d2d1c721c21a453ba36c22", null ],
-    [ "hal_i2c_send", "a01590.html#gacc9a889e19d2f1a475a39391565b66dd", null ]
+    [ "ATCA_SWI_WAKE_WORD_ADDR", "a00659.html#a35e9d98d207f17ebac66dc86e29a6464", null ],
+    [ "BIT_DELAY_1H", "a00659.html#a1ce4882b7d053eafcec22cd84fb5727d", null ],
+    [ "BIT_DELAY_1L", "a00659.html#ad884cf7d66d88b38180369a791a9824b", null ],
+    [ "BIT_DELAY_5", "a00659.html#a2ced4699fc4ab5162dbb9453edecb32e", null ],
+    [ "BIT_DELAY_7", "a00659.html#abd0d20a34060650b8a2895c17f842f44", null ],
+    [ "RX_TX_DELAY", "a00659.html#a60ba93807a2c0ea2ce1432245f3f7da0", null ]
 ];

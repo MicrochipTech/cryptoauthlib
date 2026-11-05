@@ -1,9 +1,7 @@
 var a00626 =
 [
-    [ "hal_kit_hid_control", "a01590.html#gadcf53722678e48323751359a04734680", null ],
-    [ "hal_kit_hid_init", "a01590.html#ga025e8f78bfdef446732e3aafacebc857", null ],
-    [ "hal_kit_hid_post_init", "a01590.html#ga6f06bc1662b3d0361f6a241e1b5612f2", null ],
-    [ "hal_kit_hid_receive", "a01590.html#ga1c62358b9abc11bc2e52b34c3dd712e0", null ],
-    [ "hal_kit_hid_release", "a01590.html#ga8c7b9adb28b4bbdee8d5cd78ab16255f", null ],
-    [ "hal_kit_hid_send", "a01590.html#ga3fd44b390fe7558c882c97faa783c018", null ]
+    [ "hal_check_pid", "a01557.html#gae31246ac870409a3d694c240c6c3498a", null ],
+    [ "hal_create_mutex", "a01557.html#gaad9da28968a527ce51a2b081461d4cfe", null ],
+    [ "hal_delay_ms", "a01557.html#gadc23b8130e72a445f76c68d62e8c95c5", null ],
+    [ "hal_delay_us", "a01557.html#ga7e9019810ba5ab81b256282392cd5079", null ]
 ];

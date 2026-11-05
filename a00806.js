@@ -1,7 +1,11 @@
 var a00806 =
 [
-    [ "pkcs11_digest", "a00806.html#a81936ce8429c7a97bc42921589c1522e", null ],
-    [ "pkcs11_digest_final", "a00806.html#abd1c9ccc6899b550d241f007fd023d6b", null ],
-    [ "pkcs11_digest_init", "a00806.html#a903aed9c7d096dced1233a11539c781d", null ],
-    [ "pkcs11_digest_update", "a00806.html#a87a4b63b1a4ced5e40a1cc0bbc88599d", null ]
+    [ "pkcs11_ecc_key_info_s", "a01960.html", null ],
+    [ "pkcs11_rsa_key_info_s", "a01964.html", null ],
+    [ "pkcs11_key_info_s", "a01968.html", null ],
+    [ "pkcs11_ec_pbkey_asn1_hdr_p256", "a01561.html#gacf3b4678891994823f2cdd0cb8707ecc", null ],
+    [ "pkcs11_key_private_attributes", "a01561.html#ga40d8e67ef0fae7bdc2dca013ad8410aa", null ],
+    [ "pkcs11_key_public_attributes", "a01561.html#gadf3e8d1e6b01d9fe85f54c9478d8d215", null ],
+    [ "pkcs11_key_secret_attributes", "a01561.html#ga6ef03269a32699359d90901cc84954f3", null ],
+    [ "pkcs11_x962_asn1_hdr_ec256", "a01561.html#ga7fd56486be0426ec029cd60072ef62ba", null ]
 ];
