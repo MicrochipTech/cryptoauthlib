@@ -36,6 +36,17 @@
 extern "C" {
 #endif
 
+#ifdef PKCS11_DYN_DEVICE_LOCK_ENABLE
+/*  The lock_device_flags parameter is defined as follows:
+ *      Bit Flag                    Mask        Meaning
+ */
+#define LOCK_NO                     0x0000U  /* do not lock device */
+#define LOCK_YES                    0x0001U  /* always lock device */
+#define LOCK_ON_NULL_DATA           0x0002U  /* lock when obj->data is NULL */
+#define LOCK_ON_NOTNULL_PVALUE      0x0004U  /* lock when pAttribute->pValue is not NULL */
+#define LOCK_ON_MISS_HDL_INFO       0x0008U  /* lock when obj->handle_info_initialized is false */
+#endif
+
 /** Populate an attribute based on the "object" */
 typedef CK_RV (*attrib_f)(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, pkcs11_session_ctx_ptr pSession);
 
@@ -43,6 +54,9 @@ typedef struct pkcs11_attrib_model_s
 {
     const CK_ATTRIBUTE_TYPE type;
     const attrib_f          func;
+#ifdef PKCS11_DYN_DEVICE_LOCK_ENABLE
+    uint16_t                lock_device_flags;
+#endif
 } pkcs11_attrib_model, *pkcs11_attrib_model_ptr;
 
 #ifdef __cplusplus

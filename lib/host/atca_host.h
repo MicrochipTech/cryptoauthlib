@@ -223,7 +223,7 @@ typedef struct atca_secureboot_mac_in_out
  *  \var atca_mac_in_out::otp
  *       \brief [in] Pointer to 11-byte OTP, optionally included in MAC digest, depending on mode.
  *  \var atca_mac_in_out::sn
- *       \brief [in] Pointer to 9-byte SN, optionally included in MAC digest, depending on mode.
+ *       \brief [in] Pointer to 9-byte SN. Must not be NULL. Specific SN bytes (SN[4:7] and SN[2:3]) are conditionally included in MAC digest depending on MAC_MODE_INCLUDE_SN flag, but SN[8], SN[0:1] are always included.
  *  \var atca_mac_in_out::response
  *       \brief [out] Pointer to 32-byte SHA-256 digest (MAC).
  *  \var atca_mac_in_out::temp_key

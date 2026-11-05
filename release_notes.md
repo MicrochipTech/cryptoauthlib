@@ -1,6 +1,58 @@
 
 # Microchip Cryptoauthlib Release Notes
 
+## Release v3.9.0 (11/05/2026)
+
+### New Features
+  - Added CKK_EC keytype check in pkcs11_key_get_ec_params and pkcs11_key_get_ec_point     
+    functions
+  - Added `PKCS11_NO_LOGIN` build option to disable C_Login
+    - This build option should only be used with no-auth-required keys. For crypto operations  
+      inside an auth session, device still require keys for those operations
+  - Modified CMake Files to use target_include_directories instead of target_directories
+
+### Fixes
+  - Addressed build issues
+    - Fixed build errors when TA and CA devices are selected together. atca_basic.c guards 
+      each `atcab_*` function by feature macro instead of device type
+    - Fixed PKCS#11 debug attributes compilation error
+    - Fixed an incompatible pointer types compile error in the AES-CCM NIST vector tests
+    - Fixed link errors in CA2 only CMake builds
+  - PKCS#11 layer fixes/updates
+    - Corrected PIN validation in C_Login. Invalid pins are now rejected with CKR_PIN_INCORRECT 
+      return
+    - C_SetPIN now requires a valid logged-in session and valid old pin in order to update to 
+      a new pin
+    - CKA_ALWAYS_AUTHENTICATE return 'Success' as default for CA devices, inorder to enable 
+      PKCS#11 providers to utilize hardware backed private keys
+    - PKCS#11 initialization continues to all the other slots, skipping the failed slot     
+      initialization
+    - Fixed a possible double free in hal_esp32_i2c.c:dev_handle is set to NULL after   
+      i2c_master_bus_rm_device()
+    - Updated ATCA_CUSTOM_IFACE configuration to include ATCA_NO_HEAP guard checks in  
+      hal_iface_init()
+    - Fixed a possible null pointer dereference in atcah_mac()
+    - Fixes in pkcs11_find.c
+      - Added robust thread safety checks in find_template_cache(). C_FindObjectsFinal releases 
+        its cache slot with the same protection that C_FindObjectsInit uses to acquire it
+      - A duplicate C_FindObjectsInit on the same session without closing now fails with 
+        CKR_OPERATION_ACTIVE instead of leaking a cache slot
+      - C_FindObjectsFinal now returns CKR_OPERATION_NOT_INITIALIZED when no active find exists
+      - The cache buffer is initialized to default zeros after allocation
+    - Fixes in pkcs11_cert.c
+      - Fixed a use-after-free race between C_Logout and C_GetAttributeValue on certificate 
+        objects. The certificate cache is cleared inside the locking calls.
+      - Fixed a null pointer dereference in pkcs11_cert_clear_session_cache()
+      - Added malloc() failure check for the certificate buffer in pkcs11_cert_load_cache(). On
+        any failure in pkcs11_cert_load_cache(), the cache slot is released, so a failed load no 
+        longer leaves it marked in_use
+      - A failed cert load no longer leaves the object half-initialized, which had caused a 
+        permanent CKR_GENERAL_ERROR and a memory leak
+      - Cleared the dangling pObject->data pointer after the session cache is freed
+      - Fixed the race on free-slot selection in pkcs11_cert_load_cache()
+      - Zero-length certificates no longer call malloc(0)
+      - The subject size query returns the actual length instead of a hardcoded 128 bytes
+
 ## Release v3.8.0 (05/05/2026)
 
 ### New Features

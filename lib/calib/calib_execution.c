@@ -275,7 +275,7 @@ ATCA_STATUS calib_get_execution_time(uint8_t opcode, ATCADevice device)
         no_of_commands = sizeof(device_execution_time_508) / sizeof(device_execution_time_t);
         break;
 #endif
-#if ATCA_ATECC608_SUPPORT
+#ifdef ATCA_ATECC608_SUPPORT
     case ATECC608:
         if (device->clock_divider == ATCA_CHIPMODE_CLOCK_DIV_M1)
         {

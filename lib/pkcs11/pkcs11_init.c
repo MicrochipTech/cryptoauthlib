@@ -36,6 +36,7 @@
 #include "pkcs11_slot.h"
 #include "pkcs11_object.h"
 #include "pkcs11_session.h"
+#include "pkcs11_find.h"
 #include "cryptoauthlib.h"
 
 #ifdef CreateMutex
@@ -412,6 +413,13 @@ CK_RV pkcs11_init(CK_C_INITIALIZE_ARGS const *pInitArgs)
             lib_ctx->initialized = FALSE;
         }
 
+#ifdef ATCA_HEAP
+        if (CKR_OK == rv)
+        {
+            rv = pkcs11_find_cache_init();
+        }
+#endif
+
         if (CKR_OK == rv)
         {
             /*If initialize successful set to true*/
@@ -475,6 +483,11 @@ CK_RV pkcs11_deinit(CK_VOID_PTR pReserved)
             pkcs11_slot_ctx_ptr slot_ctx_ptr = &((pkcs11_slot_ctx_ptr)(pkcs11_context.slots))[ulSlot];
             (void)pkcs11_session_closeall(slot_ctx_ptr->slot_id);
         }
+
+#ifdef ATCA_HEAP
+        /* Free all template cache buffers */
+        pkcs11_find_cache_deinit();
+#endif
 
         /* Clear the object cache */
         (void)pkcs11_object_deinit(&pkcs11_context);

@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.20.0)
 project (cryptoauthlib C)
 
 # Set the current release version
-set(VERSION "3.8.0")
+set(VERSION "3.9.0")
 set(VERSION_MAJOR 3)
-set(VERSION_MINOR 8)
+set(VERSION_MINOR 9)
 set(VERSION_PATCH 0)
 
 # Build Options

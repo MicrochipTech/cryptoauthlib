@@ -56,4 +56,9 @@ CK_RV pkcs11_find_finish(CK_SESSION_HANDLE hSession);
 
 CK_RV pkcs11_find_get_attribute(CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount);
 
+#ifdef ATCA_HEAP
+CK_RV pkcs11_find_cache_init(void);
+void pkcs11_find_cache_deinit(void);
+#endif
+
 #endif /* PKCS11_FIND_H_ */

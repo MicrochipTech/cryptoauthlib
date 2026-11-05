@@ -363,7 +363,6 @@ static ATCA_STATUS aes_ccm_nist_vector_test(ccm_nist_vt_types_t ccm_nist_type)
 
     FILE * rsp_file;
 
-    size_t count = 0;
     size_t klen = 16;
     size_t nlen = 0;
     size_t ptlen = 0;
@@ -390,6 +389,7 @@ static ATCA_STATUS aes_ccm_nist_vector_test(ccm_nist_vt_types_t ccm_nist_type)
     uint8_t tag[16];
     uint8_t expected_ciphertext[24];
     uint8_t expected_tag[16];
+    uint8_t generated_taglen = 0u;
 
     char *str;
     char *name_value;
@@ -597,15 +597,16 @@ static ATCA_STATUS aes_ccm_nist_vector_test(ccm_nist_vt_types_t ccm_nist_type)
             status = atcab_aes_ccm_encrypt_update(&ctx, plaintext, ptlen, ciphertext);
             TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
 
-            status = atcab_aes_ccm_encrypt_finish(&ctx, tag, &taglen);
+            status = atcab_aes_ccm_encrypt_finish(&ctx, tag, &generated_taglen);
             TEST_ASSERT_EQUAL(ATCA_SUCCESS, status);
+            TEST_ASSERT_EQUAL_UINT8((uint8_t)taglen, generated_taglen);
 
             if(0 != cipherlen)
             {
                 TEST_ASSERT_EQUAL_MEMORY(expected_ciphertext, ciphertext, cipherlen);
             }
-            
-            TEST_ASSERT_EQUAL_MEMORY(expected_tag, tag, taglen);    
+
+            TEST_ASSERT_EQUAL_MEMORY(expected_tag, tag, generated_taglen);    
         }        
     }
     while (!feof(rsp_file));

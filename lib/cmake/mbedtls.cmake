@@ -15,8 +15,8 @@ target_compile_definitions(mbedtls PUBLIC -DMBEDTLS_X509_ALLOW_UNSUPPORTED_CRITI
 if(NOT MSVC)
 target_compile_options(mbedtls PRIVATE -fPIC)
 endif()
-include_directories(mbedtls PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
-                                    ${CMAKE_BINARY_DIR}/downloaded/mbedtls/include)
+target_include_directories(mbedtls PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(mbedtls PUBLIC ${CMAKE_BINARY_DIR}/downloaded/mbedtls/include)
 endif()
 
 file(GLOB MBEDTLS_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "mbedtls/*.c")

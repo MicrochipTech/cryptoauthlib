@@ -123,7 +123,10 @@ ATCA_STATUS atcacert_date_dec(atcacert_date_format_t format,
                               atcacert_tm_utc_t*     timestamp);
 
 /**
- * \brief Encode the issue and expire dates in the format used by the compressed certificate.
+ * \brief Encode the issue and expire dates in format 0.
+ * \note  This function is hardcoded to FORMAT_VERSION_0, restricting dates to 2000-2031 and
+ *        expire_years to 0-31. For extended years support (2000-2127 and expire_years 0-127),
+ *        use atcacert_date_enc_compcert_ext()
  *
  * \param[in]  issue_date    Issue date to encode. Note that minutes and seconds will be ignored.
  * \param[in]  expire_years  Expire date is expressed as a number of years past the issue date.

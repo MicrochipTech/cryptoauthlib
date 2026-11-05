@@ -91,7 +91,14 @@ static CK_RV pkcs11_cert_check_trust_data(pkcs11_object_ptr pObject, pkcs11_sess
 }
 #endif
 
-/* Loads cert into cache list */
+/**
+ * \brief  Load certificate into the global cache pool
+ * \note   Caller must hold pkcs11_lock_both(). This function doesnot acquire any locks.
+ *         Synchronization is the responsibility of the caller
+ * \param  pSession  Session context
+ * \param  pObject   Certificate object to be cached
+ * \return CKR_OK on success, otherwise error code
+ */
 static CK_RV pkcs11_cert_load_cache(const pkcs11_session_ctx_ptr pSession, const pkcs11_object_ptr pObject)
 {
     CK_RV rv = CKR_GENERAL_ERROR;
@@ -110,6 +117,8 @@ static CK_RV pkcs11_cert_load_cache(const pkcs11_session_ctx_ptr pSession, const
             {
                 if (FALSE == pkcs11_cert_cache_list[i].in_use)
                 {
+                    /* Mark the free slot as in-use under lock protection */
+                    pkcs11_cert_cache_list[i].in_use = TRUE;
                     break;
                 }
             }
@@ -127,25 +136,53 @@ static CK_RV pkcs11_cert_load_cache(const pkcs11_session_ctx_ptr pSession, const
                     cert_def->comp_cert_dev_loc.slot = pObject->slot;
                     cert_def->parsed = (struct atcac_x509_ctx**)(&pkcs11_cert_cache_list[i].pCert_parsed);
                     pObject->data = cert_def;
-                    pObject->flags |= PKCS11_OBJECT_FLAG_CERT_CACHE;
-
 
                     /* Get the buffer size required first */
                     rv = pkcs11_cert_load(pObject, &pkcs11_cert_cache_list[i].cert_x509_parse, pSession->slot->device_ctx);
                     if (CKR_OK == rv)
                     {
-                        pkcs11_cert_cache_list[i].cert_x509_parse.pValue = pkcs11_os_malloc(pkcs11_cert_cache_list[i].cert_x509_parse.ulValueLen);
-                        /* Link x509 parsed certificate to object */
-                        rv = pkcs11_cert_load(pObject, &pkcs11_cert_cache_list[i].cert_x509_parse, pSession->slot->device_ctx);
-                        pkcs11_cert_cache_list[i].in_use = TRUE;
-                        pkcs11_cert_cache_list[i].pSession_cert = pSession;
-                        pkcs11_cert_cache_list[i].pObject_cert = pObject;
-                        pkcs11_cert_cache_list[i].pSession_cert_def = cert_def;
+                        if (0u != pkcs11_cert_cache_list[i].cert_x509_parse.ulValueLen)
+                        {
+                            pkcs11_cert_cache_list[i].cert_x509_parse.pValue = pkcs11_os_malloc(pkcs11_cert_cache_list[i].cert_x509_parse.ulValueLen);
+                            if (NULL != pkcs11_cert_cache_list[i].cert_x509_parse.pValue)
+                            {
+                                /* Link x509 parsed certificate to object */
+                                rv = pkcs11_cert_load(pObject, &pkcs11_cert_cache_list[i].cert_x509_parse, pSession->slot->device_ctx);
+                                if (CKR_OK == rv)
+                                {
+                                    pObject->flags |= PKCS11_OBJECT_FLAG_CERT_CACHE;
+                                    pkcs11_cert_cache_list[i].pSession_cert = pSession;
+                                    pkcs11_cert_cache_list[i].pObject_cert = pObject;
+                                    pkcs11_cert_cache_list[i].pSession_cert_def = cert_def;
+                                }
+                                else
+                                {
+                                    pkcs11_os_free(pkcs11_cert_cache_list[i].cert_x509_parse.pValue);
+                                    pkcs11_cert_cache_list[i].cert_x509_parse.pValue = NULL;
+                                }
+                            }
+                            else
+                            {
+                                rv = CKR_HOST_MEMORY;
+                            }
+                        }
+                        else
+                        {
+                            rv = CKR_DATA_INVALID;
+                        }
                     }
                 }
                 else
                 {
                     rv = CKR_HOST_MEMORY;
+                }
+
+                if (CKR_OK != rv)
+                {
+                    pObject->data = NULL;
+                    pkcs11_os_free(cert_def);
+                    pObject->flags &= PKCS11_OBJECT_FLAG_CERT_CACHE_COMPLEMENT;
+                    pkcs11_cert_cache_list[i].in_use = FALSE;
                 }
             }
             else
@@ -454,7 +491,25 @@ static CK_RV pkcs11_cert_get_subject(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttr
             }
             else
             {
-                pAttribute->ulValueLen = 128;
+                atcacert_def_t* cert_def = (atcacert_def_t*)obj_ptr->data;
+                if (NULL == cert_def)
+                {
+                    return CKR_GENERAL_ERROR;
+                }
+
+                uint8_t subject[128] = { 0 };
+                cal_buffer subject_buf = CAL_BUF_INIT(sizeof(subject), subject);
+                ATCA_STATUS status = ATCA_BAD_PARAM;
+
+                if (ATCA_SUCCESS == (status = atcacert_get_subject(cert_def, NULL, 0, &subject_buf)))
+                {
+                    pAttribute->ulValueLen = (CK_ULONG)cal_buf_get_used(&subject_buf);
+                }
+                else
+                {
+                    pAttribute->ulValueLen = 128;
+                }
+
                 if (pAttribute->pValue == NULL)
                 {
                     return CKR_OK;
@@ -493,8 +548,9 @@ static CK_RV pkcs11_cert_get_issuer(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttri
                 if (CKR_OK == read_cache)
                 {
                     uint8_t issuer_name[128] = { 0 };
+                    ATCA_STATUS status = ATCA_BAD_PARAM;
 
-                    if (ATCA_SUCCESS == (atcacert_get_issuer(cert_cfg, NULL, 0, issuer_name)))
+                    if (ATCA_SUCCESS == (status = atcacert_get_issuer(cert_cfg, NULL, 0, issuer_name)))
                     {
                         return pkcs11_attrib_fill(pAttribute, issuer_name, (CK_ULONG)sizeof(issuer_name));
                     }
@@ -851,6 +907,7 @@ static CK_RV pkcs11_cert_get_subj_key(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAtt
  * CKO_CERTIFICATE (Type: CKC_X_509) - X509 Public Key Certificate Model
  */
 const pkcs11_attrib_model pkcs11_cert_x509public_attributes[] = {
+#ifndef PKCS11_DYN_DEVICE_LOCK_ENABLE
     /** Object Class - CK_OBJECT_CLASS */
     { CKA_CLASS,                      pkcs11_object_get_class          },
     /** CK_TRUE if object is a token object; CK_FALSE if object is a session object. Default is CK_FALSE. */
@@ -909,6 +966,65 @@ const pkcs11_attrib_model pkcs11_cert_x509public_attributes[] = {
        the type defaults to SHA-1. */
     { CKA_NAME_HASH_ALGORITHM,        pkcs11_attrib_empty              },
 };
+#else
+    /** Object Class - CK_OBJECT_CLASS */
+    { CKA_CLASS,                      &pkcs11_object_get_class,          LOCK_NO                },
+    /** CK_TRUE if object is a token object; CK_FALSE if object is a session object. Default is CK_FALSE. */
+    { CKA_TOKEN,                      &pkcs11_attrib_true,               LOCK_NO                },
+    /** CK_TRUE if object is a private object; CK_FALSE if object is a public object. */
+    { CKA_PRIVATE,                    &pkcs11_token_get_access_type,     LOCK_ON_MISS_HDL_INFO  },
+    /** CK_TRUE if object can be modified. Default is CK_TRUE. */
+    { CKA_MODIFIABLE,                 &pkcs11_token_get_writable,        LOCK_ON_MISS_HDL_INFO  },
+    /** Description of the object(default empty). */
+    { CKA_LABEL,                      &pkcs11_object_get_name,           LOCK_NO                },
+    /** CK_TRUE if object can be copied using C_CopyObject.Defaults to CK_TRUE. */
+    { CKA_COPYABLE,                   &pkcs11_attrib_false,              LOCK_NO                },
+    /** CK_TRUE if the object can be destroyed using C_DestroyObject. Default is CK_TRUE. */
+    { CKA_DESTROYABLE,                &pkcs11_object_get_destroyable,    LOCK_NO                },
+    /** Type of certificate */
+    { CKA_CERTIFICATE_TYPE,           &pkcs11_cert_get_type,             LOCK_NO                },
+    /** The certificate can be trusted for the application that it was created. */
+    { CKA_TRUSTED,                    &pkcs11_cert_get_trusted_flag,     LOCK_NO                },
+    /** Default CK_CERTIFICATE_CATEGORY_UNSPECIFIED) */
+    { CKA_CERTIFICATE_CATEGORY,       &pkcs11_object_get_type,           LOCK_ON_MISS_HDL_INFO  },
+    /** Checksum */
+    { CKA_CHECK_VALUE,                NULL_PTR,                          LOCK_NO                },
+    /** Start date for the certificate (default empty) */
+    { CKA_START_DATE,                 &pkcs11_get_issue_date,            LOCK_ON_NULL_DATA      },
+    /** End date for the certificate (default empty) */
+    { CKA_END_DATE,                   &pkcs11_get_expire_date,           LOCK_ON_NULL_DATA      },
+    /** ALL: DER-encoding of the SubjectPublicKeyInfo for the public key
+       contained in this certificate (default empty)
+       SubjectPublicKeyInfo ::= SEQUENCE {
+       algorithm AlgorithmIdentifier,
+       subjectPublicKey BIT_STRING } */
+    { CKA_PUBLIC_KEY_INFO,            &pkcs11_attrib_empty,              LOCK_NO                },
+    /** DER-encoded Certificate subject name */
+    { CKA_SUBJECT,                    &pkcs11_cert_get_subject,          LOCK_ON_NULL_DATA      },
+    /** Key identifier for public/private key pair (default empty) */
+    { CKA_ID,                         &pkcs11_cert_get_subj_key,         LOCK_ON_NULL_DATA      },
+    /** DER-encoded Certificate issuer name (default empty)*/
+    { CKA_ISSUER,                     &pkcs11_cert_get_issuer,           LOCK_ON_NULL_DATA      },
+    /** DER-encoding of the certificate serial number (default empty) */
+    { CKA_SERIAL_NUMBER,              &pkcs11_cert_get_serial_num,       LOCK_ON_NULL_DATA      },
+    /** BER-encoded Complete Certificate */
+    { CKA_VALUE,                      &pkcs11_cert_get_encoded,          LOCK_ON_NULL_DATA      },
+    /** If not empty this attribute gives the URL where the complete
+       certificate can be obtained (default empty) */
+    { CKA_URL,                        &pkcs11_attrib_empty,              LOCK_NO                },
+    /** Hash of the subject public key (default empty). Hash algorithm is
+       defined by CKA_NAME_HASH_ALGORITHM */
+    { CKA_HASH_OF_SUBJECT_PUBLIC_KEY, &pkcs11_cert_get_subject_key_id,   LOCK_ON_NULL_DATA      },
+    /** Hash of the issuer public key (default empty). Hash algorithm is
+       defined by CKA_NAME_HASH_ALGORITHM */
+    { CKA_HASH_OF_ISSUER_PUBLIC_KEY,  &pkcs11_cert_get_authority_key_id, LOCK_ON_NULL_DATA      },
+    /** Java MIDP security domain. (default CK_SECURITY_DOMAIN_UNSPECIFIED) */
+    { CKA_JAVA_MIDP_SECURITY_DOMAIN,  NULL_PTR,                          LOCK_NO                },
+    /** Defines the mechanism used to calculate CKA_HASH_OF_SUBJECT_PUBLIC_KEY
+       and CKA_HASH_OF_ISSUER_PUBLIC_KEY. If the attribute is not present then
+       the type defaults to SHA-1. */
+    { CKA_NAME_HASH_ALGORITHM,        &pkcs11_attrib_empty,              LOCK_NO                },
+#endif
 
 /* coverity[misra_c_2012_rule_5_1_violation:FALSE] C99 limit is 63 characters */
 const CK_ULONG pkcs11_cert_x509public_attributes_count = (CK_ULONG)(PKCS11_UTIL_ARRAY_SIZE(pkcs11_cert_x509public_attributes));
@@ -1080,18 +1196,18 @@ CK_RV pkcs11_cert_clear_session_cache(pkcs11_session_ctx_ptr session_ctx)
     {
         if (session_ctx == pkcs11_cert_cache_list[i].pSession_cert)
         {
-            if (NULL != *pkcs11_cert_cache_list[i].pSession_cert_def->parsed)
-            {
-#if defined(ATCA_OPENSSL) || defined(ATCA_WOLFSSL) || defined(ATCA_MBEDTLS)
-                atcac_x509_free(*pkcs11_cert_cache_list[i].pSession_cert_def->parsed);
-#else
-                pkcs11_os_free(*pkcs11_cert_cache_list[i].pSession_cert_def->parsed);
-#endif
-                *pkcs11_cert_cache_list[i].pSession_cert_def->parsed = NULL;
-            }
-
             if (NULL != pkcs11_cert_cache_list[i].pSession_cert_def)
             {
+                if (NULL != pkcs11_cert_cache_list[i].pSession_cert_def->parsed &&
+                    NULL != *pkcs11_cert_cache_list[i].pSession_cert_def->parsed)
+                {
+#if defined(ATCA_OPENSSL) || defined(ATCA_WOLFSSL) || defined(ATCA_MBEDTLS)
+                    atcac_x509_free(*pkcs11_cert_cache_list[i].pSession_cert_def->parsed);
+#else
+                    pkcs11_os_free(*pkcs11_cert_cache_list[i].pSession_cert_def->parsed);
+#endif
+                    *pkcs11_cert_cache_list[i].pSession_cert_def->parsed = NULL;
+                }
                 pkcs11_os_free(pkcs11_cert_cache_list[i].pSession_cert_def);
                 pkcs11_cert_cache_list[i].pSession_cert_def = NULL;
             }
@@ -1100,6 +1216,12 @@ CK_RV pkcs11_cert_clear_session_cache(pkcs11_session_ctx_ptr session_ctx)
             {
                 pkcs11_os_free(pkcs11_cert_cache_list[i].cert_x509_parse.pValue);
                 pkcs11_cert_cache_list[i].cert_x509_parse.pValue = NULL;
+            }
+
+            if (NULL != pkcs11_cert_cache_list[i].pObject_cert)
+            {
+                pkcs11_cert_cache_list[i].pObject_cert->data = NULL;
+                pkcs11_cert_cache_list[i].pObject_cert->flags &= PKCS11_OBJECT_FLAG_CERT_CACHE_COMPLEMENT;
             }
 
             pkcs11_cert_cache_list[i].in_use = FALSE;
@@ -1143,6 +1265,7 @@ CK_RV pkcs11_cert_clear_object_cache(pkcs11_object_ptr pObject)
             {
                 pkcs11_os_free(pObject->data);
                 pObject->data = NULL;
+                cert_def = NULL;
             }
 
             if (NULL != pkcs11_cert_cache_list[i].cert_x509_parse.pValue)

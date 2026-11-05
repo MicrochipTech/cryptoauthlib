@@ -119,4 +119,32 @@ int pkcs11_util_memset(void *dest, size_t destsz, int ch, size_t count)
 #endif
 }
 
+/*
+ * \brief Constant-time memory comparison to prevent timing side-channel attacks
+ * \param[in] s1    First buffer to compare
+ * \param[in] s2    Second buffer to compare
+ * \param[in] n     Number of bytes to compare
+ * \return 0 if buffers are equal, non-zero otherwise (always examines all bytes)
+ */
+int pkcs11_util_memcmp_constant_time(const void *s1, const void *s2, size_t n)
+{
+    const unsigned char *a = (const unsigned char *)s1;
+    const unsigned char *b = (const unsigned char *)s2;
+    volatile unsigned char result = 0u;
+    size_t i;
+
+    if (NULL == a || NULL == b)
+    {
+        return -1;
+    }
+
+    /* Compare all bytes regardless of differences to prevent timing attacks */
+    for (i = 0u; i < n; i++)
+    {
+        result |= (unsigned char)(a[i] ^ b[i]);
+    }
+
+    return (int)result;
+}
+
 /** @} */

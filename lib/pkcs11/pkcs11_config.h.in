@@ -48,6 +48,23 @@
 #cmakedefine01 PKCS11_AUTH_TERMINATE_BEFORE_LOGIN
 #endif
 
+/** Disable the PKCS#11 PIN login requirement.
+    When defined, C_GetTokenInfo does not advertise CKF_LOGIN_REQUIRED,
+    CKA_ALWAYS_AUTHENTICATE reports false, and C_Login succeeds without
+    validating the PIN. Intended for fully automated/unattended use only -
+    the PIN is NOT validated. C_SetPIN returns CKR_FUNCTION_NOT_SUPPORTED.
+
+    SCOPE: This disables only the host-side PKCS#11 login ceremony. It does
+    NOT disable device-level key authentication. Keys provisioned on the
+    secure element to require an auth session will still fail crypto
+    operations in this mode - use only with keys configured as
+    no-auth-required. IO-protected ECDH on a CA WRITE_ECDH slot has no
+    plaintext fallback and returns CKR_FUNCTION_FAILED; other ECDH variants
+    fall back to an unencrypted-bus transfer of the derived secret. */
+#ifndef PKCS11_NO_LOGIN
+#cmakedefine PKCS11_NO_LOGIN
+#endif
+
 /** Use Static or Dynamic Allocation */
 #ifndef PKCS11_USE_STATIC_MEMORY
 #cmakedefine01 PKCS11_USE_STATIC_MEMORY
@@ -118,7 +135,17 @@
 /** Define how many iterations PBKDF2 will use for PIN KDF */
 #if defined(PKCS11_PIN_PBKDF2_EN) && !defined(PKCS11_PIN_PBKDF2_ITERATIONS)
 #define PKCS11_PIN_PBKDF2_ITERATIONS    @PKCS11_PIN_PBKDF2_ITERATIONS@
-#endif    
+#endif
+
+/** Define to enable lazy initialization of object handles */
+#ifndef PKCS11_LAZY_OBJECT_INIT_ENABLE
+#cmakedefine PKCS11_LAZY_OBJECT_INIT_ENABLE
+#endif
+
+/** Define to enable dynamic locking of the device */
+#ifndef PKCS11_DYN_DEVICE_LOCK_ENABLE
+#cmakedefine PKCS11_DYN_DEVICE_LOCK_ENABLE
+#endif
 
 /****************************************************************************/
 /* The following configuration options are for fine tuning of the library   */

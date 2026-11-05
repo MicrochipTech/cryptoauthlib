@@ -92,6 +92,9 @@ CK_RV pkcs11_object_find(CK_SLOT_ID slotId, pkcs11_object_ptr * ppObject, CK_ATT
 CK_RV pkcs11_object_is_private(pkcs11_object_ptr pObject, CK_BBOOL* is_private, pkcs11_session_ctx_ptr pSession);
 CK_RV pkcs11_object_deinit(pkcs11_lib_ctx_ptr pContext);
 CK_RV pkcs11_object_get_owner(pkcs11_object_ptr pObject, CK_SLOT_ID_PTR pSlotId);
+#ifdef PKCS11_LAZY_OBJECT_INIT_ENABLE
+ta_element_attributes_t* pkcs11_object_get_handle_info(pkcs11_object_ptr pObj);
+#endif
 
 
 /* Object Attributes */

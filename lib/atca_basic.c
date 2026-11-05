@@ -420,7 +420,7 @@ ATCA_STATUS atcab_aes(uint8_t mode, uint16_t key_id, const uint8_t* aes_in, uint
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if defined(ATCA_ATECC608_SUPPORT)
+#if CALIB_AES_EN
         status = calib_aes(g_atcab_device_ptr, mode, key_id, aes_in, aes_out);
 #endif
     }
@@ -454,7 +454,7 @@ ATCA_STATUS atcab_aes_encrypt_ext(ATCADevice device, uint16_t key_id, uint8_t ke
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if defined(ATCA_ATECC608_SUPPORT)
+#if CALIB_AES_EN
         status = calib_aes_encrypt(device, key_id, key_block, plaintext, ciphertext);
 #endif
     }
@@ -503,7 +503,7 @@ ATCA_STATUS atcab_aes_decrypt_ext(ATCADevice device, uint16_t key_id, uint8_t ke
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if defined(ATCA_ATECC608_SUPPORT)
+#if CALIB_AES_EN
         status = calib_aes_decrypt(device, key_id, key_block, ciphertext, plaintext);
 #endif
     }
@@ -550,7 +550,7 @@ ATCA_STATUS atcab_aes_gfm(const uint8_t* h, const uint8_t* input, uint8_t* outpu
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if defined(ATCA_ATECC608_SUPPORT)
+#if CALIB_AES_GCM_EN
         status = calib_aes_gfm(g_atcab_device_ptr, h, input, output);
 #endif
     }
@@ -588,7 +588,7 @@ ATCA_STATUS atcab_aes_gcm_init_ext(ATCADevice device, atca_aes_gcm_ctx_t* ctx, u
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_AES_GCM_EN
         status = calib_aes_gcm_init(device, ctx, key_id, key_block, iv, iv_size);
 #endif
     }
@@ -649,7 +649,7 @@ ATCA_STATUS atcab_aes_gcm_init_rand(atca_aes_gcm_ctx_t* ctx, uint16_t key_id, ui
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_AES_GCM_EN
         status = calib_aes_gcm_init_rand(g_atcab_device_ptr, ctx, key_id, key_block, rand_size, free_field, free_field_size, iv);
 #endif
     }
@@ -686,7 +686,7 @@ ATCA_STATUS atcab_aes_gcm_aad_update_ext(ATCADevice device, atca_aes_gcm_ctx_t* 
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_AES_GCM_EN
         status = calib_aes_gcm_aad_update(device, ctx, aad, aad_size);
 #endif
     }
@@ -739,7 +739,7 @@ ATCA_STATUS atcab_aes_gcm_encrypt_update_ext(ATCADevice device, atca_aes_gcm_ctx
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_AES_GCM_EN
         status = calib_aes_gcm_encrypt_update(device, ctx, plaintext, plaintext_size, ciphertext);
 #endif
     }
@@ -786,7 +786,7 @@ ATCA_STATUS atcab_aes_gcm_encrypt_finish_ext(ATCADevice device, atca_aes_gcm_ctx
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_AES_GCM_EN
         status = calib_aes_gcm_encrypt_finish(device, ctx, tag, tag_size);
 #endif
     }
@@ -834,7 +834,7 @@ ATCA_STATUS atcab_aes_gcm_decrypt_update_ext(ATCADevice device, atca_aes_gcm_ctx
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_AES_GCM_EN
         status = calib_aes_gcm_decrypt_update(device, ctx, ciphertext, ciphertext_size, plaintext);
 #endif
     }
@@ -882,7 +882,7 @@ ATCA_STATUS atcab_aes_gcm_decrypt_finish_ext(ATCADevice device, atca_aes_gcm_ctx
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_AES_GCM_EN
         status = calib_aes_gcm_decrypt_finish(device, ctx, tag, tag_size, is_verified);
 #endif
     }
@@ -933,7 +933,7 @@ ATCA_STATUS atcab_checkmac(uint8_t mode, uint16_t key_id, const uint8_t* challen
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_CHECKMAC_EN
         status = calib_checkmac(g_atcab_device_ptr, mode, key_id, challenge, response, other_data);
 #endif
     }
@@ -997,7 +997,7 @@ ATCA_STATUS atcab_counter(uint8_t mode, uint16_t counter_id, uint32_t* counter_v
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_COUNTER_EN
         status = calib_counter(g_atcab_device_ptr, mode, counter_id, counter_value);
 #endif
     }
@@ -1024,7 +1024,7 @@ ATCA_STATUS atcab_counter_increment(uint16_t counter_id, uint32_t* counter_value
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_COUNTER_EN
         status = calib_counter_increment(g_atcab_device_ptr, counter_id, counter_value);
 #endif
     }
@@ -1050,7 +1050,7 @@ ATCA_STATUS atcab_counter_read(uint16_t counter_id, uint32_t* counter_value)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_COUNTER_EN
         status = calib_counter_read(g_atcab_device_ptr, counter_id, counter_value);
 #endif
     }
@@ -1140,7 +1140,7 @@ ATCA_STATUS atcab_ecdh_base(uint8_t mode, uint16_t key_id, const uint8_t* public
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_ECC_SUPPORT
+#if CALIB_ECDH_EN
         status = calib_ecdh_base(g_atcab_device_ptr, mode, key_id, public_key, pms, out_nonce);
 #endif
     }
@@ -1174,7 +1174,7 @@ ATCA_STATUS atcab_ecdh(uint16_t key_id, const uint8_t* public_key, uint8_t* pms)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_ECC_SUPPORT
+#if CALIB_ECDH_EN
         status = calib_ecdh(g_atcab_device_ptr, key_id, public_key, pms);
 #endif
     }
@@ -1219,7 +1219,7 @@ ATCA_STATUS atcab_ecdh_enc(uint16_t key_id, const uint8_t* public_key, uint8_t* 
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_ECC_SUPPORT
+#if CALIB_ECDH_ENC_EN
 #ifdef ATCA_USE_CONSTANT_HOST_NONCE
         status = calib_ecdh_enc(g_atcab_device_ptr, key_id, public_key, pms, read_key, read_key_id);
 #else
@@ -1258,7 +1258,7 @@ ATCA_STATUS atcab_ecdh_ioenc(uint16_t key_id, const uint8_t* public_key, uint8_t
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#ifdef ATCA_ATECC608_SUPPORT
+#if CALIB_ECDH_ENC_EN
         status = calib_ecdh_ioenc(g_atcab_device_ptr, key_id, public_key, pms, io_key);
 #endif
     }
@@ -1293,7 +1293,7 @@ ATCA_STATUS atcab_ecdh_tempkey(const uint8_t* public_key, uint8_t* pms)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#ifdef ATCA_ATECC608_SUPPORT
+#if CALIB_ECDH_EN
         status = calib_ecdh_tempkey(g_atcab_device_ptr, public_key, pms);
 #endif
     }
@@ -1329,7 +1329,7 @@ ATCA_STATUS atcab_ecdh_tempkey_ioenc(const uint8_t* public_key, uint8_t* pms, co
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#ifdef ATCA_ATECC608_SUPPORT
+#if CALIB_ECDH_ENC_EN
         status = calib_ecdh_tempkey_ioenc(g_atcab_device_ptr, public_key, pms, io_key);
 #endif
     }
@@ -1365,7 +1365,7 @@ ATCA_STATUS atcab_gendig(uint8_t zone, uint16_t key_id, const uint8_t* other_dat
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_GENDIG_EN
         status = calib_gendig(g_atcab_device_ptr, zone, key_id, other_data, other_data_size);
 #endif
     }
@@ -1393,7 +1393,7 @@ ATCA_STATUS atcab_gendivkey(const uint8_t* other_data)
 
     if (SHA105 == dev_type)
     {
-#ifdef ATCA_SHA105_SUPPORT
+#if CALIB_GENDIVKEY_EN
         status = calib_sha105_gendivkey(g_atcab_device_ptr, other_data);
 #endif
     }
@@ -1572,7 +1572,7 @@ ATCA_STATUS atcab_hmac(uint8_t mode, uint16_t key_id, uint8_t* digest)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if defined(ATCA_ATSHA204A_SUPPORT) || defined(ATCA_ATECC108A_SUPPORT) || defined(ATCA_ATECC508A_SUPPORT)
+#if CALIB_HMAC_EN
         status = calib_hmac(g_atcab_device_ptr, mode, key_id, digest);
 #else
         ((void)mode);
@@ -1732,7 +1732,7 @@ ATCA_STATUS atcab_info_set_latch(bool state)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_INFO_LATCH_EN
         status = calib_info_set_latch(g_atcab_device_ptr, state);
 #endif
     }
@@ -1761,7 +1761,7 @@ ATCA_STATUS atcab_info_get_latch(bool* state)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_INFO_LATCH_EN
         status = calib_info_get_latch(g_atcab_device_ptr, state);
 #endif
     }
@@ -1845,7 +1845,7 @@ ATCA_STATUS atcab_lock(uint8_t mode, uint16_t summary_crc)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_LOCK_EN || CALIB_LOCK_CA2_EN
         status = calib_lock(g_atcab_device_ptr, mode, summary_crc);
 #endif
     }
@@ -1874,7 +1874,7 @@ ATCA_STATUS atcab_lock_config_zone_ext(ATCADevice device)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_LOCK_EN || CALIB_LOCK_CA2_EN
         status = calib_lock_config_zone(device);
 #endif
     }
@@ -1914,7 +1914,7 @@ ATCA_STATUS atcab_lock_config_zone_crc(uint16_t summary_crc)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_LOCK_EN || CALIB_LOCK_CA2_EN
         status = calib_lock_config_zone_crc(g_atcab_device_ptr, summary_crc);
 #endif
     }
@@ -1943,7 +1943,7 @@ ATCA_STATUS atcab_lock_data_zone_ext(ATCADevice device)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_LOCK_EN || CALIB_LOCK_CA2_EN
         status = calib_lock_data_zone(device);
 #endif
     }
@@ -1986,7 +1986,7 @@ ATCA_STATUS atcab_lock_data_zone_crc(uint16_t summary_crc)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_LOCK_EN || CALIB_LOCK_CA2_EN
         status = calib_lock_data_zone_crc(g_atcab_device_ptr, summary_crc);
 #endif
     }
@@ -2019,7 +2019,7 @@ ATCA_STATUS atcab_lock_data_slot_ext(ATCADevice device, uint16_t slot)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_LOCK_EN || CALIB_LOCK_CA2_EN
         status = calib_lock_data_slot(device, slot);
 #endif
     }
@@ -2116,7 +2116,7 @@ ATCA_STATUS atcab_nonce_base(uint8_t mode, uint16_t zero, const uint8_t* num_in,
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_NONCE_EN
         status = calib_nonce_base(g_atcab_device_ptr, mode, zero, num_in, rand_out);
 #endif
     }
@@ -2145,7 +2145,7 @@ ATCA_STATUS atcab_nonce(const uint8_t* num_in)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_NONCE_EN
         status = calib_nonce(g_atcab_device_ptr, num_in);
 #endif
     }
@@ -2184,7 +2184,7 @@ ATCA_STATUS atcab_nonce_load(uint8_t target, const uint8_t* num_in, uint16_t num
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_NONCE_EN
         status = calib_nonce_load(g_atcab_device_ptr, target, num_in, num_in_size);
 #endif
     }
@@ -2218,7 +2218,7 @@ ATCA_STATUS atcab_nonce_rand_ext(ATCADevice device, const uint8_t* num_in, uint8
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_NONCE_EN
         status = calib_nonce_rand(device, num_in, rand_out);
 #endif
     }
@@ -2263,7 +2263,7 @@ ATCA_STATUS atcab_challenge(const uint8_t* num_in)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_NONCE_EN
         status = calib_challenge(g_atcab_device_ptr, num_in);
 #endif
     }
@@ -2296,7 +2296,7 @@ ATCA_STATUS atcab_challenge_seed_update(const uint8_t* num_in, uint8_t* rand_out
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_NONCE_EN
         status = calib_challenge_seed_update(g_atcab_device_ptr, num_in, rand_out);
 #endif
     }
@@ -2341,13 +2341,13 @@ ATCA_STATUS atcab_priv_write(uint16_t key_id, const uint8_t priv_key[36], uint16
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_ECC_SUPPORT
+#if CALIB_PRIVWRITE_EN
 #ifdef ATCA_USE_CONSTANT_HOST_NONCE
         status = calib_priv_write(g_atcab_device_ptr, key_id, priv_key, write_key_id, write_key);
 #else
         status = calib_priv_write(g_atcab_device_ptr, key_id, priv_key, write_key_id, write_key, num_in);
 #endif /* ATCA_USE_CONSTANT_HOST_NONCE */
-#endif /* ATCA_ECC_SUPPORT */
+#endif /* CALIB_PRIVWRITE_EN */
     }
     else if (atcab_is_ta_device(dev_type))
     {
@@ -2434,7 +2434,7 @@ ATCA_STATUS atcab_read_zone_ext(ATCADevice device, uint8_t zone, uint16_t slot, 
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_READ_EN || CALIB_READ_CA2_EN
         status = calib_read_zone_ext(device, zone, slot, block, offset, data, len);
 #endif
     }
@@ -2488,7 +2488,7 @@ ATCA_STATUS atcab_is_locked(uint8_t zone, bool* is_locked)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_READ_EN || CALIB_READ_CA2_EN
         status = calib_is_locked_ext(g_atcab_device_ptr, zone, is_locked);
 #endif
     }
@@ -2515,7 +2515,7 @@ ATCA_STATUS atcab_is_config_locked_ext(ATCADevice device, bool* is_locked)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_READ_EN || CALIB_READ_CA2_EN
         status = calib_is_locked_ext(device, LOCK_ZONE_CONFIG, is_locked);
 #endif
     }
@@ -2555,7 +2555,7 @@ ATCA_STATUS atcab_is_data_locked_ext(ATCADevice device, bool* is_locked)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_READ_EN || CALIB_READ_CA2_EN
         status = calib_is_locked_ext(device, LOCK_ZONE_DATA, is_locked);
 #endif
     }
@@ -2636,7 +2636,7 @@ ATCA_STATUS atcab_is_private_ext(ATCADevice device, uint16_t slot, bool* is_priv
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_READ_EN || CALIB_READ_CA2_EN
         status = calib_is_private(g_atcab_device_ptr, slot, is_private);
 #endif
     }
@@ -2665,7 +2665,7 @@ ATCA_STATUS atcab_read_bytes_zone_ext(ATCADevice device, uint8_t zone, uint16_t 
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_READ_EN || CALIB_READ_CA2_EN
         status = calib_read_bytes_zone_ext(device, zone, slot, offset, data, length);
 #endif
     }
@@ -2714,7 +2714,7 @@ ATCA_STATUS atcab_read_serial_number_ext(ATCADevice device, uint8_t* serial_numb
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_READ_EN || CALIB_READ_CA2_EN
         status = calib_read_serial_number_ext(device, serial_number);
 #endif
     }
@@ -2763,7 +2763,7 @@ ATCA_STATUS atcab_read_pubkey_ext(ATCADevice device, uint16_t slot, uint8_t* pub
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_READ_EN || CALIB_READ_CA2_EN
         status = calib_read_pubkey(device, slot, public_key);
 #endif
     }
@@ -2846,7 +2846,7 @@ ATCA_STATUS atcab_read_config_zone_ext(ATCADevice device, uint8_t* config_data)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_READ_EN || CALIB_READ_CA2_EN
         status = calib_read_config_zone(device, config_data);
 #endif
     }
@@ -2895,7 +2895,7 @@ ATCA_STATUS atcab_cmp_config_zone(uint8_t* config_data, bool* same_config)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_READ_EN || CALIB_READ_CA2_EN
         status = calib_cmp_config_zone(g_atcab_device_ptr, config_data, same_config);
 #endif
     }
@@ -2983,7 +2983,7 @@ ATCA_STATUS atcab_secureboot(uint8_t mode, uint16_t param2, const uint8_t* diges
 
     if (atcab_is_ca_device(dev_type))
     {
-#ifdef ATCA_ATECC608_SUPPORT
+#if CALIB_SECUREBOOT_EN
         status = calib_secureboot(g_atcab_device_ptr, mode, param2, digest, signature, mac);
 #endif
     }
@@ -3022,7 +3022,7 @@ ATCA_STATUS atcab_secureboot_mac(uint8_t mode, const uint8_t* digest, const uint
 
     if (atcab_is_ca_device(dev_type))
     {
-#ifdef ATCA_ATECC608_SUPPORT
+#if CALIB_SECUREBOOT_MAC_EN
         status = calib_secureboot_mac(g_atcab_device_ptr, mode, digest, signature, num_in, io_key, is_verified);
 #endif
     }
@@ -3059,7 +3059,7 @@ ATCA_STATUS atcab_selftest(uint8_t mode, uint16_t param2, uint8_t* result)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if defined(ATCA_ATECC608_SUPPORT) || ATCA_CA2_SUPPORT
+#if CALIB_SELFTEST_EN
         status = calib_selftest(g_atcab_device_ptr, mode, param2, result);
 #endif
     }
@@ -3107,7 +3107,7 @@ ATCA_STATUS atcab_sha_base(uint8_t mode, uint16_t length, const uint8_t* data_in
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_SHA_EN
         status = calib_sha_base(g_atcab_device_ptr, mode, length, data_in, data_out, data_out_size);
 #endif
     }
@@ -3131,7 +3131,7 @@ ATCA_STATUS atcab_sha_start(void)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_SHA_EN
         status = calib_sha_start(g_atcab_device_ptr);
 #endif
     }
@@ -3159,7 +3159,7 @@ ATCA_STATUS atcab_sha_update(const uint8_t* message)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_SHA_EN
         status = calib_sha_update(g_atcab_device_ptr, message);
 #endif
     }
@@ -3190,7 +3190,7 @@ ATCA_STATUS atcab_sha_end(uint8_t* digest, uint16_t length, const uint8_t* messa
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_SHA_EN
         status = calib_sha_end(g_atcab_device_ptr, digest, length, message);
 #endif
     }
@@ -3283,7 +3283,7 @@ ATCA_STATUS atcab_sha(uint16_t length, const uint8_t* message, uint8_t* digest)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_SHA_EN
         status = calib_sha(g_atcab_device_ptr, length, message, digest);
 #endif
     }
@@ -3312,7 +3312,7 @@ ATCA_STATUS atcab_hw_sha2_256(const uint8_t* data, size_t data_size, uint8_t* di
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_SHA_EN
         status = calib_hw_sha2_256(g_atcab_device_ptr, data, data_size, digest);
 #endif
     }
@@ -3340,7 +3340,7 @@ ATCA_STATUS atcab_hw_sha2_256_init(atca_sha256_ctx_t* ctx)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_SHA_EN
         status = calib_hw_sha2_256_init(g_atcab_device_ptr, ctx);
 #endif
     }
@@ -3370,7 +3370,7 @@ ATCA_STATUS atcab_hw_sha2_256_update(atca_sha256_ctx_t* ctx, const uint8_t* data
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_SHA_EN
         status = calib_hw_sha2_256_update(g_atcab_device_ptr, ctx, data, data_size);
 #endif
     }
@@ -3399,7 +3399,7 @@ ATCA_STATUS atcab_hw_sha2_256_finish(atca_sha256_ctx_t* ctx, uint8_t* digest)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_SHA_EN
         status = calib_hw_sha2_256_finish(g_atcab_device_ptr, ctx, digest);
 #endif
     }
@@ -3585,7 +3585,7 @@ ATCA_STATUS atcab_sign_base(uint8_t mode, uint16_t key_id, uint8_t* signature)
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_ECC_SUPPORT
+#if CALIB_SIGN_EN
         status = calib_sign_base(g_atcab_device_ptr, mode, key_id, signature);
 #endif
     }
@@ -3623,7 +3623,7 @@ ATCA_STATUS atcab_sign_ext(ATCADevice device, uint16_t key_id, const uint8_t* ms
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_ECC_SUPPORT || defined(ATCA_ECC204_SUPPORT) || defined(ATCA_ECC206_SUPPORT) || defined(ATCA_TA010_SUPPORT)
+#if CALIB_SIGN_EN || CALIB_SIGN_CA2_EN
         status = calib_sign_ext(device, key_id, msg, signature);
 #endif
     }
@@ -3681,7 +3681,7 @@ ATCA_STATUS atcab_sign_internal(uint16_t key_id, bool is_invalidate, bool is_ful
 
     if (atcab_is_ca_device(dev_type))
     {
-#if ATCA_ECC_SUPPORT
+#if CALIB_SIGN_INTERNAL_EN
         status = calib_sign_internal(g_atcab_device_ptr, key_id, is_invalidate, is_full_sn, signature);
 #endif
     }
@@ -3773,7 +3773,7 @@ ATCA_STATUS atcab_verify(uint8_t mode, uint16_t key_id, const uint8_t* signature
 
     if (atcab_is_ca_device(dev_type))
     {
-#if ATCA_ECC_SUPPORT
+#if CALIB_VERIFY_EXTERN_EN || CALIB_VERIFY_STORED_EN
         status = calib_verify(g_atcab_device_ptr, mode, key_id, signature, public_key, other_data, mac);
 #endif
     }
@@ -3817,7 +3817,7 @@ ATCA_STATUS atcab_verify_extern_ext(ATCADevice device, const uint8_t* message, c
 
     if (atcab_is_ca_device(dev_type))
     {
-#if ATCA_ECC_SUPPORT
+#if CALIB_VERIFY_EXTERN_EN
         status = calib_verify_extern(device, message, signature, public_key, is_verified);
 #endif
     }
@@ -3886,7 +3886,7 @@ ATCA_STATUS atcab_verify_extern_mac(const uint8_t* message, const uint8_t* signa
 
     if (atcab_is_ca_device(dev_type))
     {
-#ifdef ATCA_ATECC608_SUPPORT
+#if CALIB_VERIFY_EXTERN_EN && CALIB_VERIFY_MAC_EN
         status = calib_verify_extern_mac(g_atcab_device_ptr, message, signature, public_key, num_in, io_key, is_verified);
 #endif
     }
@@ -3928,7 +3928,7 @@ ATCA_STATUS atcab_verify_stored_ext(ATCADevice device, const uint8_t* message, c
 
     if (atcab_is_ca_device(dev_type))
     {
-#if ATCA_ECC_SUPPORT
+#if CALIB_VERIFY_STORED_EN
         status = calib_verify_stored(device, message, signature, key_id, is_verified);
 #endif
     }
@@ -3990,7 +3990,7 @@ ATCA_STATUS atcab_verify_stored_with_tempkey(const uint8_t* signature, uint16_t 
 
     if (atcab_is_ca_device(dev_type))
     {
-#if ATCA_ECC_SUPPORT
+#if CALIB_VERIFY_STORED_EN
         status = calib_verify_stored_with_tempkey(g_atcab_device_ptr, signature, key_id, is_verified);
 #endif
     }
@@ -4030,7 +4030,7 @@ ATCA_STATUS atcab_verify_stored_mac(const uint8_t* message, const uint8_t* signa
 
     if (atcab_is_ca_device(dev_type))
     {
-#ifdef ATCA_ATECC608_SUPPORT
+#if CALIB_VERIFY_STORED_EN && CALIB_VERIFY_MAC_EN
         status = calib_verify_stored_mac(g_atcab_device_ptr, message, signature, key_id, num_in, io_key, is_verified);
 #endif
     }
@@ -4071,7 +4071,7 @@ ATCA_STATUS atcab_verify_validate(uint16_t key_id, const uint8_t* signature, con
 
     if (atcab_is_ca_device(dev_type))
     {
-#if ATCA_ECC_SUPPORT
+#if CALIB_VERIFY_VALIDATE_EN
         status = calib_verify_validate(g_atcab_device_ptr, key_id, signature, other_data, is_verified);
 #endif
     }
@@ -4112,7 +4112,7 @@ ATCA_STATUS atcab_verify_invalidate(uint16_t key_id, const uint8_t* signature, c
 
     if (atcab_is_ca_device(dev_type))
     {
-#if ATCA_ECC_SUPPORT
+#if CALIB_VERIFY_VALIDATE_EN
         status = calib_verify_invalidate(g_atcab_device_ptr, key_id, signature, other_data, is_verified);
 #endif
     }
@@ -4154,7 +4154,7 @@ ATCA_STATUS atcab_write(uint8_t zone, uint16_t address, const uint8_t* value, co
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_WRITE_EN || CALIB_WRITE_CA2_EN
         status = calib_write_ext(g_atcab_device_ptr, zone, address, value, mac);
 #endif
     }
@@ -4191,7 +4191,7 @@ ATCA_STATUS atcab_write_zone_ext(ATCADevice device, uint8_t zone, uint16_t slot,
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_WRITE_EN || CALIB_WRITE_CA2_EN
         status = calib_write_zone_ext(device, zone, slot, block, offset, data, len);
 #endif
     }
@@ -4231,7 +4231,7 @@ ATCA_STATUS atcab_write_bytes_zone_ext(ATCADevice device, uint8_t zone, uint16_t
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_WRITE_EN || CALIB_WRITE_CA2_EN
         status = calib_write_bytes_zone_ext(device, zone, slot, offset_bytes, data, length);
 #endif
     }
@@ -4289,7 +4289,7 @@ ATCA_STATUS atcab_write_pubkey_ext(ATCADevice device, uint16_t slot, const uint8
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_WRITE_EN || CALIB_WRITE_CA2_EN
         status = calib_write_pubkey(device, slot, public_key);
 #endif
     }
@@ -4342,7 +4342,7 @@ ATCA_STATUS atcab_write_config_zone_ext(ATCADevice device, const uint8_t* config
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_WRITE_EN || CALIB_WRITE_CA2_EN
         status = calib_write_config_zone_ext(device, config_data);
 #endif
     }
@@ -4446,7 +4446,7 @@ ATCA_STATUS atcab_write_config_counter(uint16_t counter_id, uint32_t counter_val
 
     if (atcab_is_ca_device(dev_type) || atcab_is_ca2_device(dev_type))
     {
-#if ATCA_CA_SUPPORT
+#if CALIB_WRITE_EN || CALIB_WRITE_CA2_EN
         status = calib_write_config_counter_ext(g_atcab_device_ptr, counter_id, counter_value);
 #endif
     }

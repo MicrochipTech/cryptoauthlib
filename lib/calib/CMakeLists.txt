@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10.0)
 project(casupport C)
 
-if(ATCA_CA_SUPPORT)
+if(ATCA_CA_SUPPORT OR ATCA_CA2_SUPPORT)
     file(GLOB CALIB_SRC "*.c")
     file(GLOB CALIB_INC "*.h")
     file(GLOB HOST_SRC "../host/*.c")

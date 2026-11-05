@@ -1016,6 +1016,7 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
     char fileName_tmp[MAX_CONF_FILE_NAME_SIZE];
     CK_BYTE totalConfFileCount = 0;
     long l_tmp = 0;
+    CK_ULONG configured_count = 0;
 
     if (NULL == slot_ctx)
     {
@@ -1078,19 +1079,28 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
                     /* Configuration files must end with ".conf" */
                     if (0 == strcmp(&de->d_name[fn_len - 5u], ".conf"))
                     {
-                        /* coverity[misra_c_2012_directive_4_12_violation] Standard library functions are required */
-                        /* coverity[misra_c_2012_rule_21_3_violation] Standard library functions are required */
-                        updateConfFileData[i] = (pkcs11_conf_filedata*)malloc(sizeof(pkcs11_conf_filedata));
-
-                        if (NULL != updateConfFileData[i])
+                        /* Reserve at least one slot as the NULL sentinel the processing and cleanup loops below rely on */
+                        if (i >= (CK_BYTE)(MAX_CONF_FILES - 1u))
                         {
-                            (void)strcpy(updateConfFileData[i]->filename, de->d_name);
-                            updateConfFileData[i]->initialized = false;
+                            PKCS11_DEBUG("Too many configuration files; ignoring the remainder\n");
+                            break;
+                        }
 
-                            if (UINT8_MAX > totalConfFileCount)
-                            {
-                                totalConfFileCount++;
-                            }
+                        updateConfFileData[i] = (pkcs11_conf_filedata*)pkcs11_os_malloc(sizeof(pkcs11_conf_filedata));
+
+                        if (NULL == updateConfFileData[i])
+                        {
+                            rv = CKR_HOST_MEMORY;
+                            PKCS11_DEBUG("Failed to allocate a conf file entry\n");
+                            break;
+                        }
+
+                        (void)strcpy(updateConfFileData[i]->filename, de->d_name);
+                        updateConfFileData[i]->initialized = false;
+
+                        if (UINT8_MAX > totalConfFileCount)
+                        {
+                            totalConfFileCount++;
                         }
                         i++;
                     }
@@ -1121,7 +1131,6 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
         /* Load Base file first and then load child files*/
         if ((2 == argc) && (false == updateConfFileData[i]->initialized))
         {
-
             size_t fnlen = strlen((char*)pLibCtx->config_path) + strlen(updateConfFileData[i]->filename) + 1u;
             char* filename = pkcs11_os_malloc(fnlen);
 
@@ -1146,8 +1155,10 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
 
                 if (0 != errno)
                 {
+                    PKCS11_DEBUG("Invalid slot ID in base configuration filename\n");
                     pkcs11_os_free(filename);
-                    break;
+                    i++;
+                    continue;
                 }
 
                 CK_SLOT_ID baseSlotid_tmp = slot_id;
@@ -1158,6 +1169,9 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
                 pkcs11_os_free(filename);
                 if (NULL != fp)
                 {
+                    CK_RV slot_rv = CKR_GENERAL_ERROR;
+                    bool ctx_needs_reset = false;
+
                     buflen = pkcs11_config_load_file(fp, &buf);
 
                     if (0U < buflen)
@@ -1165,11 +1179,12 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
                         if (0u == slot_ctx->label[0])
                         {
                             slot_ctx->slot_id = slot_id;
+                            ctx_needs_reset = true;
+                            slot_rv = CKR_OK;
                         }
                         else if (slot_ctx->slot_id == slot_id)
                         {
                             PKCS11_DEBUG("Tried to reload the same configuration file for the same slot\n");
-                            rv = CKR_GENERAL_ERROR;
                         }
                         else
                         {
@@ -1182,6 +1197,8 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
                                 /* Set Defaults */
                                 slot_ctx->user_pin_handle = 0xFFFF;
                                 slot_ctx->so_pin_handle = 0xFFFF;
+                                ctx_needs_reset = true;
+                                slot_rv = CKR_OK;
                             }
                             else
                             {
@@ -1192,21 +1209,21 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
                             }
                         }
 
-                        if (CKR_OK == rv)
+                        if (CKR_OK == slot_rv)
                         {
                             if (0 < (argc = pkcs11_config_parse_buffer(buf, buflen, (int)(sizeof(argv) / sizeof(argv[0])), argv)))
                             {
-                                rv = pkcs11_config_parse_slot_file(slot_ctx, argc, argv);
-                                PKCS11_DEBUG("Load conf file status [%d] slot_id [%d]\n", slot_ctx->slot_id);
+                                slot_rv = pkcs11_config_parse_slot_file(slot_ctx, argc, argv);
+                                PKCS11_DEBUG("Load conf file status [%d] slot_id [%d]\n", (int)slot_rv, (int)slot_ctx->slot_id);
                             }
                             else
                             {
-                                rv = CKR_GENERAL_ERROR;
+                                slot_rv = CKR_GENERAL_ERROR;
                                 PKCS11_DEBUG("Failed to parse the slot configuration file\n");
                             }
                         }
 #ifndef PKCS11_LABEL_IS_SERNUM
-                        if (CKR_OK == rv)
+                        if (CKR_OK == slot_rv)
                         {
                             /* If a label wasn't set - configure a default */
                             if (0u == slot_ctx->label[0])
@@ -1215,15 +1232,29 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
                             }
                             /* Load configuration is successful*/
                             slot_ctx->slot_state = SLOT_STATE_CONFIGURED;
-                            updateConfFileData[i]->initialized = true;
                         }
 #endif
+                        if (CKR_OK == slot_rv)
+                        {
+                            updateConfFileData[i]->initialized = true;
+                            configured_count++;
+                        }
+
                         pkcs11_os_free(buf);
+
+                        /* Roll back a failed slot so its pool entry is reusable
+                           and cannot contaminate the next slot's configuration */
+                        if ((CKR_OK != slot_rv) && ctx_needs_reset)
+                        {
+                            (void)memset(slot_ctx, 0, sizeof(*slot_ctx));
+                            slot_ctx->user_pin_handle = 0xFFFF;
+                            slot_ctx->so_pin_handle = 0xFFFF;
+                        }
                     }
                     (void)fclose(fp);
 
                     /* Base conf file load success, check for all child files and load them*/
-                    if (CKR_OK == rv)
+                    if (CKR_OK == slot_rv)
                     {
                         CK_ULONG idx;
                         /* Check all conf files for THE correponding child conf files */
@@ -1247,7 +1278,8 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
 
                             if (0 != errno)
                             {
-                                break;
+                                PKCS11_DEBUG("Invalid slot ID in base configuration filename\n");
+                                continue;
                             }
                             /* If the child file slot id matches with parent file slot id
                                and if not initialized load the configuration*/
@@ -1257,12 +1289,12 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
                                 fnlen = strlen((char*)pLibCtx->config_path) + strlen((char*)updateConfFileData[idx]->filename) + 1u;
 
                                 char* handlefilename = pkcs11_os_malloc(fnlen);
+                                CK_RV child_rv = CKR_GENERAL_ERROR;
 
                                 if (NULL == handlefilename)
                                 {
-                                    rv = CKR_HOST_MEMORY;
                                     PKCS11_DEBUG("Failed to allocated a filename buffer\n");
-                                    break;
+                                    continue;
                                 }
                                 (void)snprintf(handlefilename, fnlen, "%s%s", pLibCtx->config_path, updateConfFileData[idx]->filename);
 
@@ -1276,8 +1308,9 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
 
                                 if (0 != errno)
                                 {
+                                    PKCS11_DEBUG("Invalid slot ID in child configuration filename\n");
                                     pkcs11_os_free(handlefilename);
-                                    break;
+                                    continue;
                                 }
                                 PKCS11_DEBUG("Opening Child Configuration: %s\n", handlefilename);
                                 /* coverity[cert_fio32_c_violation] files are created in pLibCtx->config_path which has already been validated as a proper device*/
@@ -1300,33 +1333,38 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
 
                                         if (0 != errno)
                                         {
+                                            PKCS11_DEBUG("Invalid handle ID in child configuration filename\n");
                                             pkcs11_os_free(buf);
                                             (void)fclose(fp);
-                                            break;
+                                            continue;
                                         }
 
                                         if (0u == slot_ctx->label[0] || (slot_ctx->slot_id != cslot_id))
                                         {
-                                            rv = CKR_GENERAL_ERROR;
+                                            child_rv = CKR_GENERAL_ERROR;
                                             PKCS11_DEBUG("Trying to load an object configuration without a slot configuration file\n");
                                         }
+                                        else
+                                        {
+                                            child_rv = CKR_OK;
+                                        }
 
-                                        if (CKR_OK == rv)
+                                        if (CKR_OK == child_rv)
                                         {
                                             (void)memset(argv, 0, sizeof(argv));
                                             if (0 < (argc = pkcs11_config_parse_buffer(buf, buflen, (int)(sizeof(argv) / sizeof(argv[0])), argv)))
                                             {
-                                                rv = pkcs11_config_parse_object_file(slot_ctx, handle, argc, argv);
-                                                PKCS11_DEBUG("Load Handle file status [%d] slot_id [%d]\n", slot_ctx->slot_id);
+                                                child_rv = pkcs11_config_parse_object_file(slot_ctx, handle, argc, argv);
+                                                PKCS11_DEBUG("Load Handle file status [%d] slot_id [%d]\n", (int)child_rv, (int)slot_ctx->slot_id);
                                             }
                                             else
                                             {
-                                                rv = CKR_GENERAL_ERROR;
-                                                PKCS11_DEBUG("Failed to parse the slot configuration file\n");
+                                                child_rv = CKR_GENERAL_ERROR;
+                                                PKCS11_DEBUG("Failed to parse the child configuration file\n");
                                             }
                                         }
 
-                                        if (CKR_OK == rv)
+                                        if (CKR_OK == child_rv)
                                         {
 #if ATCA_CA_SUPPORT
                                             if (atcab_is_ca_device(slot_ctx->interface_config.devtype))
@@ -1338,10 +1376,17 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
                                             /* Child conf loaded successfully*/
                                             updateConfFileData[idx]->initialized = true;
                                         }
+                                        else
+                                        {
+                                            PKCS11_DEBUG("Child configuration file load failed for slot %d\n", (int)cslot_id);
+                                        }
                                         pkcs11_os_free(buf);
-
                                     }
                                     (void)fclose(fp);
+                                }
+                                else
+                                {
+                                    PKCS11_DEBUG("Unable to open child configuration file\n");
                                 }
                             }
                         }
@@ -1349,7 +1394,6 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
                 }
                 else
                 {
-                    rv = CKR_GENERAL_ERROR;
                     PKCS11_DEBUG("Unable to open the configuration file\n");
                 }
             }
@@ -1365,6 +1409,13 @@ CK_RV pkcs11_config_load_objects(pkcs11_slot_ctx_ptr slot_ctx)
     for (i = 0; NULL != updateConfFileData[i]; i++)
     {
         pkcs11_os_free(updateConfFileData[i]);
+    }
+
+    /* Success if at least one slot configured; otherwise report failure */
+    if (0u == configured_count)
+    {
+        rv = CKR_GENERAL_ERROR;
+        PKCS11_DEBUG("No slot configuration was loaded\n");
     }
 
     return rv;
@@ -1394,6 +1445,9 @@ CK_RV pkcs11_config_load(pkcs11_slot_ctx_ptr slot_ctx)
         pObject->count = pkcs11_object_monotonic_attributes_count;
         pObject->size = 4;
         pObject->config = &slot_ctx->cfg_zone;
+#ifdef PKCS11_LAZY_OBJECT_INIT_ENABLE
+        pObject->device_ctx = slot_ctx->device_ctx;
+#endif
     }
 
     if (CKR_OK == rv)

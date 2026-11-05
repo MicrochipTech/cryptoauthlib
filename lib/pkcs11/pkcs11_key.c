@@ -43,6 +43,17 @@
  * \defgroup pkcs11 Key (pkcs11_key_)
    @{ */
 
+/* True when a PIN-derived IO-protection key (slot->read_key) is available for
+   encrypted CA-device transfers. In PKCS11_NO_LOGIN builds no key is ever
+   derived (read_key stays zero), so IO-protected command variants must not be
+   selected. In normal builds this expands to slot->logged_in, preserving the
+   existing behavior exactly. */
+#ifdef PKCS11_NO_LOGIN
+#define PKCS11_IO_PROT_AVAILABLE(slot)   (false)
+#else
+#define PKCS11_IO_PROT_AVAILABLE(slot)   ((slot)->logged_in)
+#endif
+
 #if defined(ATCA_HEAP)
 typedef struct pkcs11_key_cache_s
 {
@@ -412,17 +423,23 @@ static CK_RV pkcs11_key_get_ec_params(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAtt
     CK_RV rv = CKR_ARGUMENTS_BAD;
     if (NULL != obj_ptr && NULL != psession)
     {
-        const pkcs11_key_info_t *ec_key_data = pkcs11_get_object_key_type(psession->slot->device_ctx, obj_ptr);
-
-        if (NULL != ec_key_data)
+        if (CKK_EC == obj_ptr->class_type) 
         {
-            rv = pkcs11_attrib_fill(pAttribute, ec_key_data->ecc_key_info->curve_oid, (CK_ULONG)(ec_key_data->ecc_key_info->oid_size));
+            const pkcs11_key_info_t *ec_key_data = pkcs11_get_object_key_type(psession->slot->device_ctx, obj_ptr);
+
+            if (NULL != ec_key_data)
+            {
+                rv = pkcs11_attrib_fill(pAttribute, ec_key_data->ecc_key_info->curve_oid, (CK_ULONG)(ec_key_data->ecc_key_info->oid_size));
+            }
+            else
+            {
+                (void)pkcs11_attrib_empty(pObject, pAttribute, NULL);
+            }
         }
         else
         {
             (void)pkcs11_attrib_empty(pObject, pAttribute, NULL);
         }
-
     }
     return rv;
 }
@@ -434,6 +451,12 @@ static CK_RV pkcs11_key_get_ec_point(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttr
 
     if (NULL != obj_ptr && NULL != psession)
     {
+        if (CKK_EC != obj_ptr->class_type)
+        {
+            (void)pkcs11_attrib_empty(pObject, pAttribute, NULL);
+            return rv;
+        }
+        
         const pkcs11_key_info_t *ec_key_data = pkcs11_get_object_key_type(psession->slot->device_ctx, obj_ptr);
 
         if (NULL == ec_key_data)
@@ -588,15 +611,21 @@ static CK_RV pkcs11_key_auth_required(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAtt
 
     if (NULL != obj_ptr && NULL != session_ctx)
     {
+#ifndef PKCS11_NO_LOGIN
         if (atcab_is_ca_device(atcab_get_device_type_ext(session_ctx->slot->device_ctx)))
         {
 #if ATCA_CA_SUPPORT
             ((void)pAttribute);
+            rv = ATCA_SUCCESS;
 #endif
         }
         else
         {
         }
+#else
+        /* PIN login disabled - no object ever requires authentication */
+        rv = pkcs11_attrib_false(pObject, pAttribute, NULL);
+#endif
     }
     return rv;
 }
@@ -979,6 +1008,7 @@ const CK_ULONG pkcs11_key_private_attributes_count = (CK_ULONG)(PKCS11_UTIL_ARRA
  * CKO_SECRET_KEY - Secret Key Object Base Model
  */
 const pkcs11_attrib_model pkcs11_key_secret_attributes[] = {
+#ifndef PKCS11_DYN_DEVICE_LOCK_ENABLE
     /** Object Class - CK_OBJECT_CLASS */
     { CKA_CLASS,              pkcs11_object_get_class                                           },
     /** CK_TRUE if object is a token object; CK_FALSE if object is a session object. Default is CK_FALSE. */
@@ -1057,6 +1087,85 @@ const pkcs11_attrib_model pkcs11_key_secret_attributes[] = {
     /* Length in bytes of the key */
     { CKA_VALUE_LEN,          pkcs11_key_get_secret_length                                      },
 };
+#else
+    /** Object Class - CK_OBJECT_CLASS */
+    { CKA_CLASS,              &pkcs11_object_get_class,                 LOCK_NO                 },
+    /** CK_TRUE if object is a token object; CK_FALSE if object is a session object. Default is CK_FALSE. */
+    { CKA_TOKEN,              &pkcs11_token_get_storage,                LOCK_NO                 },
+    /** CK_TRUE if object is a private object; CK_FALSE if object is a public object. */
+    { CKA_PRIVATE,            &pkcs11_token_get_access_type,            LOCK_ON_MISS_HDL_INFO   },
+    /** CK_TRUE if object can be modified. Default is CK_TRUE. */
+    { CKA_MODIFIABLE,         &pkcs11_token_get_writable,               LOCK_ON_MISS_HDL_INFO   },
+    /** Description of the object(default empty). */
+    { CKA_LABEL,              &pkcs11_object_get_name,                  LOCK_NO                 },
+    /** CK_TRUE if object can be copied using C_CopyObject.Defaults to CK_TRUE. */
+    { CKA_COPYABLE,           &pkcs11_attrib_false,                     LOCK_NO                 },
+    /** CK_TRUE if the object can be destroyed using C_DestroyObject. Default is CK_TRUE. */
+    { CKA_DESTROYABLE,        &pkcs11_object_get_destroyable,           LOCK_NO                 },
+    /** Type of key */
+    { CKA_KEY_TYPE,           &pkcs11_object_get_type,                  LOCK_ON_MISS_HDL_INFO   },
+    /** Key identifier for key (default empty) */
+    { CKA_ID,                 &pkcs11_attrib_empty,                     LOCK_NO                 },
+    /** Start date for the key (default empty) */
+    { CKA_START_DATE,         &pkcs11_attrib_empty,                     LOCK_NO                 },
+    /** End date for the key (default empty) */
+    { CKA_END_DATE,           &pkcs11_attrib_empty,                     LOCK_NO                 },
+    /** CK_TRUE if key supports key derivation (i.e., if other keys can be derived from this one (default CK_FALSE) */
+    { CKA_DERIVE,             &pkcs11_attrib_true,                      LOCK_NO                 },
+    /** CK_TRUE only if key was either generated locally (i.e., on the token)
+       with a C_GenerateKey or C_GenerateKeyPair call created with a C_CopyObject
+       call as a copy of a key which had its CKA_LOCAL attribute set to CK_TRUE */
+    { CKA_LOCAL,              &pkcs11_key_get_local_flag,               LOCK_NO                 },
+    /** Identifier of the mechanism used to generate the key material. */
+    { CKA_KEY_GEN_MECHANISM,  NULL_PTR,                                 LOCK_NO                 },
+    /** A list of mechanisms allowed to be used with this key. The number of
+       mechanisms in the array is the ulValueLen component of the attribute
+       divided by the size of CK_MECHANISM_TYPE. */
+    { CKA_ALLOWED_MECHANISMS, &pkcs11_key_get_allowed_mechanisms,       LOCK_NO                 },
+    /** CK_TRUE if key is sensitive */
+    { CKA_SENSITIVE,          &pkcs11_token_get_access_type,            LOCK_ON_MISS_HDL_INFO   },
+    /** CK_TRUE if key supports encryption */
+    { CKA_ENCRYPT,            NULL_PTR,                                 LOCK_NO                 },
+    /** CK_TRUE if key supports decryption */
+    { CKA_DECRYPT,            NULL_PTR,                                 LOCK_NO                 },
+    /** CK_TRUE if key supports signatures (i.e., authentication codes) where
+        the signature is an appendix to the data */
+    { CKA_SIGN,               NULL_PTR,                                 LOCK_NO                 },
+    /** CK_TRUE if key supports verification (i.e., of authentication codes)
+        where the signature is an appendix to the data */
+    { CKA_VERIFY,             NULL_PTR,                                 LOCK_NO                 },
+    /** CK_TRUE if key supports wrapping (i.e., can be used to wrap other keys)  */
+    { CKA_WRAP,               NULL_PTR,                                 LOCK_NO                 },
+    /** CK_TRUE if key supports unwrapping (i.e., can be used to unwrap other keys) */
+    { CKA_UNWRAP,             NULL_PTR,                                 LOCK_NO                 },
+    /** CK_TRUE if key is extractable and can be wrapped */
+    { CKA_EXTRACTABLE,        &pkcs11_attrib_false,                     LOCK_NO                 },
+    /** CK_TRUE if key has always had the CKA_SENSITIVE attribute set to CK_TRUE */
+    { CKA_ALWAYS_SENSITIVE,   &pkcs11_token_get_access_type,            LOCK_ON_MISS_HDL_INFO   },
+    /** CK_TRUE if key has never had the CKA_EXTRACTABLE attribute set to CK_TRUE  */
+    { CKA_NEVER_EXTRACTABLE,  &pkcs11_token_get_access_type,            LOCK_ON_MISS_HDL_INFO   },
+    /** Key checksum */
+    { CKA_CHECK_VALUE,        &pkcs11_key_get_check_value,              LOCK_NO                 },
+    /** CK_TRUE if the key can only be wrapped with a wrapping key that has CKA_TRUSTED set to CK_TRUE. Default is CK_FALSE. */
+    { CKA_WRAP_WITH_TRUSTED,  NULL_PTR,                                 LOCK_NO                 },
+    /**  The wrapping key can be used to wrap keys with CKA_WRAP_WITH_TRUSTED set to CK_TRUE. */
+    { CKA_TRUSTED,            NULL_PTR,                                 LOCK_NO                 },
+    /** For wrapping keys. The attribute template to match against any keys
+        wrapped using this wrapping key. Keys that do not match cannot be
+        wrapped. The number of attributes in the array is the ulValueLen
+        component of the attribute divided by the size of CK_ATTRIBUTE */
+    { CKA_WRAP_TEMPLATE,      NULL_PTR,                                 LOCK_NO                 },
+    /** For wrapping keys. The attribute template to apply to any keys unwrapped
+        using this wrapping key. Any user supplied template is applied after
+        this template as if the object has already been created. The number of
+        attributes in the array is the ulValueLen component of the attribute
+        divided by the size of CK_ATTRIBUTE.  */
+    { CKA_UNWRAP_TEMPLATE,    NULL_PTR,                                 LOCK_NO                 },
+    /* Key value */
+    { CKA_VALUE,              &pkcs11_key_get_secret,                   LOCK_NO                 },
+    /* Length in bytes of the key */
+    { CKA_VALUE_LEN,          &pkcs11_key_get_secret_length,            LOCK_NO                 },
+#endif
 
 const CK_ULONG pkcs11_key_secret_attributes_count = (CK_ULONG)(PKCS11_UTIL_ARRAY_SIZE(pkcs11_key_secret_attributes));
 
@@ -1088,8 +1197,19 @@ static CK_RV pkcs11_key_privwrite_ca(CK_VOID_PTR pSession, pkcs11_object_ptr pOb
             /* Requires the io protection secret to be configured previously and for the
                 configuration to support this - should only be enabled for testing purposes.
                 Production devices should never have this feature enabled. */
-            rv = pkcs11_util_convert_rv(calib_priv_write(session_ctx->slot->device_ctx, pObject->slot, key_buf, write_key_id, session_ctx->slot->read_key,
-                                                         num_in));
+            if (PKCS11_IO_PROT_AVAILABLE(session_ctx->slot))
+            {
+                /* The encrypted PrivWrite authorizes against the PIN-derived
+                   read_key; writing a private key has no plaintext fallback. */
+                rv = pkcs11_util_convert_rv(calib_priv_write(session_ctx->slot->device_ctx, pObject->slot, key_buf, write_key_id, session_ctx->slot->read_key,
+                                                             num_in));
+            }
+            else
+            {
+                /* No valid IO-protection key available (e.g. not logged in or a
+                   PKCS11_NO_LOGIN build where read_key stays zero). */
+                rv = CKR_FUNCTION_FAILED;
+            }
         }
     }
 
@@ -1518,8 +1638,8 @@ CK_RV pkcs11_key_generate_pair
     return rv;
 }
 
-#if defined(ATCA_NO_HEAP) && ATCA_CA_SUPPORT
-static uint8_t pkcs11_key_cache[32];
+#if defined(ATCA_NO_HEAP)
+static uint8_t pkcs11_key_cache[66];
 
 static uint8_t pkcs11_key_used(uint8_t * key, size_t keylen)
 {
@@ -1549,29 +1669,29 @@ static CK_RV pkcs11_key_derive_ca(pkcs11_session_ctx_ptr pSession, pkcs11_object
         pSecretKey->count = pkcs11_key_secret_attributes_count;
         pSecretKey->size = 32;
         pSecretKey->flags = PKCS11_OBJECT_FLAG_DESTROYABLE | PKCS11_OBJECT_FLAG_SENSITIVE;
-#ifdef ATCA_NO_HEAP
-        if (!pkcs11_key_used(pkcs11_key_cache, sizeof(pkcs11_key_cache)))
-        {
-            pSecretKey->data = pkcs11_key_cache;
-        }
-#else
-        pSecretKey->data = pkcs11_os_malloc(pSecretKey->size);
-#endif
-        if (NULL == pSecretKey->data)
-        {
-            rv = CKR_HOST_MEMORY;
-        }
-        else
+
+        if (atcab_is_ca_device(atcab_get_device_type_ext(pSession->slot->device_ctx)))
         {
             ATCA_STATUS status = ATCA_SUCCESS;
             pkcs11_lib_ctx_ptr pLibCtx = pkcs11_get_context();
-
-            if (atcab_is_ca_device(atcab_get_device_type_ext(pSession->slot->device_ctx)))
+ 
+            pSecretKey->slot = ATCA_TEMPKEY_KEYID;
+            pSecretKey->config = &((pkcs11_slot_ctx_ptr)pSession->slot)->cfg_zone;
+            if (CKR_OK == (rv = pkcs11_lock_both(pLibCtx)))
             {
-                pSecretKey->slot = ATCA_TEMPKEY_KEYID;
-                pSecretKey->config = &((pkcs11_slot_ctx_ptr)pSession->slot)->cfg_zone;
-
-                if (CKR_OK == (rv = pkcs11_lock_both(pLibCtx)))
+#ifdef ATCA_NO_HEAP
+                if (!pkcs11_key_used(pkcs11_key_cache, pSecretKey->size))
+                {
+                    pSecretKey->data = pkcs11_key_cache;
+                }
+#else
+                pSecretKey->data = pkcs11_os_malloc(pSecretKey->size);
+#endif
+                if (NULL == pSecretKey->data)
+                {
+                    rv = CKR_HOST_MEMORY;
+                }
+                else
                 {
                     /* Because of the number of ECDH options this function unfortunately has a complex bit of logic
                        to walk through to select the proper ECDH command. Normally this would be left up to the user
@@ -1579,7 +1699,7 @@ static CK_RV pkcs11_key_derive_ca(pkcs11_session_ctx_ptr pSession, pkcs11_object
 
                     if (ATCA_TEMPKEY_KEYID == pBaseKey->slot)
                     {
-                        if (pSession->slot->logged_in)
+                        if (PKCS11_IO_PROT_AVAILABLE(pSession->slot))
                         {
                             status = calib_ecdh_tempkey_ioenc(pSession->slot->device_ctx, &pEcdhParameters->pPublicData[1], (uint8_t*)pSecretKey->data,
                                                               pSession->slot->read_key);
@@ -1593,19 +1713,31 @@ static CK_RV pkcs11_key_derive_ca(pkcs11_session_ctx_ptr pSession, pkcs11_object
                     {
                         if (ATCA_SLOT_CONFIG_WRITE_ECDH_MASK == (ATCA_SLOT_CONFIG_WRITE_ECDH_MASK & pSession->slot->cfg_zone.SlotConfig[pBaseKey->slot]))
                         {
-                            uint8_t num_in[32] = { 0, 1, 2, 3, 0, 0, 0, 0,
-                                                   0, 0, 0, 0, 0, 0, 0, 0,
-                                                   0, 0, 0, 0, 0, 0, 0, 0,
-                                                   0, 0, 0, 0, 0, 0, 0, 0 };
+                            /* WRITE_ECDH slots write the premaster secret into slot
+                               (key_id|1); it can only be retrieved via an encrypted
+                               read, which requires a valid read_key. No plaintext
+                               fallback is possible. */
+                            if (PKCS11_IO_PROT_AVAILABLE(pSession->slot))
+                            {
+                                uint8_t num_in[32] = { 0, 1, 2, 3, 0, 0, 0, 0,
+                                                       0, 0, 0, 0, 0, 0, 0, 0,
+                                                       0, 0, 0, 0, 0, 0, 0, 0,
+                                                       0, 0, 0, 0, 0, 0, 0, 0 };
 
-                            uint16_t read_key_id = (ATCA_SLOT_CONFIG_READKEY_MASK & pSession->slot->cfg_zone.SlotConfig[pBaseKey->slot | 0x01u])
-                                                   >> ATCA_SLOT_CONFIG_READKEY_SHIFT;
-                            status = calib_ecdh_enc(pSession->slot->device_ctx, pBaseKey->slot, &pEcdhParameters->pPublicData[1], (uint8_t*)pSecretKey->data,
-                                                    pSession->slot->read_key, read_key_id, num_in);
+                                uint16_t read_key_id = (ATCA_SLOT_CONFIG_READKEY_MASK & pSession->slot->cfg_zone.SlotConfig[pBaseKey->slot | 0x01u])
+                                                       >> ATCA_SLOT_CONFIG_READKEY_SHIFT;
+                                status = calib_ecdh_enc(pSession->slot->device_ctx, pBaseKey->slot, &pEcdhParameters->pPublicData[1], (uint8_t*)pSecretKey->data,
+                                                        pSession->slot->read_key, read_key_id, num_in);
+                            }
+                            else
+                            {
+                                /* No valid IO-protection key available to decrypt the result. */
+                                status = ATCA_FUNC_FAIL;
+                            }
                         }
                         else if ((ATECC508A != pSession->slot->interface_config.devtype) &&
                                  (ATCA_CHIP_OPT_IO_PROT_EN_MASK == (ATCA_CHIP_OPT_IO_PROT_EN_MASK & pSession->slot->cfg_zone.ChipOptions)) &&
-                                 pSession->slot->logged_in)
+                                 PKCS11_IO_PROT_AVAILABLE(pSession->slot))
                         {
                             status = calib_ecdh_ioenc(pSession->slot->device_ctx, pBaseKey->slot, &pEcdhParameters->pPublicData[1], (uint8_t*)pSecretKey->data,
                                                       pSession->slot->read_key);
@@ -1619,10 +1751,10 @@ static CK_RV pkcs11_key_derive_ca(pkcs11_session_ctx_ptr pSession, pkcs11_object
                     {
                         status = ATCA_GEN_FAIL;
                     }
-                    (void)pkcs11_unlock_both(pLibCtx);
+                    rv = pkcs11_util_convert_rv(status);
                 }
+                (void)pkcs11_unlock_both(pLibCtx);
             }
-            rv = pkcs11_util_convert_rv(status);
         }
     }
 

@@ -512,7 +512,9 @@ CK_RV pkcs11_token_get_info(CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo)
                     {
                         break;
                     }
+#ifndef PKCS11_NO_LOGIN
                     pInfo->flags |= CKF_LOGIN_REQUIRED;
+#endif
                 }
 
                 if (slot_ctx->so_pin_handle != 0xFFFFu)
@@ -662,8 +664,7 @@ CK_RV pkcs11_token_convert_pin_to_key(
     return pkcs11_util_convert_rv(status);
 }
 
-CK_RV pkcs11_token_set_pin(CK_SESSION_HANDLE hSession, CK_UTF8CHAR_PTR pOldPin,
-                           CK_ULONG ulOldLen, CK_UTF8CHAR_PTR pNewPin, CK_ULONG ulNewLen)
+CK_RV pkcs11_token_init_pin(CK_SESSION_HANDLE hSession, CK_UTF8CHAR_PTR pNewPin, CK_ULONG ulNewLen)
 {
     pkcs11_session_ctx_ptr pSession;
     pkcs11_lib_ctx_ptr pLibCtx;
@@ -672,9 +673,6 @@ CK_RV pkcs11_token_set_pin(CK_SESSION_HANDLE hSession, CK_UTF8CHAR_PTR pOldPin,
     CK_RV rv;
     bool is_ca_device = false;
     CK_ULONG key_len = 0;
-
-    ((void)pOldPin);
-    ((void)ulOldLen);
 
     rv = pkcs11_init_check(&pLibCtx, FALSE);
     if (CKR_OK != rv)
@@ -695,8 +693,8 @@ CK_RV pkcs11_token_set_pin(CK_SESSION_HANDLE hSession, CK_UTF8CHAR_PTR pOldPin,
 
     is_ca_device = atcab_is_ca_device(atcab_get_device_type_ext(pSession->slot->device_ctx));
 
-    //For TA100/TA101, with AES 128 GCM generated key, 16 byte data of key is written to auth handle
-    //For ECC, 32 bytes write possible
+    /* For TA100/TA101, with AES 128 GCM generated key, 16 byte data of key is written to auth handle */
+    /* For ECC, 32 bytes write possible */
     key_len = (is_ca_device ? ATCA_SHA256_DIGEST_SIZE : (ATCA_SHA256_DIGEST_SIZE/2u));
 
     if (CKR_OK == (rv = pkcs11_lock_context(pLibCtx)))
@@ -738,14 +736,154 @@ CK_RV pkcs11_token_set_pin(CK_SESSION_HANDLE hSession, CK_UTF8CHAR_PTR pOldPin,
             }
         }
 
+        (void)pkcs11_util_memset(buf, sizeof(buf), 0, sizeof(buf));
         (void)pkcs11_unlock_context(pLibCtx);
     }
 
     /* Lock the pin once it has been written */
 #if PKCS11_LOCK_PIN_SLOT
-    if (CKR_OK == rv)
+    if (CKR_OK == rv && CKR_OK == (rv = pkcs11_lock_both(pLibCtx)))
     {
-        rv = atcab_lock_data_slot_ext(pSession->slot->device_ctx, pin_slot);
+        rv = pkcs11_util_convert_rv(atcab_lock_data_slot_ext(pSession->slot->device_ctx, pin_slot));
+        (void)pkcs11_unlock_both(pLibCtx);
+    }
+#endif
+
+    return rv;
+}
+
+CK_RV pkcs11_token_set_pin(CK_SESSION_HANDLE hSession, CK_UTF8CHAR_PTR pOldPin,
+                           CK_ULONG ulOldLen, CK_UTF8CHAR_PTR pNewPin, CK_ULONG ulNewLen)
+{
+    pkcs11_session_ctx_ptr pSession;
+    pkcs11_lib_ctx_ptr pLibCtx;
+    uint16_t pin_slot;
+    uint8_t buf[ATCA_SHA256_DIGEST_SIZE] = { 0 };
+    uint8_t stored_pin_key[ATCA_SHA256_DIGEST_SIZE] = { 0 };
+    uint8_t derived_old_pin_key[ATCA_SHA256_DIGEST_SIZE] = { 0 };
+    CK_RV rv;
+    bool is_ca_device = false;
+    CK_ULONG key_len = 0;
+
+    rv = pkcs11_init_check(&pLibCtx, FALSE);
+    if (CKR_OK != rv)
+    {
+        return rv;
+    }
+
+    if (NULL == pNewPin || ulNewLen == 0u || NULL == pOldPin || ulOldLen == 0u)
+    {
+        return CKR_ARGUMENTS_BAD;
+    }
+
+    rv = pkcs11_session_check(&pSession, hSession);
+    if (CKR_OK != rv)
+    {
+        return rv;
+    }
+
+#ifdef PKCS11_NO_LOGIN
+    /* The PIN is not used in no-login builds, so changing it is not supported. */
+    return CKR_FUNCTION_NOT_SUPPORTED;
+#endif
+
+    if (false == pSession->slot->logged_in)
+    {
+        return CKR_USER_NOT_LOGGED_IN;
+    }
+
+    is_ca_device = atcab_is_ca_device(atcab_get_device_type_ext(pSession->slot->device_ctx));
+
+    /* For TA100/TA101, with AES 128 GCM generated key, 16 byte data of key is written to auth handle */
+    /* For ECC, 32 bytes write possible */
+    key_len = (is_ca_device ? ATCA_SHA256_DIGEST_SIZE : (ATCA_SHA256_DIGEST_SIZE/2u));
+
+    if (CKR_OK == (rv = pkcs11_lock_context(pLibCtx)))
+    {
+        do
+        {
+            /* Convert provided old pin and new pin to a key */
+#ifndef PKCS11_PIN_KDF_ALWAYS
+            if (((CK_ULONG)2u * key_len) == ulOldLen)
+            {
+                if (CKR_OK == (rv = pkcs11_token_convert_pin_to_key(pOldPin, ulOldLen, NULL, 0, derived_old_pin_key, key_len, pSession->slot)))
+                {
+                    rv = pkcs11_token_convert_pin_to_key(pNewPin, ulNewLen, NULL, 0, buf, key_len, pSession->slot);
+                }
+            }
+            else
+#endif
+            {
+                uint8_t sn[ATCA_SERIAL_NUM_SIZE];
+                if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
+                {
+                    if (CKR_OK == (rv = pkcs11_util_convert_rv(atcab_read_serial_number_ext(pSession->slot->device_ctx, sn))))
+                    {
+                        if (CKR_OK == (rv = pkcs11_token_convert_pin_to_key(pOldPin, ulOldLen, sn, ATCA_SERIAL_NUM_SIZE,
+                                                                            derived_old_pin_key, key_len, pSession->slot)))
+                        {
+                            rv = pkcs11_token_convert_pin_to_key(pNewPin, ulNewLen, sn, ATCA_SERIAL_NUM_SIZE,
+                                                                 buf, key_len, pSession->slot);
+                        }
+                    }
+                    (void)pkcs11_unlock_device(pLibCtx);
+                }
+            }
+
+            if (is_ca_device)
+            {
+#if ATCA_CA_SUPPORT
+                pin_slot = (ATCA_CHIP_OPT_IO_PROT_KEY_MASK & pSession->slot->cfg_zone.ChipOptions) >> ATCA_CHIP_OPT_IO_PROT_KEY_SHIFT;
+#else
+                rv = CKR_GENERAL_ERROR;
+#endif
+            }
+            else
+            {
+                pin_slot = pSession->slot->user_pin_handle;
+            }
+
+            if (CKR_OK == rv)
+            {
+                /* Read the currently stored pin key from device */
+                if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
+                {
+                    rv = pkcs11_util_convert_rv(atcab_read_bytes_zone_ext(pSession->slot->device_ctx, ATCA_ZONE_DATA, pin_slot, 0, stored_pin_key, (uint8_t)key_len));
+                    (void)pkcs11_unlock_device(pLibCtx);
+                }
+            }
+
+            if (CKR_OK == rv)
+            {
+                /* Verify that provided old pin matches the stored pin */
+                if (0 != pkcs11_util_memcmp_constant_time(derived_old_pin_key, stored_pin_key, (size_t)key_len))
+                {
+                    rv = CKR_PIN_INCORRECT;
+                    break;
+                }
+
+                /* Write the new pin key to device */
+                if (CKR_OK == (rv = pkcs11_lock_device(pLibCtx)))
+                {
+                    rv = pkcs11_util_convert_rv(atcab_write_zone_ext(pSession->slot->device_ctx, ATCA_ZONE_DATA, pin_slot, 0, 0, buf, (uint8_t)key_len));
+                    (void)pkcs11_unlock_device(pLibCtx);
+                }
+            }
+        } while (false);
+
+        (void)pkcs11_util_memset(buf, sizeof(buf), 0, sizeof(buf));
+        (void)pkcs11_util_memset(stored_pin_key, sizeof(stored_pin_key), 0, sizeof(stored_pin_key));
+        (void)pkcs11_util_memset(derived_old_pin_key, sizeof(derived_old_pin_key), 0, sizeof(derived_old_pin_key));
+
+        (void)pkcs11_unlock_context(pLibCtx);
+    }
+
+    /* Lock the pin once it has been written */
+#if PKCS11_LOCK_PIN_SLOT
+    if (CKR_OK == rv && CKR_OK == (rv = pkcs11_lock_both(pLibCtx)))
+    {
+        rv = pkcs11_util_convert_rv(atcab_lock_data_slot_ext(pSession->slot->device_ctx, pin_slot));
+        (void)pkcs11_unlock_both(pLibCtx);
     }
 #endif
 

@@ -1139,6 +1139,13 @@ ATCA_STATUS atcacert_date_dec_posix_le(const uint8_t        formatted_date[DATEF
 }
 #endif
 
+/**
+ * \brief Encode issue and expiration dates using compressed certificate format version 0.
+ *
+ * \note This function supports issue years from 2000 through 2031 and expiration intervals
+ *       from 0 through 31 years. Use atcacert_date_enc_compcert_ext() for extended support
+ *       up to year 2127 and expiration intervals up to 127 years
+ */
 ATCA_STATUS atcacert_date_enc_compcert(const atcacert_tm_utc_t* issue_date,
                                        uint8_t                  expire_years,
                                        uint8_t                  enc_dates[3])

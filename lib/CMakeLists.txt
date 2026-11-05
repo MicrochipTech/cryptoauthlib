@@ -267,7 +267,7 @@ if (ATCA_JWT_SUPPORT)
     source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${JWT_SRC_GRP})
 endif()
 
-if (ATCA_CA_SUPPORT)
+if (ATCA_CA_SUPPORT OR ATCA_CA2_SUPPORT)
     add_subdirectory(calib)
     file(GLOB CALIB_SRC_GRP RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "calib/*.c")
     file(GLOB HOST_SRC_GRP RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "host/*.c")
@@ -318,16 +318,16 @@ endif(BUILD_TESTS)
 configure_file(atca_config.h.in atca_config.h @ONLY)
 set(LIB_INC ${LIB_INC} ${CMAKE_CURRENT_BINARY_DIR}/atca_config.h)
 
-include_directories(cryptoauth PUBLIC ${CMAKE_CURRENT_BINARY_DIR}
-                                      ${CMAKE_CURRENT_SOURCE_DIR}
-                                      ${CMAKE_BINARY_DIR}/downloaded
-                                      ../app/tng
-                                      ../third_party
-                                      ../third_party/hidapi/hidapi
-                                      ${USB_INCLUDE_DIR})
+target_include_directories(cryptoauth PUBLIC ${CMAKE_CURRENT_BINARY_DIR}
+                                             ${CMAKE_CURRENT_SOURCE_DIR}
+                                             ${CMAKE_BINARY_DIR}/downloaded
+                                             ../app/tng
+                                             ../third_party
+                                             ../third_party/hidapi/hidapi
+                                             ${USB_INCLUDE_DIR})
 
 if(APPLE)
-include_directories(cryptoauth PUBLIC ../third_party/hidapi/mac)
+target_include_directories(cryptoauth PUBLIC ../third_party/hidapi/mac)
 endif()
 
 if(ATCA_MBEDTLS)
@@ -339,7 +339,7 @@ target_link_libraries(cryptoauth wolfssl)
 endif()
 
 if(ATCA_OPENSSL)
-include_directories(cryptoauth PUBLIC ${OPENSSL_INCLUDE_DIR})
+target_include_directories(cryptoauth PUBLIC ${OPENSSL_INCLUDE_DIR})
 target_link_libraries(cryptoauth ${OPENSSL_CRYPTO_LIBRARY})
 endif()
 

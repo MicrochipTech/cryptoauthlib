@@ -479,9 +479,11 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
 {
     pkcs11_lib_ctx_ptr pLibCtx = pkcs11_get_context();
     pkcs11_session_ctx_ptr session_ctx = pkcs11_get_session_context(hSession);
+#ifndef PKCS11_NO_LOGIN
     bool is_ca_device = false;
     uint16_t key_len = 0;
     uint8_t auth_idx = 0;
+#endif
     CK_RV rv;
 
     ((void)userType);
@@ -491,11 +493,16 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
         return CKR_CRYPTOKI_NOT_INITIALIZED;
     }
 
+#ifndef PKCS11_NO_LOGIN
     if (NULL == pPin || 0u == ulPinLen)
     {
         PKCS11_DEBUG("pin: %p, pin-len: %d\n", pPin, ulPinLen);
         return CKR_ARGUMENTS_BAD;
     }
+#else
+    ((void)pPin);
+    ((void)ulPinLen);
+#endif
 
     if (NULL == session_ctx)
     {
@@ -512,6 +519,7 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
         return CKR_USER_ALREADY_LOGGED_IN;
     }
 
+#ifndef PKCS11_NO_LOGIN
     do
     {
         //! Reserve the PKCS11_AUTH_OP_0 / PKCS11_AUTH_OP_1 based on availability
@@ -567,6 +575,14 @@ CK_RV pkcs11_session_login(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK
         session_ctx->slot->logged_in = TRUE;
         session_ctx->state = CKS_RO_USER_FUNCTIONS;
     }
+#else
+    /* PIN login disabled: no auth handshake, no read_key is derived.
+       Note: operations that rely on slot->read_key (e.g. IO-protected
+       ECDH on CA devices) are not supported in this mode. */
+    rv = CKR_OK;
+    session_ctx->slot->logged_in = TRUE;
+    session_ctx->state = CKS_RO_USER_FUNCTIONS;
+#endif
 
     return rv;
 }
@@ -593,9 +609,15 @@ CK_RV pkcs11_session_logout(CK_SESSION_HANDLE hSession)
         return CKR_SESSION_CLOSED;
     }
 
+#ifndef PKCS11_NO_LOGIN
+#endif
 
-    (void)pkcs11_cert_clear_session_cache(session_ctx);
-    (void)pkcs11_key_clear_session_cache(session_ctx);
+    if (CKR_OK == (rv = pkcs11_lock_both(lib_ctx)))
+    {
+        (void)pkcs11_cert_clear_session_cache(session_ctx);
+        (void)pkcs11_key_clear_session_cache(session_ctx);
+        (void)pkcs11_unlock_both(lib_ctx);
+    }
 
     do
     {

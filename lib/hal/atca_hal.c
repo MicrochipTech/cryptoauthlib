@@ -139,7 +139,7 @@ static ATCAHAL_t hal_kit_bridge = {
 };
 #endif
 
-#ifdef ATCA_HAL_CUSTOM
+#if defined(ATCA_HAL_CUSTOM) && !defined(ATCA_HEAP) 
 static ATCAHAL_t hal_custom;
 #endif
 
@@ -305,21 +305,23 @@ ATCA_STATUS hal_iface_init(ATCAIfaceCfg *cfg, ATCAHAL_t **hal, ATCAHAL_t **phy)
 #ifdef ATCA_HAL_CUSTOM
         if (ATCA_CUSTOM_IFACE == cfg->iface_type)
         {
-            *hal = hal_malloc(sizeof(ATCAHAL_t));
-            if (NULL != *hal)
-            {
-                (*hal)->halinit = ATCA_IFACECFG_VALUE(cfg, atcacustom.halinit);
-                (*hal)->halpostinit = ATCA_IFACECFG_VALUE(cfg, atcacustom.halpostinit);
-                (*hal)->halreceive = ATCA_IFACECFG_VALUE(cfg, atcacustom.halreceive);
-                (*hal)->halsend = ATCA_IFACECFG_VALUE(cfg, atcacustom.halsend);
-                (*hal)->halcontrol = hal_custom_control;
-                (*hal)->halrelease = ATCA_IFACECFG_VALUE(cfg, atcacustom.halrelease);
-                status = ATCA_SUCCESS;
-            }
-            else
+#ifndef ATCA_HEAP
+            (void)memset(&hal_custom, 0, sizeof(hal_custom));
+            *hal = &hal_custom;
+#else
+            if (NULL == (*hal = hal_malloc(sizeof(ATCAHAL_t))))
             {
                 status = ATCA_ALLOC_FAILURE;
+                return status;
             }
+#endif
+            (*hal)->halinit = ATCA_IFACECFG_VALUE(cfg, atcacustom.halinit);
+            (*hal)->halpostinit = ATCA_IFACECFG_VALUE(cfg, atcacustom.halpostinit);
+            (*hal)->halreceive = ATCA_IFACECFG_VALUE(cfg, atcacustom.halreceive);
+            (*hal)->halsend = ATCA_IFACECFG_VALUE(cfg, atcacustom.halsend);
+            (*hal)->halcontrol = hal_custom_control;
+            (*hal)->halrelease = ATCA_IFACECFG_VALUE(cfg, atcacustom.halrelease);
+            status = ATCA_SUCCESS;
         }
 #endif
     }

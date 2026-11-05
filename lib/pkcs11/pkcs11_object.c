@@ -68,6 +68,7 @@ static CK_OBJECT_HANDLE pkcs11_object_alloc_handle(void)
  * CKA_HW_FEATURE_TYPE == CKH_MONOTONIC_COUNTER
  */
 const pkcs11_attrib_model pkcs11_object_monotonic_attributes[] = {
+#ifndef PKCS11_DYN_DEVICE_LOCK_ENABLE
     /** Object Class - CK_OBJECT_CLASS */
     { CKA_CLASS,           pkcs11_object_get_class },
     /** Hardware Feature Type - CK_HW_FEATURE_TYPE */
@@ -80,6 +81,19 @@ const pkcs11_attrib_model pkcs11_object_monotonic_attributes[] = {
     /** Current value of the monotonic counter. Big endian order. */
     { CKA_VALUE,           NULL_PTR                },
 };
+#else
+    /** Object Class - CK_OBJECT_CLASS */
+    { CKA_CLASS,           &pkcs11_object_get_class,             LOCK_NO               },
+    /** Hardware Feature Type - CK_HW_FEATURE_TYPE */
+    { CKA_HW_FEATURE_TYPE, &pkcs11_object_get_type,              LOCK_ON_MISS_HDL_INFO },
+    /** Counter will reset to a previously returned value if the token is
+        initialized using C_InitToken. */
+    { CKA_RESET_ON_INIT,   &pkcs11_attrib_false,                 LOCK_NO               },
+    /** Counter has been reset at least once at some point in time. */
+    { CKA_HAS_RESET,       &pkcs11_attrib_false,                 LOCK_NO               },
+    /** Current value of the monotonic counter. Big endian order. */
+    { CKA_VALUE,           NULL_PTR,                             LOCK_NO               },
+#endif
 
 /* coverity[misra_c_2012_rule_5_1_violation:FALSE] C99 limit is 63 characters */
 const CK_ULONG pkcs11_object_monotonic_attributes_count = (CK_ULONG)(PKCS11_UTIL_ARRAY_SIZE(pkcs11_object_monotonic_attributes));
@@ -152,6 +166,9 @@ CK_RV pkcs11_object_alloc(CK_SLOT_ID slotId, pkcs11_object_ptr *ppObject)
                     pkcs11_object_cache[i].handle = pkcs11_object_alloc_handle();
                     pkcs11_object_cache[i].slotid = slotId;
                     pkcs11_object_cache[i].object = *ppObject;
+#ifdef PKCS11_LAZY_OBJECT_INIT_ENABLE
+                    (*ppObject)->handle_info_initialized = false;
+#endif
                 }
                 else
                 {
@@ -342,6 +359,11 @@ CK_RV pkcs11_object_get_type(CK_VOID_PTR pObject, CK_ATTRIBUTE_PTR pAttribute, p
     {
         return CKR_ARGUMENTS_BAD;
     }
+
+#ifdef PKCS11_LAZY_OBJECT_INIT_ENABLE
+    // on-demand load handle_info, make sure class_type initialized based on handle_info
+    (void) pkcs11_object_get_handle_info(obj_ptr);
+#endif
 
     return pkcs11_attrib_fill(pAttribute, &obj_ptr->class_type, (CK_ULONG)sizeof(obj_ptr->class_type));
 }
@@ -562,6 +584,10 @@ CK_RV pkcs11_object_create(
 
         if (NULL != pObject)
         {
+#ifdef PKCS11_LAZY_OBJECT_INIT_ENABLE
+            // for on-demand get_handle_info
+            pObject->device_ctx = pSession->slot->device_ctx;
+#endif
 
             switch (*pClass)
             {
@@ -736,5 +762,12 @@ CK_RV pkcs11_object_is_private(pkcs11_object_ptr pObject, CK_BBOOL *is_private, 
 
     return rv;
 }
+
+#ifdef PKCS11_LAZY_OBJECT_INIT_ENABLE
+ta_element_attributes_t* pkcs11_object_get_handle_info(pkcs11_object_ptr pObj)
+{
+    return &pObj->handle_info;
+}
+#endif
 
 /** @} */

@@ -317,7 +317,7 @@ void pkcs11_debug_attributes(CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)
             (void)memset(buffer, 0, buf_len);
             if (buffer)
             {
-                (void)atcab_bin2hex_(pTemplate->pValue, pTemplate->pValue, buffer, &buf_len, false, true, true);
+                (void)atcab_bin2hex_(pTemplate->pValue, pTemplate->ulValueLen, buffer, &buf_len, false, true, true);
                 PKCS11_DEBUG_NOFILE("%s(%X):%d:%s:\r\n", name, (unsigned int)pTemplate->type, (int)pTemplate->ulValueLen, buffer);
                 pkcs11_os_free(buffer);
             }

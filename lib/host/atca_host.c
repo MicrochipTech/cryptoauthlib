@@ -490,7 +490,7 @@ ATCA_STATUS atcah_mac(struct atca_mac_in_out *param)
         || ((MAC_MODE_USE_TEMPKEY_MASK == (param->mode & MAC_MODE_USE_TEMPKEY_MASK)) && (NULL == param->temp_key))
         || (((MAC_MODE_INCLUDE_OTP_64 == (param->mode & MAC_MODE_INCLUDE_OTP_64))
              || (MAC_MODE_INCLUDE_OTP_88 == (param->mode & MAC_MODE_INCLUDE_OTP_88))) && (NULL == param->otp))
-        || ((MAC_MODE_INCLUDE_SN == (param->mode & MAC_MODE_INCLUDE_SN)) && (NULL == param->sn))
+        || (NULL == param->sn)
         )
     {
         return ATCA_BAD_PARAM;
